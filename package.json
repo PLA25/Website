@@ -1,0 +1,29 @@
+{
+  "name": "pad-pla25",
+  "version": "1.0.0",
+  "description": "De PLA25 website",
+  "main": "start.js",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "save": "^2.3.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node start.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PLA25/test-website.git"
+  },
+  "keywords": [
+    "PLA25"
+  ],
+  "author": "PLA25",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PLA25/test-website/issues"
+  },
+  "homepage": "https://github.com/PLA25/test-website#readme"
+}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Kaart</title>
+		<meta charset="UTF-8" />
+		<script>
+			addEventListener('load', function() {
+				var xhr = new XMLHttpRequest();
+				xhr.responseType = "text";
+				xhr.open("GET", "/user");
+				xhr.addEventListener("loadend", function() {
+					var result = JSON.parse(xhr.response);
+					document.body.innerText = "Welkom, " + result.name + " (" + result.role + ")";
+				});
+				xhr.send();
+			});
+		</script>
+	</head>
+	<body>
+	</body>
+</html>
