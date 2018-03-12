@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Map</title>
+		<meta charset="UTF-8" />
+	</head>
+	<body>
+		<div id="top-bar">Welkom, <span id="naam">NAAM</span> (<span id="rol">ROL</span>)</div>
+		<script>
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "/user");
+			xhr.addEventListener('loadend', function() {
+				var user = JSON.parse(xhr.responseText);
+				document.querySelector('span#naam').innerText = user.name;
+				document.querySelector('span#rol').innerText = user.role;
+			});
+			xhr.send();
+		</script>
+	</body>
+</html>
