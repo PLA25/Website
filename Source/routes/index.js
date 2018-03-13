@@ -20,7 +20,7 @@ app.get("/admin", check, function(req, res) {
 });
 
 app.post("/", passport.authenticate('local', {}), (req, res) => {
-	if ('user' in req) {
+	if (req.isAuthenticated()) {
 		res.redirect('/map');
 	} else {
 		res.redirect('/login');
@@ -28,7 +28,7 @@ app.post("/", passport.authenticate('local', {}), (req, res) => {
 });
 
 app.get("/login", function(req, res) {
-	if (!('user' in req)) {
+	if (!req.isAuthenticated()) {
 		res.render('login');
 	} else {
 		res.redirect('/map');
