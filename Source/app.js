@@ -5,21 +5,25 @@ const passport = require('passport');
 const auth = require('passport-local').Strategy;
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const sleep = require('system-sleep');
+const hbs = require('handlebars');
+
+const mongoose = require('mongoose');
+mongoose.set('debug', true);
+const db = mongoose.createConnection('mongodb://admin:admin@ds111279.mlab.com:11279/pla25');
+
+var dbready = false;
+var connection = null;
+
+db.then(function(conn) {
+	connection = conn;
+	dbready = true;
+});
 
 const app = express();
 
-/**
- *
- * Hier worden de gebruikers uit de db gehaald
- *
- */
-function getUsers() {
-	//haal de gebruikers uit de db, geeft nu dummy data
-	return [
-		{name: "Sjaak", role: "admin", username: "sjaak", password: "123"},
-		{name: "Kees", role: "user", username: "kees", password: "123"}
-	];
-}
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname + '/views'));
 
 /**
  *
@@ -42,7 +46,23 @@ passport.use(new auth({
 	passwordField: 'password',
 	session: true
 }, (un, pw, done) => {
-	var users = getUsers();
+	if (!dbready) {
+		return done(null, false);
+	}
+	var ready = false;
+	var users = [];
+	db.collection("users").find({}).toArray(function(err, array) {
+		if (err) {
+			console.log("\n::: ERROR :::\n");
+			throw err;
+		} else {
+			users = array;
+			ready = true;
+		}
+	});
+	while (!ready) {
+		sleep(100);
+	}
 	for (var i = 0; i < users.length; i++) {
 		if (users[i].username == un && users[i].password == pw) {
 			return done(null, users[i]);
@@ -89,13 +109,7 @@ const check = function(req, res, next) {
  * De aanmeldpagina
  *
  */
-app.get("/login", function(req, res) {
-	if (!('user' in req)) {
-		res.sendFile("./login.html", root);
-	} else {
-		res.redirect('/map');
-	}
-});
+app.use(require('./routes/login'));
 
 /**
  *
@@ -111,22 +125,14 @@ app.get("/", function(req, res) {
  * De /map pagina
  *
  */
-app.get("/map", check, function(req, res) {
-	res.sendFile("./map.html", root);
-});
+app.use(require('./routes/map'));
 
 /**
  *
  * De /admin pagina
  *
  */
-app.get("/admin", check, function(req, res) {
-	if (req.user.role == 'admin') {
-		res.sendFile("./admin.html", root);
-	} else {
-		res.redirect('/map');
-	}
-});
+app.use(require('./routes/admin'));
 
 /**
  *
@@ -158,19 +164,6 @@ app.get("*", function(req, res) {
 		res.redirect("/login");
 	} else {
 		res.sendFile("." + req.url, root);
-	}
-});
-
-/**
- *
- * Hier wordt de data van het aanmeldscherm naar gestuurd om aan te melden
- *
- */
-app.post("/", passport.authenticate('local', {}), (req, res) => {
-	if ('user' in req) {
-		res.redirect('/map');
-	} else {
-		res.redirect('/login');
 	}
 });
 

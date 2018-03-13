@@ -2,5 +2,5 @@
 title 
 cd Source
 cls
-node start.js
+node app.js
 pause > nul
