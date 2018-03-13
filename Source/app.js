@@ -1,4 +1,4 @@
-const express = require('express');
+﻿const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const passport = require('passport');
@@ -103,13 +103,7 @@ const check = function(req, res, next) {
  * Hier worden /login, /logout, /map, /admin en /user aangemaakt
  *
  */
-
-/**
- *
- * De aanmeldpagina
- *
- */
-app.use(require('./routes/login'));
+app.use(require('./routes/index'));
 
 /**
  *
@@ -119,20 +113,6 @@ app.use(require('./routes/login'));
 app.get("/", function(req, res) {
 	res.redirect("/map");
 });
-
-/**
- *
- * De /map pagina
- *
- */
-app.use(require('./routes/map'));
-
-/**
- *
- * De /admin pagina
- *
- */
-app.use(require('./routes/admin'));
 
 /**
  *
