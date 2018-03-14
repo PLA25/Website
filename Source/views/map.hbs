@@ -1,0 +1,22 @@
+<div id="map" class="map"></div>
+    <script>
+	var center = ol.proj.transform([4.895168, 52.370216], 'EPSG:4326', 'EPSG:3857');
+      var map = new ol.Map({
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          }),
+	  new ol.layer.Vector({
+            source: new ol.source.Vector({
+              url: '/data.kml',
+              format: new ol.format.KML()
+            })
+          })
+        ],
+        target: 'map',
+        view: new ol.View({
+          center: center,
+          zoom: 11
+        })
+      });
+    </script>
