@@ -8,6 +8,7 @@ const sleep = require('system-sleep');
 const hbs = require('handlebars');
 const fs = require('fs');
 const path = require('path');
+const logger = require('morgan');
 
 const mongoose = require('mongoose');
 mongoose.set('debug', true);
@@ -94,24 +95,25 @@ app.use(require('./routes/index'));
 
 /**
  *
+ * /user toevoegen
+ *
+ */
+app.use(require('./routes/users'));
+
+/**
+ *
+ * de statische map 'public'
+ *
+ */
+app.use(express.static(path.join(__dirname, "/public")));
+
+/**
+ *
  * Alle overige pagina's verwijzen naar /login of het bestand opsturen als het gaat om css, js, etc.
  *
  */
 app.get("*", function(req, res) {
-	var path = require('path');
-	if (path.extname(req.url) == "") {
-		res.redirect("/login");
-	} else {
-		var path = path.join(root.root, req.url);
-		if (fs.existsSync(path)) {
-			res.sendFile(path);
-		} else {
-			res.status(404);
-			res.send('404');
-		}
-	}
+	res.redirect('/login');
 });
-
-//app.listen(80, 'localhost');
 
 module.exports = app;
