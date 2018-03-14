@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <Document>
+    <Placemark>
+      <name>Meetpunt 1</name>
+      <Point>
+        <coordinates>4.87995, 52.37783, 0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Station Amsterdam Centraal</name>
+      <Point>
+        <coordinates>4.900272, 52.379128, 0</coordinates>
+      </Point>
+    </Placemark>    
+    <Placemark>
+      <name>HvA Wibauthuis</name>
+      <Point>
+        <coordinates>4.910036, 52.359198, 0</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>HvA Theo Thijssenhuis</name>
+      <Point>
+        <coordinates>4.908656, 52.359234, 0</coordinates>
+      </Point>
+    </Placemark>
+  </Document>
+</kml>
