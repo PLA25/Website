@@ -2,13 +2,7 @@ const app = require('express').Router();
 
 const passport = require('passport');
 
-const check = function(req, res, next) {
-	if ('user' in req) {
-		next();
-	} else {
-		res.redirect('/login');
-	}
-};
+const check = require('./check');
 
 app.get("/admin", check, function(req, res) {
 	if (req.user.role == 'admin') {

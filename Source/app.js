@@ -90,13 +90,7 @@ app.use(passport.session());
  *
  */
 const root = ({root:__dirname + "\\public"});
-const check = function(req, res, next) {
-	if ('user' in req) {
-		next();
-	} else {
-		res.redirect('/login');
-	}
-};
+const check = require('./routes/check');
 
 /**
  *
