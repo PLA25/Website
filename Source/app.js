@@ -52,16 +52,11 @@ passport.use(new auth({
 	}
 	var ready = false;
 	var user = false;
-	connection.collection("users").find({"username": un, "password": pw}).toArray(function(err, array) {
-		if (err) {
-			console.log("\n::: ERROR :::\n");
-			throw err;
-		} else {
-			if (array[0]) {
-				user = array[0];
-			}
-			ready = true;
+	connection.collection("users").findOne({"username": un, "password": pw}, function(err, result) {
+		if (!err) {
+			user = result;
 		}
+		ready = true;
 	});
 	while (!ready) {
 		sleep(100);
