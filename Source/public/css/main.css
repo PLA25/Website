@@ -1,27 +1,3 @@
-
-
-
-
-/*//////////////////////////////////////////////////////////////////
-[ FONT ]*/
-
-@font-face {
-  font-family: Ubuntu-Regular;
-  src: url('../fonts/ubuntu/Ubuntu-Regular.ttf'); 
-}
-
-@font-face {
-  font-family: Ubuntu-Bold;
-  src: url('../fonts/ubuntu/Ubuntu-Bold.ttf'); 
-}
-
-@font-face {
-  font-family: JosefinSans-Bold;
-  src: url('../fonts/JosefinSans/JosefinSans-Bold.ttf'); 
-}
-
-
-
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
 
