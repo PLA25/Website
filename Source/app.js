@@ -147,4 +147,4 @@ app.get("*", function(req, res) {
 	}
 });
 
-app.listen(80, "localhost");
+module.exports = app;
