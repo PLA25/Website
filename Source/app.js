@@ -34,6 +34,8 @@ app.set('views', path.join(__dirname + '/views'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.use(logger('dev'));
+
 app.use(cookieParser());
 
 app.use(session({
