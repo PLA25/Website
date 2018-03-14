@@ -2,12 +2,17 @@ const app = require('express').Router();
 
 const passport = require('passport');
 
-const check = require('./check');
+const check = function(req, res, next) {
+	if ('user' in req) {
+		next();
+	} else {
+		res.redirect('/login');
+	}
+};
 
 app.get("/admin", check, function(req, res) {
 	if (req.user.role == 'admin') {
-		//res.sendFile("./admin.html", root);
-		res.render('admin');
+		res.render('admin', {});
 	} else {
 		res.redirect('/map');
 	}
@@ -30,8 +35,21 @@ app.get("/login", function(req, res) {
 });
 
 app.get("/map", check, function(req, res) {
-	//res.sendFile("./map.html", root);
 	res.render('map');
+});
+
+app.get('/user', check, function(req, res) {
+	res.setHeader("Content-Type", "text/json; charset=UTF-8");
+	res.send(JSON.stringify(req.user));
+});
+
+app.get('/logout', (req, res) => {
+	req.logout();
+	res.redirect('/login');
+});
+
+app.get("/", function(req, res) {
+	res.redirect("/map");
 });
 
 module.exports = app;
