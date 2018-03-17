@@ -7,7 +7,7 @@ var router = express.Router();
 router.get('/meetpunten', (req, res) => {
   sensorHub.find({}, function(err, rawHubs) {
     for (var i = 0; i < rawHubs.length; i++) {
-      rawHubs[i].SerialID = rawHubs[i].SerialID.replace('\\n', '');
+      rawHubs[i].SerialID = rawHubs[i].SerialID.replace('\n', '');
     }
 
     res.render('meetpunten', {
