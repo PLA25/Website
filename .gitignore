@@ -87,3 +87,6 @@ coverage
 
 # Benchmarking
 benchmarks/graphs
+
+# Config file
+Source/config.js
