@@ -2,10 +2,12 @@ var express = require('express');
 var router = express.Router();
 
 var home = require('./home');
+var api = require('./api');
 var map = require('./map');
 
 module.exports = (app) => {
   app.use('/', home);
+  app.use('/api', api);
   app.use('/map', map);
 
   // catch 404 and forward to error handler
