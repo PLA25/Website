@@ -2,7 +2,13 @@
 <html>
 
 <head>
-  <title>{{title}}</title>
+  <!-- Title -->
+  {{#if title}}
+    <title>PDS - {{title}}</title>
+  {{else}}
+    <title>PolutionDetectionSystem</title>
+  {{/if}}
+
   <link rel='stylesheet' href='/stylesheets/style.css' />
   <link rel="stylesheet" href="https://openlayers.org/en/v4.6.4/css/ol.css" type="text/css">
   <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
