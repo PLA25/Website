@@ -1,0 +1,11 @@
+'use strict';
+
+module.exports = {
+  MongoDB: {
+    Host: '',
+    Port: ,
+    User: '',
+    Pass: '',
+    Name: ''
+  }
+};
