@@ -27,18 +27,17 @@ var uitzonderingen = ["/"];
 function authenticator(req, res, next) {
 	var noParams = req.url.replace(/\?.*/, "");
 	var isLoginPage = (noParams == "/login");
-	var auth = req.isAuthenticated();
 	//
 	//Als de pagina onder de uitzonderingen valt
 	if (uitzonderingen.includes(noParams)) {
 		next();
 	}
 	//Als de gebruiker niet is aangemeld en zich niet op de login pagina bevindt
-	else if (!isLoginPage && !auth) {
+	else if (!isLoginPage && !req.isAuthenticated()) {
 		res.redirect('/');
 	}
 	//Als de gebruiker op de login pagina is, maar al aangemeld is (verwijst naar /home)
-	else if (isLoginPage && auth) {
+	else if (isLoginPage && req.isAuthenticated()) {
 		res.redirect('/home');
 	}
 	//Anders is alles goed en gaat het verder

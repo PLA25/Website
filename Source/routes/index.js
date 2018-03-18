@@ -1,6 +1,5 @@
 var express = require('express');
 var session = require('express-session');
-var passport = require('./passport');
 var router = express.Router();
 
 var home = require('./home');
@@ -11,17 +10,6 @@ var logout = require('./logout');
 
 
 module.exports = (app) => {
-
-  app.use(session({
-	secret: 'maikvur4#$^93C5rfg^re',
-	resave: true,
-	saveUninitialized: false
-  }));
-
-  app.use(passport.initialize());
-  app.use(passport.session());
-
-  app.use(passport.authenticator);
 
   app.use('/', home);
   app.use('/api', api);
