@@ -8,8 +8,10 @@ cache:
     - node_modules
 
 before_script:
-  - npm install -g eslint
   - cd Source
+  - npm install -g eslint
+  - npm install
+  - npm install --only=dev
 
 script:
   - npm run lint-fix
