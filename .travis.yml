@@ -14,4 +14,4 @@ before_script:
   - npm install --only=dev
 
 script:
-  - npm run lint-fix
+  - npm run lint
