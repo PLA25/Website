@@ -1,9 +1,28 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.render('index', {});
-});
+module.exports = (passport) => {
+  router.get('/', (req, res) => {
+    res.render('index', {});
+  });
 
-module.exports = router;
+  router.get('/login', (req, res) => {
+    res.render('login', {
+      title: "Login",
+      layout: false
+    });
+  });
+
+  router.post('/login', passport.authenticate('local-login', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+  }));
+
+  router.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
+  });
+
+  return router;
+};

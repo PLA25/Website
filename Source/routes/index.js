@@ -5,8 +5,19 @@ var home = require('./home');
 var api = require('./api');
 var map = require('./map');
 
-module.exports = (app) => {
-  app.use('/', home);
+module.exports = (app, passport) => {
+  app.use('/', home(passport));
+
+  app.use((req, res, next) => {
+    if (req.isAuthenticated()) {
+      next();
+    } else {
+      res.redirect('/login');
+    }
+
+    res.locals.user = req.user;
+  });
+
   app.use('/api', api);
   app.use('/map', map);
 
