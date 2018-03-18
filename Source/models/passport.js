@@ -3,6 +3,7 @@ var authMethod = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 
 var db = mongoose.createConnection('mongodb://admin:admin@ds111279.mlab.com:11279/pla25');
+var schema = mongoose.Schema;
 var connection;
 var dbready = false;
 
@@ -10,6 +11,13 @@ db.then(conn => {
 	connection = conn;
 	dbready = true;
 });
+
+var userSchema = new schema({
+	username: String,
+	password: String
+});
+
+var Users = mongoose.model('users', userSchema);
 
 /**
  *

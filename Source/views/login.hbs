@@ -1,32 +1,32 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spectre.css/0.5.1/spectre.min.css" />
 <style>
-	form.screen-center {
+	* {
+		color: white;
+	}
+	form {
 		position: absolute;
 		top: 50%;
 		left: 50%;
 		transform: translateX(-50%) translateY(-50%);
-		width: 20%;
-		height: 50%;
-		text-align: center;
-		background-color: rgb(100, 100, 200);
-		padding: 10px;
+		width: 400px;
+		height: 400px;
 		border-radius: 10px;
-		min-height: 260px;
+		text-align: center !important;
 	}
-	.spacing {
-		margin-bottom: 15px;
+	body {
+		overflow: hidden;
 	}
-	#bg {
-		position: absolute;
-		top: 0px;
-		width: 100%;
-		height: 100%;
+	input:not([type='submit']) {
+		margin-bottom: 20px !important;
+		width: 320px !important;
+		left: 30px !important;
+		position: relative !important;
 	}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.blue_grey-blue.min.css" integrity="sha256-aMjro64VbDMZsykwUQBlQzH/8TTpbI/EBKsmqYaIjrM=" crossorigin="anonymous" />
 <div id="bg"></div>
-<form method="POST" class="screen-center" action="/login">
+<form method="POST" class="mdl-color--primary" action="/login">
 	<h3 style="color: white; margin-bottom: 60px;">Login</h3>
-	<input type="text" placeholder="username" name="username" class="form-input spacing" />
-	<input type="password" placeholder="password" name="password" class="form-input spacing" />
-	<input type="submit" value="login" class="btn btn.btn-primary spacing" />
+	<input type="text" placeholder="username" name="username" class="mdl-textfield__input" />
+	<input type="password" placeholder="password" name="password" class="mdl-textfield__input" />
+	<input type="submit" value="login" class="mdl-button" style="color: white;" />
 </form>

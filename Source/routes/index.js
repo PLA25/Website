@@ -5,8 +5,6 @@ var router = express.Router();
 var home = require('./home');
 var api = require('./api');
 var map = require('./map');
-var login = require('./login');
-var logout = require('./logout');
 
 
 module.exports = (app) => {
@@ -14,8 +12,6 @@ module.exports = (app) => {
   app.use('/', home);
   app.use('/api', api);
   app.use('/map', map);
-  app.use('/login', login);
-  app.use('/logout', logout);
 
   // catch 404 and forward to error handler
   app.use((req, res, next) => {
