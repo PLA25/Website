@@ -8,17 +8,17 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET login page. */
-router.get('/', (req, res) => {
+router.get('/login', (req, res) => {
 	res.render('login', {title: "Login", layout: false});
 });
 
 /* POST login page */
-router.post('/', passport.authenticate('local', {failureRedirect: "/login"}), (req, res) => {
+router.post('/login', passport.authenticate('local', {failureRedirect: "/login"}), (req, res) => {
 	res.redirect('/home');
 });
 
 /* GET logout page */
-router.get('/', (req, res) => {
+router.get('/logout', (req, res) => {
 	req.logout();
 	res.redirect('/');
 });
