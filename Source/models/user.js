@@ -1,19 +1,16 @@
-var config = require('./../config');
-var mongoose = require('mongoose');
-var bcrypt = require('bcrypt-nodejs');
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt-nodejs');
 
-var schema = mongoose.Schema;
-
-var userSchema = schema({
+const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   password: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
 userSchema.methods.generateHash = function generateHash(password) {

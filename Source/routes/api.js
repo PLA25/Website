@@ -1,18 +1,17 @@
-var sensorHub = require('./../models/sensorhub');
-var express = require('express');
-var path = require('path');
+const sensorHub = require('./../models/sensorhub');
+const express = require('express');
 
-var router = express.Router();
+const router = express.Router();
 
 router.get('/meetpunten', (req, res) => {
-  sensorHub.find({}, function(err, rawHubs) {
-    for (var i = 0; i < rawHubs.length; i++) {
+  sensorHub.find({}, (err, rawHubs) => {
+    for (let i = 0; i < rawHubs.length; i += 1) {
       rawHubs[i].SerialID = rawHubs[i].SerialID.replace('\n', '');
     }
 
     res.render('meetpunten', {
       layout: false,
-      sensorHubs: rawHubs
+      sensorHubs: rawHubs,
     });
   });
 });
