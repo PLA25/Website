@@ -1,3 +1,37 @@
+.mdl-demo .mdl-layout__header-row {
+  padding-left: 40px;
+}
+
+.mdl-demo .mdl-layout.is-small-screen .mdl-layout__header-row h3 {
+  font-size: inherit;
+}
+
+.mdl-demo .mdl-layout__tab-bar-button {
+  display: none;
+}
+
+.mdl-demo .mdl-layout__tab-bar-container {
+  height: 64px;
+}
+
+.mdl-demo .mdl-layout__tab-bar {
+  padding: 0;
+  padding-left: 16px;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+}
+
+.mdl-demo .mdl-layout__tab-bar .mdl-layout__tab {
+  height: 64px;
+  line-height: 64px;
+}
+
+.mdl-demo .mdl-layout__tab-bar .mdl-layout__tab.is-active::after {
+  background-color: white;
+  height: 4px;
+}
+
 .mdl-layout__header-row {
   height: 32px !important;
 }

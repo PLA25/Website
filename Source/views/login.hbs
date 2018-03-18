@@ -1,7 +1,74 @@
-<form action="/login" method="post">
-	<input type="text" name="email" id="email">
-	<input type="password" name="password" id="wachtwoord">
-	<button type="submit">
-		Login
-	</button>
-</form>
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Title -->
+	{{#if title}}
+		<title>PDS - {{title}}</title>
+	{{else}}
+		<title>PolutionDetectionSystem</title>
+	{{/if}}
+
+	<!-- Style -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.blue_grey-blue.min.css" integrity="sha256-aMjro64VbDMZsykwUQBlQzH/8TTpbI/EBKsmqYaIjrM=" crossorigin="anonymous" />
+
+	<!-- Script -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.min.js" integrity="sha256-PCfu4+fnQrp4wNmVbjN1eaX4LbOvOejab0UOhjLezrw=" crossorigin="anonymous"></script>
+</head>
+
+<style>
+	body {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: rgb(96, 125, 139);
+	}
+
+	.demo-card-wide.mdl-card {
+		width: 400px;
+	}
+
+	.demo-card-wide>.mdl-card__title {
+		color: #fff;
+		height: 176px;
+		background: url('/welcome_card.jpg') center / cover;
+	}
+
+	.demo-card-wide>.mdl-card__menu {
+		color: #fff;
+	}
+</style>
+
+<body>
+	<div class="demo-card-wide mdl-card mdl-shadow--2dp">
+		<div class="mdl-card__title">
+			<h2 class="mdl-card__title-text">Welcome</h2>
+		</div>
+
+		<form action="/login" method="post" align="center">
+			<div class="mdl-card__supporting-text">
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<input class="mdl-textfield__input" type="text" id="email" name="email">
+					<label class="mdl-textfield__label" for="email">Email</label>
+				</div>
+
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+					<input class="mdl-textfield__input" type="password" id="password" name="password">
+					<label class="mdl-textfield__label" for="password">Password</label>
+				</div>
+			</div>
+			<div class="mdl-card__actions mdl-card--border">
+				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">
+					Login
+				</button>
+			</div>
+		</form>
+</body>
+
+</html>
