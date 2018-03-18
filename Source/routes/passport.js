@@ -7,8 +7,8 @@ var connection;
 var dbready = false;
 
 db.then(conn => {
-	connection = conn;
-	dbready = true;
+  connection = conn;
+  dbready = true;
 });
 
 /**
@@ -25,26 +25,26 @@ var uitzonderingen = ["/"];
  *
  */
 function authenticator(req, res, next) {
-	var url = req.url;
-	var noParams = url.replace(/\?.*/, "");
-	var isLoginPage = (noParams == "/login");
-	//
-	//Als de pagina onder de uitzonderingen valt
-	if (uitzonderingen.includes(noParams)) {
-		next();
-	}
-	//Als de gebruiker niet is aangemeld en zich niet op de login pagina bevindt
-	else if (!isLoginPage && !req.isAuthenticated()) {
-		res.redirect('/');
-	}
-	//Als de gebruiker op de login pagina is, maar al aangemeld is (verwijst naar /home)
-	else if (isLoginPage && req.isAuthenticated()) {
-		res.redirect('/home');
-	}
-	//Anders is alles goed en gaat het verder
-	else {
-		next();
-	}
+  var url = req.url;
+  var noParams = url.replace(/\?.*/, "");
+  var isLoginPage = (noParams == "/login");
+  //
+  //Als de pagina onder de uitzonderingen valt
+  if (uitzonderingen.includes(noParams)) {
+    next();
+  }
+  //Als de gebruiker niet is aangemeld en zich niet op de login pagina bevindt
+  else if (!isLoginPage && !req.isAuthenticated()) {
+    res.redirect('/');
+  }
+  //Als de gebruiker op de login pagina is, maar al aangemeld is (verwijst naar /home)
+  else if (isLoginPage && req.isAuthenticated()) {
+    res.redirect('/home');
+  }
+  //Anders is alles goed en gaat het verder
+  else {
+    next();
+  }
 }
 
 /**
@@ -53,29 +53,32 @@ function authenticator(req, res, next) {
  *
  */
 passport.use(new authMethod({
-	usernameField: 'username',
-	passwordField: 'password',
-	session: true
+  usernameField: 'username',
+  passwordField: 'password',
+  session: true
 }, (un, pw, done) => {
-	//un = username, pw = password
-	if (!dbready) {
-		return done(null, false);
-	}
-	connection.collection("users").findOne({"username": un, "password": pw}, (err, result) => {
-		if (!err) {
-			return done(null, result);
-		} else {
-			return done(null, false);
-		}
-	});
+  //un = username, pw = password
+  if (!dbready) {
+    return done(null, false);
+  }
+  connection.collection("users").findOne({
+    "username": un,
+    "password": pw
+  }, (err, result) => {
+    if (!err) {
+      return done(null, result);
+    } else {
+      return done(null, false);
+    }
+  });
 }));
 
 passport.serializeUser(function(user, done) {
-	done(null, user);
+  done(null, user);
 });
 
 passport.deserializeUser(function(user, done) {
-	done(null, user);
+  done(null, user);
 });
 
 passport.authenticator = authenticator;

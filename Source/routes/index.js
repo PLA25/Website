@@ -8,9 +8,7 @@ var map = require('./map');
 var login = require('./login');
 var logout = require('./logout');
 
-
 module.exports = (app) => {
-
   app.use('/', home);
   app.use('/api', api);
   app.use('/map', map);
