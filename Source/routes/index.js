@@ -6,6 +6,14 @@ var api = require('./api');
 var map = require('./map');
 
 module.exports = (app, passport) => {
+  app.use((req, res, next) => {
+    if (req.isAuthenticated()) {
+      res.locals.user = req.user;
+    }
+
+    next();
+  });
+
   app.use('/', home(passport));
 
   app.use((req, res, next) => {
@@ -14,8 +22,6 @@ module.exports = (app, passport) => {
     } else {
       res.redirect('/login');
     }
-
-    res.locals.user = req.user;
   });
 
   app.use('/api', api);

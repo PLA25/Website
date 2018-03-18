@@ -2,10 +2,6 @@ var express = require('express');
 var router = express.Router();
 
 module.exports = (passport) => {
-  router.get('/', (req, res) => {
-    res.render('index', {});
-  });
-
   router.get('/login', (req, res) => {
     res.render('login', {
       title: "Login",
@@ -18,6 +14,18 @@ module.exports = (passport) => {
     failureRedirect: '/login',
     failureFlash: true
   }));
+
+  router.use((req, res, next) => {
+    if (req.isAuthenticated()) {
+      next();
+    } else {
+      res.redirect('/login');
+    }
+  });
+
+  router.get('/', (req, res) => {
+    res.render('index', {});
+  });
 
   router.get('/logout', (req, res) => {
     req.logout();
