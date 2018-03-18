@@ -25,7 +25,8 @@ var uitzonderingen = ["/"];
  *
  */
 function authenticator(req, res, next) {
-	var noParams = req.url.replace(/\?.*/, "");
+	var url = req.url;
+	var noParams = url.replace(/\?.*/, "");
 	var isLoginPage = (noParams == "/login");
 	//
 	//Als de pagina onder de uitzonderingen valt
