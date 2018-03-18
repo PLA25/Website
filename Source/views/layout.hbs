@@ -9,15 +9,52 @@
     <title>PolutionDetectionSystem</title>
   {{/if}}
 
-  <link rel='stylesheet' href='/stylesheets/style.css' />
-  <link rel="stylesheet" href="https://openlayers.org/en/v4.6.4/css/ol.css" type="text/css">
-  <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
-  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
-  <script src="https://openlayers.org/en/v4.6.4/build/ol.js"></script>
+  <!-- Style -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.blue_grey-blue.min.css" integrity="sha256-aMjro64VbDMZsykwUQBlQzH/8TTpbI/EBKsmqYaIjrM=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol.css" integrity="sha256-rQq4Fxpq3LlPQ8yP11i6Z2lAo82b6ACDgd35CKyNEBw=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.min.js" integrity="sha256-PCfu4+fnQrp4wNmVbjN1eaX4LbOvOejab0UOhjLezrw=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol.js" integrity="sha256-ZZT1txI5nKBm9GNPGc022qk5dTv9aZ7s3IdNKm9JAl4=" crossorigin="anonymous"></script>
 </head>
 
-<body>
-  {{{body}}}
+<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+      </div>
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        <h1>Polution Detection System</h1>
+      </div>
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+      </div>
+      <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+        <a href="/" class="mdl-layout__tab is-active">Home</a>
+        <a href="/map" class="mdl-layout__tab">Map</a>
+        <a href="/aboutus" class="mdl-layout__tab">About us</a>
+        <a href="/faq" class="mdl-layout__tab">FAQ</a>
+        <a href="/contact" class="mdl-layout__tab">Contact</a>
+      </div>
+    </header>
+
+    <main class="mdl-layout__content">
+      {{{body}}}
+    </main>
+
+    <footer class="mdl-mega-footer">
+      <div class="mdl-mega-footer--bottom-section">
+        <div class="mdl-logo">
+          &copy;Cygni (Planet 25)
+        </div>
+        <ul class="mdl-mega-footer--link-list">
+          <li><a href="#">Help</a></li>
+          <li><a href="#">Privacy and Terms</a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>
 </body>
 
 </html>
