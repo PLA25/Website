@@ -26,15 +26,23 @@ var uitzonderingen = ["/"];
  */
 function authenticator(req, res, next) {
 	var noParams = req.url.replace(/\?.*/, "");
-	var isLoginPage = req.url.startsWith("/login");
+	var isLoginPage = (noParams == "/login");
 	var auth = req.isAuthenticated();
+	//
+	//Als de pagina onder de uitzonderingen valt
 	if (uitzonderingen.includes(noParams)) {
 		next();
-	} else if (!isLoginPage && !auth) {
+	}
+	//Als de gebruiker niet is aangemeld en zich niet op de login pagina bevindt
+	else if (!isLoginPage && !auth) {
 		res.redirect('/');
-	} else if (isLoginPage && auth) {
+	}
+	//Als de gebruiker op de login pagina is, maar al aangemeld is (verwijst naar /home)
+	else if (isLoginPage && auth) {
 		res.redirect('/home');
-	} else {
+	}
+	//Anders is alles goed en gaat het verder
+	else {
 		next();
 	}
 }
