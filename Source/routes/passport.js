@@ -16,7 +16,7 @@ db.then(conn => {
  * Hier kunnen de pagina's worden aangegeven die voor iedereen toegankelijk zijn.
  *
  */
-var uitzonderingen = [];
+var uitzonderingen = ["/"];
 
 /**
  *
@@ -31,7 +31,7 @@ function authenticator(req, res, next) {
 	if (uitzonderingen.includes(noParams)) {
 		next();
 	} else if (!isLoginPage && !auth) {
-		res.redirect('/login');
+		res.redirect('/');
 	} else if (isLoginPage && auth) {
 		res.redirect('/home');
 	} else {
