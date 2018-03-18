@@ -6,9 +6,7 @@ var home = require('./home');
 var api = require('./api');
 var map = require('./map');
 
-
 module.exports = (app) => {
-
   app.use('/', home);
   app.use('/api', api);
   app.use('/map', map);
