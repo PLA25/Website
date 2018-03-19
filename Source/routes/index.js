@@ -1,9 +1,6 @@
-var express = require('express');
-var router = express.Router();
-
-var home = require('./home');
-var api = require('./api');
-var map = require('./map');
+const home = require('./home');
+const api = require('./api');
+const map = require('./map');
 
 module.exports = (app, passport) => {
   app.use((req, res, next) => {
@@ -29,13 +26,13 @@ module.exports = (app, passport) => {
 
   // catch 404 and forward to error handler
   app.use((req, res, next) => {
-    var err = new Error('Not Found');
+    const err = new Error('Not Found');
     err.status = 404;
     next(err);
   });
 
   // error handler
-  app.use((err, req, res, next) => {
+  app.use((err, req, res) => {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};

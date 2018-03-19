@@ -1,22 +1,18 @@
-var config = require('./../config');
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var db = mongoose.connect(`mongodb://${config.MongoDB.User}:${config.MongoDB.Pass}@${config.MongoDB.Host}:${config.MongoDB.Port}/${config.MongoDB.Name}`);
-var schema = mongoose.Schema;
-
-var sensorHubScheme = new schema({
+const sensorHubScheme = new mongoose.Schema({
   SerialID: {
     type: String,
-    required: true
+    required: true,
   },
   Latitude: {
     type: String,
-    required: true
+    required: true,
   },
   Longitude: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('SensorHub', sensorHubScheme);
