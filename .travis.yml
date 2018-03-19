@@ -1,0 +1,17 @@
+language: node_js
+
+node_js:
+  - '8'
+
+cache:
+  directories:
+    - node_modules
+
+before_script:
+  - cd Source
+  - npm install -g eslint
+  - npm install
+  - npm install --only=dev
+
+script:
+  - npm run lint

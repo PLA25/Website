@@ -1,4 +1,4 @@
-'use strict';
+
 
 const Passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -18,10 +18,10 @@ Passport.deserializeUser((id, done) => {
 const LocalLogin = new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password',
-  passReqToCallback: true
+  passReqToCallback: true,
 }, (req, email, password, done) => {
   User.findOne({
-    'email': email.toLowerCase()
+    email: email.toLowerCase(),
   }, (err, user) => {
     if (err) {
       return done(err);
