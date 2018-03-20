@@ -1,6 +1,13 @@
 module.exports = {
-    "extends": "airbnb-base",
-    "rules": {
-      "no-param-reassign": "off"
-    }
+  extends: 'airbnb-base',
+  rules: {
+    'no-mixed-spaces-and-tabs': ['error', 'smart-tabs'],
+    'no-multiple-empty-lines': ['error', {
+      max: 1,
+      maxBOF: 0,
+      maxEOF: 1,
+    }],
+    'no-param-reassign': 'off',
+    'no-trailing-spaces': 'error',
+  },
 };
