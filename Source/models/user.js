@@ -11,6 +11,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  role: {
+	  type: int,
+	  required: true,
+  },
 });
 
 userSchema.methods.generateHash = function generateHash(password) {
