@@ -19,7 +19,7 @@ const LocalLogin = new LocalStrategy({
   passReqToCallback: true,
 }, (req, email, password, done) => {
   User.findOne({
-    email: email.toLowerCase(),
+	email: email.toLowerCase(),
   }, (err, user) => {
     if (err) {
       return done(err);

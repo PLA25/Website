@@ -15,56 +15,77 @@
   {{/if}}
 
   <!-- Style -->
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Bootstrap core CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
+
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.blue_grey-blue.min.css" integrity="sha256-aMjro64VbDMZsykwUQBlQzH/8TTpbI/EBKsmqYaIjrM=" crossorigin="anonymous" />
+  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.blue_grey-blue.min.css" integrity="sha256-aMjro64VbDMZsykwUQBlQzH/8TTpbI/EBKsmqYaIjrM=" crossorigin="anonymous" />-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol.css" integrity="sha256-rQq4Fxpq3LlPQ8yP11i6Z2lAo82b6ACDgd35CKyNEBw=" crossorigin="anonymous" />
   <link rel="stylesheet" href="/css/style.css">
 
   <!-- Script -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.min.js" integrity="sha256-PCfu4+fnQrp4wNmVbjN1eaX4LbOvOejab0UOhjLezrw=" crossorigin="anonymous"></script>
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.min.js" integrity="sha256-PCfu4+fnQrp4wNmVbjN1eaX4LbOvOejab0UOhjLezrw=" crossorigin="anonymous"></script>-->
+
+  <!-- JQuery -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
+            
   <script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol.js" integrity="sha256-ZZT1txI5nKBm9GNPGc022qk5dTv9aZ7s3IdNKm9JAl4=" crossorigin="anonymous"></script>
 </head>
 
-<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
-  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
-      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-      </div>
-      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-        <h3>Polution Detection System</h3>
-      </div>
-      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-      </div>
+<body>
+  <div>
+    <header>
 
-      <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
-        <a class="mdl-layout__tab is-active" href="/">
-            Home
-          </a>
-        {{#if @user}}
-          <a class="mdl-layout__tab" href="/map">
-              Map
-            </a>
-          <a class="mdl-layout__tab" href="/logout">
-              Logout
-            </a>
-        {{else}}
-          <a class="mdl-layout__tab" href="/login">
-              Login
-            </a>
-        {{/if}}
-      </div>
+      <nav class="navbar navbar-expand-lg primary-color">
+        <span class="white-text navbar-brand" style="margin-right: 80px;">Polution Detection System</span>
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<a class="white-text nav-link" href="/">
+					Home
+				</a>
+			</li>
+			{{#if @user}}
+			<li class="nav-item">
+				<a class="white-text nav-link" href="/map">
+					Map
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="white-text nav-link" href="/logout">
+					Logout
+				</a>
+			</li>
+			{{else}}
+			<li class="nav-item">
+				<a class="white-text nav-link" href="/login">
+					Login
+				</a>
+			</li>
+			{{/if}}
+		</ul>
+      </nav>
+
     </header>
 
-    <main class="mdl-layout__content">
+    <main>
       {{{body}}}
     </main>
 
-    <footer class="mdl-mega-footer">
-      <div class="mdl-mega-footer--bottom-section">
-        <div class="mdl-logo">
-          Copyright (C) 2018 Cygni (Planet 25)
-        </div>
-      </div>
+    <footer class="page-footer fixed-bottom black pt-4 mt-4">
+	  <div class="footer-copyright">
+        Copyright (C) 2018 Cygni (Planet 25)
+	  </div>
     </footer>
   </div>
 </body>
