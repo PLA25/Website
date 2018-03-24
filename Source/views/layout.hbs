@@ -31,26 +31,31 @@
       <div class="mdl-layout--large-screen-only mdl-layout__header-row">
       </div>
       <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-        <h3>Polution Detection System</h3>
+        <h3>Pollution Detection System</h3>
       </div>
       <div class="mdl-layout--large-screen-only mdl-layout__header-row">
       </div>
 
       <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
         <a class="mdl-layout__tab is-active" href="/">
-            Home
-          </a>
+          Home
+        </a>
         {{#if @user}}
           <a class="mdl-layout__tab" href="/map">
-              Map
+            Map
+          </a>
+          {{#if @user.isAdmin}}
+            <a class="mdl-layout__tab" href="/about">
+              About
             </a>
+          {{/if}}
           <a class="mdl-layout__tab" href="/logout">
-              Logout
-            </a>
+            Logout
+          </a>
         {{else}}
           <a class="mdl-layout__tab" href="/login">
-              Login
-            </a>
+            Login
+          </a>
         {{/if}}
       </div>
     </header>
