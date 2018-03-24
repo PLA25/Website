@@ -11,11 +11,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  role: {
-	  type: int,
-	  required: true,
+  isAdmin: {
+	  type: boolean,
   },
 });
+
+function getUsers() {
+	//haal de gebruikers uit de db, geeft nu dummy data
+	return [
+		{email: "test123@gmail.com", password: "test", isAdmin: "true", un: "sjaak", pw: "123"},
+		{email: "role@gmail.com", password: "role", isAdmin: "false", un: "kees", pw: "123"}
+	];
+}
 
 userSchema.methods.generateHash = function generateHash(password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
