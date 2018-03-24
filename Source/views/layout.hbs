@@ -74,6 +74,11 @@
 					Logout
 				</a>
 			</li>
+				{{#if @user.isAdmin}}
+					<a class="white-text nav-link" href="/about">
+						About
+					</a>
+				{{/if}}
 			{{else}}
 			<li class="nav-item">
 				<a class="white-text nav-link" href="/login">
