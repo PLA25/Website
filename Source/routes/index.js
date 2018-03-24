@@ -1,14 +1,12 @@
 const home = require('./home');
 const api = require('./api');
 const map = require('./map');
-boolean isAdmin = true;
 
 module.exports = (app, passport) => {
   app.use((req, res, next) => {
     if (req.isAuthenticated()) {
+      req.user.isAdmin = true;
       res.locals.user = req.user;
-
-	  res.locals.user.isAdmin = req.user.isAdmin;
     }
 
     next();
