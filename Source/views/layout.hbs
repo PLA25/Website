@@ -40,7 +40,7 @@
         <a class="mdl-layout__tab is-active" href="/">
             Home
           </a>
-        {{#if @user}}
+        {{#if @user.isAdmin}}
           <a class="mdl-layout__tab" href="/map">
               Map
             </a>

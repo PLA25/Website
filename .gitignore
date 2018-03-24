@@ -90,3 +90,4 @@ benchmarks/graphs
 
 # Config file
 Source/config.js
+Source/views/about.hbs
