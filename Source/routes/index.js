@@ -5,7 +5,6 @@ const map = require('./map');
 module.exports = (app, passport) => {
   app.use((req, res, next) => {
     if (req.isAuthenticated()) {
-      req.user.isAdmin = true;
       res.locals.user = req.user;
     }
 
