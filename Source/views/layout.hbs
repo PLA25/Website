@@ -38,24 +38,24 @@
 
       <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
         <a class="mdl-layout__tab is-active" href="/">
-            Home
-          </a>
+          Home
+        </a>
         {{#if @user}}
           <a class="mdl-layout__tab" href="/map">
-              Map
-            </a>
+            Map
+          </a>
           {{#if @user.isAdmin}}
             <a class="mdl-layout__tab" href="/about">
-				About
-				</a>
+              About
+            </a>
           {{/if}}
           <a class="mdl-layout__tab" href="/logout">
-              Logout
-            </a>
+            Logout
+          </a>
         {{else}}
           <a class="mdl-layout__tab" href="/login">
-              Login
-            </a>
+            Login
+          </a>
         {{/if}}
       </div>
     </header>
