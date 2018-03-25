@@ -36,110 +36,55 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js" integrity="sha384-Y9m2kwm4OOjZ4AyDvK/6IEUqz0XKcLlQJFnkMnZKOziXmiOAcNHkE9BwTOowtgyK" crossorigin="anonymous"></script>
 
 	<style>
-		
-		div#form-wrapper {
-			position: absolute;
-			left: 50%;
-			transform: translateX(-50%) translateY(-50%);
-			top: 50%;
-		}
-		div.md-form {
-			position: relative;
-			top: 0px;
-			left: 0px;
-		}
-		div#image {
-			width: 100%;
-			position: relative;
-			top: 0px;
-		}
+
 		html {
-			background-color: #f0f0f0;
+			background-color: #ffffff;
 		}
-		
+		form {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 30%;
+			transform: translateY(-50%) translateX(-50%);
+		}
+		@media (max-width: 800px) {
+			form {
+				width: 90% !important;
+			}
+		}
+		@media (max-width: 1000px) {
+			form {
+				width: 60%;
+			}
+		}
+
 	</style>
 </head>
 
 <body>
-	<div id="form-wrapper" class="text-center rounded border border-dark p-3 white">
 
-		<h4 class="h4">Login</h4>
+	<form class="mt-3" method="POST">
+		<p class="h4 text-center mb-4">Sign in</p>
 
-		<form action="/login" method="post" class="text-center">
+		<!-- Material input email -->
+		<div class="md-form">
+			<i class="fa fa-envelope prefix grey-text"></i>
+			<input type="text" name="email" id="email" placeholder="Email" class="form-control">
+			<!--<label for="email" class="">Your email</label>-->
+		</div>
 
-				<div class="md-form">
-					<input type="text" id="email" name="email" class="form-control">
-					<label for="email">Email</label>
-				</div>
+		<!-- Material input password -->
+		<div class="md-form">
+			<i class="fa fa-lock prefix grey-text"></i>
+			<input type="password" name="password" id="password" placeholder="Password" class="form-control">
+			<!--<label for="password" class="">Your password</label>-->
+		</div>
 
-				<div class="md-form">
-					<input type="password" id="password" name="password" class="form-control">
-					<label for="password">Password</label>
-				</div>
+		<div class="text-center mt-4">
+			<button class="btn btn-primary" type="submit">Login</button>
+		</div>
+	</form>
 
-				<button class="btn btn-primary mt-5" type="submit">
-					Login
-				</button>
-
-		</form>
-
-	</div>
-	
-	<script>
-		function rem(text) {
-			if (text === "email") {
-				$('label[for="email"]').html('');
-			} else if (text == "password") {
-				$('label[for="password"]').html('');
-			}
-		}
-
-		function show(text) {
-			if (text === "email") {
-				$('label[for="email"]').html('Email');
-			} else if (text == "password") {
-				$('label[for="password"]').html('Password');
-			}
-		}
-
-		var email = $('input[type="text"]');
-		var password = $('input[type="password"]');
-		
-		//focus
-		email.on('focus', () => {
-			rem('email');
-		});
-		password.on('focus', () => {
-			rem('password');
-		});
-
-		//blur
-		email.on('blur', () => {
-			show('email');
-		});
-		password.on('blur', () => {
-			show('password');
-		});
-
-		//input
-		email.on('input', () => {
-			rem('email');
-		});
-		password.on('input', () => {
-			rem('password');
-		});
-
-		//auto-fill fix
-		$(window).on('load', () => {
-			if (email.val() !== "") {
-				rem('email');
-			}
-			if (password.val() !== "") {
-				rem('password');
-			}
-		});
-	</script>
-	
 </body>
 
 </html>
