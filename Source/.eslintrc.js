@@ -1,6 +1,7 @@
 module.exports = {
   extends: 'airbnb-base',
   rules: {
+    'import/extensions': 'off',
     'no-mixed-spaces-and-tabs': ['error', 'smart-tabs'],
     'no-multiple-empty-lines': ['error', {
       max: 1,
