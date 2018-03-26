@@ -26,66 +26,66 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol.js" integrity="sha256-ZZT1txI5nKBm9GNPGc022qk5dTv9aZ7s3IdNKm9JAl4=" crossorigin="anonymous"></script>
 </head>
 
-<body class="view">
-  <div>
-    <header>
-      <nav class="navbar navbar-expand-lg blue darken-3">
-        <span class="white-text navbar-brand mr-5">Polution Detection System</span>
-        <button id="hamburger-menu-toggler" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle menu">
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg blue darken-3">
+      <span class="white-text navbar-brand mr-5">Polution Detection System</span>
+      <button id="hamburger-menu-toggler" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle menu">
           <span class="black-text">
             <i class="fa fa-bars fa-1x"></i>
           </span>
         </button>
-        <div class="collapse navbar-collapse" id="navbar-content">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="white-text nav-link" href="/">
+      <div class="collapse navbar-collapse" id="navbar-content">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="white-text nav-link" href="/">
                 Home
               </a>
-            </li>
-            {{#if @user}}
-              <li class="nav-item">
-                <a class="white-text nav-link" href="/map">
+          </li>
+          {{#if @user}}
+            <li class="nav-item">
+              <a class="white-text nav-link" href="/map">
                 Map
               </a>
-              </li>
-              {{#if @user.isAdmin}}
-                <li class="nav-item">
-                  <a class="white-text nav-link" href="/about">
+            </li>
+            {{#if @user.isAdmin}}
+              <li class="nav-item">
+                <a class="white-text nav-link" href="/about">
                 About
               </a>
-                </li>
-                <li class="nav-item">
-                  <a class="white-text nav-link" href="/admin">
-                Admin
-              </a>
-                </li>
-              {{/if}}
-              <li class="nav-item">
-                <a class="white-text nav-link" href="/logout">
-                Logout
-              </a>
               </li>
-            {{else}}
               <li class="nav-item">
-                <a class="white-text nav-link" href="/login">
-                Login
+                <a class="white-text nav-link" href="/admin">
+                Admin
               </a>
               </li>
             {{/if}}
-          </ul>
-        </div>
-      </nav>
-    </header>
-    <main>
-      {{{body}}}
-    </main>
-    <footer class="page-footer fixed-bottom black pt-4 mt-4">
-      <div class="footer-copyright">
-        Copyright (C) 2018 Cygni (Planet 25)
+            <li class="nav-item">
+              <a class="white-text nav-link" href="/logout">
+                Logout
+              </a>
+            </li>
+          {{else}}
+            <li class="nav-item">
+              <a class="white-text nav-link" href="/login">
+                Login
+              </a>
+            </li>
+          {{/if}}
+        </ul>
       </div>
-    </footer>
-  </div>
+    </nav>
+  </header>
+
+  <main>
+    {{{body}}}
+  </main>
+
+  <footer class="page-footer fixed-bottom rgba-blue-strong">
+    <div class="footer-copyright py-3 text-center white-text">
+      Copyright (C) 2018 Cygni (Planet 25)
+    </div>
+  </footer>
 
   <!-- Scripts -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
