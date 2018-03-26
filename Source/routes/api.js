@@ -16,6 +16,10 @@ router.get('/meetpunten', (req, res) => {
   });
 });
 
+router.get('/:z/:x/:y', (req, res) => {
+  res.redirect(`https://tiles.planet.com/basemaps/v1/planet-tiles/global_monthly_2018_02_mosaic/gmap/${req.params.z}/${req.params.x}/${req.params.y}.png?api_key=44db310cea0743da8e73888c2d2d7b3f`);
+});
+
 router.get('*', (req, res) => {
   res.redirect('/map');
 });
