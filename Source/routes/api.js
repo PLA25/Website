@@ -1,8 +1,10 @@
-const config = require('./../config');
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const base64 = require('node-base64-image');
+
+// eslint-disable-next-line import/no-unresolved, import/no-extraneous-dependencies
+const config = require('./../config');
 
 /* Models */
 const SensorHub = require('./../models/sensorhub');
