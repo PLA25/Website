@@ -1,4 +1,30 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  font-size: 1.1rem;
+}
+
+main {
+  padding: 25px;
+}
+
+footer {
+  background-color: orange;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
 .map {
   height: 50% !important;
   width: 50% !important;
+}
+
+.rgba-blue-dark {
+  background-color: rgba(3, 169, 244, 1) !important;
 }
