@@ -1,42 +1,30 @@
-.mdl-demo .mdl-layout__header-row {
-  padding-left: 40px;
+html {
+  position: relative;
+  min-height: 100%;
 }
 
-.mdl-demo .mdl-layout.is-small-screen .mdl-layout__header-row h3 {
-  font-size: inherit;
+body {
+  font-size: 1.1rem;
 }
 
-.mdl-demo .mdl-layout__tab-bar-button {
-  display: none;
+main {
+  padding: 25px;
 }
 
-.mdl-demo .mdl-layout__tab-bar-container {
-  height: 64px;
-}
-
-.mdl-demo .mdl-layout__tab-bar {
-  padding: 0;
-  padding-left: 16px;
-  box-sizing: border-box;
-  height: 100%;
+footer {
+  background-color: orange;
+  position: absolute;
+  left: 0;
+  bottom: 0;
   width: 100%;
-}
-
-.mdl-demo .mdl-layout__tab-bar .mdl-layout__tab {
-  height: 64px;
-  line-height: 64px;
-}
-
-.mdl-demo .mdl-layout__tab-bar .mdl-layout__tab.is-active::after {
-  background-color: white;
-  height: 4px;
-}
-
-.mdl-layout__header-row {
-  height: 32px !important;
+  overflow: hidden;
 }
 
 .map {
   height: 50% !important;
   width: 50% !important;
+}
+
+.rgba-blue-dark {
+  background-color: rgba(3, 169, 244, 1) !important;
 }
