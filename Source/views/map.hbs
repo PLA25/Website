@@ -1,6 +1,5 @@
 <div id="map" class="map"></div>
 <script>
-  addEventListener('load', () => {
   var center = ol.proj.transform([4.895168, 52.370216], 'EPSG:4326', 'EPSG:3857');
   var map = new ol.Map({
     layers: [
@@ -29,6 +28,5 @@
       center: center,
       zoom: 11
     })
-  });
   });
 </script>
