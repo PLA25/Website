@@ -71,16 +71,23 @@
 					Map
 				</a>
 			</li>
+				{{#if @user.isAdmin}}
+				<li class="nav-item">
+					<a class="white-text nav-link" href="/about">
+						About
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="white-text nav-link" href="/admin">
+						Admin
+					</a>
+				</li>
+				{{/if}}
 			<li class="nav-item">
 				<a class="white-text nav-link" href="/logout">
 					Logout
 				</a>
 			</li>
-				{{#if @user.isAdmin}}
-					<a class="white-text nav-link" href="/about">
-						About
-					</a>
-				{{/if}}
 			{{else}}
 			<li class="nav-item">
 				<a class="white-text nav-link" href="/login">
