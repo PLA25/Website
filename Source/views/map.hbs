@@ -4,16 +4,13 @@
   var map = new ol.Map({
     layers: [
       new ol.layer.Tile({
-        source: new ol.source.OSM()
-      }),
-      new ol.layer.Tile({
         source: new ol.source.XYZ({
-          url: '/api/{z}/{x}/{y}'
+          url: '/api/planet/{z}/{x}/{y}'
         })
       }),
       new ol.layer.Tile({
         source: new ol.source.XYZ({
-          url: 'https://{a-d}.tiles.mapbox.com/v3/planet.jh0b3oee/{z}/{x}/{y}.png'
+          url: '/api/mapbox/{z}/{x}/{y}'
         })
       }),
       new ol.layer.Vector({

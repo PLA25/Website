@@ -19,8 +19,13 @@ router.get('/meetpunten', (req, res) => {
   });
 });
 
-router.get('/:z/:x/:y', (req, res, next) => {
-  const cachePath = path.resolve(`${__dirname}./../cache/`);
+router.get('/:host/:z/:x/:y', (req, res, next) => {
+  const tempCachePath = path.resolve(`${__dirname}./../cache/`);
+  if (!fs.existsSync(tempCachePath)) {
+    fs.mkdirSync(tempCachePath);
+  }
+
+  const cachePath = path.resolve(`${tempCachePath}/${req.params.host}/`);
   if (!fs.existsSync(cachePath)) {
     fs.mkdirSync(cachePath);
   }
@@ -31,8 +36,22 @@ router.get('/:z/:x/:y', (req, res, next) => {
     return;
   }
 
-  const planetURL = `https://tiles.planet.com/basemaps/v1/planet-tiles/global_monthly_2018_02_mosaic/gmap/${req.params.z}/${req.params.x}/${req.params.y}.png?api_key=44db310cea0743da8e73888c2d2d7b3f`;
-  base64.encode(planetURL, {
+  let url = '';
+  switch (req.params.host) {
+    case 'planet':
+      url = `https://tiles.planet.com/basemaps/v1/planet-tiles/global_monthly_2018_02_mosaic/gmap/${req.params.z}/${req.params.x}/${req.params.y}.png?api_key=44db310cea0743da8e73888c2d2d7b3f`;
+      break;
+
+    case 'mapbox':
+      url = `https://a.tiles.mapbox.com/v3/planet.jh0b3oee/${req.params.z}/${req.params.x}/${req.params.y}.png`;
+      break;
+
+    default:
+      res.sendFile(path.resolve(cachePath, '-1_-1_-1.jpg'));
+      return;
+  }
+
+  base64.encode(url, {
     string: false,
   }, (err, image) => {
     if (err) {
