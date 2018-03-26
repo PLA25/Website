@@ -1,13 +1,16 @@
-const sensorHub = require('./../models/sensorhub');
+const config = require('./../config');
 const express = require('express');
 const path = require('path');
-const base64 = require('node-base64-image');
 const fs = require('fs');
+const base64 = require('node-base64-image');
+
+/* Models */
+const SensorHub = require('./../models/sensorhub');
 
 const router = express.Router();
 
 router.get('/meetpunten', (req, res) => {
-  sensorHub.find({}, (err, rawHubs) => {
+  SensorHub.find({}, (err, rawHubs) => {
     for (let i = 0; i < rawHubs.length; i += 1) {
       rawHubs[i].SerialID = rawHubs[i].SerialID.replace('\n', '');
     }
@@ -39,7 +42,7 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
   let url = '';
   switch (req.params.host) {
     case 'planet':
-      url = `https://tiles.planet.com/basemaps/v1/planet-tiles/global_monthly_2018_02_mosaic/gmap/${req.params.z}/${req.params.x}/${req.params.y}.png?api_key=44db310cea0743da8e73888c2d2d7b3f`;
+      url = `https://tiles.planet.com/basemaps/v1/planet-tiles/global_monthly_2018_02_mosaic/gmap/${req.params.z}/${req.params.x}/${req.params.y}.png?api_key=${config.Planet.Key}`;
       break;
 
     case 'mapbox':

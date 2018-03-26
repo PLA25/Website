@@ -8,4 +8,7 @@ module.exports = {
     Pass: '',
     Name: ''
   }
+  Planet: {
+    Key: ''
+  },
 };
