@@ -4,16 +4,13 @@
   var map = new ol.Map({
     layers: [
       new ol.layer.Tile({
-        source: new ol.source.OSM()
-      }),
-      new ol.layer.Tile({
         source: new ol.source.XYZ({
-          url: 'https://tiles.planet.com/basemaps/v1/planet-tiles/global_monthly_2018_02_mosaic/gmap/{z}/{x}/{y}.png?api_key=44db310cea0743da8e73888c2d2d7b3f'
+          url: '/api/planet/{z}/{x}/{y}'
         })
       }),
       new ol.layer.Tile({
         source: new ol.source.XYZ({
-          url: 'https://{a-d}.tiles.mapbox.com/v3/planet.jh0b3oee/{z}/{x}/{y}.png'
+          url: '/api/mapbox/{z}/{x}/{y}'
         })
       }),
       new ol.layer.Vector({

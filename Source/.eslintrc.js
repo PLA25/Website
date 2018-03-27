@@ -8,6 +8,7 @@ module.exports = {
       maxEOF: 1,
     }],
     'no-param-reassign': 'off',
+    'no-shadow': 'off',
     'no-trailing-spaces': 'error',
   },
 };
