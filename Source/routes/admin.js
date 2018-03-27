@@ -1,10 +1,13 @@
 const express = require('express');
-
+const User = require('./../models/user');
 const router = express.Router();
 
-/* GET admin page. */
 router.get('/', (req, res) => {
-  res.render('admin', {});
+  User.find({}, (err, users) => {
+    res.render('admin', {
+      Users: users,
+    });
+  });
 });
 
 module.exports = router;
