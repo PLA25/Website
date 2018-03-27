@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <!-- Meta -->
@@ -15,66 +15,84 @@
   {{/if}}
 
   <!-- Style -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.blue_grey-blue.min.css" integrity="sha256-aMjro64VbDMZsykwUQBlQzH/8TTpbI/EBKsmqYaIjrM=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet" integrity="sha384-Xs3HsmEnkn3GuuBg8nr2ntOPDKbIntZF4fC9XXL1hqsgaVVnKd6vHnf9YVT/R6Kj" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol.css" integrity="sha256-rQq4Fxpq3LlPQ8yP11i6Z2lAo82b6ACDgd35CKyNEBw=" crossorigin="anonymous" />
   <link rel="stylesheet" href="/css/style.css">
 
-  <!-- Script -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.min.js" integrity="sha256-PCfu4+fnQrp4wNmVbjN1eaX4LbOvOejab0UOhjLezrw=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol.js" integrity="sha256-ZZT1txI5nKBm9GNPGc022qk5dTv9aZ7s3IdNKm9JAl4=" crossorigin="anonymous"></script>
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.5/ol.js" integrity="sha256-77IKwU93jwIX7zmgEBfYGHcmeO0Fx2MoWB/ooh9QkBA=" crossorigin="anonymous"></script>
 </head>
 
-<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
-  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
-      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-      </div>
-      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-        <h3>Pollution Detection System</h3>
-      </div>
-      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-      </div>
-
-      <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
-        <a class="mdl-layout__tab is-active" href="/">
-          Home
-        </a>
-        {{#if @user}}
-          <a class="mdl-layout__tab" href="/map">
-            Map
-          </a>
-          {{#if @user.isAdmin}}
-            <a class="mdl-layout__tab" href="/about">
-              About
-            </a>
-			<a class="mdl-layout__tab" href="/admin">
-              Admin
-            </a>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg rgba-blue-dark">
+      <span class="white-text navbar-brand mr-5">
+        Polution Detection System
+      </span>
+      <button id="hamburger-menu-toggler" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle menu">
+        <span class="black-text">
+          <i class="fa fa-bars fa-1x"></i>
+        </span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar-content">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="white-text nav-link" href="/">
+                Home
+              </a>
+          </li>
+          {{#if @user}}
+            <li class="nav-item">
+              <a class="white-text nav-link" href="/map">
+                Map
+              </a>
+            </li>
+            {{#if @user.isAdmin}}
+              <li class="nav-item">
+                <a class="white-text nav-link" href="/about">
+                About
+              </a>
+              </li>
+              <li class="nav-item">
+                <a class="white-text nav-link" href="/admin">
+                Admin
+              </a>
+              </li>
+            {{/if}}
+            <li class="nav-item">
+              <a class="white-text nav-link" href="/logout">
+                Logout
+              </a>
+            </li>
+          {{else}}
+            <li class="nav-item">
+              <a class="white-text nav-link" href="/login">
+                Login
+              </a>
+            </li>
           {{/if}}
-          <a class="mdl-layout__tab" href="/logout">
-            Logout
-          </a>
-        {{else}}
-          <a class="mdl-layout__tab" href="/login">
-            Login
-          </a>
-        {{/if}}
+        </ul>
       </div>
-    </header>
+    </nav>
+  </header>
 
-    <main class="mdl-layout__content">
-      {{{body}}}
-    </main>
+  <main>
+    {{{body}}}
+  </main>
 
-    <footer class="mdl-mega-footer">
-      <div class="mdl-mega-footer--bottom-section">
-        <div class="mdl-logo">
-          Copyright (C) 2018 Cygni (Planet 25)
-        </div>
-      </div>
-    </footer>
-  </div>
+  <footer class="page-footer rgba-blue-strong">
+    <div class="footer-copyright py-3 text-center white-text">
+      Copyright (C) 2018 Cygni (Planet 25)
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.1/umd/popper.min.js" integrity="sha256-AoNQZpaRmemSTxMy9xcqXX5VLwI6IMPYugO7bFHOW+U=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha256-5+02zu5UULQkO7w1GIr6vftCgMfFdZcAHeDtFnKZsBs=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js" integrity="sha256-QZSO8dEprjUmbVDiez1Tpan+c4M7IKOHiEmYYZZJyaM=" crossorigin="anonymous"></script>
 </body>
 
 </html>
