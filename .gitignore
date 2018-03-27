@@ -90,3 +90,6 @@ benchmarks/graphs
 
 # Config file
 Source/config.js
+
+# Image cache
+Source/cache/*/*.jpg
