@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<kml xmlns="http://earth.google.com/kml/2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<Document>
+		<name>dummy data test</name>
+		<Folder>
+			<name>Test folder</name>
+			<!--<Placemark id="test1">
+				<name>test 1</name>
+				<Point>
+					<coordinates>-56.072,-60.975,0</coordinates>
+				</Point>
+			</Placemark>-->
+			<Placemark id="test2">
+				<name>test 2</name>
+				<Point>
+					<coordinates>4.899,52.377,0</coordinates>
+				</Point>
+			</Placemark>
+		</Folder>
+	</Document>
+</kml>
