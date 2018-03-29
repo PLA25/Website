@@ -10,10 +10,22 @@
 					<coordinates>-56.072,-60.975,0</coordinates>
 				</Point>
 			</Placemark>-->
-			<Placemark id="test2">
-				<name>test 2</name>
+			<Placemark id="centraal">
+				<name>Centraal</name>
 				<Point>
 					<coordinates>4.899,52.377,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="ergens">
+				<name>Ergens</name>
+				<Point>
+					<coordinates>4.912,52.377,0</coordinates>
+				</Point>
+			</Placemark>
+			<Placemark id="damrak">
+				<name>Damrak</name>
+				<Point>
+					<coordinates>4.8982,52.377,0</coordinates>
 				</Point>
 			</Placemark>
 		</Folder>

@@ -19,7 +19,7 @@ const app = express();
 hbs.localsAsTemplateData(app);
 
 app.get('/test', (req, res) => {
-  res.render('heatmap', {});
+  res.render('heatmap', {layout: false});
 });
 
 // view engine setup
