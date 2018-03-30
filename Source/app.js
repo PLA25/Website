@@ -18,10 +18,6 @@ mongoose.connect(`mongodb://${config.MongoDB.User}:${config.MongoDB.Pass}@${conf
 const app = express();
 hbs.localsAsTemplateData(app);
 
-app.get('/test', (req, res) => {
-  res.render('heatmap', {layout: false});
-});
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
