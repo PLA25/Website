@@ -1,0 +1,5 @@
+Gebruik addHeatmap met als argumenten: het ol.Map object en de url naar het kml bestand met de data.
+
+Uit die functie komt een object met de functies "enable" en "isEnabled".
+ - enable: gebruik dit om de heatmap aan te zetten, geef false als argument om het uit te zetten.
+ - isEnabled: De naam zegt het al.
