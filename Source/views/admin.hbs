@@ -1,3 +1,64 @@
+<div class="table-responsive">
+<table class="table">
+    <thead class="mdb-color darken-3">
+        <tr class="text-white">
+            <th>Email</th>
+            <th>Admin</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+      {{#each Users}}
+        <tr>
+            <td>
+              {{this.email}}
+            </td>
+            <td>
+              {{this.isAdmin}}
+            </td>
+            <td>
+              <button class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
+            </td>
+            <td>
+              <button class="btn btn-primary"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
+            </td>
+        </tr>
+        {{/each}}
+
+    </tbody>
+
+</table>
+<table class="table">
+    <thead class="mdb-color darken-3">
+        <tr class="text-white">
+            <th>Email</th>
+            <th>Admin</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+      {{#each Users}}
+        <tr>
+            <td>
+              {{this.email}}
+            </td>
+            <td>
+              {{this.isAdmin}}
+            </td>
+            <td>
+              <button class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
+            </td>
+            <td>
+              <button class="btn btn-primary"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
+            </td>
+        </tr>
+        {{/each}}
+
+    </tbody>
+
+</table>
 <table class="table">
     <thead class="mdb-color darken-3">
         <tr class="text-white">
@@ -52,7 +113,7 @@
               {{this.Latitude}}
             </td>
             <td>
-              <button class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i> Edit <style="float: right;"></button>
+              <button class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
             </td>
             <td>
               <button class="btn btn-primary"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
@@ -63,3 +124,4 @@
     </tbody>
 
 </table>
+</div>
