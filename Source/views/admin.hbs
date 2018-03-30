@@ -32,3 +32,42 @@
     </tbody>
 
 </table>
+
+<table class="table">
+    <thead class="mdb-color darken-3">
+        <tr class="text-white">
+            <th>SerialID</th>
+            <th>Longitude</th>
+            <th>Latitude</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+      {{#each sensorHubs}}
+        <tr>
+            <td>
+              {{this.SerialID}}
+            </td>
+            <td>
+              {{this.Longitude}}
+            </td>
+            <td>
+              {{this.Latitude}}
+            </td>
+            <td>
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                  Aanpassen
+              </button>
+            </td>
+            <td>
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                Verwijderen
+              </button>
+            </td>
+        </tr>
+        {{/each}}
+
+    </tbody>
+
+</table>
