@@ -1,20 +1,30 @@
 <table class="table">
     <thead class="mdb-color darken-3">
         <tr class="text-white">
-            <th>#</th>
             <th>Email</th>
             <th>Admin</th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
       {{#each Users}}
         <tr>
-            <th scope="row"></th>
             <td>
               {{this.email}}
             </td>
             <td>
               {{this.isAdmin}}
+            </td>
+            <td>
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                  Aanpassen
+              </button>
+            </td>
+            <td>
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                Verwijderen
+              </button>
             </td>
         </tr>
         {{/each}}
