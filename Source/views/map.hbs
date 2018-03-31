@@ -1,4 +1,5 @@
 <div id="map" class="map"></div>
+<script src="/js/heatmap.js"></script>
 <script>
   var center = ol.proj.transform([4.895168, 52.370216], 'EPSG:4326', 'EPSG:3857');
   var map = new ol.Map({
@@ -12,12 +13,6 @@
         source: new ol.source.XYZ({
           url: '/api/mapbox/{z}/{x}/{y}'
         })
-      }),
-      new ol.layer.Vector({
-        source: new ol.source.Vector({
-          url: '/api/meetpunten',
-          format: new ol.format.KML()
-        })
       })
     ],
     target: 'map',
@@ -26,4 +21,9 @@
       zoom: 11
     })
   });
+  //De heatmap api
+  var heatmap = addHeatmap(map, '/api/meetpunten');
+  //Dit heeft een de functies "enable" en "isEnabled"
+  //Gebruik enable() of enable(true) om het aan te zetten en enable(false) om het uit te zetten
+  heatmap.enable();
 </script>
