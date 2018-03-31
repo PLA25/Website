@@ -52,6 +52,8 @@ function addHeatmap(map, kml) {
 	map.addLayer(datalayer);
 
 	onzoom();
+	
+	window.addEventListener('load', onzoom);
 
 	return ({
 		"enable": value => {
