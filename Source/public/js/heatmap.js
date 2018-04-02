@@ -10,6 +10,10 @@
  */
 function addHeatmap(map, kml) {
 
+//https://gis.stackexchange.com/questions/130603/how-to-resize-a-feature-and-prevent-it-from-scaling-when-zooming-in-openlayers-3?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+//https://openlayers.org/en/latest/apidoc/ol.geom.Geometry.html
+//http://dev.openlayers.org/examples/resize-features.html
+//https://openlayers.org/en/latest/examples/kml-earthquakes.html
 	var datalayer = new ol.layer.Heatmap({
 		source: new ol.source.Vector({
 			url: kml,
@@ -17,25 +21,29 @@ function addHeatmap(map, kml) {
 				extractStyles: false
 			})
 		}),
-		blur: 60,
+		blur: 0,//60,
 		radius: 100,
 		visible: true
 	});
 
-	var toner = new ol.layer.Tile({
-		source: new ol.source.Stamen({
-			layer: 'toner'
-		}),
-		visible: true
-	});
-
 	var vector = datalayer.getSource();
+	
+	vector.on('addfeature', e => {
+		var f = e.feature;
+		var parts = f.get('name').split(', ');
+		f.set('name', parts[0]);
+		if (parts[1]) {
+			f.set('weight', parts[1]);
+		} else {
+			f.set('weight', 0);
+		}
+	});
 
 	var view = map.getView();
 
 	var isHMEnabled = false;
 
-	view.on('propertychange', (event) => {
+	view.on('propertychange', event => {
 		if (event.key === "resolution") {
 			onzoom();
 		}
@@ -43,12 +51,9 @@ function addHeatmap(map, kml) {
 
 	function onzoom(event) {
 		var val = view.getZoom();
-		datalayer.setRadius(parseInt(val * 3, 10));
 		datalayer.setVisible(isHMEnabled);
-		toner.setVisible(isHMEnabled);
 	}
 
-	map.addLayer(toner);
 	map.addLayer(datalayer);
 
 	onzoom();

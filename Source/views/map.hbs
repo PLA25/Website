@@ -1,12 +1,28 @@
 <div id="map" class="map"></div>
 <script src="/js/heatmap.js"></script>
 <script>
+  var date = new Date();
+  var month = (date.getMonth() - 1) + "";
+  var year = date.getFullYear();
+  if (month < 1) {
+	month = 12;
+	year--;
+  }
+  if (month.length === 1) {
+	month = "0" + month;
+  }
   var center = ol.proj.transform([4.895168, 52.370216], 'EPSG:4326', 'EPSG:3857');
   var map = new ol.Map({
     layers: [
+	  new ol.layer.Tile({
+	    source: new ol.source.Stamen({
+		  layer: 'toner'
+		})
+	  }),
       new ol.layer.Tile({
         source: new ol.source.XYZ({
-          url: '/api/planet/{z}/{x}/{y}'
+          url: 'https://tiles.planet.com/basemaps/v1/planet-tiles/global_monthly_' + year + '_' + month + '_mosaic/gmap/{z}/{x}/{y}.png?api_key={{Planet.key}}',
+		  scale: 2
         })
       }),
       new ol.layer.Tile({
@@ -18,7 +34,8 @@
     target: 'map',
     view: new ol.View({
       center: center,
-      zoom: 11
+      zoom: 11,
+	  maxZoom: 15
     })
   });
   //De heatmap api
