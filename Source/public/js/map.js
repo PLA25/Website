@@ -7,6 +7,7 @@ const view = new ol.View({
   zoom: 11,
   minZoom: 8,
   maxZoom: 15,
+  extent: [500000, 6750000, 750000, 7000000],
 });
 
 // eslint-disable-next-line no-unused-vars
