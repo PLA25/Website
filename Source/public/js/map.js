@@ -2,6 +2,13 @@
 
 const center = ol.proj.transform([4.895168, 52.370216], 'EPSG:4326', 'EPSG:3857');
 
+const view = new ol.View({
+  center,
+  zoom: 11,
+  minZoom: 8,
+  maxZoom: 15,
+});
+
 // eslint-disable-next-line no-unused-vars
 const map = new ol.Map({
   layers: [
@@ -23,8 +30,5 @@ const map = new ol.Map({
     }),
   ],
   target: 'map',
-  view: new ol.View({
-    center,
-    zoom: 11,
-  }),
+  view,
 });
