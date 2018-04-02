@@ -21,8 +21,8 @@ function addHeatmap(map, kml) {
 				extractStyles: false
 			})
 		}),
-		blur: 0,//60,
-		radius: 100,
+		blur: 60,
+		radius: 40,
 		visible: true
 	});
 
@@ -35,7 +35,7 @@ function addHeatmap(map, kml) {
 		if (parts[1]) {
 			f.set('weight', parts[1]);
 		} else {
-			f.set('weight', 0);
+			f.set('weight', 0.5);
 		}
 	});
 
