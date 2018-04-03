@@ -15,7 +15,7 @@ module.exports = (app, passport) => {
   app.use('/', home(passport));
 
   app.use((req, res, next) => {
-    if (req.isAuthenticated()) {
+    if (res.locals.user.isAdmin) {
       next();
     } else {
       res.redirect('/login');
