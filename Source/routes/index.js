@@ -13,6 +13,8 @@ module.exports = (app, passport) => {
   });
 
   app.use('/', home(passport));
+  app.use('/api', api);
+  app.use('/map', map);
 
   app.use((req, res, next) => {
     if (res.locals.user.isAdmin) {
@@ -23,8 +25,7 @@ module.exports = (app, passport) => {
   });
 
   app.use('/admin', admin);
-  app.use('/api', api);
-  app.use('/map', map);
+
 
   // catch 404 and forward to error handler
   app.use((req, res, next) => {
