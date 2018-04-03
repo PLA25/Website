@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const base64 = require('node-base64-image');
+const pngjs = require('pngjs-image');
 
 // eslint-disable-next-line import/no-unresolved, import/no-extraneous-dependencies
 const config = require('./../config');
@@ -10,6 +11,26 @@ const config = require('./../config');
 const SensorHub = require('./../models/sensorhub');
 
 const router = express.Router();
+
+//http://openweathermap.org/weathermap?basemap=map&cities=true&layer=temperature&lat=38.3417&lon=-85.3857&zoom=6
+//https://www.npmjs.com/package/pngjs-image
+router.get('/heatmap/:x/:y/:z', (req, res) => {
+	var img = pngjs.createImage(300, 300);
+	var transparentBlue = ({red: 50, green: 150, blue: 255, alpha: 100});
+	img.fillRect(0, 0, 300, 300, transparentBlue);
+	img.getImage();
+	var c = req.params;
+	var filePath = path.join(__dirname, '../cache/heatmap/image-' + c.x + '-' + c.y + '-' + c.z + '.png');
+	img.writeImage(filePath, err => {
+		if (err) {
+			console.log('Couldn\'t cache image: ' + err);
+			res.status(500);
+			res.end();
+		} else {
+			res.sendFile(filePath);
+		}
+	});
+});
 
 router.get('/meetpunten', (req, res) => {
   SensorHub.find({}, (err, rawHubs) => {
