@@ -16,12 +16,12 @@ router.get('/', (req, res) => {
 });
 
 router.use((req, res, next) => {
-    if (res.locals.user.isAdmin) {
-      next();
-    } else {
-      res.redirect('/login');
-    }
-  });
+  if (res.locals.user.isAdmin) {
+    next();
+  } else {
+    res.redirect('/login');
+  }
+});
 
 router.use((req, res, next) => {
   if (req.isAdmin()) {
