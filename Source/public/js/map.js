@@ -31,10 +31,21 @@ const map = new ol.Map({
     new ol.layer.Vector({
       source: new ol.source.Vector({
         url: '/api/meetpunten',
-        format: new ol.format.KML(),
-      }),
+        format: new ol.format.KML()
+      })
     }),
+    new ol.layer.Tile({
+      source: new ol.source.XYZ({
+        url: '/api/heatmap/{z}/{x}/{y}'
+      })
+    })
   ],
   target: 'map',
   view,
 });
+
+//De heatmap api
+var heatmap = addHeatmap(map);
+//Dit heeft een de functies "enable" en "isEnabled"
+//Gebruik enable() of enable(true) om het aan te zetten en enable(false) om het uit te zetten
+heatmap.enable();
