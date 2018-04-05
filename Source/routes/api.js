@@ -2,14 +2,139 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const base64 = require('node-base64-image');
+const distance = require('fast-haversine');
+const Jimp = require('jimp');
 
 // eslint-disable-next-line import/no-unresolved, import/no-extraneous-dependencies
 const config = require('./../config');
 
 /* Models */
 const SensorHub = require('./../models/sensorhub');
+const Data = require('./../models/data');
 
 const router = express.Router();
+
+function tempToColor (temp) {
+  let degrees = 300 - ((temp + 50) / 100 * 300);
+
+  while (degrees > 360) {
+    degrees -= 360;
+  }
+
+  let value = 0;
+  if (degrees <= 60) {
+    value = parseInt(degrees / 60 * 255, 10);
+    return [255, value, 0];
+  } else if (degrees <= 120) {
+    value = 255 - parseInt(degrees / 120 * 255, 10);
+    return [value, 255, 0];
+  } else if (degrees <= 180) {
+    value = parseInt(degrees / 180 * 255, 10);
+    return [0, 255, value];
+  } else if (degrees <= 240) {
+    value = 255 - parseInt(degrees / 240 * 255, 10);
+    return [0, value, 255];
+  } else if (degrees <= 300) {
+    value = parseInt(degrees / 300 * 255, 10);
+    return [value, 0, 255];
+  }
+  value = 255 - parseInt(degrees / 120 * 255, 10);
+  return [255, 0, value];
+}
+
+function GetData (options) {
+  return new Promise((resolve, reject) => {
+    Data.findOne(options, (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      resolve(data);
+    });
+  });
+}
+
+function tile2long (x, z) {
+  return (x / Math.pow(2, z) * 360 - 180);
+}
+
+function tile2lat (y, z) {
+  const n = Math.PI - 2 * Math.PI * y / Math.pow(2, z);
+  return (180 / Math.PI * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n))));
+}
+
+router.get('/heatmap/:z/:x/:y', (req, res, next) => {
+  SensorHub.find({}, (err, sensorHubs) => {
+    if (err) {
+      next(err);
+      return;
+    }
+
+    const latitude = tile2lat(req.params.y, req.params.z);
+    const longitude = tile2long(req.params.x, req.params.z);
+
+    const calculatedHubs = [];
+    for (var i = 0; i < sensorHubs.length; i += 1) {
+      const sensorHub = sensorHubs[i];
+
+      const from = {
+        lat: parseFloat(sensorHub.Latitude, 10),
+        lon: parseFloat(sensorHub.Longitude, 10)
+      };
+
+      const to = {
+        lat: parseFloat(latitude, 10),
+        lon: parseFloat(longitude, 10)
+      };
+
+      sensorHub.Distance = distance(from, to);
+      calculatedHubs.push(sensorHub);
+    }
+
+    const selectedNodes = calculatedHubs.sort((a, b) => a.Distance - b.Distance).slice(0, 3);
+
+    let divider = 0;
+    for (var i = 0; i < selectedNodes.length; i += 1) {
+      divider += (1 / parseFloat(selectedNodes[i].Distance, 10));
+    }
+
+    const promises = [];
+    for (var i = 0; i < selectedNodes.length; i += 1) {
+      promises.push(GetData({
+        Type: 'temperature',
+        SensorHub: selectedNodes[i].SerialID
+      }));
+    }
+
+    Promise.all(promises)
+      .then((data) => {
+        let calculatedValue = 0;
+        for (let i = 0; i < data.length; i += 1) {
+          const dataNode = data[i];
+          const sensorHub = selectedNodes[i];
+
+          const weight = (1 / sensorHub.Distance) / divider;
+          calculatedValue += (parseFloat(dataNode.Value, 10) * weight);
+        }
+
+        const image = new Jimp(256, 256, 0x0);
+        const rgb = tempToColor(calculatedValue);
+
+        for (let x = 0; x < 256; x += 1) {
+          for (let y = 0; y < 256; y += 1) {
+            image.setPixelColor(Jimp.rgbaToInt(rgb[0], rgb[1], rgb[2], parseFloat(0.25 * 255)), x, y);
+          }
+        }
+
+        image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
+          res.set('Content-Type', Jimp.MIME_PNG);
+          res.send(buffer);
+        });
+      })
+      .catch(err => res.send(err));
+  });
+});
 
 router.get('/meetpunten', (req, res) => {
   SensorHub.find({}, (err, rawHubs) => {
