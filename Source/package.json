@@ -11,10 +11,17 @@
     "bcrypt-nodejs": "0.0.3",
     "connect-flash": "0.1.1",
     "cookie-parser": "1.4.3",
+    "express": "4.16.3",
+    "express-session": "1.15.6",
     "fast-haversine": "1.0.0",
+    "hbs": "4.0.1",
     "jimp": "0.2.28",
+    "mongoose": "5.0.13",
+    "morgan": "1.9.0",
     "node-base64-image": "1.0.4",
-    "passport-local": "1.0.0"
+    "passport": "0.4.0",
+    "passport-local": "1.0.0",
+    "serve-favicon": "2.5.0"
   },
   "devDependencies": {
     "eslint": "4.19.1",
