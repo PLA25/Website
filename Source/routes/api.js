@@ -21,25 +21,30 @@ function tempToColor (temp) {
     degrees -= 360;
   }
 
+  let output = [0, 0, 0];
   let value = 0;
+
   if (degrees <= 60) {
     value = parseInt(degrees / 60 * 255, 10);
-    return [255, value, 0];
+    output = [255, value, 0];
   } else if (degrees <= 120) {
     value = 255 - parseInt(degrees / 120 * 255, 10);
-    return [value, 255, 0];
+    output = [value, 255, 0];
   } else if (degrees <= 180) {
     value = parseInt(degrees / 180 * 255, 10);
-    return [0, 255, value];
+    output = [0, 255, value];
   } else if (degrees <= 240) {
     value = 255 - parseInt(degrees / 240 * 255, 10);
-    return [0, value, 255];
+    output = [0, value, 255];
   } else if (degrees <= 300) {
     value = parseInt(degrees / 300 * 255, 10);
-    return [value, 0, 255];
+    output = [value, 0, 255];
+  } else {
+    value = 255 - parseInt(degrees / 120 * 255, 10);
+    output = [255, 0, value];
   }
-  value = 255 - parseInt(degrees / 120 * 255, 10);
-  return [255, 0, value];
+
+  return output;
 }
 
 function GetData (options) {
@@ -136,8 +141,13 @@ router.get('/heatmap/:z/:x/:y', (req, res, next) => {
   });
 });
 
-router.get('/meetpunten', (req, res) => {
+router.get('/meetpunten', (req, res, next) => {
   SensorHub.find({}, (err, rawHubs) => {
+    if (err) {
+      next(err);
+      return;
+    }
+
     for (let i = 0; i < rawHubs.length; i += 1) {
       rawHubs[i].SerialID = rawHubs[i].SerialID.replace('\n', '');
     }
