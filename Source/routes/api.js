@@ -12,26 +12,6 @@ const SensorHub = require('./../models/sensorhub');
 
 const router = express.Router();
 
-//http://openweathermap.org/weathermap?basemap=map&cities=true&layer=temperature&lat=38.3417&lon=-85.3857&zoom=6
-//https://www.npmjs.com/package/pngjs-image
-router.get('/heatmap/:x/:y/:z', (req, res) => {
-	var img = pngjs.createImage(300, 300);
-	var transparentBlue = ({red: 50, green: 150, blue: 255, alpha: 100});
-	img.fillRect(0, 0, 300, 300, transparentBlue);
-	img.getImage();
-	var c = req.params;
-	var filePath = path.join(__dirname, '../cache/heatmap/image-' + c.x + '-' + c.y + '-' + c.z + '.png');
-	img.writeImage(filePath, err => {
-		if (err) {
-			console.log('Couldn\'t cache image: ' + err);
-			res.status(500);
-			res.end();
-		} else {
-			res.sendFile(filePath);
-		}
-	});
-});
-
 router.get('/meetpunten', (req, res) => {
   SensorHub.find({}, (err, rawHubs) => {
     for (let i = 0; i < rawHubs.length; i += 1) {
@@ -71,6 +51,14 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
     case 'mapbox':
       url = `https://a.tiles.mapbox.com/v3/planet.jh0b3oee/${req.params.z}/${req.params.x}/${req.params.y}.png`;
       break;
+
+	//http://openweathermap.org/weathermap?basemap=map&layer=temperature&cities=false
+	//https://www.npmjs.com/package/pngjs-image
+	case 'heatmap':
+	  var c = req.params;
+	  var fileCachePath = path.join(__dirname, '../cache/heatmap/image-${c.x}-${c.y}-${c.z}.png');
+	  url = fileCachePath;
+	  break;
 
     default:
       res.sendFile(path.resolve(cachePath, '-1_-1_-1.jpg'));
