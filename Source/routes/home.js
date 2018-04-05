@@ -6,14 +6,14 @@ module.exports = (passport) => {
   router.get('/login', (req, res) => {
     res.render('login', {
       title: 'Login',
-      layout: 'layout-nonav',
+      layout: 'layout-nonav'
     });
   });
 
   router.post('/login', passport.authenticate('local-login', {
     successRedirect: '/',
     failureRedirect: '/login',
-    failureFlash: true,
+    failureFlash: true
   }));
 
   router.use((req, res, next) => {
