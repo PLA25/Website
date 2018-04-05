@@ -3,16 +3,16 @@ const mongoose = require('mongoose');
 const sensorHubScheme = new mongoose.Schema({
   SerialID: {
     type: String,
-    required: true,
+    required: true
   },
   Latitude: {
     type: String,
-    required: true,
+    required: true
   },
   Longitude: {
     type: String,
-    required: true,
-  },
+    required: true
+  }
 });
 
 module.exports = mongoose.model('SensorHub', sensorHubScheme);

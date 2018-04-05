@@ -1,4 +1,5 @@
 const home = require('./home');
+const admin = require('./admin');
 const api = require('./api');
 const map = require('./map');
 
@@ -21,6 +22,7 @@ module.exports = (app, passport) => {
     }
   });
 
+  app.use('/admin', admin);
   app.use('/api', api);
   app.use('/map', map);
 
