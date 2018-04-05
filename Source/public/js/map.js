@@ -28,6 +28,17 @@ const map = new ol.Map({
         url: '/api/mapbox/{z}/{x}/{y}',
       }),
     }),
+    new ol.layer.Vector({
+      source: new ol.source.Vector({
+        url: '/api/meetpunten',
+        format: new ol.format.KML()
+      })
+    }),
+    new ol.layer.Tile({
+      source: new ol.source.XYZ({
+        url: '/api/heatmap/{z}/{x}/{y}'
+      })
+    })
   ],
   target: 'map',
   view,
