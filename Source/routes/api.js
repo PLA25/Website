@@ -14,12 +14,18 @@ const Data = require('./../models/data');
 
 const router = express.Router();
 
-function tempToColor (temp) {
+function tempToDegrees (temp) {
   let degrees = 300 - ((temp + 50) / 100 * 300);
 
   while (degrees > 360) {
     degrees -= 360;
   }
+
+  return degrees;
+}
+
+function tempToColor (temp) {
+  const degrees = tempToDegrees(temp);
 
   let output = [0, 0, 0];
   let value = 0;
