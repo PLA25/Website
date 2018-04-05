@@ -26,39 +26,35 @@ function tempToDegrees (temp) {
 
 function tempToColor (temp) {
   const degrees = tempToDegrees(temp);
-  var rgb = [0, 0, 0];
 
+  let value = 0;
   if (degrees <= 60) {
-    let value = parseInt(degrees / 60 * 255, 10);
-    rgb = [255, value, 0];
+    value = parseInt(degrees / 60 * 255, 10);
+    return [255, value, 0];
   }
 
-  if (degrees > 60 && degrees <= 120) {
-    let value = 255 - parseInt(degrees / 120 * 255, 10);
-    rgb = [value, 255, 0];
+  if (degrees <= 120) {
+    value = 255 - parseInt(degrees / 120 * 255, 10);
+    return [value, 255, 0];
   }
 
-  if (degrees > 120 && degrees <= 180) {
-    let value = parseInt(degrees / 180 * 255, 10);
-    rgb = [0, 255, value];
+  if (degrees <= 180) {
+    value = parseInt(degrees / 180 * 255, 10);
+    return [0, 255, value];
   }
 
-  if (degrees > 180 && degrees <= 240) {
-    let value = 255 - parseInt(degrees / 240 * 255, 10);
-    rgb = [0, value, 255];
+  if (degrees <= 240) {
+    value = 255 - parseInt(degrees / 240 * 255, 10);
+    return [0, value, 255];
   }
 
-  if (degrees > 240 && degrees <= 300) {
-    let value = parseInt(degrees / 300 * 255, 10);
-    rgb = [value, 0, 255];
+  if (degrees <= 300) {
+    value = parseInt(degrees / 300 * 255, 10);
+    return [value, 0, 255];
   }
 
-  if (degrees > 300 && degrees <= 360) {
-    let value = 255 - parseInt(degrees / 120 * 255, 10);
-    rgb = [255, 0, value];
-  }
-
-  return rgb;
+  value = 255 - parseInt(degrees / 120 * 255, 10);
+  return [255, 0, value];
 }
 
 function GetData (options) {
