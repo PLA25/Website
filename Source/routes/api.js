@@ -19,7 +19,7 @@ router.get('/meetpunten', (req, res) => {
 
     res.render('meetpunten', {
       layout: false,
-      sensorHubs: rawHubs,
+      sensorHubs: rawHubs
     });
   });
 });
@@ -57,7 +57,7 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
   }
 
   base64.encode(url, {
-    string: false,
+    string: false
   }, (err, image) => {
     if (err) {
       next(err);
@@ -65,7 +65,7 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
     }
 
     base64.decode(image, {
-      filename: filePath.replace('.jpg', ''),
+      filename: filePath.replace('.jpg', '')
     }, (err) => {
       if (err) {
         next(err);

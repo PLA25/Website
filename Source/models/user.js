@@ -5,22 +5,22 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
+    unique: true
   },
   password: {
     type: String,
-    required: true,
+    required: true
   },
   isAdmin: {
-    type: Boolean,
-  },
+    type: Boolean
+  }
 });
 
-userSchema.methods.generateHash = function generateHash(password) {
+userSchema.methods.generateHash = function generateHash (password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
-userSchema.methods.validPassword = function validatePassword(password) {
+userSchema.methods.validPassword = function validatePassword (password) {
   return bcrypt.compareSync(password, this.password);
 };
 

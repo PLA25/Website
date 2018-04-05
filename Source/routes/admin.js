@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
     SensorHub.find({}, (err, rawHubs) => {
       res.render('admin', {
         Users: users,
-        sensorHubs: rawHubs,
+        sensorHubs: rawHubs
       });
     });
   });
