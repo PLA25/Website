@@ -12,12 +12,21 @@ router.use((req, res, next) => {
   }
 });
 
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
   User.find({}, (err, users) => {
+    if (err) {
+      next(err);
+      return;
+    }
     SensorHub.find({}, (err, rawHubs) => {
+      if (err) {
+        next(err);
+        return;
+      }
+
       res.render('admin', {
         Users: users,
-        sensorHubs: rawHubs,
+        sensorHubs: rawHubs
       });
     });
   });
