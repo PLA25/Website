@@ -14,6 +14,7 @@ const passport = require('./config/passport');
 const routes = require('./routes');
 
 mongoose.connect(`mongodb://${config.MongoDB.User}:${config.MongoDB.Pass}@${config.MongoDB.Host}:${config.MongoDB.Port}/${config.MongoDB.Name}`);
+mongoose.Promise = Promise;
 
 const app = express();
 hbs.localsAsTemplateData(app);

@@ -13,23 +13,17 @@ router.use((req, res, next) => {
 });
 
 router.get('/', (req, res, next) => {
-  User.find({}, (err, users) => {
-    if (err) {
-      next(err);
-      return;
-    }
-    SensorHub.find({}, (err, rawHubs) => {
-      if (err) {
-        next(err);
-        return;
-      }
-
+  User.find({}).exec()
+    .then(users => SensorHub.find({}).exec().then(sensorHubs => [users, sensorHubs]))
+    .then(([users, sensorHubs]) => {
       res.render('admin', {
-        Users: users,
-        sensorHubs: rawHubs,
+        users,
+        sensorHubs,
       });
+    })
+    .catch((err) => {
+      next(err);
     });
-  });
 });
 
 module.exports = router;
