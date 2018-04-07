@@ -26,7 +26,7 @@ router.get('/', (req, res, next) => {
 
       res.render('admin', {
         Users: users,
-        sensorHubs: rawHubs
+        sensorHubs: rawHubs,
       });
     });
   });

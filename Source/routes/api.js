@@ -14,7 +14,7 @@ const Data = require('./../models/data');
 
 const router = express.Router();
 
-function tempToDegrees (temp) {
+function tempToDegrees(temp) {
   let degrees = 300 - ((temp + 50) / 100 * 300);
 
   while (degrees > 360) {
@@ -24,7 +24,7 @@ function tempToDegrees (temp) {
   return degrees;
 }
 
-function tempToColor (temp) {
+function tempToColor(temp) {
   const degrees = tempToDegrees(temp);
 
   let value = 0;
@@ -57,7 +57,7 @@ function tempToColor (temp) {
   return [255, 0, value];
 }
 
-function GetData (options) {
+function GetData(options) {
   return new Promise((resolve, reject) => {
     Data.findOne(options, (err, data) => {
       if (err) {
@@ -70,11 +70,11 @@ function GetData (options) {
   });
 }
 
-function tile2long (x, z) {
+function tile2long(x, z) {
   return (x / Math.pow(2, z) * 360 - 180);
 }
 
-function tile2lat (y, z) {
+function tile2lat(y, z) {
   const n = Math.PI - 2 * Math.PI * y / Math.pow(2, z);
   return (180 / Math.PI * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n))));
 }
@@ -90,17 +90,17 @@ router.get('/heatmap/:z/:x/:y', (req, res, next) => {
     const longitude = tile2long(req.params.x, req.params.z);
 
     const calculatedHubs = [];
-    for (var i = 0; i < sensorHubs.length; i++) {
+    for (let i = 0; i < sensorHubs.length; i++) {
       const sensorHub = sensorHubs[i];
 
       const from = {
         lat: parseFloat(sensorHub.Latitude, 10),
-        lon: parseFloat(sensorHub.Longitude, 10)
+        lon: parseFloat(sensorHub.Longitude, 10),
       };
 
       const to = {
         lat: parseFloat(latitude, 10),
-        lon: parseFloat(longitude, 10)
+        lon: parseFloat(longitude, 10),
       };
 
       sensorHub.Distance = distance(from, to);
@@ -110,15 +110,15 @@ router.get('/heatmap/:z/:x/:y', (req, res, next) => {
     const selectedNodes = calculatedHubs.sort((a, b) => a.Distance - b.Distance).slice(0, 3);
 
     let divider = 0;
-    for (var j = 0; j < selectedNodes.length; j++) {
+    for (let j = 0; j < selectedNodes.length; j++) {
       divider += (1 / parseFloat(selectedNodes[j].Distance, 10));
     }
 
     const promises = [];
-    for (var k = 0; k < selectedNodes.length; k++) {
+    for (let k = 0; k < selectedNodes.length; k++) {
       promises.push(GetData({
         Type: 'temperature',
-        SensorHub: selectedNodes[k].SerialID
+        SensorHub: selectedNodes[k].SerialID,
       }));
     }
 
@@ -169,7 +169,7 @@ router.get('/meetpunten', (req, res, next) => {
 
     res.render('meetpunten', {
       layout: false,
-      sensorHubs: rawHubs
+      sensorHubs: rawHubs,
     });
   });
 });
@@ -207,7 +207,7 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
   }
 
   base64.encode(url, {
-    string: false
+    string: false,
   }, (err, image) => {
     if (err) {
       next(err);
@@ -215,7 +215,7 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
     }
 
     base64.decode(image, {
-      filename: filePath.replace('.jpg', '')
+      filename: filePath.replace('.jpg', ''),
     }, (err) => {
       if (err) {
         next(err);
