@@ -75,103 +75,100 @@ function tile2long(x, z) {
 }
 
 function tile2lat(y, z) {
-  const n = Math.PI - 2 * Math.PI * y / (2 ** z);
-  return (180 / Math.PI * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n))));
+  const n = Math.PI - (((2 * Math.PI) * y) / (2 ** z));
+  return ((180 / Math.PI) * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n))));
 }
 
 router.get('/heatmap/:z/:x/:y', (req, res, next) => {
-  SensorHub.find({}, (err, sensorHubs) => {
-    if (err) {
+  SensorHub.find({}).exec()
+    .then((sensorHubs) => {
+      const latitude = tile2lat(req.params.y, req.params.z);
+      const longitude = tile2long(req.params.x, req.params.z);
+
+      const calculatedHubs = [];
+      for (let i = 0; i < sensorHubs.length; i += 1) {
+        const sensorHub = sensorHubs[i];
+
+        const from = {
+          lat: parseFloat(sensorHub.Latitude, 10),
+          lon: parseFloat(sensorHub.Longitude, 10),
+        };
+
+        const to = {
+          lat: parseFloat(latitude, 10),
+          lon: parseFloat(longitude, 10),
+        };
+
+        sensorHub.Distance = distance(from, to);
+        calculatedHubs.push(sensorHub);
+      }
+
+      return calculatedHubs.sort((a, b) => a.Distance - b.Distance).slice(0, 3);
+    })
+    .then((selectedNodes) => {
+      const promises = [];
+      for (let i = 0; i < selectedNodes.length; i += 1) {
+        promises.push(GetData({
+          Type: 'temperature',
+          SensorHub: selectedNodes[i].SerialID,
+        }));
+      }
+
+      return Promise.all(promises).then(data => [selectedNodes, data]);
+    })
+    .then(([selectedNodes, data]) => {
+      let divider = 0;
+      for (let i = 0; i < selectedNodes.length; i += 1) {
+        divider += (1 / parseFloat(selectedNodes[i].Distance, 10));
+      }
+
+      let calculatedValue = 0;
+      for (let i = 0; i < data.length; i += 1) {
+        const dataNode = data[i];
+        const sensorHub = selectedNodes[i];
+
+        const weight = (1 / sensorHub.Distance) / divider;
+        calculatedValue += (parseFloat(dataNode.Value, 10) * weight);
+      }
+
+      return calculatedValue;
+    })
+    .then((calculatedValue) => {
+      const image = new Jimp(256, 256, 0x0);
+      const rgb = tempToColor(calculatedValue);
+
+      for (let x = 0; x < 256; x += 1) {
+        for (let y = 0; y < 256; y += 1) {
+          image.setPixelColor(Jimp.rgbaToInt(rgb[0], rgb[1], rgb[2], parseFloat(0.25 * 255)), x, y);
+        }
+      }
+
+      image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
+        if (err) {
+          next(err);
+          return;
+        }
+
+        res.set('Content-Type', Jimp.MIME_PNG);
+        res.send(buffer);
+      });
+    })
+    .catch((err) => {
       next(err);
-      return;
-    }
-
-    const latitude = tile2lat(req.params.y, req.params.z);
-    const longitude = tile2long(req.params.x, req.params.z);
-
-    const calculatedHubs = [];
-    for (let i = 0; i < sensorHubs.length; i += 1) {
-      const sensorHub = sensorHubs[i];
-
-      const from = {
-        lat: parseFloat(sensorHub.Latitude, 10),
-        lon: parseFloat(sensorHub.Longitude, 10),
-      };
-
-      const to = {
-        lat: parseFloat(latitude, 10),
-        lon: parseFloat(longitude, 10),
-      };
-
-      sensorHub.Distance = distance(from, to);
-      calculatedHubs.push(sensorHub);
-    }
-
-    const selectedNodes = calculatedHubs.sort((a, b) => a.Distance - b.Distance).slice(0, 3);
-
-    let divider = 0;
-    for (let i = 0; i < selectedNodes.length; i += 1) {
-      divider += (1 / parseFloat(selectedNodes[i].Distance, 10));
-    }
-
-    const promises = [];
-    for (let i = 0; i < selectedNodes.length; i += 1) {
-      promises.push(GetData({
-        Type: 'temperature',
-        SensorHub: selectedNodes[i].SerialID,
-      }));
-    }
-
-    Promise.all(promises)
-      .then((data) => {
-        let calculatedValue = 0;
-        for (let i = 0; i < data.length; i += 1) {
-          const dataNode = data[i];
-          const sensorHub = selectedNodes[i];
-
-          const weight = (1 / sensorHub.Distance) / divider;
-          calculatedValue += (parseFloat(dataNode.Value, 10) * weight);
-        }
-
-        const image = new Jimp(256, 256, 0x0);
-        const rgb = tempToColor(calculatedValue);
-
-        for (let x = 0; x < 256; x += 1) {
-          for (let y = 0; y < 256; y += 1) {
-            image.setPixelColor(Jimp.rgbaToInt(rgb[0], rgb[1], rgb[2], parseFloat(0.25 * 255)), x, y);
-          }
-        }
-
-        image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
-          if (err) {
-            next(err);
-            return;
-          }
-
-          res.set('Content-Type', Jimp.MIME_PNG);
-          res.send(buffer);
-        });
-      })
-      .catch(err => res.send(err));
-  });
+    });
 });
 
 router.get('/meetpunten', (req, res, next) => {
-  SensorHub.find({}, (err, rawHubs) => {
-    if (err) {
+  SensorHub.find({}).exec()
+    .then((sensorHubs) => {
+      res.render('meetpunten', {
+        layout: false,
+        sensorHubs,
+      });
+    })
+    .catch((err) => {
       next(err);
-      return;
-    }
-
-    for (let i = 0; i < rawHubs.length; i += 1) {
-      rawHubs[i].SerialID = rawHubs[i].SerialID.replace('\n', '');
-    }
-
-    res.render('meetpunten', {
-      layout: false,
-      sensorHubs: rawHubs,
     });
-  });
 });
 
 router.get('/:host/:z/:x/:y', (req, res, next) => {
@@ -216,8 +213,8 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
 
     base64.decode(image, {
       filename: filePath.replace('.jpg', ''),
-    }, (err) => {
-      if (err) {
+    }, (err2) => {
+      if (err2) {
         next(err);
         return;
       }
