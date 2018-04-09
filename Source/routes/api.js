@@ -15,7 +15,7 @@ const Data = require('./../models/data');
 const router = express.Router();
 
 function tempToDegrees(temp) {
-  let degrees = 300 - ((temp + 50) / 100 * 300);
+  let degrees = 300 - (((temp + 50) / 100) * 300);
 
   while (degrees > 360) {
     degrees -= 360;
@@ -29,31 +29,31 @@ function tempToColor(temp) {
 
   let value = 0;
   if (degrees <= 60) {
-    value = parseInt(degrees / 60 * 255, 10);
+    value = parseInt((degrees / 60) * 255, 10);
     return [255, value, 0];
   }
 
   if (degrees <= 120) {
-    value = 255 - parseInt(degrees / 120 * 255, 10);
+    value = 255 - parseInt((degrees / 120) * 255, 10);
     return [value, 255, 0];
   }
 
   if (degrees <= 180) {
-    value = parseInt(degrees / 180 * 255, 10);
+    value = parseInt((degrees / 180) * 255, 10);
     return [0, 255, value];
   }
 
   if (degrees <= 240) {
-    value = 255 - parseInt(degrees / 240 * 255, 10);
+    value = 255 - parseInt((degrees / 240) * 255, 10);
     return [0, value, 255];
   }
 
   if (degrees <= 300) {
-    value = parseInt(degrees / 300 * 255, 10);
+    value = parseInt((degrees / 300) * 255, 10);
     return [value, 0, 255];
   }
 
-  value = 255 - parseInt(degrees / 120 * 255, 10);
+  value = 255 - parseInt((degrees / 120) * 255, 10);
   return [255, 0, value];
 }
 
@@ -71,11 +71,11 @@ function GetData(options) {
 }
 
 function tile2long(x, z) {
-  return (x / Math.pow(2, z) * 360 - 180);
+  return (((x / (2 ** z)) * 360) - 180);
 }
 
 function tile2lat(y, z) {
-  const n = Math.PI - 2 * Math.PI * y / Math.pow(2, z);
+  const n = Math.PI - 2 * Math.PI * y / (2 ** z);
   return (180 / Math.PI * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n))));
 }
 
@@ -90,7 +90,7 @@ router.get('/heatmap/:z/:x/:y', (req, res, next) => {
     const longitude = tile2long(req.params.x, req.params.z);
 
     const calculatedHubs = [];
-    for (let i = 0; i < sensorHubs.length; i++) {
+    for (let i = 0; i < sensorHubs.length; i += 1) {
       const sensorHub = sensorHubs[i];
 
       const from = {
@@ -110,22 +110,22 @@ router.get('/heatmap/:z/:x/:y', (req, res, next) => {
     const selectedNodes = calculatedHubs.sort((a, b) => a.Distance - b.Distance).slice(0, 3);
 
     let divider = 0;
-    for (let j = 0; j < selectedNodes.length; j++) {
-      divider += (1 / parseFloat(selectedNodes[j].Distance, 10));
+    for (let i = 0; i < selectedNodes.length; i += 1) {
+      divider += (1 / parseFloat(selectedNodes[i].Distance, 10));
     }
 
     const promises = [];
-    for (let k = 0; k < selectedNodes.length; k++) {
+    for (let i = 0; i < selectedNodes.length; i += 1) {
       promises.push(GetData({
         Type: 'temperature',
-        SensorHub: selectedNodes[k].SerialID,
+        SensorHub: selectedNodes[i].SerialID,
       }));
     }
 
     Promise.all(promises)
       .then((data) => {
         let calculatedValue = 0;
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.length; i += 1) {
           const dataNode = data[i];
           const sensorHub = selectedNodes[i];
 
@@ -136,8 +136,8 @@ router.get('/heatmap/:z/:x/:y', (req, res, next) => {
         const image = new Jimp(256, 256, 0x0);
         const rgb = tempToColor(calculatedValue);
 
-        for (let x = 0; x < 256; x++) {
-          for (let y = 0; y < 256; y++) {
+        for (let x = 0; x < 256; x += 1) {
+          for (let y = 0; y < 256; y += 1) {
             image.setPixelColor(Jimp.rgbaToInt(rgb[0], rgb[1], rgb[2], parseFloat(0.25 * 255)), x, y);
           }
         }
@@ -163,7 +163,7 @@ router.get('/meetpunten', (req, res, next) => {
       return;
     }
 
-    for (let i = 0; i < rawHubs.length; i++) {
+    for (let i = 0; i < rawHubs.length; i += 1) {
       rawHubs[i].SerialID = rawHubs[i].SerialID.replace('\n', '');
     }
 
