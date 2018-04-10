@@ -28,3 +28,8 @@ footer {
 .rgba-blue-dark {
   background-color: rgba(3, 169, 244, 1) !important;
 }
+
+.login-error {
+  font-size: 1.0rem;
+  margin-bottom: 5px;
+}

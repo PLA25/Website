@@ -24,6 +24,10 @@
                 <hr>
               </div>
 
+              {{#if error}}
+                  <div class="alert alert-danger login-error">{{error}}</div>
+              {{/if}}
+
               <form action="/login" method="post">
                 <div class="md-form">
                   <i class="fa fa-user prefix grey-text"></i>
