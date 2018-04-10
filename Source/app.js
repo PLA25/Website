@@ -14,6 +14,7 @@ const passport = require('./config/passport');
 const routes = require('./routes');
 
 mongoose.connect(`mongodb://${config.MongoDB.User}:${config.MongoDB.Pass}@${config.MongoDB.Host}:${config.MongoDB.Port}/${config.MongoDB.Name}`);
+mongoose.Promise = Promise;
 
 const app = express();
 hbs.localsAsTemplateData(app);
@@ -26,7 +27,7 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: false
+  extended: false,
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -39,8 +40,8 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   cookie: {
-    maxAge: (5 * 60 * 1000)
-  }
+    maxAge: (5 * 60 * 1000),
+  },
 }));
 app.use(passport.initialize());
 app.use(passport.session());
