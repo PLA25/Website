@@ -26,11 +26,11 @@ const LocalLogin = new LocalStrategy({
     }
 
     if (!user) {
-      return done(null, false, req.flash('msg', 'Geen gebruiker gevonden.'));
+      return done(null, false, req.flash('error', 'No user found.'));
     }
 
     if (!user.validPassword(password)) {
-      return done(null, false, req.flash('msg', 'Oops! Verkeerd wachtwoord.'));
+      return done(null, false, req.flash('error', 'Oops! Wrong password.'));
     }
 
     return done(null, user);
