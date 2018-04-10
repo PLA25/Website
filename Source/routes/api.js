@@ -8,12 +8,16 @@ const Jimp = require('jimp');
 // eslint-disable-next-line import/no-unresolved, import/no-extraneous-dependencies
 const config = require('./../config');
 
-/* Models */
+/** Requires the SensorHub and Data models. */
 const SensorHub = require('./../models/sensorhub');
 const Data = require('./../models/data');
 
 const router = express.Router();
 
+/**
+ * Converts temperature to degrees.
+ * @param {number} temp - The temperature.
+ */
 function tempToDegrees(temp) {
   let degrees = 300 - (((temp + 50) / 100) * 300);
 
@@ -24,6 +28,10 @@ function tempToDegrees(temp) {
   return degrees;
 }
 
+/**
+ * Converts temperature to color.
+ * @param {number} temp - The temperature.
+ */
 function tempToColor(temp) {
   const degrees = tempToDegrees(temp);
 
