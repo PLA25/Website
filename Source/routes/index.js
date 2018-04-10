@@ -39,7 +39,7 @@ module.exports = (app, passport) => {
   /** Throws the 404 error and renders its page. */
   app.use((req, res) => {
     res.status(404);
-    
+
     /** Renders the 404 error page from its view. */
     res.render('404');
   });
@@ -50,9 +50,10 @@ module.exports = (app, passport) => {
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-    /** Sets the appropriate error status, if it doesn't exist then set it as the 500 error, which is known for unspecificity. */
+    /** Sets the appropriate error status, if it doesn't exist then set it as the 500 error, which
+    is known for unspecificity. */
     res.status(err.status || 500);
-    
+
     /** Renders the error page from its view. */
     res.render('error');
   });

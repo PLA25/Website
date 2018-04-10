@@ -1,4 +1,5 @@
-/** Requires the Express module for routing, and the User and SensorHub models for admin management. */
+/** Requires the Express module for routing, and the User and SensorHub models for admin
+management. */
 const express = require('express');
 const User = require('./../models/user');
 const SensorHub = require('./../models/sensorhub');
