@@ -25,12 +25,11 @@ module.exports = (app, passport) => {
   app.use('/admin', admin);
   app.use('/api', api);
   app.use('/map', map);
-
-  // catch 404 and forward to error handler
-  app.use((req, res, next) => {
-    const err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+  
+  // Error 404
+  app.use((req, res) => {
+    res.status(404);
+    res.render('404');
   });
 
   // error handler
@@ -41,6 +40,7 @@ module.exports = (app, passport) => {
 
     // render the error page
     res.status(err.status || 500);
+    
     res.render('error');
   });
 
