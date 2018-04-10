@@ -26,7 +26,7 @@ module.exports = (app, passport) => {
   app.use('/api', api);
   app.use('/map', map);
   
-  // Error 404
+  /** Error 404 handler. */
   app.use((req, res) => {
     res.status(404);
     res.render('404');
