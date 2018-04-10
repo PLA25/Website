@@ -25,6 +25,7 @@ router.get('/', (req, res, next) => {
   User.find({}).exec()
     .then(users => SensorHub.find({}).exec().then(sensorHubs => [users, sensorHubs]))
     .then(([users, sensorHubs]) => {
+      /** Renders the view 'admin' with User and SensorHub data. */
       res.render('admin', {
         users,
         sensorHubs,

@@ -4,7 +4,12 @@ const admin = require('./admin');
 const api = require('./api');
 const map = require('./map');
 
+/**
+ * Handles routing.
+ * @returns {express} app - The application instance.
+ */
 module.exports = (app, passport) => {
+  /** Adds the user instance to locals if it exists. */
   app.use((req, res, next) => {
     if (req.isAuthenticated()) {
       res.locals.user = req.user;
@@ -52,5 +57,6 @@ module.exports = (app, passport) => {
     res.render('error');
   });
 
+  /** Returns the application instance. */
   return app;
 };

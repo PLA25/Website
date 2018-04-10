@@ -6,6 +6,7 @@ const router = express.Router();
 
 /** Displays the map page content. */
 router.get('/', (req, res) => {
+  /** Renders the view 'map'. */
   res.render('map', {});
 });
 
