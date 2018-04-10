@@ -7,7 +7,7 @@ module.exports = (passport) => {
     res.render('login', {
       title: 'Login',
       layout: 'layout-nonav',
-      error: req.flash('error')
+      error: req.flash('error'),
     });
   });
 
