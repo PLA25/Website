@@ -93,3 +93,6 @@ Source/config.js
 
 # Image cache
 Source/cache/*/*.jpg
+
+# JSDoc output
+Source/out
