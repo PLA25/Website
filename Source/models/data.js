@@ -1,5 +1,10 @@
+/** Requires the Mongoose module for database schemas. */
 const mongoose = require('mongoose');
 
+/**
+ * Creates the Data schema with attributes reflecting the ones in the database.
+ * @todo Change "dataScheme" to "dataSchema".
+ */
 const dataScheme = new mongoose.Schema({
   SensorHub: {
     type: String,

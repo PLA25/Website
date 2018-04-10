@@ -1,5 +1,10 @@
+/** Requires the Mongoose module for database schemas. */
 const mongoose = require('mongoose');
 
+/**
+ * Creates the SensorHub schema with attributes reflecting the ones in the database.
+ * @todo Change "sensorHubScheme" to "sensorHubSchema".
+ */
 const sensorHubScheme = new mongoose.Schema({
   SerialID: {
     type: String,
