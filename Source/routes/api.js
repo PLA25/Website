@@ -1,3 +1,4 @@
+/** Requires all necessary modules for the API. */
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -12,27 +13,34 @@ const config = require('./../config');
 const SensorHub = require('./../models/sensorhub');
 const Data = require('./../models/data');
 
+/** Creates router instance for this route. */
 const router = express.Router();
 
 /**
  * Converts temperature to degrees.
  * @param {number} temp - The temperature.
+ * @returns {number} degress - The degrees.
  */
 function tempToDegrees(temp) {
+  /** Creates the degrees, from a temperature range of -70 to 50. */
   let degrees = 300 - (((temp + 50) / 100) * 300);
 
+  /** Makes sure the degrees don't go above 360, which is mathematically impossible. */
   while (degrees > 360) {
     degrees -= 360;
   }
 
+  /** Returns the degrees. */
   return degrees;
 }
 
 /**
  * Converts temperature to color.
  * @param {number} temp - The temperature.
+ * @returns [{number}, {number}, {number}] color
  */
 function tempToColor(temp) {
+  /** Finds the degrees for further conversion. */
   const degrees = tempToDegrees(temp);
 
   let value = 0;
@@ -61,10 +69,15 @@ function tempToColor(temp) {
     return [value, 0, 255];
   }
 
+  /** The determined value if the degrees are higher than 300. */
   value = 255 - parseInt((degrees / 120) * 255, 10);
   return [255, 0, value];
 }
 
+/**
+ * @param options
+ * @todo Change 'GetData' to 'getData' in accordance of code style.
+ */
 function GetData(options) {
   return new Promise((resolve, reject) => {
     Data.findOne(options, (err, data) => {
@@ -78,10 +91,24 @@ function GetData(options) {
   });
 }
 
+/**
+ * Converts a tile with x- and z-coordinates to a longitude.
+ * @param {number} x - The x-coordinate.
+ * @param {number} z - The z-coordinate.
+ * @returns {number} - The longitude.
+ * @todo Change 'tile2long' to 'tileToLong' or 'tileToLongtitude' for the sake of consistency.
+ */
 function tile2long(x, z) {
   return (((x / (2 ** z)) * 360) - 180);
 }
 
+/**
+ * Converts a tile with y- and z-coordinates to a latitude.
+ * @param {number} y - The y-coordinate.
+ * @param {number} z - The z-coordinate.
+ * @returns {number} - The latitude.
+ * @todo Change 'tile2lat' to 'tileToLat' or 'tileToLatitude' for the sake of consistency.
+ */
 function tile2lat(y, z) {
   const n = Math.PI - (((2 * Math.PI) * y) / (2 ** z));
   return ((180 / Math.PI) * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n))));
