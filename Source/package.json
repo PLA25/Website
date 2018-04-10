@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "generate": "jsdoc ./ -r -d \"docs\" -c \"conf.json\"",
     "lint": "eslint ./**/*.js",
     "lint-fix": "eslint ./**/*.js --fix",
     "start": "node ./bin/www"
