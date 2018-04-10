@@ -1,3 +1,4 @@
+/** Creates page instances from required routes. */
 const home = require('./home');
 const admin = require('./admin');
 const api = require('./api');
@@ -12,34 +13,42 @@ module.exports = (app, passport) => {
     next();
   });
 
+  /** Sets the home address as a passport home page. */
   app.use('/', home(passport));
 
+  /** Displays the login page if user is not authenticated, continues if it is. */
   app.use((req, res, next) => {
     if (req.isAuthenticated()) {
       next();
     } else {
+      /** Redirects to the login page. */
       res.redirect('/login');
     }
   });
 
+  /** Sets addresses for each page instance. */
   app.use('/admin', admin);
   app.use('/api', api);
   app.use('/map', map);
 
-  /** Error 404 handler. */
+  /** Throws the 404 error and renders its page. */
   app.use((req, res) => {
     res.status(404);
+    
+    /** Renders the 404 error page from its view. */
     res.render('404');
   });
 
-  // error handler
+  /** Handles all errors other than 404. */
   app.use((err, req, res) => {
-    // set locals, only providing error in development
+    /** Sets locals, only providing error in development. */
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-    // render the error page
+    /** Sets the appropriate error status, if it doesn't exist then set it as the 500 error, which is known for unspecificity. */
     res.status(err.status || 500);
+    
+    /** Renders the error page from its view. */
     res.render('error');
   });
 
