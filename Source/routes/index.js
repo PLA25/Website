@@ -25,7 +25,7 @@ module.exports = (app, passport) => {
   app.use('/admin', admin);
   app.use('/api', api);
   app.use('/map', map);
-  
+
   /** Error 404 handler. */
   app.use((req, res) => {
     res.status(404);
@@ -40,7 +40,7 @@ module.exports = (app, passport) => {
 
     // render the error page
     res.status(err.status || 500);
-    
+
     res.render('error');
   });
 
