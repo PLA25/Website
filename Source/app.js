@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const hbs = require('hbs');
 const mongoose = require('mongoose');
+const i18n = require('i18n');
 
 const config = require('./config');
 const passport = require('./config/passport');
@@ -18,6 +19,12 @@ mongoose.Promise = Promise;
 
 const app = express();
 hbs.localsAsTemplateData(app);
+
+/** Configures languages. */
+i18n.configure({
+  locales: ['en', 'nl'],
+  directory: __dirname + '/locales',
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
