@@ -5,6 +5,10 @@
  * @see module:routes
  */
 
+// eslint-disable-next-line import/no-unresolved, import/no-extraneous-dependencies
+const config = require('./../config');
+
+/* Packages */
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -12,72 +16,20 @@ const base64 = require('node-base64-image');
 const distance = require('fast-haversine');
 const Jimp = require('jimp');
 
-// eslint-disable-next-line import/no-unresolved, import/no-extraneous-dependencies
-const config = require('./../config');
-
-const SensorHub = require('./../models/sensorhub');
+/* Models */
 const Data = require('./../models/data');
+const SensorHub = require('./../models/sensorhub');
 
-/** Creates router instance for this route. */
+/**
+ * Express router to mount user related functions on.
+ * @type {object}
+ * @const
+ * @global
+ */
 const router = express.Router();
 
-/**
- * Converts temperature to degrees.
- * @param {number} temp - The temperature.
- * @returns {number} degress - The degrees.
- */
-function tempToDegrees(temp) {
-  /** Creates the degrees, from a temperature range of -70 to 50. */
-  let degrees = 300 - (((temp + 50) / 100) * 300);
-
-  /** Makes sure the degrees don't go above 360, which is mathematically impossible. */
-  while (degrees > 360) {
-    degrees -= 360;
-  }
-
-  /** Returns the degrees. */
-  return degrees;
-}
-
-/**
- * Converts temperature to color.
- * @param {number} temp - The temperature.
- * @returns [{number}, {number}, {number}] color
- */
-function tempToColor(temp) {
-  /** Finds the degrees for further conversion. */
-  const degrees = tempToDegrees(temp);
-
-  let value = 0;
-  if (degrees <= 60) {
-    value = parseInt((degrees / 60) * 255, 10);
-    return [255, value, 0];
-  }
-
-  if (degrees <= 120) {
-    value = 255 - parseInt((degrees / 120) * 255, 10);
-    return [value, 255, 0];
-  }
-
-  if (degrees <= 180) {
-    value = parseInt((degrees / 180) * 255, 10);
-    return [0, 255, value];
-  }
-
-  if (degrees <= 240) {
-    value = 255 - parseInt((degrees / 240) * 255, 10);
-    return [0, value, 255];
-  }
-
-  if (degrees <= 300) {
-    value = parseInt((degrees / 300) * 255, 10);
-    return [value, 0, 255];
-  }
-
-  /** The determined value if the degrees are higher than 300. */
-  value = 255 - parseInt((degrees / 120) * 255, 10);
-  return [255, 0, value];
-}
+/* Helpers */
+const { tempToColor, tileToLong, tileToLat } = require('./../lib/converter');
 
 /**
  * @param options
@@ -96,34 +48,11 @@ function GetData(options) {
   });
 }
 
-/**
- * Converts a tile with x- and z-coordinates to a longitude.
- * @param {number} x - The x-coordinate.
- * @param {number} z - The z-coordinate.
- * @returns {number} - The longitude.
- * @todo Change 'tile2long' to 'tileToLong' or 'tileToLongtitude' for the sake of consistency.
- */
-function tile2long(x, z) {
-  return (((x / (2 ** z)) * 360) - 180);
-}
-
-/**
- * Converts a tile with y- and z-coordinates to a latitude.
- * @param {number} y - The y-coordinate.
- * @param {number} z - The z-coordinate.
- * @returns {number} - The latitude.
- * @todo Change 'tile2lat' to 'tileToLat' or 'tileToLatitude' for the sake of consistency.
- */
-function tile2lat(y, z) {
-  const n = Math.PI - (((2 * Math.PI) * y) / (2 ** z));
-  return ((180 / Math.PI) * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n))));
-}
-
 router.get('/heatmap/:z/:x/:y', (req, res, next) => {
   SensorHub.find({}).exec()
     .then((sensorHubs) => {
-      const latitude = tile2lat(req.params.y, req.params.z);
-      const longitude = tile2long(req.params.x, req.params.z);
+      const latitude = tileToLat(req.params.y, req.params.z);
+      const longitude = tileToLong(req.params.x, req.params.z);
 
       const calculatedHubs = [];
       for (let i = 0; i < sensorHubs.length; i += 1) {
