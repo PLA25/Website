@@ -20,12 +20,7 @@ const Jimp = require('jimp');
 const Data = require('./../models/data');
 const SensorHub = require('./../models/sensorhub');
 
-/**
- * Express router to mount user related functions on.
- * @type {object}
- * @const
- * @global
- */
+/* Constants */
 const router = express.Router();
 
 /* Helpers */
