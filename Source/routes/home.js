@@ -18,12 +18,12 @@ const isLoggedIn = require('./../middleware/isLoggedIn');
 const router = express.Router();
 
 /**
-   * Renders the login page.
-   *
-   * @name Login
-   * @path {GET} /login
-   * @code {200} if the request is sucesfull
-   */
+ * Renders the login page.
+ *
+ * @name Login
+ * @path {GET} /login
+ * @code {200} if the request is sucesfull
+ */
 router.get('/login', (req, res) => {
   res.render('login', {
     title: 'Login',
@@ -33,12 +33,12 @@ router.get('/login', (req, res) => {
 });
 
 /**
-   * Handles the POST-data to /login.
-   *
-   * @name Login
-   * @path {POST} /login
-   * @code {200} if the request is sucesfull
-   */
+ * Handles the POST-data to /login.
+ *
+ * @name Login
+ * @path {POST} /login
+ * @code {200} if the request is sucesfull
+ */
 router.post('/login', passport.authenticate('local-login', {
   successRedirect: '/',
   failureRedirect: '/login',
@@ -46,24 +46,24 @@ router.post('/login', passport.authenticate('local-login', {
 }));
 
 /**
-   * Renders the index page.
-   *
-   * @name Index
-   * @path {GET} /
-   * @code {200} if the request is sucesfull
-   */
+ * Renders the index page.
+ *
+ * @name Index
+ * @path {GET} /
+ * @code {200} if the request is sucesfull
+ */
 router.get('/', isLoggedIn, (req, res) => {
   res.render('index');
 });
 
 /**
-   * Logs a user out and redirects him to the homepage.
-   *
-   * @name Logout
-   * @path {GET} /logout
-   * @code {200} if the request is sucesfull
-   * @todo Redirect to /login instead to remove an extra redirection (/logout -> / -> /login).
-   */
+ * Logs a user out and redirects him to the homepage.
+ *
+ * @name Logout
+ * @path {GET} /logout
+ * @code {200} if the request is sucesfull
+ * @todo Redirect to /login instead to remove an extra redirection (/logout -> / -> /login).
+ */
 router.get('/logout', isLoggedIn, (req, res) => {
   req.logout();
   res.redirect('/');
