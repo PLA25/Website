@@ -8,7 +8,8 @@
     "lint": "eslint ./**/*.js",
     "lint-fix": "eslint ./**/*.js --fix",
     "postlint-fix": "glob-run css-beautify -r ./public/**/*.css -n -N -t",
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "precommit": "npm run lint-fix"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
@@ -32,6 +33,7 @@
     "eslint-config-airbnb-base": "12.1.0",
     "eslint-plugin-import": "2.10.0",
     "glob-run": "0.1.6",
+    "husky": "0.14.3",
     "js-beautify": "1.7.5",
     "jsdoc": "3.5.5",
     "jsdoc-http-plugin": "0.3.0"
