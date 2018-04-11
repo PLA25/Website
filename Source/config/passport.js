@@ -1,5 +1,8 @@
+/* Packages */
 const Passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+
+/* Models */
 const User = require('./../models/user');
 
 /* Serializes the user. */
