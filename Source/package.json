@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "generate": "jsdoc ./ -r -d \"./../docs\" -c \"jsdoc.json\" -R \"./../README.md\"",
+    "postgenerate": "glob-run html-beautify -r ./../docs/**/*.html",
     "lint": "eslint ./**/*.js",
     "lint-fix": "eslint ./**/*.js --fix",
     "start": "node ./bin/www"
@@ -29,6 +30,8 @@
     "eslint": "4.19.1",
     "eslint-config-airbnb-base": "12.1.0",
     "eslint-plugin-import": "2.10.0",
+    "glob-run": "0.1.6",
+    "js-beautify": "1.7.5",
     "jsdoc": "3.5.5",
     "jsdoc-http-plugin": "0.3.0"
   }
