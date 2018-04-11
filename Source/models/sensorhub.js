@@ -1,11 +1,6 @@
-/** Requires the Mongoose module for database schemas. */
 const mongoose = require('mongoose');
 
-/**
- * Creates the SensorHub schema with attributes reflecting the ones in the database.
- * @todo Change "sensorHubScheme" to "sensorHubSchema".
- */
-const sensorHubScheme = new mongoose.Schema({
+const schema = new mongoose.Schema({
   SerialID: {
     type: String,
     required: true,
@@ -20,4 +15,23 @@ const sensorHubScheme = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('SensorHub', sensorHubScheme);
+/**
+ * Class representing a SensorHub.
+ * @class
+ */
+class SensorHub {
+  /**
+   * Creates a new sensorhub.
+   * @param {string} serialID - The serialID value.
+   * @param {string} latitude - The latitude value.
+   * @param {string} longitude - The longitude value.
+   */
+  constructor(serialID, latitude, longitude) {
+    this.SerialID = serialID;
+    this.Latitude = latitude;
+    this.Longitude = longitude;
+  }
+}
+
+schema.loadClass(SensorHub);
+module.exports = mongoose.model('SensorHub', schema);

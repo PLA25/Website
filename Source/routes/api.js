@@ -9,7 +9,6 @@ const Jimp = require('jimp');
 // eslint-disable-next-line import/no-unresolved, import/no-extraneous-dependencies
 const config = require('./../config');
 
-/** Requires the SensorHub and Data models. */
 const SensorHub = require('./../models/sensorhub');
 const Data = require('./../models/data');
 
