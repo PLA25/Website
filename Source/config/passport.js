@@ -1,8 +1,5 @@
-/** Requires the Passport related modules. */
 const Passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-
-/** Requires the User model. */
 const User = require('./../models/user');
 
 /** Serializes the user. */
@@ -38,7 +35,7 @@ const LocalLogin = new LocalStrategy({
     }
 
     /** If the password doesn't match the entered username, flash this error message. */
-    if (!user.validPassword(password)) {
+    if (!user.validatePassword(password)) {
       return done(null, false, req.flash('error', 'Oops! Wrong password.'));
     }
 
