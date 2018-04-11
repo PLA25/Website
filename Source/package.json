@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "generate": "jsdoc ./ -r -d \"./../docs\" -c \"jsdoc.json\" -R \"./../README.md\"",
-    "postgenerate": "glob-run html-beautify -r ./../docs/**/*.html",
+    "postgenerate": "glob-run html-beautify -r ./../docs/**/*.html -n -t -m 1 & glob-run css-beautify -r ./../docs/**/*.css -n -t -m 1",
     "lint": "eslint ./**/*.js",
     "lint-fix": "eslint ./**/*.js --fix",
     "start": "node ./bin/www"
