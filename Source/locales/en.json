@@ -1,0 +1,21 @@
+{
+	"error404": {
+		"heading": "Error 404",
+		"before-link": "The page you were looking for couldn't be found. Click ",
+		"link": "here",
+		"after-link": " to return to the home page."
+	},
+  "admin": {
+    "users": "Users",
+    "email": "Email",
+    "admin": "Admin",
+    "edit": "Edit",
+    "delete": "Delete",
+    "serial-id": "SerialID",
+    "longitude": "Longitude",
+    "latitude": "Latitude"
+  },
+	"index": {
+		"heading": "Home"
+	}
+}

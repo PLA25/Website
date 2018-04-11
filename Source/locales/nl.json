@@ -1,0 +1,21 @@
+{
+	"error404": {
+		"heading": "Error 404",
+		"before-link": "De pagina waar je naar zocht kon niet gevonden worden. Klik ",
+		"link": "hier",
+		"after-link": " om terug te gaan naar de home pagina."
+	},
+  "admin": {
+    "users": "Gebruikers",
+    "email": "E-mail",
+    "admin": "Admin",
+    "edit": "Aanpassen",
+    "delete": "Verwijderen",
+    "serial-id": "SerieID",
+    "longitude": "Lengtegraad",
+    "latitude": "Breedtegraad"
+  },
+	"index": {
+		"heading": "Home"
+	}
+}
