@@ -1,18 +1,32 @@
+/**
+ * Admin route
+ *
+ * @module routes/admin
+ * @see module:routes
+ */
+
+/* Packages */
 const express = require('express');
+
+/* Middleware */
+const isAdmin = require('./../middleware/isAdmin');
+
+/* Models */
 const User = require('./../models/user');
 const SensorHub = require('./../models/sensorhub');
 
+/* Constants */
 const router = express.Router();
 
-router.use((req, res, next) => {
-  if (req.user.isAdmin) {
-    next();
-  } else {
-    res.redirect('/');
-  }
-});
-
-router.get('/', (req, res, next) => {
+/**
+ * Renders the admin index page.
+ *
+ * @name Admin index
+ * @path {GET} /admin/
+ * @code {200} if the request is sucesfull
+ * @code {500} if the request fail because the database isn't accesible
+ */
+router.get('/', isAdmin, (req, res, next) => {
   User.find({}).exec()
     .then(users => SensorHub.find({}).exec().then(sensorHubs => [users, sensorHubs]))
     .then(([users, sensorHubs]) => {

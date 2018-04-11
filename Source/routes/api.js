@@ -1,3 +1,14 @@
+/**
+ * API route
+ *
+ * @module routes/api
+ * @see module:routes
+ */
+
+// eslint-disable-next-line import/no-unresolved, import/no-extraneous-dependencies
+const config = require('./../config');
+
+/* Packages */
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -5,58 +16,20 @@ const base64 = require('node-base64-image');
 const distance = require('fast-haversine');
 const Jimp = require('jimp');
 
-// eslint-disable-next-line import/no-unresolved, import/no-extraneous-dependencies
-const config = require('./../config');
-
 /* Models */
-const SensorHub = require('./../models/sensorhub');
 const Data = require('./../models/data');
+const SensorHub = require('./../models/sensorhub');
 
+/* Constants */
 const router = express.Router();
 
-function tempToDegrees(temp) {
-  let degrees = 300 - (((temp + 50) / 100) * 300);
+/* Helpers */
+const { tempToColor, tileToLong, tileToLat } = require('./../lib/converter');
 
-  while (degrees > 360) {
-    degrees -= 360;
-  }
-
-  return degrees;
-}
-
-function tempToColor(temp) {
-  const degrees = tempToDegrees(temp);
-
-  let value = 0;
-  if (degrees <= 60) {
-    value = parseInt((degrees / 60) * 255, 10);
-    return [255, value, 0];
-  }
-
-  if (degrees <= 120) {
-    value = 255 - parseInt((degrees / 120) * 255, 10);
-    return [value, 255, 0];
-  }
-
-  if (degrees <= 180) {
-    value = parseInt((degrees / 180) * 255, 10);
-    return [0, 255, value];
-  }
-
-  if (degrees <= 240) {
-    value = 255 - parseInt((degrees / 240) * 255, 10);
-    return [0, value, 255];
-  }
-
-  if (degrees <= 300) {
-    value = parseInt((degrees / 300) * 255, 10);
-    return [value, 0, 255];
-  }
-
-  value = 255 - parseInt((degrees / 120) * 255, 10);
-  return [255, 0, value];
-}
-
+/**
+ * @param options
+ * @todo Change 'GetData' to 'getData' in accordance of code style.
+ */
 function GetData(options) {
   return new Promise((resolve, reject) => {
     Data.findOne(options, (err, data) => {
@@ -70,20 +43,11 @@ function GetData(options) {
   });
 }
 
-function tile2long(x, z) {
-  return (((x / (2 ** z)) * 360) - 180);
-}
-
-function tile2lat(y, z) {
-  const n = Math.PI - (((2 * Math.PI) * y) / (2 ** z));
-  return ((180 / Math.PI) * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n))));
-}
-
 router.get('/heatmap/:z/:x/:y', (req, res, next) => {
   SensorHub.find({}).exec()
     .then((sensorHubs) => {
-      const latitude = tile2lat(req.params.y, req.params.z);
-      const longitude = tile2long(req.params.x, req.params.z);
+      const latitude = tileToLat(req.params.y, req.params.z);
+      const longitude = tileToLong(req.params.x, req.params.z);
 
       const calculatedHubs = [];
       for (let i = 0; i < sensorHubs.length; i += 1) {
@@ -158,6 +122,10 @@ router.get('/heatmap/:z/:x/:y', (req, res, next) => {
     });
 });
 
+/**
+ * Creates route for meetpunten.
+ * @todo Change 'meetpunten' to an English name for consistency.
+ */
 router.get('/meetpunten', (req, res, next) => {
   SensorHub.find({}).exec()
     .then((sensorHubs) => {
@@ -171,6 +139,7 @@ router.get('/meetpunten', (req, res, next) => {
     });
 });
 
+/** Handles caching. */
 router.get('/:host/:z/:x/:y', (req, res, next) => {
   const tempCachePath = path.resolve(`${__dirname}./../cache/`);
   if (!fs.existsSync(tempCachePath)) {
@@ -224,6 +193,7 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
   });
 });
 
+/** Redirects * to the map page. */
 router.get('*', (req, res) => {
   res.redirect('/map');
 });
