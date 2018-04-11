@@ -1,3 +1,10 @@
+/**
+ * Routes
+ * @module routes
+ * @see module:routes/admin
+ */
+
+
 /** Creates page instances from required routes. */
 const home = require('./home');
 const admin = require('./admin');
