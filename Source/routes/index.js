@@ -1,47 +1,40 @@
+/**
+ * Routes
+ * @module routes
+ * @see module:routes/admin
+ * @see module:routes/api
+ * @see module:routes/home
+ * @see module:routes/map
+ */
+
+/* Routes */
 const home = require('./home');
 const admin = require('./admin');
 const api = require('./api');
 const map = require('./map');
 
-module.exports = (app, passport) => {
-  app.use((req, res, next) => {
-    if (req.isAuthenticated()) {
-      res.locals.user = req.user;
-    }
+/* Middleware */
+const {
+  errorHandler, isLoggedIn, setUser, pageNotFoundHandler,
+} = require('./../middleware');
 
-    next();
-  });
+module.exports = (app) => {
+  app.use(setUser);
 
-  app.use('/', home(passport));
+  app.use('/', home);
 
-  app.use((req, res, next) => {
-    if (req.isAuthenticated()) {
-      next();
-    } else {
-      res.redirect('/login');
-    }
-  });
+  /* Only allow authenticated user */
+  app.use(isLoggedIn);
 
+  /* Sets addresses for each page instance. */
   app.use('/admin', admin);
   app.use('/api', api);
   app.use('/map', map);
 
-  /** Error 404 handler. */
-  app.use((req, res) => {
-    res.status(404);
-    res.render('404');
-  });
+  /* Handlers */
+  app.use(pageNotFoundHandler);
+  app.use(errorHandler);
 
-  // error handler
-  app.use((err, req, res) => {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error');
-  });
-
+  /* Returns the application instance. */
   return app;
 };

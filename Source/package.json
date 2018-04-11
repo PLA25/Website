@@ -3,8 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "generate": "jsdoc ./ -r -d \"./../docs\" -c \"jsdoc.json\" -R \"./../README.md\"",
+    "postgenerate": "glob-run html-beautify -r ./../docs/**/*.html -n -t -m 1 & glob-run css-beautify -r ./../docs/**/*.css -n -N -t",
     "lint": "eslint ./**/*.js",
     "lint-fix": "eslint ./**/*.js --fix",
+    "postlint-fix": "glob-run css-beautify -r ./public/**/*.css -n -N -t",
     "start": "node ./bin/www",
     "precommit": "npm run lint-fix"
   },
@@ -29,6 +32,10 @@
     "eslint": "4.19.1",
     "eslint-config-airbnb-base": "12.1.0",
     "eslint-plugin-import": "2.10.0",
-    "husky": "0.14.3"
+    "glob-run": "0.1.6",
+    "husky": "0.14.3",
+    "js-beautify": "1.7.5",
+    "jsdoc": "3.5.5",
+    "jsdoc-http-plugin": "0.3.0"
   }
 }
