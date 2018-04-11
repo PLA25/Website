@@ -1,9 +1,9 @@
 {
 	"error404": {
 		"heading": "Error 404",
-		"before-link": "De pagina waar je naar zocht kon niet gevonden worden. Klik ",
+		"before-link": "De pagina waar u naar zocht kon niet gevonden worden. Klik ",
 		"link": "hier",
-		"after-link": " om terug te gaan naar de home pagina."
+		"after-link": " om terug te gaan naar de homepagina."
 	},
   "admin": {
     "users": "Gebruikers",
@@ -17,5 +17,17 @@
   },
 	"index": {
 		"heading": "Home"
-	}
+	},
+  "layout": {
+    "home": "Home",
+    "map": "Kaart",
+    "admin": "Admin",
+    "logout": "Uitloggen",
+    "login": "Inloggen"
+  },
+  "login": {
+    "your-email": "Uw e-mail",
+    "your-password": "Uw wachtwoord",
+    "login": "Inloggen"
+  }
 }

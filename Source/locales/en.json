@@ -17,5 +17,17 @@
   },
 	"index": {
 		"heading": "Home"
-	}
+	},
+  "layout": {
+    "home": "Home",
+    "map": "Map",
+    "admin": "Admin",
+    "logout": "Logout",
+    "login": "Login"
+  },
+  "login": {
+    "your-email": "Your email",
+    "your-password": "Your password",
+    "login": "Login"
+  }
 }

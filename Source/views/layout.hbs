@@ -11,7 +11,7 @@
   {{#if title}}
     <title>PDS - {{title}}</title>
   {{else}}
-    <title>PolutionDetectionSystem</title>
+    <title>Polution Detection System</title>
   {{/if}}
 
   <!-- Style -->
@@ -41,31 +41,31 @@
         <ul class="navbar-nav">
           <li class="nav-item">
             <a class="white-text nav-link" href="/">
-                Home
-              </a>
+              {{i18n "layout.home"}}
+            </a>
           </li>
           {{#if @user}}
             <li class="nav-item">
               <a class="white-text nav-link" href="/map">
-                Map
+                {{i18n "layout.map"}}
               </a>
             </li>
             {{#if @user.isAdmin}}
               <li class="nav-item">
                 <a class="white-text nav-link" href="/admin">
-                Admin
-              </a>
+                  {{i18n "layout.admin"}}
+                </a>
               </li>
             {{/if}}
             <li class="nav-item">
               <a class="white-text nav-link" href="/logout">
-                Logout
+                {{i18n "layout.logout"}}
               </a>
             </li>
           {{else}}
             <li class="nav-item">
               <a class="white-text nav-link" href="/login">
-                Login
+                {{i18n "layout.login"}}
               </a>
             </li>
           {{/if}}
