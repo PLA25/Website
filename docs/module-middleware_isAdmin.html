@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Module: routes/map</title>
+	<title>JSDoc: Module: middleware/isAdmin</title>
 
 	<script src="scripts/prettify/prettify.js">
 
@@ -24,7 +24,7 @@
 
 	<div id="main">
 
-		<h1 class="page-title">Module: routes/map</h1>
+		<h1 class="page-title">Module: middleware/isAdmin</h1>
 
 		<section>
 
@@ -35,7 +35,65 @@
 			<article>
 				<div class="container-overview">
 
-					<div class="description">Map route</div>
+					<div class="description">Verifies if user has the role admin, if not redirect to 404.</div>
+
+					<h5>Parameters:</h5>
+
+					<table class="params">
+						<thead>
+							<tr>
+
+								<th>Name</th>
+
+								<th>Type</th>
+
+								<th class="last">Description</th>
+							</tr>
+						</thead>
+
+						<tbody>
+
+							<tr>
+
+								<td class="name"><code>req</code></td>
+
+								<td class="type">
+
+									<span class="param-type">Object</span>
+
+								</td>
+
+								<td class="description last">Express request object</td>
+							</tr>
+
+							<tr>
+
+								<td class="name"><code>res</code></td>
+
+								<td class="type">
+
+									<span class="param-type">Object</span>
+
+								</td>
+
+								<td class="description last">Express response object</td>
+							</tr>
+
+							<tr>
+
+								<td class="name"><code>next</code></td>
+
+								<td class="type">
+
+									<span class="param-type">function</span>
+
+								</td>
+
+								<td class="description last">Express next middleware function</td>
+							</tr>
+
+						</tbody>
+					</table>
 
 					<dl class="details">
 
@@ -43,7 +101,7 @@
 						<dd class="tag-source">
 							<ul class="dummy">
 								<li>
-									<a href="routes_map.js.html">routes/map.js</a>, <a href="routes_map.js.html#line1">line 1</a>
+									<a href="middleware_isAdmin.js.html">middleware/isAdmin.js</a>, <a href="middleware_isAdmin.js.html#line1">line 1</a>
 								</li>
 							</ul>
 						</dd>
@@ -51,53 +109,26 @@
 						<dt class="tag-see">See:</dt>
 						<dd class="tag-see">
 							<ul>
-								<li><a href="module-routes.html">module:routes</a></li>
+								<li>module:middleware</li>
 							</ul>
 						</dd>
 
 					</dl>
 
+					<h5>Returns:</h5>
+
+					<dl>
+						<dt>
+        Type
+    </dt>
+						<dd>
+
+							<span class="param-type">undefined</span>
+
+						</dd>
+					</dl>
+
 				</div>
-
-				<h3 class="subsection-title">Members</h3>
-
-				<h4 class="name" id="~express"><span class="type-signature">(inner, constant) </span>express<span class="type-signature"></span></h4>
-
-				<div class="description">
-					Requires the Express module for routing.
-				</div>
-
-				<dl class="details">
-
-					<dt class="tag-source">Source:</dt>
-					<dd class="tag-source">
-						<ul class="dummy">
-							<li>
-								<a href="routes_map.js.html">routes/map.js</a>, <a href="routes_map.js.html#line9">line 9</a>
-							</li>
-						</ul>
-					</dd>
-
-				</dl>
-
-				<h4 class="name" id="~router"><span class="type-signature">(inner, constant) </span>router<span class="type-signature"></span></h4>
-
-				<div class="description">
-					Creates router instance for this route.
-				</div>
-
-				<dl class="details">
-
-					<dt class="tag-source">Source:</dt>
-					<dd class="tag-source">
-						<ul class="dummy">
-							<li>
-								<a href="routes_map.js.html">routes/map.js</a>, <a href="routes_map.js.html#line12">line 12</a>
-							</li>
-						</ul>
-					</dd>
-
-				</dl>
 
 			</article>
 

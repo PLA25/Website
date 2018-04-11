@@ -5,40 +5,33 @@
  * @see module:routes
  */
 
+/* Packages */
 const express = require('express');
+
+/* Middleware */
+const isAdmin = require('./../middleware/isAdmin');
+
+/* Models */
 const User = require('./../models/user');
 const SensorHub = require('./../models/sensorhub');
 
+/* Constants */
 const router = express.Router();
 
-/**
- * Description of my middleware.
- *
- * @module myMiddleware
- * @function
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- * @param {Function} next - Express next middleware function
- */
-router.use((req, res, next) => {
-  if (req.user.isAdmin) {
-    next();
-  } else {
-    res.redirect('/');
-  }
-});
+router.use(isAdmin);
 
 /**
- * Admin page
+ * Renders the admin index page.
  *
  * @name Admin index
- * @path {GET} /admin
+ * @path {GET} /admin/
+ * @code {200} if the request is sucesfull
+ * @code {500} if the request fail because the database isn't accesible
  */
 router.get('/', (req, res, next) => {
   User.find({}).exec()
     .then(users => SensorHub.find({}).exec().then(sensorHubs => [users, sensorHubs]))
     .then(([users, sensorHubs]) => {
-      /** Renders the view 'admin' with User and SensorHub data. */
       res.render('admin', {
         users,
         sensorHubs,

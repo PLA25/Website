@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Source: models/sensorhub.js</title>
+	<title>JSDoc: Source: middleware/isAdmin.js</title>
 
 	<script src="scripts/prettify/prettify.js">
 
@@ -24,47 +24,28 @@
 
 	<div id="main">
 
-		<h1 class="page-title">Source: models/sensorhub.js</h1>
+		<h1 class="page-title">Source: middleware/isAdmin.js</h1>
 
 		<section>
 			<article>
-				<pre class="prettyprint source linenums"><code>const mongoose = require('mongoose');
-
-const schema = new mongoose.Schema({
-  SerialID: {
-    type: String,
-    required: true,
-  },
-  Latitude: {
-    type: String,
-    required: true,
-  },
-  Longitude: {
-    type: String,
-    required: true,
-  },
-});
-
-/**
- * Class representing a SensorHub.
- * @class
+				<pre class="prettyprint source linenums"><code>/**
+ * Verifies if user has the role admin, if not redirect to 404.
+ *
+ * @function
+ * @see module:middleware
+ * @module middleware/isAdmin
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @param {Function} next - Express next middleware function
+ * @return {undefined}
  */
-class SensorHub {
-  /**
-   * Creates a new sensorhub.
-   * @param {string} serialID - The serialID value.
-   * @param {string} latitude - The latitude value.
-   * @param {string} longitude - The longitude value.
-   */
-  constructor(serialID, latitude, longitude) {
-    this.SerialID = serialID;
-    this.Latitude = latitude;
-    this.Longitude = longitude;
+module.exports = (req, res, next) => {
+  if (req.user.isAdmin) {
+    next();
+  } else {
+    res.redirect('/404');
   }
-}
-
-schema.loadClass(SensorHub);
-module.exports = mongoose.model('SensorHub', schema);
+};
 </code></pre>
 			</article>
 		</section>
