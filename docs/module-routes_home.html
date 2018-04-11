@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: routes</title>
+    <title>JSDoc: Module: routes/home</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: routes</h1>
+    <h1 class="page-title">Module: routes/home</h1>
 
     
 
@@ -40,7 +40,7 @@
     <div class="container-overview">
     
         
-            <div class="description">Routes</div>
+            <div class="description">Home route</div>
         
 
         
@@ -49,7 +49,7 @@
     
 
     
-    <h4 class="name" id="module:routes"><span class="type-signature"></span>(require("routes"))<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="global.html#express">express</a>}</span></h4>
+    <h4 class="name" id="module:routes/home"><span class="type-signature"></span>(require("routes/home"))<span class="signature">()</span><span class="type-signature"> &rarr; {Router}</span></h4>
     
 
     
@@ -57,7 +57,7 @@
 
 
 <div class="description">
-    Handles routing.
+    Displays the home, login & logout page contents.
 </div>
 
 
@@ -101,7 +101,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="routes_index.js.html">routes/index.js</a>, <a href="routes_index.js.html#line18">line 18</a>
+        <a href="routes_home.js.html">routes/home.js</a>, <a href="routes_home.js.html#line18">line 18</a>
     </li></ul></dd>
     
 
@@ -128,7 +128,7 @@
 
         
 <div class="param-desc">
-    app - The application instance.
+    router - The router.
 </div>
 
 
@@ -139,7 +139,7 @@
     </dt>
     <dd>
         
-<span class="param-type"><a href="global.html#express">express</a></span>
+<span class="param-type">Router</span>
 
 
     </dd>
@@ -197,7 +197,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="routes_index.js.html">routes/index.js</a>, <a href="routes_index.js.html#line1">line 1</a>
+        <a href="routes_home.js.html">routes/home.js</a>, <a href="routes_home.js.html#line1">line 1</a>
     </li></ul></dd>
     
 
@@ -207,7 +207,7 @@
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="module-routes_admin.html">module:routes/admin</a></li>
+            <li><a href="module-routes.html">module:routes</a></li>
         </ul>
     </dd>
     
@@ -253,13 +253,13 @@
 
         
             
-<h4 class="name" id="~home"><span class="type-signature">(inner, constant) </span>home<span class="type-signature"></span></h4>
+<h4 class="name" id="~error"><span class="type-signature">(inner) </span>error<span class="type-signature"></span></h4>
 
 
 
 
 <div class="description">
-    Creates page instances from required routes.
+    Flashes error messages on the login page.
 </div>
 
 
@@ -297,7 +297,193 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="routes_index.js.html">routes/index.js</a>, <a href="routes_index.js.html#line9">line 9</a>
+        <a href="routes_home.js.html">routes/home.js</a>, <a href="routes_home.js.html#line25">line 25</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~express"><span class="type-signature">(inner, constant) </span>express<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Requires the Express module for routing.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_home.js.html">routes/home.js</a>, <a href="routes_home.js.html#line9">line 9</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~failureFlash"><span class="type-signature">(inner) </span>failureFlash<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Allows error messages to be flashed on the login page.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_home.js.html">routes/home.js</a>, <a href="routes_home.js.html#line34">line 34</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="~router"><span class="type-signature">(inner, constant) </span>router<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Creates router instance for this route.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_home.js.html">routes/home.js</a>, <a href="routes_home.js.html#line12">line 12</a>
     </li></ul></dd>
     
 

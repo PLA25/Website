@@ -1,3 +1,10 @@
+/**
+ * Map route
+ *
+ * @module routes/map
+ * @see module:routes
+ */
+
 /** Requires the Express module for routing. */
 const express = require('express');
 

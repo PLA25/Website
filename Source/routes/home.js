@@ -1,3 +1,10 @@
+/**
+ * Home route
+ *
+ * @module routes/home
+ * @see module:routes
+ */
+
 /** Requires the Express module for routing. */
 const express = require('express');
 

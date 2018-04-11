@@ -1,4 +1,10 @@
-/** Requires all necessary modules for the API. */
+/**
+ * API route
+ *
+ * @module routes/api
+ * @see module:routes
+ */
+
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
