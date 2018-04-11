@@ -44,6 +44,7 @@ app.use(session({
   rolling: true,
   resave: true,
   saveUninitialized: true,
+  /** Stores the session as a cookie for 5 minutes. */
   cookie: {
     maxAge: (5 * 60 * 1000),
   },

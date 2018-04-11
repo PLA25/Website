@@ -193,6 +193,10 @@ router.get('/heatmap/:z/:x/:y', (req, res, next) => {
     });
 });
 
+/**
+ * Creates route for meetpunten.
+ * @todo Change 'meetpunten' to an English name for consistency.
+ */
 router.get('/meetpunten', (req, res, next) => {
   SensorHub.find({}).exec()
     .then((sensorHubs) => {
@@ -206,6 +210,7 @@ router.get('/meetpunten', (req, res, next) => {
     });
 });
 
+/** Handles caching. */
 router.get('/:host/:z/:x/:y', (req, res, next) => {
   const tempCachePath = path.resolve(`${__dirname}./../cache/`);
   if (!fs.existsSync(tempCachePath)) {
@@ -259,6 +264,7 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
   });
 });
 
+/** Redirects * to the map page. */
 router.get('*', (req, res) => {
   res.redirect('/map');
 });
