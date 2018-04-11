@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Source: models/data.js</title>
+	<title>JSDoc: Source: middleware/errorHandler.js</title>
 
 	<script src="scripts/prettify/prettify.js">
 
@@ -24,39 +24,33 @@
 
 	<div id="main">
 
-		<h1 class="page-title">Source: models/data.js</h1>
+		<h1 class="page-title">Source: middleware/errorHandler.js</h1>
 
 		<section>
 			<article>
-				<pre class="prettyprint source linenums"><code>const mongoose = require('mongoose');
-
-const schema = new mongoose.Schema({
-  SensorHub: {
-    type: String,
-    required: true,
-  },
-  Type: {
-    type: String,
-    required: true,
-  },
-  Timestamp: {
-    type: Date,
-    required: true,
-  },
-  Value: {
-    type: String,
-    required: true,
-  },
-});
-
-/**
- * Class representing a data.
- * @class
+				<pre class="prettyprint source linenums"><code>/**
+ * Catches and handles all unhandled errors.
+ *
+ * @function
+ * @see module:middleware
+ * @module middleware/errorHandler
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @param {Function} next - Express next middleware function
+ * @return {undefined}
  */
-class Data {}
+module.exports = (err, req, res) => {
+  /* Sets locals, only providing error in development. */
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-schema.loadClass(Data);
-module.exports = mongoose.model('Data', schema);
+  /* Sets the appropriate error status, if it doesn't exist then set it as the 500 error, which
+  is known for unspecificity. */
+  res.status(err.status || 500);
+
+  /* Renders the error page from its view. */
+  res.render('error');
+};
 </code></pre>
 			</article>
 		</section>

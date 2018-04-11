@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Source: models/data.js</title>
+	<title>JSDoc: Module: middleware</title>
 
 	<script src="scripts/prettify/prettify.js">
 
@@ -24,41 +24,51 @@
 
 	<div id="main">
 
-		<h1 class="page-title">Source: models/data.js</h1>
+		<h1 class="page-title">Module: middleware</h1>
 
 		<section>
+
+			<header>
+
+			</header>
+
 			<article>
-				<pre class="prettyprint source linenums"><code>const mongoose = require('mongoose');
+				<div class="container-overview">
 
-const schema = new mongoose.Schema({
-  SensorHub: {
-    type: String,
-    required: true,
-  },
-  Type: {
-    type: String,
-    required: true,
-  },
-  Timestamp: {
-    type: Date,
-    required: true,
-  },
-  Value: {
-    type: String,
-    required: true,
-  },
-});
+					<div class="description">middleware</div>
 
-/**
- * Class representing a data.
- * @class
- */
-class Data {}
+					<dl class="details">
 
-schema.loadClass(Data);
-module.exports = mongoose.model('Data', schema);
-</code></pre>
+						<dt class="tag-source">Source:</dt>
+						<dd class="tag-source">
+							<ul class="dummy">
+								<li>
+									<a href="middleware_index.js.html">middleware/index.js</a>, <a href="middleware_index.js.html#line1">line 1</a>
+								</li>
+							</ul>
+						</dd>
+
+						<dt class="tag-see">See:</dt>
+						<dd class="tag-see">
+							<ul>
+								<li><a href="module-middleware_errorHandler.html">module:middleware/errorHandler</a></li>
+
+								<li><a href="module-middleware_isAdmin.html">module:middleware/isAdmin</a></li>
+
+								<li><a href="module-middleware_isLoggedIn.html">module:middleware/isLoggedIn</a></li>
+
+								<li><a href="module-middleware_setUser.html">module:middleware/setUser</a></li>
+
+								<li><a href="module-middleware_pageNotFoundHandler.html">module:middleware/pageNotFoundHandler</a></li>
+							</ul>
+						</dd>
+
+					</dl>
+
+				</div>
+
 			</article>
+
 		</section>
 
 	</div>

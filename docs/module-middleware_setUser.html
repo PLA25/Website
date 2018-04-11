@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Source: models/data.js</title>
+	<title>JSDoc: Module: middleware/setUser</title>
 
 	<script src="scripts/prettify/prettify.js">
 
@@ -24,41 +24,114 @@
 
 	<div id="main">
 
-		<h1 class="page-title">Source: models/data.js</h1>
+		<h1 class="page-title">Module: middleware/setUser</h1>
 
 		<section>
+
+			<header>
+
+			</header>
+
 			<article>
-				<pre class="prettyprint source linenums"><code>const mongoose = require('mongoose');
+				<div class="container-overview">
 
-const schema = new mongoose.Schema({
-  SensorHub: {
-    type: String,
-    required: true,
-  },
-  Type: {
-    type: String,
-    required: true,
-  },
-  Timestamp: {
-    type: Date,
-    required: true,
-  },
-  Value: {
-    type: String,
-    required: true,
-  },
-});
+					<div class="description">Sets the authenticated user object in the locals.</div>
 
-/**
- * Class representing a data.
- * @class
- */
-class Data {}
+					<h5>Parameters:</h5>
 
-schema.loadClass(Data);
-module.exports = mongoose.model('Data', schema);
-</code></pre>
+					<table class="params">
+						<thead>
+							<tr>
+
+								<th>Name</th>
+
+								<th>Type</th>
+
+								<th class="last">Description</th>
+							</tr>
+						</thead>
+
+						<tbody>
+
+							<tr>
+
+								<td class="name"><code>req</code></td>
+
+								<td class="type">
+
+									<span class="param-type">Object</span>
+
+								</td>
+
+								<td class="description last">Express request object</td>
+							</tr>
+
+							<tr>
+
+								<td class="name"><code>res</code></td>
+
+								<td class="type">
+
+									<span class="param-type">Object</span>
+
+								</td>
+
+								<td class="description last">Express response object</td>
+							</tr>
+
+							<tr>
+
+								<td class="name"><code>next</code></td>
+
+								<td class="type">
+
+									<span class="param-type">function</span>
+
+								</td>
+
+								<td class="description last">Express next middleware function</td>
+							</tr>
+
+						</tbody>
+					</table>
+
+					<dl class="details">
+
+						<dt class="tag-source">Source:</dt>
+						<dd class="tag-source">
+							<ul class="dummy">
+								<li>
+									<a href="middleware_setUser.js.html">middleware/setUser.js</a>, <a href="middleware_setUser.js.html#line1">line 1</a>
+								</li>
+							</ul>
+						</dd>
+
+						<dt class="tag-see">See:</dt>
+						<dd class="tag-see">
+							<ul>
+								<li><a href="module-middleware.html">module:middleware</a></li>
+							</ul>
+						</dd>
+
+					</dl>
+
+					<h5>Returns:</h5>
+
+					<dl>
+						<dt>
+        Type
+    </dt>
+						<dd>
+
+							<span class="param-type">undefined</span>
+
+						</dd>
+					</dl>
+
+				</div>
+
 			</article>
+
 		</section>
 
 	</div>

@@ -1,4 +1,4 @@
-/** Requires all modules. */
+/* Packages */
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
@@ -10,16 +10,16 @@ const flash = require('connect-flash');
 const hbs = require('hbs');
 const mongoose = require('mongoose');
 
-/** Requires the configuration, passport and routes. */
+/* Requires the configuration, passport and routes. */
 const config = require('./config');
 const passport = require('./config/passport');
 const routes = require('./routes');
 
-/** Connects to the MongoDB database with the configured settings. */
+/* Connects to the MongoDB database with the configured settings. */
 mongoose.connect(`mongodb://${config.MongoDB.User}:${config.MongoDB.Pass}@${config.MongoDB.Host}:${config.MongoDB.Port}/${config.MongoDB.Name}`);
 mongoose.Promise = Promise;
 
-/** Creates an application instance with Express. */
+/* Creates an application instance with Express. */
 const app = express();
 hbs.localsAsTemplateData(app);
 
@@ -44,7 +44,7 @@ app.use(session({
   rolling: true,
   resave: true,
   saveUninitialized: true,
-  /** Stores the session as a cookie for 5 minutes. */
+  /* Stores the session as a cookie for 5 minutes. */
   cookie: {
     maxAge: (5 * 60 * 1000),
   },
@@ -53,4 +53,4 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-module.exports = routes(app, passport);
+module.exports = routes(app);

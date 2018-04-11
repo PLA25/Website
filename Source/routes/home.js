@@ -5,59 +5,68 @@
  * @see module:routes
  */
 
-/** Requires the Express module for routing. */
+/* Packages */
 const express = require('express');
 
-/** Creates router instance for this route. */
+/* Authentication */
+const passport = require('./../config/passport');
+
+/* Middleware */
+const isLoggedIn = require('./../middleware/isLoggedIn');
+
+/* Constants */
 const router = express.Router();
 
 /**
- * Displays the home, login & logout page contents.
- * @returns {Router} router - The router.
- */
-module.exports = (passport) => {
-  /** Gets the login page. */
-  router.get('/login', (req, res) => {
-    res.render('login', {
-      title: 'Login',
-      layout: 'layout-nonav',
-      /** Flashes error messages on the login page. */
-      error: req.flash('error'),
-    });
+   * Renders the login page.
+   *
+   * @name Login
+   * @path {GET} /login
+   * @code {200} if the request is sucesfull
+   */
+router.get('/login', (req, res) => {
+  res.render('login', {
+    title: 'Login',
+    layout: 'layout-nonav',
+    error: req.flash('error'),
   });
+});
 
-  /** Decides what to do with login success and failure. */
-  router.post('/login', passport.authenticate('local-login', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    /** Allows error messages to be flashed on the login page. */
-    failureFlash: true,
-  }));
+/**
+   * Handles the POST-data to /login.
+   *
+   * @name Login
+   * @path {POST} /login
+   * @code {200} if the request is sucesfull
+   */
+router.post('/login', passport.authenticate('local-login', {
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true,
+}));
 
-  /** If the user is not authenticated, load the login screen. */
-  router.use((req, res, next) => {
-    if (req.isAuthenticated()) {
-      next();
-    } else {
-      res.redirect('/login');
-    }
-  });
+/**
+   * Renders the index page.
+   *
+   * @name Index
+   * @path {GET} /
+   * @code {200} if the request is sucesfull
+   */
+router.get('/', isLoggedIn, (req, res) => {
+  res.render('index');
+});
 
-  /** Handles the default page. */
-  router.get('/', (req, res) => {
-    /** Renders the view 'index'. */
-    res.render('index', {});
-  });
-
-  /**
+/**
    * Logs a user out and redirects him to the homepage.
+   *
+   * @name Logout
+   * @path {GET} /logout
+   * @code {200} if the request is sucesfull
    * @todo Redirect to /login instead to remove an extra redirection (/logout -> / -> /login).
    */
-  router.get('/logout', (req, res) => {
-    req.logout();
-    res.redirect('/');
-  });
+router.get('/logout', isLoggedIn, (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
 
-  /** Returns the router instance. */
-  return router;
-};
+module.exports = router;

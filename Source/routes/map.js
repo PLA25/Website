@@ -5,16 +5,21 @@
  * @see module:routes
  */
 
-/** Requires the Express module for routing. */
+/* Packages */
 const express = require('express');
 
-/** Creates router instance for this route. */
+/* Constants */
 const router = express.Router();
 
-/** Displays the map page content. */
+/**
+ * Renders the map page.
+ *
+ * @name Index
+ * @path {GET} /map/
+ * @code {200} if the request is sucesfull
+ */
 router.get('/', (req, res) => {
-  /** Renders the view 'map'. */
-  res.render('map', {});
+  res.render('map');
 });
 
 module.exports = router;

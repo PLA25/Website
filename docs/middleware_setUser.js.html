@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Source: models/data.js</title>
+	<title>JSDoc: Source: middleware/setUser.js</title>
 
 	<script src="scripts/prettify/prettify.js">
 
@@ -24,39 +24,28 @@
 
 	<div id="main">
 
-		<h1 class="page-title">Source: models/data.js</h1>
+		<h1 class="page-title">Source: middleware/setUser.js</h1>
 
 		<section>
 			<article>
-				<pre class="prettyprint source linenums"><code>const mongoose = require('mongoose');
-
-const schema = new mongoose.Schema({
-  SensorHub: {
-    type: String,
-    required: true,
-  },
-  Type: {
-    type: String,
-    required: true,
-  },
-  Timestamp: {
-    type: Date,
-    required: true,
-  },
-  Value: {
-    type: String,
-    required: true,
-  },
-});
-
-/**
- * Class representing a data.
- * @class
+				<pre class="prettyprint source linenums"><code>/**
+ * Sets the authenticated user object in the locals.
+ *
+ * @function
+ * @see module:middleware
+ * @module middleware/setUser
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @param {Function} next - Express next middleware function
+ * @return {undefined}
  */
-class Data {}
+module.exports = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    res.locals.user = req.user;
+  }
 
-schema.loadClass(Data);
-module.exports = mongoose.model('Data', schema);
+  next();
+};
 </code></pre>
 			</article>
 		</section>
