@@ -1,10 +1,10 @@
 {
-	"error404": {
-		"heading": "Error 404",
-		"before-link": "The page you were looking for couldn't be found. Click ",
-		"link": "here",
-		"after-link": " to return to the home page."
-	},
+  "error404": {
+    "heading": "Error 404",
+    "before-link": "The page you were looking for couldn't be found. Click ",
+    "link": "here",
+    "after-link": " to return to the home page."
+  },
   "admin": {
     "users": "Users",
     "email": "Email",
@@ -15,9 +15,9 @@
     "longitude": "Longitude",
     "latitude": "Latitude"
   },
-	"index": {
-		"heading": "Home"
-	},
+  "index": {
+    "heading": "Home"
+  },
   "layout": {
     "home": "Home",
     "map": "Map",
