@@ -7,10 +7,12 @@
  * Converts temperature, in celsius, to degrees.
  *
  * @function
- * @param {number} temp - temperature in celsius
+ * @param {number} temperature - temperature in celsius
  * @return {number} 0 - 360
  */
-function tempToDegrees(temp) {
+function tempToDegrees(temperature) {
+  const temp = temperature > 50 ? 50 : temperature;
+
   /*
    * Creates the degrees, from a temperature range of -70 to 50.
    */
@@ -41,7 +43,6 @@ function tempToColor(temp) {
    * Finds the degrees for further conversion.
    */
   const degrees = tempToDegrees(temp);
-
   let value = 0;
   if (degrees <= 60) {
     value = parseInt((degrees / 60) * 255, 10);
@@ -71,7 +72,7 @@ function tempToColor(temp) {
   /*
    * The determined value if the degrees are higher than 300.
    */
-  value = 255 - parseInt((degrees / 120) * 255, 10);
+  value = 255 - parseInt((degrees / 360) * 255, 10);
   return [255, 0, value];
 }
 
