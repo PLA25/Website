@@ -44,27 +44,27 @@ function tempToColor(temp) {
    */
   const degrees = tempToDegrees(temp);
   let value = 0;
-  if (degrees < 60) {
+  if (degrees <= 60) {
     value = parseInt((degrees / 60) * 255, 10);
     return [255, value, 0];
   }
 
-  if (degrees < 120) {
+  if (degrees <= 120) {
     value = 255 - parseInt((degrees / 120) * 255, 10);
     return [value, 255, 0];
   }
 
-  if (degrees < 180) {
+  if (degrees <= 180) {
     value = parseInt((degrees / 180) * 255, 10);
     return [0, 255, value];
   }
 
-  if (degrees < 240) {
+  if (degrees <= 240) {
     value = 255 - parseInt((degrees / 240) * 255, 10);
     return [0, value, 255];
   }
 
-  if (degrees < 300) {
+  if (degrees <= 300) {
     value = parseInt((degrees / 300) * 255, 10);
     return [value, 0, 255];
   }
@@ -72,7 +72,7 @@ function tempToColor(temp) {
   /*
    * The determined value if the degrees are higher than 300.
    */
-  value = 255 - parseInt((degrees / 120) * 255, 10);
+  value = 255 - parseInt((degrees / 360) * 255, 10);
   return [255, 0, value];
 }
 
