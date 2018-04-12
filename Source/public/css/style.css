@@ -39,6 +39,7 @@ footer {
 }
 
 .navbar .flag {
+  cursor: pointer;
   margin-left: 5px;
 }
 
@@ -48,6 +49,7 @@ footer {
 }
 
 .card .flag {
+  cursor: pointer;
   float: left;
   margin-right: 10px;
 }

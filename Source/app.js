@@ -19,8 +19,6 @@ mongoose.Promise = Promise;
 
 /**
  * Configures i18n.
- * @todo Create a feature to switch languages on command.
- * @todo Save the current language as a cookie.
  */
 i18n.configure({
   locales: ['en', 'nl'],
@@ -35,17 +33,6 @@ hbs.localsAsTemplateData(app);
 
 /** Binds i18n to the Express app. */
 app.use(i18n.init);
-
-/** Binds i18n to Handlebars. */
-hbs.registerHelper('i18n',
-  function (str) {
-    if(!str) {
-      return str;
-    }
-
-    return i18n.__(str);
-  }
-);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -74,5 +61,31 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+
+/** Sets locale if there's a session with a locale. */
+app.use(function (req, res, next) {
+  if (req.session.locale) {
+    i18n.setLocale(req.session.locale);
+  }
+
+  next();
+});
+
+/** Changes the language on command. */
+app.post('/locale-:locale', (req, res) => {
+  req.session.locale = req.params.locale;
+  res.redirect('back');
+});
+
+/** Binds i18n to Handlebars. */
+hbs.registerHelper('i18n',
+  function (str) {
+    if(!str) {
+      return str;
+    }
+
+    return i18n.__(str);
+  }
+);
 
 module.exports = routes(app, passport);
