@@ -24,7 +24,11 @@ const SensorHub = require('./../models/sensorhub');
 const router = express.Router();
 
 /* Helpers */
-const { tempToColor, tileToLong, tileToLat } = require('./../lib/converter');
+const {
+  tempToColor,
+  tileToLong,
+  tileToLat,
+} = require('./../lib/converter');
 
 /**
  * @param options
@@ -43,11 +47,26 @@ function GetData(options) {
   });
 }
 
+/**
+ * Generate a heatmap tile
+ *
+ * @name Heatmap
+ * @path {GET} /api/heatmap/:z/:x/:y
+ * @params {String} :z is the z index of the map layer.
+ * @params {String} :x is the x index of the map layer.
+ * @params {String} :y is the y index of the map layer.
+ * @response {Image} Tile 256x256 pixels
+ */
 router.get('/heatmap/:z/:x/:y', (req, res, next) => {
   SensorHub.find({}).exec()
     .then((sensorHubs) => {
       const latitude = tileToLat(req.params.y, req.params.z);
       const longitude = tileToLong(req.params.x, req.params.z);
+
+      const to = {
+        lat: parseFloat(latitude, 10),
+        lon: parseFloat(longitude, 10),
+      };
 
       const calculatedHubs = [];
       for (let i = 0; i < sensorHubs.length; i += 1) {
@@ -56,11 +75,6 @@ router.get('/heatmap/:z/:x/:y', (req, res, next) => {
         const from = {
           lat: parseFloat(sensorHub.Latitude, 10),
           lon: parseFloat(sensorHub.Longitude, 10),
-        };
-
-        const to = {
-          lat: parseFloat(latitude, 10),
-          lon: parseFloat(longitude, 10),
         };
 
         sensorHub.Distance = distance(from, to);
@@ -81,28 +95,62 @@ router.get('/heatmap/:z/:x/:y', (req, res, next) => {
       return Promise.all(promises).then(data => [selectedNodes, data]);
     })
     .then(([selectedNodes, data]) => {
-      let divider = 0;
-      for (let i = 0; i < selectedNodes.length; i += 1) {
-        divider += (1 / parseFloat(selectedNodes[i].Distance, 10));
-      }
+      const lat1 = tileToLat(req.params.y, req.params.z);
+      const lon1 = tileToLong(req.params.x, req.params.z);
+      const lat2 = tileToLat(parseInt(req.params.y, 10) - 1, req.params.z);
+      const lon2 = tileToLong(parseInt(req.params.x, 10) - 1, req.params.z);
 
-      let calculatedValue = 0;
-      for (let i = 0; i < data.length; i += 1) {
-        const dataNode = data[i];
-        const sensorHub = selectedNodes[i];
+      const lat = (lat2 - lat1) / 2;
+      const lon = (lon1 - lon2) / 2;
 
-        const weight = (1 / sensorHub.Distance) / divider;
-        calculatedValue += (parseFloat(dataNode.Value, 10) * weight);
-      }
+      const links = lon1 - lon;
+      const boven = lat1 - lat;
+      const rechts = lon1 + lon;
+      const onder = lat1 + lat;
 
-      return calculatedValue;
-    })
-    .then((calculatedValue) => {
       const image = new Jimp(256, 256, 0x0);
-      const rgb = tempToColor(calculatedValue);
+
+      const xMulti = (rechts - links) / 256;
+      const yMulti = (boven - onder) / 256;
 
       for (let x = 0; x < 256; x += 1) {
         for (let y = 0; y < 256; y += 1) {
+          const calculatedHubs = [];
+          for (let i = 0; i < selectedNodes.length; i += 1) {
+            const sensorHub = selectedNodes[i].toObject();
+
+            const latitude = onder + (yMulti * y);
+            const longitude = links + (xMulti * x);
+
+            const to = {
+              lat: parseFloat(latitude, 10),
+              lon: parseFloat(longitude, 10),
+            };
+
+            const from = {
+              lat: parseFloat(sensorHub.Latitude, 10),
+              lon: parseFloat(sensorHub.Longitude, 10),
+            };
+
+            sensorHub.Distance = distance(from, to);
+            calculatedHubs.push(sensorHub);
+          }
+
+          let divider = 0;
+          for (let i = 0; i < calculatedHubs.length; i += 1) {
+            divider += (1 / parseFloat(calculatedHubs[i].Distance, 10));
+          }
+
+          let calculatedValue = 0;
+          for (let i = 0; i < data.length; i += 1) {
+            const dataNode = data[i];
+            const sensorHub = calculatedHubs[i];
+
+            const weight = (1 / sensorHub.Distance) / divider;
+            calculatedValue += (parseFloat(dataNode.Value, 10) * weight);
+          }
+
+          const rgb = tempToColor(calculatedValue);
           image.setPixelColor(Jimp.rgbaToInt(rgb[0], rgb[1], rgb[2], parseFloat(0.25 * 255)), x, y);
         }
       }
@@ -124,6 +172,9 @@ router.get('/heatmap/:z/:x/:y', (req, res, next) => {
 
 /**
  * Creates route for meetpunten.
+ *
+ * @name Meetpunten
+ * @path {GET} /api/meetpunten
  * @todo Change 'meetpunten' to an English name for consistency.
  */
 router.get('/meetpunten', (req, res, next) => {

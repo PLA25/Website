@@ -20,10 +20,12 @@ footer {
 	overflow: hidden;
 }
 
+/*
 .map {
 	height: 50% !important;
 	width: 50% !important;
 }
+*/
 
 .rgba-blue-dark {
 	background-color: rgba(3, 169, 244, 1) !important;
