@@ -1,11 +1,13 @@
-$('#locale-en').click(function() {
-  $.post('/locale-en');
+function changeLocale(locale) {
+  $.post('/locale-' + locale);
 
   setTimeout(location.reload.bind(location), 100);
+}
+
+$('#locale-en').click(function() {
+  changeLocale('en');
 });
 
 $('#locale-nl').click(function() {
-  $.post('/locale-nl');
-
-  setTimeout(location.reload.bind(location), 100);
+  changeLocale('nl');
 });
