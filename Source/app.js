@@ -11,28 +11,13 @@ const hbs = require('hbs');
 const mongoose = require('mongoose');
 
 /* Requires the configuration, passport and routes. */
+const config = require('./config/all');
+
 const passport = require('./config/passport');
 const routes = require('./routes');
 
-let config;
-try {
-  // eslint-disable-next-line global-require
-  config = require('./config');
-} catch (e) {
-  config = {
-    MongoDB: {
-      Host: process.env.MongoDB_Host,
-      Port: process.env.MongoDB_Port,
-      User: process.env.MongoDB_User,
-      Pass: process.env.MongoDB_Pass,
-      Name: process.env.MongoDB_Name,
-    },
-  };
-} finally {
-  /* Connects to the MongoDB database with the configured settings. */
-  mongoose.connect(`mongodb://${config.MongoDB.User}:${config.MongoDB.Pass}@${config.MongoDB.Host}:${config.MongoDB.Port}/${config.MongoDB.Name}`);
-  mongoose.Promise = Promise;
-}
+/* Connects to the MongoDB database with the configured settings. */
+mongoose.connect(`mongodb://${config.MongoDB.User}:${config.MongoDB.Pass}@${config.MongoDB.Host}:${config.MongoDB.Port}/${config.MongoDB.Name}`);
 
 /* Creates an application instance with Express. */
 let app = express();
