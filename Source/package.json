@@ -9,7 +9,7 @@
     "lint-fix": "eslint ./**/*.js --fix",
     "postlint-fix": "glob-run css-beautify -r ./public/**/*.css -n -N -t",
     "start": "node ./bin/www",
-    "test": "istanbul cover ./node_modules/mocha/bin/_mocha && codecov",
+    "test": "mocha",
     "precommit": "npm run lint-fix"
   },
   "dependencies": {
