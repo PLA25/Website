@@ -17,5 +17,4 @@ before_script:
 
 script:
   - npm run lint
-  - istanbul cover ./node_modules/mocha/bin/_mocha --reporter lcovonly -- -R spec
-  - codecov
+  - npm test
