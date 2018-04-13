@@ -3,7 +3,6 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const favicon = require('serve-favicon');
-// const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
@@ -27,9 +26,8 @@ hbs.localsAsTemplateData(app);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-/** Sets a favicon for browsers. */
+/* Sets a favicon for browsers. */
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-// app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false,
@@ -55,9 +53,4 @@ app.use(flash());
 
 app = routes(app);
 
-const port = process.env.PORT || 3000;
-const server = app.listen(port, () => {
-  // console.log('App listening on port %s', port);
-});
-
-module.exports = server;
+module.exports = app.listen(process.env.PORT || 3000);
