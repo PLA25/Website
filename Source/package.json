@@ -7,8 +7,8 @@
     "postgenerate": "glob-run html-beautify -r ./../docs/**/*.html -n -t -m 1 & glob-run css-beautify -r ./../docs/**/*.css -n -N -t & glob-run css-beautify -r ./public/**/*.css -n -N -t",
     "lint": "eslint ./**/*.js",
     "lint-fix": "eslint ./**/*.js --fix",
-    "start": "node ./bin/www",
-    "test": "nyc --reporter=html --reporter=text mocha",
+    "start": "node app.js",
+    "test": "nyc --reporter=html --reporter=text mocha --exit",
     "coverage-coveralls": "nyc report --reporter=text-lcov | coveralls",
     "coverage-codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "precommit": "npm run lint-fix"
@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "chai": "4.1.2",
+    "chai-http": "4.0.0",
     "codecov": "3.0.0",
     "coveralls": "3.0.0",
     "eslint": "4.19.1",
@@ -43,6 +44,8 @@
     "jsdoc": "3.5.5",
     "jsdoc-http-plugin": "0.3.0",
     "mocha": "5.1.0",
-    "nyc": "11.6.0"
+    "nyc": "11.6.0",
+    "really-need": "1.9.2",
+    "supertest": "3.0.0"
   }
 }

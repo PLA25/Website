@@ -3,7 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const favicon = require('serve-favicon');
-const logger = require('morgan');
+// const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
@@ -11,16 +11,31 @@ const hbs = require('hbs');
 const mongoose = require('mongoose');
 
 /* Requires the configuration, passport and routes. */
-const config = require('./config');
 const passport = require('./config/passport');
 const routes = require('./routes');
 
-/* Connects to the MongoDB database with the configured settings. */
-mongoose.connect(`mongodb://${config.MongoDB.User}:${config.MongoDB.Pass}@${config.MongoDB.Host}:${config.MongoDB.Port}/${config.MongoDB.Name}`);
-mongoose.Promise = Promise;
+let config;
+try {
+  // eslint-disable-next-line global-require
+  config = require('./config');
+} catch (e) {
+  config = {
+    MongoDB: {
+      Host: process.env.MongoDB_Host,
+      Port: process.env.MongoDB_Port,
+      User: process.env.MongoDB_User,
+      Pass: process.env.MongoDB_Pass,
+      Name: process.env.MongoDB_Name,
+    },
+  };
+} finally {
+  /* Connects to the MongoDB database with the configured settings. */
+  mongoose.connect(`mongodb://${config.MongoDB.User}:${config.MongoDB.Pass}@${config.MongoDB.Host}:${config.MongoDB.Port}/${config.MongoDB.Name}`);
+  mongoose.Promise = Promise;
+}
 
 /* Creates an application instance with Express. */
-const app = express();
+let app = express();
 hbs.localsAsTemplateData(app);
 
 // view engine setup
@@ -29,7 +44,7 @@ app.set('view engine', 'hbs');
 
 /** Sets a favicon for browsers. */
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false,
@@ -53,4 +68,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-module.exports = routes(app);
+app = routes(app);
+
+const port = process.env.PORT || 3000;
+const server = app.listen(port, () => {
+  // console.log('App listening on port %s', port);
+});
+
+module.exports = server;
