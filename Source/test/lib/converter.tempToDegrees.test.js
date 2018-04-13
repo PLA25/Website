@@ -2,7 +2,7 @@
 require('chai').should();
 
 /* Lib */
-const { tempToDegrees } = require('./../lib/converter');
+const { tempToDegrees } = require('./../../lib/converter');
 
 describe('tempToDegrees', () => {
   // Arrange
