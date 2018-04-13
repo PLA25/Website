@@ -5,8 +5,21 @@
  * @see module:routes
  */
 
-// eslint-disable-next-line import/no-unresolved, import/no-extraneous-dependencies
-const config = require('./../config');
+let config;
+try {
+  // eslint-disable-next-line global-require
+  config = require('./../config');
+} catch (e) {
+  config = {
+    MongoDB: {
+      Host: process.env.MongoDB_Host,
+      Port: process.env.MongoDB_Port,
+      User: process.env.MongoDB_User,
+      Pass: process.env.MongoDB_Pass,
+      Name: process.env.MongoDB_Name,
+    },
+  };
+}
 
 /* Packages */
 const express = require('express');
