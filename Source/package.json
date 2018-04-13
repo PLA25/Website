@@ -4,10 +4,9 @@
   "private": true,
   "scripts": {
     "generate": "jsdoc ./ -r -d \"./../docs\" -c \"jsdoc.json\" -R \"./../README.md\"",
-    "postgenerate": "glob-run html-beautify -r ./../docs/**/*.html -n -t -m 1 & glob-run css-beautify -r ./../docs/**/*.css -n -N -t",
+    "postgenerate": "glob-run html-beautify -r ./../docs/**/*.html -n -t -m 1 & glob-run css-beautify -r ./../docs/**/*.css -n -N -t & glob-run css-beautify -r ./public/**/*.css -n -N -t",
     "lint": "eslint ./**/*.js",
     "lint-fix": "eslint ./**/*.js --fix",
-    "postlint-fix": "glob-run css-beautify -r ./public/**/*.css -n -N -t",
     "start": "node ./bin/www",
     "test": "mocha",
     "precommit": "npm run lint-fix"
