@@ -14,19 +14,7 @@ function tempToDegrees(temp) {
   /*
    * Creates the degrees, from a temperature range of -70 to 50.
    */
-  let degrees = 300 - (((temp + 50) / 100) * 300);
-
-  /*
-   * Makes sure the degrees don't go above 360, which is mathematically impossible.
-   */
-  while (degrees > 360) {
-    degrees -= 360;
-  }
-
-  /*
-   * Returns the degrees.
-   */
-  return degrees;
+  return (300 - (((temp + 50) / 100) * 300));
 }
 
 /**
