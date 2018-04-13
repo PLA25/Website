@@ -16,11 +16,12 @@ function tempToDegrees(temp) {
    */
   let degrees = 360 - (((temp + 50) / 100) * 360);
 
-  /*
-   * Makes sure the degrees don't go above 360, which is mathematically impossible.
-   */
   while (degrees > 360) {
     degrees -= 360;
+  }
+
+  while (degrees < 0) {
+    degrees += 360;
   }
 
   /*
