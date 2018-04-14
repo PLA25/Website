@@ -67,7 +67,7 @@ app.use(passport.session());
 app.use(flash());
 
 /* Sets locale if there's a session with a locale. */
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   if (req.session.locale) {
     i18n.setLocale(req.session.locale);
   }
@@ -82,14 +82,15 @@ app.post('/locale-:locale', (req, res) => {
 });
 
 /* Binds i18n to Handlebars. */
-hbs.registerHelper('i18n',
-  function (str) {
-    if(!str) {
+hbs.registerHelper(
+  'i18n',
+  (str) => {
+    if (!str) {
       return str;
     }
 
     return i18n.__(str);
-  }
+  },
 );
 
 module.exports = routes(app, passport);
