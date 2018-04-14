@@ -1,7 +1,7 @@
 /* Packages */
 const chai = require('chai');
 const request = require('supertest');
-const app = require('./../../app');
+const app = require('./../../bin/www');
 
 chai.should();
 

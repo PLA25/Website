@@ -19,7 +19,7 @@ const routes = require('./routes');
 mongoose.connect(`mongodb://${config.MongoDB.User}:${config.MongoDB.Pass}@${config.MongoDB.Host}:${config.MongoDB.Port}/${config.MongoDB.Name}`);
 
 /* Creates an application instance with Express. */
-let app = express();
+const app = express();
 hbs.localsAsTemplateData(app);
 
 // view engine setup
@@ -51,6 +51,4 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-app = routes(app);
-
-module.exports = app.listen(process.env.PORT || 3000);
+module.exports = routes(app);

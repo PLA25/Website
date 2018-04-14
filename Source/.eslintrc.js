@@ -6,6 +6,9 @@ module.exports = {
   },
   "extends": "airbnb-base",
   "rules": {
+    "no-console": ["error", {
+      "allow": ["error", "warn"]
+    }],
     "no-multiple-empty-lines": ["error", {
       "max": 1,
       "maxBOF": 0,
