@@ -54,14 +54,37 @@ router.get('/heatmap/:z/:x/:y', (req, res, next) => {
   }
 
   const filePath = path.resolve(cachePath, `${req.params.z}_${req.params.x}_${req.params.y}.png`);
-  /*
-   * if (fs.existsSync(filePath)) {
-   * res.sendFile(filePath);
-   * return;
-   *}
-   */
+
+  if (fs.existsSync(filePath)) {
+    res.sendFile(filePath);
+    return;
+  }
 
   SensorHub.find({}).exec()
+    .then((sensorHubs) => {
+      const latitude = tileToLat(req.params.y, req.params.z);
+      const longitude = tileToLong(req.params.x, req.params.z);
+
+      const calculatedHubs = [];
+      for (let i = 0; i < sensorHubs.length; i += 1) {
+        const sensorHub = sensorHubs[i];
+
+        const from = {
+          lat: parseFloat(sensorHub.Latitude, 10),
+          lon: parseFloat(sensorHub.Longitude, 10),
+        };
+
+        const to = {
+          lat: parseFloat(latitude, 10),
+          lon: parseFloat(longitude, 10),
+        };
+
+        sensorHub.Distance = distance(from, to);
+        calculatedHubs.push(sensorHub);
+      }
+
+      return calculatedHubs.sort((a, b) => a.Distance - b.Distance).slice(0, 5);
+    })
     .then((allSensorHubs) => {
       const promises = [];
 
@@ -120,7 +143,7 @@ router.get('/heatmap/:z/:x/:y', (req, res, next) => {
             selectedNodes.push(sensorHub);
           }
 
-          const calculatedHubs = selectedNodes.sort((a, b) => a.Distance - b.Distance).slice(0, 5);
+          const calculatedHubs = selectedNodes;
 
           let divider = 0;
           calculatedHubs.forEach((calculatedHub) => {
