@@ -5,8 +5,7 @@
  * @see module:routes
  */
 
-// eslint-disable-next-line import/no-unresolved, import/no-extraneous-dependencies
-const config = require('./../config');
+const config = require('./../config/all');
 
 /* Packages */
 const express = require('express');

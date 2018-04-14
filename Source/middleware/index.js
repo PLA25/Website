@@ -15,5 +15,9 @@ const setUser = require('./setUser');
 const pageNotFoundHandler = require('./pageNotFoundHandler');
 
 module.exports = {
-  errorHandler, isAdmin, isLoggedIn, setUser, pageNotFoundHandler,
+  errorHandler,
+  isAdmin,
+  isLoggedIn,
+  setUser,
+  pageNotFoundHandler,
 };

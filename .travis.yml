@@ -9,9 +9,12 @@ cache:
 
 before_script:
   - cd Source
-  - npm install -g eslint
   - npm install
-  - npm install --only=dev
 
 script:
   - npm run lint
+  - npm test
+
+after_success:
+  - npm run coverage-coveralls
+  - npm run coverage-codecov
