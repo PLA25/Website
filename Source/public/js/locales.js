@@ -1,13 +1,17 @@
-function changeLocale(locale) {
-  $.post(`/locale-${locale}`);
+$(() => {
+  function changeLocale(locale) {
+    $.post(`/locale-${locale}`, () => {
+      window.location.reload();
+    }).fail(() => {
+      // TODO: How do we want to handle this error?
+    });
+  }
 
-  setTimeout(location.reload.bind(location), 100);
-}
+  $('#locale-en').click(() => {
+    changeLocale('en');
+  });
 
-$('#locale-en').click(() => {
-  changeLocale('en');
-});
-
-$('#locale-nl').click(() => {
-  changeLocale('nl');
+  $('#locale-nl').click(() => {
+    changeLocale('nl');
+  });
 });

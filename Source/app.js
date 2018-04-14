@@ -88,6 +88,7 @@ hbs.registerHelper(
       return str;
     }
 
+    // eslint-disable-next-line no-underscore-dangle
     return i18n.__(str);
   },
 );
