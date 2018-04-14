@@ -91,3 +91,4 @@ Source/config.js
 
 # Image cache
 Source/cache/*/*.jpg
+Source/cache/*/*.png
