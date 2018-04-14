@@ -5,6 +5,7 @@
  * @see module:routes
  */
 
+/* Config */
 const config = require('./../config/all');
 
 /* Packages */
@@ -12,7 +13,6 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const base64 = require('node-base64-image');
-const distance = require('fast-haversine');
 const Jimp = require('jimp');
 
 /* Models */
@@ -23,31 +23,60 @@ const SensorHub = require('./../models/sensorhub');
 const router = express.Router();
 
 /* Helpers */
-const { tempToColor, tileToLong, tileToLat } = require('./../lib/converter');
+const {
+  generateImage,
+} = require('./../lib/generator');
 
-/**
- * @param options
- * @todo Change 'GetData' to 'getData' in accordance of code style.
- */
-function GetData(options) {
+let cacheSensorHubs = null;
+
+function getCachedSensorHubs(options) {
   return new Promise((resolve, reject) => {
-    Data.findOne(options, (err, data) => {
-      if (err) {
-        reject(err);
-        return;
-      }
+    if (cacheSensorHubs !== null) {
+      resolve(cacheSensorHubs);
+      return;
+    }
 
-      resolve(data);
-    });
+    SensorHub.find(options).exec()
+      .then((sensorHubs) => {
+        cacheSensorHubs = sensorHubs;
+        resolve(sensorHubs);
+      })
+      .catch((err) => {
+        reject(err);
+      });
   });
 }
 
-router.get('/heatmap/:z/:x/:y', (req, res, next) => {
-  const tempCachePath = path.resolve(`${__dirname}./../cache/`);
+let cacheData = null;
+
+function getCachedData(options) {
+  return new Promise((resolve, reject) => {
+    if (cacheData !== null) {
+      resolve(cacheData);
+      return;
+    }
+
+    Data.find(options).exec()
+      .then((data) => {
+        cacheData = data;
+        resolve(data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
+const tempCachePath = path.resolve(`${__dirname}./../cache/`);
+router.get('*', (req, res, next) => {
   if (!fs.existsSync(tempCachePath)) {
     fs.mkdirSync(tempCachePath);
   }
 
+  next();
+});
+
+router.get('/heatmap/:z/:x/:y', (req, res, next) => {
   const cachePath = path.resolve(`${tempCachePath}/heatmap/`);
   if (!fs.existsSync(cachePath)) {
     fs.mkdirSync(cachePath);
@@ -60,110 +89,10 @@ router.get('/heatmap/:z/:x/:y', (req, res, next) => {
     return;
   }
 
-  SensorHub.find({}).exec()
-    .then((sensorHubs) => {
-      const latitude = tileToLat(req.params.y, req.params.z);
-      const longitude = tileToLong(req.params.x, req.params.z);
-
-      const calculatedHubs = [];
-      for (let i = 0; i < sensorHubs.length; i += 1) {
-        const sensorHub = sensorHubs[i];
-
-        const from = {
-          lat: parseFloat(sensorHub.Latitude, 10),
-          lon: parseFloat(sensorHub.Longitude, 10),
-        };
-
-        const to = {
-          lat: parseFloat(latitude, 10),
-          lon: parseFloat(longitude, 10),
-        };
-
-        sensorHub.Distance = distance(from, to);
-        calculatedHubs.push(sensorHub);
-      }
-
-      return calculatedHubs.sort((a, b) => a.Distance - b.Distance).slice(0, 5);
-    })
-    .then((allSensorHubs) => {
-      const promises = [];
-
-      allSensorHubs.forEach((sensorHub) => {
-        promises.push(GetData({
-          Type: 'temperature',
-          SensorHub: sensorHub.SerialID,
-        }));
-      });
-
-      return Promise.all(promises).then(data => [allSensorHubs, data]);
-    })
+  getCachedSensorHubs({})
+    .then(allSensorHubs => getCachedData({}).then(data => [allSensorHubs, data]))
     .then(([allSensorHubs, data]) => {
-      const lat1 = tileToLat(req.params.y, req.params.z);
-      const lon1 = tileToLong(req.params.x, req.params.z);
-      const lat2 = tileToLat(parseInt(req.params.y, 10) - 1, req.params.z);
-      const lon2 = tileToLong(parseInt(req.params.x, 10) - 1, req.params.z);
-
-      const lat = (lat2 - lat1) / 2;
-      const lon = (lon1 - lon2) / 2;
-
-      const links = lon1 - lon;
-      const boven = lat1 - lat;
-      const rechts = lon1 + lon;
-      const onder = lat1 + lat;
-
-      const xMulti = (rechts - links) / 256;
-      const yMulti = (boven - onder) / 256;
-
-      const image = new Jimp(256, 256, 0x0);
-
-      let rgb = [];
-      for (let x = 0; x < 256; x += 1) {
-        for (let y = 0; y < 256; y += 1) {
-          // if(y % 1 == 0 && x % 1 == 0) {
-          const selectedNodes = [];
-
-          const latitude = onder + (yMulti * y);
-          const longitude = links + (xMulti * x);
-
-          const to = {
-            lat: parseFloat(latitude, 10),
-            lon: parseFloat(longitude, 10),
-          };
-
-          for (let i = 0; i < allSensorHubs.length; i += 1) {
-            const sensorHub = allSensorHubs[i].toObject();
-
-            const from = {
-              lat: parseFloat(sensorHub.Latitude, 10),
-              lon: parseFloat(sensorHub.Longitude, 10),
-            };
-
-            sensorHub.Index = i;
-            sensorHub.Distance = distance(from, to);
-            selectedNodes.push(sensorHub);
-          }
-
-          const calculatedHubs = selectedNodes;
-
-          let divider = 0;
-          calculatedHubs.forEach((calculatedHub) => {
-            divider += (1 / parseFloat(calculatedHub.Distance, 10));
-          });
-
-          let calculatedValue = 0;
-          calculatedHubs.forEach((calculatedHub) => {
-            const dataNode = data[calculatedHub.Index];
-            const weight = (1 / calculatedHub.Distance) / divider;
-
-            calculatedValue += (parseFloat(dataNode.Value, 10) * weight);
-          });
-
-          rgb = tempToColor(calculatedValue);
-          // }
-          image.setPixelColor(Jimp.rgbaToInt(rgb[0], rgb[1], rgb[2], parseFloat(0.25 * 255)), x, y);
-        }
-      }
-
+      const image = generateImage(req.params, allSensorHubs, data);
       image.write(filePath);
       image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
         if (err) {
@@ -197,13 +126,8 @@ router.get('/meetpunten', (req, res, next) => {
     });
 });
 
-/** Handles caching. */
+/* Handles caching. */
 router.get('/:host/:z/:x/:y', (req, res, next) => {
-  const tempCachePath = path.resolve(`${__dirname}./../cache/`);
-  if (!fs.existsSync(tempCachePath)) {
-    fs.mkdirSync(tempCachePath);
-  }
-
   const cachePath = path.resolve(`${tempCachePath}/${req.params.host}/`);
   if (!fs.existsSync(cachePath)) {
     fs.mkdirSync(cachePath);
@@ -251,7 +175,7 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
   });
 });
 
-/** Redirects * to the map page. */
+/* Redirects * to the map page. */
 router.get('*', (req, res) => {
   res.redirect('/map');
 });
