@@ -16,12 +16,12 @@
         <div class="col-md-6 col-xl-5 mb-4">
           <div class="card">
             <div class="card-body z-depth-2">
-
               <div class="text-center">
                 <h3 class="dark-grey-text">
-                    <strong>Pollution Detection System</strong>
-                  </h3>
-                <hr>
+                  <strong>Pollution Detection System</strong>
+                </h3>
+
+                <hr />
               </div>
 
               {{#if error}}
@@ -32,18 +32,29 @@
                 <div class="md-form">
                   <i class="fa fa-user prefix grey-text"></i>
                   <input type="text" id="form3" name="email" class="form-control">
-                  <label for="form3">Your email</label>
+                  <label for="form3">{{i18n "login.your-email"}}</label>
                 </div>
                 <div class="md-form">
                   <i class="fa fa-lock prefix grey-text"></i>
                   <input type="password" id="form2" name="password" class="form-control">
-                  <label for="form2">Your password</label>
+                  <label for="form2">{{i18n "login.your-password"}}</label>
                 </div>
                 <div class="text-center mt-3">
-                  <button class="btn btn-indigo">Login</button>
+                  <button class="btn btn-indigo">{{i18n "login.login"}}</button>
                 </div>
               </form>
 
+              <div class="text-center">
+                <hr />
+
+                <div class="flag" id="locale-en">
+                  <img alt="English" src="/lang_en.png" />
+                </div>
+
+                <div class="flag" id="locale-nl">
+                  <img alt="Nederlands" class="flag" src="/lang_nl.png" />
+                </div>
+              </div>
             </div>
           </div>
         </div>

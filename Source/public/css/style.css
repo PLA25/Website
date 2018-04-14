@@ -33,3 +33,29 @@ footer {
 	font-size: 1.0rem;
 	margin-bottom: 5px;
 }
+
+.navbar .navbar-nav {
+  margin-right: 30px;
+}
+
+.navbar .flag {
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.navbar .flag img {
+  height: 27px;
+  width: 48px;
+}
+
+.card .flag {
+  cursor: pointer;
+  float: left;
+  margin-right: 10px;
+}
+
+.card .flag img {
+  border-radius: 0;
+  height: 27px;
+  width: 48px;
+}
