@@ -20,7 +20,7 @@ const {
 
 module.exports = (app) => {
   app.use(setUser);
-  app.use('/api', api);
+
   app.use('/', home);
 
   /* Only allow authenticated user */
@@ -28,7 +28,7 @@ module.exports = (app) => {
 
   /* Sets addresses for each page instance. */
   app.use('/admin', admin);
-
+  app.use('/api', api);
   app.use('/map', map);
 
   /* Handlers */
