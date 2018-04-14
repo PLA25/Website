@@ -3,7 +3,6 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const favicon = require('serve-favicon');
-const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
@@ -12,7 +11,8 @@ const mongoose = require('mongoose');
 const i18n = require('i18n');
 
 /* Requires the configuration, passport and routes. */
-const config = require('./config');
+const config = require('./config/all');
+
 const passport = require('./config/passport');
 const routes = require('./routes');
 
@@ -42,7 +42,6 @@ app.set('view engine', 'hbs');
 
 /* Sets a favicon for browsers. */
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false,
@@ -89,6 +88,7 @@ hbs.registerHelper(
       return str;
     }
 
+    // eslint-disable-next-line no-underscore-dangle
     return i18n.__(str);
   },
 );

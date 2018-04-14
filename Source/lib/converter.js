@@ -14,13 +14,14 @@ function tempToDegrees(temp) {
   /*
    * Creates the degrees, from a temperature range of -70 to 50.
    */
-  let degrees = 300 - (((temp + 50) / 100) * 300);
+  let degrees = 360 - (((temp + 50) / 100) * 360);
 
-  /*
-   * Makes sure the degrees don't go above 360, which is mathematically impossible.
-   */
   while (degrees > 360) {
     degrees -= 360;
+  }
+
+  while (degrees < 0) {
+    degrees += 360;
   }
 
   /*
@@ -41,37 +42,40 @@ function tempToColor(temp) {
    * Finds the degrees for further conversion.
    */
   const degrees = tempToDegrees(temp);
-
   let value = 0;
+
+  // [255, 0, 0] -> [255, 255, 0]
   if (degrees <= 60) {
-    value = parseInt((degrees / 60) * 255, 10);
+    value = Math.round((degrees / 60) * 255);
     return [255, value, 0];
   }
 
+  // [255, 255, 0] -> [0, 255, 0]
   if (degrees <= 120) {
-    value = 255 - parseInt((degrees / 120) * 255, 10);
+    value = 255 - Math.round(((degrees - 60) / 60) * 255);
     return [value, 255, 0];
   }
 
+  // [0, 255, 0] -> [0, 255, 255]
   if (degrees <= 180) {
-    value = parseInt((degrees / 180) * 255, 10);
+    value = Math.round(((degrees - 120) / 60) * 255);
     return [0, 255, value];
   }
 
+  // [0, 255, 255] -> [0, 0, 255]
   if (degrees <= 240) {
-    value = 255 - parseInt((degrees / 240) * 255, 10);
+    value = 255 - Math.round(((degrees - 180) / 60) * 255);
     return [0, value, 255];
   }
 
+  // [0, 0, 255] -> [255, 0, 255]
   if (degrees <= 300) {
-    value = parseInt((degrees / 300) * 255, 10);
+    value = Math.round(((degrees - 240) / 60) * 255);
     return [value, 0, 255];
   }
 
-  /*
-   * The determined value if the degrees are higher than 300.
-   */
-  value = 255 - parseInt((degrees / 120) * 255, 10);
+  // [255, 0, 255] -> [255, 0, 0]
+  value = 255 - Math.round(((degrees - 300) / 60) * 255);
   return [255, 0, value];
 }
 
@@ -99,5 +103,8 @@ function tileToLat(y, z) {
 }
 
 module.exports = {
-  tempToDegrees, tempToColor, tileToLat, tileToLong,
+  tempToDegrees,
+  tempToColor,
+  tileToLat,
+  tileToLong,
 };
