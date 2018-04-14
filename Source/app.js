@@ -20,11 +20,11 @@ const routes = require('./routes');
 mongoose.connect(`mongodb://${config.MongoDB.User}:${config.MongoDB.Pass}@${config.MongoDB.Host}:${config.MongoDB.Port}/${config.MongoDB.Name}`);
 mongoose.Promise = Promise;
 
-/** Configures i18n. */
+/* Configures i18n. */
 i18n.configure({
   locales: ['en', 'nl'],
   defaultLocale: 'en',
-  directory: __dirname + '/locales',
+  directory: path.resolve(__dirname, 'locales'),
   objectNotation: true,
   syncFiles: true,
 });
@@ -33,14 +33,14 @@ i18n.configure({
 const app = express();
 hbs.localsAsTemplateData(app);
 
-/** Binds i18n to the Express app. */
+/* Binds i18n to the Express app. */
 app.use(i18n.init);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-/** Sets a favicon for browsers. */
+/* Sets a favicon for browsers. */
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -66,7 +66,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-/** Sets locale if there's a session with a locale. */
+/* Sets locale if there's a session with a locale. */
 app.use(function (req, res, next) {
   if (req.session.locale) {
     i18n.setLocale(req.session.locale);
@@ -75,13 +75,13 @@ app.use(function (req, res, next) {
   next();
 });
 
-/** Changes the language on command. */
+/* Changes the language on command. */
 app.post('/locale-:locale', (req, res) => {
   req.session.locale = req.params.locale;
   res.redirect('back');
 });
 
-/** Binds i18n to Handlebars. */
+/* Binds i18n to Handlebars. */
 hbs.registerHelper('i18n',
   function (str) {
     if(!str) {
