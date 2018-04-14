@@ -6,6 +6,7 @@ module.exports = {
   },
   "extends": "airbnb-base",
   "rules": {
+    "multiline-comment-style": ["error", "starred-block"],
     "no-console": ["error", {
       "allow": ["error", "warn"]
     }],
@@ -14,7 +15,9 @@ module.exports = {
       "maxBOF": 0,
       "maxEOF": 1
     }],
-    "multiline-comment-style": ["error", "starred-block"],
+    "object-property-newline": ["error", {
+      "allowAllPropertiesOnSameLine": false
+    }],
     "spaced-comment": ["error", "always", {
       "block": {
         "balanced": true

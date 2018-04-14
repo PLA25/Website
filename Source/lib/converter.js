@@ -103,5 +103,8 @@ function tileToLat(y, z) {
 }
 
 module.exports = {
-  tempToDegrees, tempToColor, tileToLat, tileToLong,
+  tempToDegrees,
+  tempToColor,
+  tileToLat,
+  tileToLong,
 };

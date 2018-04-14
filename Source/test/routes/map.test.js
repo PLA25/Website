@@ -5,11 +5,22 @@ const app = require('./../../bin/www');
 
 chai.should();
 
-const authenticatedUser = require('./../authenticatedUser');
+const {
+  authenticatedAdmin,
+  authenticatedUser,
+} = require('./../authenticatedUser');
 
 describe('GET /map', () => {
   it('should return a 200 response if the user is logged in', (done) => {
     authenticatedUser.get('/map')
+      .end((err, response) => {
+        response.statusCode.should.equal(200);
+        done();
+      });
+  });
+
+  it('should return a 200 response if the admin is logged in', (done) => {
+    authenticatedAdmin.get('/map')
       .end((err, response) => {
         response.statusCode.should.equal(200);
         done();
