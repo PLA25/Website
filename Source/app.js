@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const hbs = require('hbs');
 const mongoose = require('mongoose');
+const i18n = require('i18n');
 
 /* Requires the configuration, passport and routes. */
 const config = require('./config');
@@ -19,15 +20,27 @@ const routes = require('./routes');
 mongoose.connect(`mongodb://${config.MongoDB.User}:${config.MongoDB.Pass}@${config.MongoDB.Host}:${config.MongoDB.Port}/${config.MongoDB.Name}`);
 mongoose.Promise = Promise;
 
+/* Configures i18n. */
+i18n.configure({
+  locales: ['en', 'nl'],
+  defaultLocale: 'en',
+  directory: path.resolve(__dirname, 'locales'),
+  objectNotation: true,
+  syncFiles: true,
+});
+
 /* Creates an application instance with Express. */
 const app = express();
 hbs.localsAsTemplateData(app);
+
+/* Binds i18n to the Express app. */
+app.use(i18n.init);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-/** Sets a favicon for browsers. */
+/* Sets a favicon for browsers. */
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -53,4 +66,31 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-module.exports = routes(app);
+/* Sets locale if there's a session with a locale. */
+app.use((req, res, next) => {
+  if (req.session.locale) {
+    i18n.setLocale(req.session.locale);
+  }
+
+  next();
+});
+
+/* Changes the language on command. */
+app.post('/locale-:locale', (req, res) => {
+  req.session.locale = req.params.locale;
+  res.redirect('back');
+});
+
+/* Binds i18n to Handlebars. */
+hbs.registerHelper(
+  'i18n',
+  (str) => {
+    if (!str) {
+      return str;
+    }
+
+    return i18n.__(str);
+  },
+);
+
+module.exports = routes(app, passport);
