@@ -17,6 +17,7 @@ const routes = require('./routes');
 
 /* Connects to the MongoDB database with the configured settings. */
 mongoose.connect(`mongodb://${config.MongoDB.User}:${config.MongoDB.Pass}@${config.MongoDB.Host}:${config.MongoDB.Port}/${config.MongoDB.Name}`);
+mongoose.Promise = Promise;
 
 /* Creates an application instance with Express. */
 const app = express();
