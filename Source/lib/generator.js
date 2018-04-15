@@ -27,51 +27,56 @@ function generateImage(params, allSensorHubs, data) {
   const xMulti = (rechts - links) / 256;
   const yMulti = (boven - onder) / 256;
 
-  for (let x = 0; x < image.bitmap.width; x += 1) {
-    for (let y = 0; y < image.bitmap.height; y += 1) {
-      if ((x % 2 === 0 && y % 2 === 1) || (y % 2 === 0 && x % 2 === 1) || (x === 0 && y === 0)) {
-        const latitude = onder + (yMulti * y);
-        const longitude = links + (xMulti * x);
+  const incr = 2 ** Math.max((15 - parseInt(params.z, 10)), 3);
+  for (let x = 0; x < image.bitmap.width; x += incr) {
+    for (let y = 0; y < image.bitmap.height; y += incr) {
+      const latitude = onder + (yMulti * y);
+      const longitude = links + (xMulti * x);
 
-        const to = {
-          lat: parseFloat(latitude, 10),
-          lon: parseFloat(longitude, 10),
+      const to = {
+        lat: parseFloat(latitude, 10),
+        lon: parseFloat(longitude, 10),
+      };
+
+      const calculatedHubs = [];
+      for (let i = 0; i < allSensorHubs.length; i += 1) {
+        const sensorHub = allSensorHubs[i].toObject();
+
+        const from = {
+          lat: parseFloat(sensorHub.Latitude, 10),
+          lon: parseFloat(sensorHub.Longitude, 10),
         };
 
-        const calculatedHubs = [];
-        for (let i = 0; i < allSensorHubs.length; i += 1) {
-          const sensorHub = allSensorHubs[i].toObject();
-
-          const from = {
-            lat: parseFloat(sensorHub.Latitude, 10),
-            lon: parseFloat(sensorHub.Longitude, 10),
-          };
-
-          sensorHub.Index = i;
-          sensorHub.Distance = distance(from, to);
-          calculatedHubs.push(sensorHub);
-        }
-
-        const selectedNodes = calculatedHubs.sort((a, b) => a.Distance - b.Distance).slice(0, 5);
-
-        let divider = 0;
-        for (let i = 0; i < selectedNodes.length; i += 1) {
-          divider += (1 / parseFloat(selectedNodes[i].Distance, 10));
-        }
-
-        let calculatedValue = 0;
-        for (let i = 0; i < selectedNodes.length; i += 1) {
-          const sensorHub = selectedNodes[i];
-          const dataNode = data[sensorHub.Index];
-
-          const weight = (1 / sensorHub.Distance) / divider;
-          calculatedValue += (parseFloat(dataNode.Value, 10) * weight);
-        }
-
-        rgb = tempToColor(calculatedValue);
+        sensorHub.Index = i;
+        sensorHub.Distance = distance(from, to);
+        calculatedHubs.push(sensorHub);
       }
 
-      image.setPixelColor(Jimp.rgbaToInt(rgb[0], rgb[1], rgb[2], parseFloat(0.25 * 255)), x, y);
+      const selectedNodes = calculatedHubs.sort((a, b) => a.Distance - b.Distance).slice(0, 5);
+
+      let divider = 0;
+      for (let i = 0; i < selectedNodes.length; i += 1) {
+        divider += (1 / parseFloat(selectedNodes[i].Distance, 10));
+      }
+
+      let calculatedValue = 0;
+      for (let i = 0; i < selectedNodes.length; i += 1) {
+        const sensorHub = selectedNodes[i];
+        const dataNode = data[sensorHub.Index];
+
+        const weight = (1 / sensorHub.Distance) / divider;
+        calculatedValue += (parseFloat(dataNode.Value, 10) * weight);
+      }
+
+      rgb = tempToColor(calculatedValue);
+      const color = Jimp.rgbaToInt(rgb[0], rgb[1], rgb[2], parseFloat(0.25 * 255));
+      image.setPixelColor(color, x, y);
+
+      for (let i = 1; i < incr; i += 1) {
+        for (let l = 1; l < incr; l += 1) {
+          image.setPixelColor(color, (x + i), (y + l));
+        }
+      }
     }
   }
 
