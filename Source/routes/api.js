@@ -63,6 +63,7 @@ router.get('*', (req, res, next) => {
 router.get('/meetpunten', (req, res, next) => {
   getCachedData(SensorHub, {})
     .then((sensorHubs) => {
+      res.set('Content-Type', 'application/vnd.google-earth.kml+xml');
       res.render('meetpunten', {
         layout: false,
         sensorHubs,
