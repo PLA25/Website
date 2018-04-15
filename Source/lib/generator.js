@@ -8,18 +8,16 @@ const distance = require('fast-haversine');
 
 const {
   tempToColor,
-  tileToLong,
-  tileToLat,
+  getLatLong,
 } = require('./converter');
 
 function generateImage(params, allSensorHubs, data) {
-  const image = new Jimp(256, 256, 0x0);
-  let rgb = [];
-
-  const lat1 = tileToLat(params.y, params.z);
-  const lon1 = tileToLong(params.x, params.z);
-  const lat2 = tileToLat(parseInt(params.y, 10) - 1, params.z);
-  const lon2 = tileToLong(parseInt(params.x, 10) - 1, params.z);
+  const [lat1, lon1] = getLatLong(params);
+  const [lat2, lon2] = getLatLong({
+    z: parseInt(params.z, 10),
+    x: parseInt(params.x, 10) - 1,
+    y: parseInt(params.y, 10) - 1,
+  });
 
   const lat = (lat2 - lat1) / 2;
   const lon = (lon1 - lon2) / 2;
@@ -31,6 +29,9 @@ function generateImage(params, allSensorHubs, data) {
 
   const xMulti = (rechts - links) / 256;
   const yMulti = (boven - onder) / 256;
+
+  const image = new Jimp(256, 256, 0x0);
+  let rgb = [];
 
   const incr = 2 ** Math.max((15 - parseInt(params.z, 10)), 3);
   for (let x = 0; x < image.bitmap.width; x += incr) {

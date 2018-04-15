@@ -102,7 +102,15 @@ function tileToLat(y, z) {
   return ((180 / Math.PI) * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n))));
 }
 
+function getLatLong({ z, x, y }) {
+  const latitude = tileToLat(y, z);
+  const longitude = tileToLong(x, z);
+
+  return [latitude, longitude];
+}
+
 module.exports = {
+  getLatLong,
   tempToColor,
   tempToDegrees,
   tileToLat,
