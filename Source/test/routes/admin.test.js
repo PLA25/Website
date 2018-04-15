@@ -10,7 +10,7 @@ const {
   authenticatedUser,
 } = require('./../authenticatedUser');
 
-describe('GET /admin', () => {
+module.exports = () => {
   it('should return a 302 response if the user is logged in', (done) => {
     authenticatedUser.get('/admin')
       .end((err, res) => {
@@ -36,4 +36,4 @@ describe('GET /admin', () => {
         done();
       });
   });
-});
+};

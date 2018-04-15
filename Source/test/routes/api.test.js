@@ -10,7 +10,7 @@ const {
   authenticatedUser,
 } = require('./../authenticatedUser');
 
-describe('GET /api', () => {
+module.exports = () => {
   describe('General', () => {
     it('should redirect to /map for any unknown path', (done) => {
       authenticatedAdmin.get('/api')
@@ -125,4 +125,4 @@ describe('GET /api', () => {
         });
     });
   });
-});
+};
