@@ -27,44 +27,24 @@ const {
   generateImage,
 } = require('./../lib/generator');
 
-let cacheSensorHubs = null;
-
-function getCachedSensorHubs(options) {
-  return new Promise((resolve, reject) => {
-    if (cacheSensorHubs !== null) {
-      resolve(cacheSensorHubs);
+const cacheData = [];
+function getCachedData(model, options) {
+  return new Promise(((resolve, reject) => {
+    const modelName = model.collection.name;
+    if (cacheData[modelName] !== undefined) {
+      resolve(cacheData[modelName]);
       return;
     }
 
-    SensorHub.find(options).exec()
-      .then((sensorHubs) => {
-        cacheSensorHubs = sensorHubs;
-        resolve(sensorHubs);
-      })
-      .catch((err) => {
-        reject(err);
-      });
-  });
-}
-
-let cacheData = null;
-
-function getCachedData(options) {
-  return new Promise((resolve, reject) => {
-    if (cacheData !== null) {
-      resolve(cacheData);
-      return;
-    }
-
-    Data.find(options).exec()
+    model.find(options).exec()
       .then((data) => {
-        cacheData = data;
+        cacheData[modelName] = data;
         resolve(data);
       })
       .catch((err) => {
         reject(err);
       });
-  });
+  }));
 }
 
 const tempCachePath = path.resolve(`${__dirname}./../cache/`);
@@ -81,7 +61,7 @@ router.get('*', (req, res, next) => {
  * @todo Change 'meetpunten' to an English name for consistency.
  */
 router.get('/meetpunten', (req, res, next) => {
-  SensorHub.find({}).exec()
+  getCachedData(SensorHub, {})
     .then((sensorHubs) => {
       res.render('meetpunten', {
         layout: false,
@@ -155,8 +135,8 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
 router.get('/heatmap/:z/:x/:y', (req, res, next) => {
   const filePath = path.resolve(`${tempCachePath}/heatmap/`, `${req.params.z}_${req.params.x}_${req.params.y}.png`);
 
-  getCachedSensorHubs({})
-    .then(allSensorHubs => getCachedData({}).then(data => [allSensorHubs, data]))
+  getCachedData(SensorHub, {})
+    .then(allSensorHubs => getCachedData(Data, {}).then(data => [allSensorHubs, data]))
     .then(([allSensorHubs, data]) => {
       const image = generateImage(req.params, allSensorHubs, data);
       image.write(filePath);
