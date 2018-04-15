@@ -18,6 +18,8 @@ const SensorHub = require('./../models/sensorhub');
 /* Constants */
 const router = express.Router();
 
+router.all('*', isAdmin);
+
 /**
  * Renders the admin index page.
  *
@@ -26,7 +28,7 @@ const router = express.Router();
  * @code {200} if the request is sucesfull
  * @code {500} if the request fail because the database isn't accesible
  */
-router.get('/', isAdmin, (req, res, next) => {
+router.get('/', (req, res, next) => {
   User.find({}).exec()
     .then(users => SensorHub.find({}).exec().then(sensorHubs => [users, sensorHubs]))
     .then(([users, sensorHubs]) => {

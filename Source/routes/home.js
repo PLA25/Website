@@ -17,6 +17,11 @@ const isLoggedIn = require('./../middleware/isLoggedIn');
 /* Constants */
 const router = express.Router();
 
+router.get('/404', (req, res) => {
+  res.status(404);
+  res.render('404');
+});
+
 /**
  * Renders the login page.
  *

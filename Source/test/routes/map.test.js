@@ -10,7 +10,7 @@ const {
   authenticatedUser,
 } = require('./../authenticatedUser');
 
-describe('GET /map', () => {
+module.exports = () => {
   it('should return a 200 response if the user is logged in', (done) => {
     authenticatedUser.get('/map')
       .end((err, response) => {
@@ -35,4 +35,4 @@ describe('GET /map', () => {
         done();
       });
   });
-});
+};

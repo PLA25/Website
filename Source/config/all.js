@@ -11,6 +11,9 @@ try {
       Pass: process.env.MongoDB_Pass,
       Name: process.env.MongoDB_Name,
     },
+    Planet: {
+      Key: process.env.Planet_Key,
+    },
   };
 }
 
