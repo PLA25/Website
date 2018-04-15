@@ -76,39 +76,6 @@ router.get('*', (req, res, next) => {
   next();
 });
 
-router.get('/heatmap/:z/:x/:y', (req, res, next) => {
-  const cachePath = path.resolve(`${tempCachePath}/heatmap/`);
-  if (!fs.existsSync(cachePath)) {
-    fs.mkdirSync(cachePath);
-  }
-
-  const filePath = path.resolve(cachePath, `${req.params.z}_${req.params.x}_${req.params.y}.png`);
-
-  if (fs.existsSync(filePath)) {
-    res.sendFile(filePath);
-    return;
-  }
-
-  getCachedSensorHubs({})
-    .then(allSensorHubs => getCachedData({}).then(data => [allSensorHubs, data]))
-    .then(([allSensorHubs, data]) => {
-      const image = generateImage(req.params, allSensorHubs, data);
-      // image.write(filePath);
-      image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
-        if (err) {
-          next(err);
-          return;
-        }
-
-        res.set('Content-Type', Jimp.MIME_PNG);
-        res.send(buffer);
-      });
-    })
-    .catch((err) => {
-      next(err);
-    });
-});
-
 /**
  * Creates route for meetpunten.
  * @todo Change 'meetpunten' to an English name for consistency.
@@ -133,7 +100,7 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
     fs.mkdirSync(cachePath);
   }
 
-  const filePath = path.resolve(cachePath, `${req.params.z}_${req.params.x}_${req.params.y}.jpg`);
+  const filePath = path.resolve(cachePath, `${req.params.z}_${req.params.x}_${req.params.y}.png`);
   if (fs.existsSync(filePath)) {
     res.sendFile(filePath);
     return;
@@ -149,8 +116,12 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
       url = `https://a.tiles.mapbox.com/v3/planet.jh0b3oee/${req.params.z}/${req.params.x}/${req.params.y}.png`;
       break;
 
+    case 'heatmap':
+      next();
+      return;
+
     default:
-      res.sendFile(path.resolve(cachePath, '-1_-1_-1.jpg'));
+      res.sendFile(path.resolve(cachePath, '-1_-1_-1.png'));
       return;
   }
 
@@ -163,16 +134,45 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
     }
 
     base64.decode(image, {
-      filename: filePath.replace('.jpg', ''),
+      filename: filePath,
     }, (err2) => {
       if (err2) {
         next(err);
         return;
       }
 
-      res.sendFile(filePath);
+      fs.rename(`${filePath}.jpg`, filePath, (err3) => {
+        if (err3) {
+          next(err3);
+        }
+
+        res.sendFile(filePath);
+      });
     });
   });
+});
+
+router.get('/heatmap/:z/:x/:y', (req, res, next) => {
+  const filePath = path.resolve(`${tempCachePath}/heatmap/`, `${req.params.z}_${req.params.x}_${req.params.y}.png`);
+
+  getCachedSensorHubs({})
+    .then(allSensorHubs => getCachedData({}).then(data => [allSensorHubs, data]))
+    .then(([allSensorHubs, data]) => {
+      const image = generateImage(req.params, allSensorHubs, data);
+      image.write(filePath);
+      image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
+        if (err) {
+          next(err);
+          return;
+        }
+
+        res.set('Content-Type', Jimp.MIME_PNG);
+        res.send(buffer);
+      });
+    })
+    .catch((err) => {
+      next(err);
+    });
 });
 
 /* Redirects * to the map page. */
