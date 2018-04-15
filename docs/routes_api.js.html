@@ -35,6 +35,7 @@
  * @see module:routes
  */
 
+/* Config */
 const config = require('./../config/all');
 
 /* Packages */
@@ -42,7 +43,6 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const base64 = require('node-base64-image');
-const distance = require('fast-haversine');
 const Jimp = require('jimp');
 
 /* Models */
@@ -53,102 +53,37 @@ const SensorHub = require('./../models/sensorhub');
 const router = express.Router();
 
 /* Helpers */
-const { tempToColor, tileToLong, tileToLat } = require('./../lib/converter');
+const {
+  generateImage,
+} = require('./../lib');
 
-/**
- * @param options
- * @todo Change 'GetData' to 'getData' in accordance of code style.
- */
-function GetData(options) {
-  return new Promise((resolve, reject) => {
-    Data.findOne(options, (err, data) => {
-      if (err) {
+const cacheData = [];
+function getCachedData(model, options) {
+  return new Promise(((resolve, reject) => {
+    const modelName = model.collection.name;
+    if (cacheData[modelName] !== undefined) {
+      resolve(cacheData[modelName]);
+      return;
+    }
+
+    model.find(options).exec()
+      .then((data) => {
+        cacheData[modelName] = data;
+        resolve(data);
+      })
+      .catch((err) => {
         reject(err);
-        return;
-      }
-
-      resolve(data);
-    });
-  });
+      });
+  }));
 }
 
-router.get('/heatmap/:z/:x/:y', (req, res, next) => {
-  SensorHub.find({}).exec()
-    .then((sensorHubs) => {
-      const latitude = tileToLat(req.params.y, req.params.z);
-      const longitude = tileToLong(req.params.x, req.params.z);
+const tempCachePath = path.resolve(`${__dirname}./../cache/`);
+router.get('*', (req, res, next) => {
+  if (!fs.existsSync(tempCachePath)) {
+    fs.mkdirSync(tempCachePath);
+  }
 
-      const calculatedHubs = [];
-      for (let i = 0; i &lt; sensorHubs.length; i += 1) {
-        const sensorHub = sensorHubs[i];
-
-        const from = {
-          lat: parseFloat(sensorHub.Latitude, 10),
-          lon: parseFloat(sensorHub.Longitude, 10),
-        };
-
-        const to = {
-          lat: parseFloat(latitude, 10),
-          lon: parseFloat(longitude, 10),
-        };
-
-        sensorHub.Distance = distance(from, to);
-        calculatedHubs.push(sensorHub);
-      }
-
-      return calculatedHubs.sort((a, b) => a.Distance - b.Distance).slice(0, 3);
-    })
-    .then((selectedNodes) => {
-      const promises = [];
-      for (let i = 0; i &lt; selectedNodes.length; i += 1) {
-        promises.push(GetData({
-          Type: 'temperature',
-          SensorHub: selectedNodes[i].SerialID,
-        }));
-      }
-
-      return Promise.all(promises).then(data => [selectedNodes, data]);
-    })
-    .then(([selectedNodes, data]) => {
-      let divider = 0;
-      for (let i = 0; i &lt; selectedNodes.length; i += 1) {
-        divider += (1 / parseFloat(selectedNodes[i].Distance, 10));
-      }
-
-      let calculatedValue = 0;
-      for (let i = 0; i &lt; data.length; i += 1) {
-        const dataNode = data[i];
-        const sensorHub = selectedNodes[i];
-
-        const weight = (1 / sensorHub.Distance) / divider;
-        calculatedValue += (parseFloat(dataNode.Value, 10) * weight);
-      }
-
-      return calculatedValue;
-    })
-    .then((calculatedValue) => {
-      const image = new Jimp(256, 256, 0x0);
-      const rgb = tempToColor(calculatedValue);
-
-      for (let x = 0; x &lt; 256; x += 1) {
-        for (let y = 0; y &lt; 256; y += 1) {
-          image.setPixelColor(Jimp.rgbaToInt(rgb[0], rgb[1], rgb[2], parseFloat(0.25 * 255)), x, y);
-        }
-      }
-
-      image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
-        if (err) {
-          next(err);
-          return;
-        }
-
-        res.set('Content-Type', Jimp.MIME_PNG);
-        res.send(buffer);
-      });
-    })
-    .catch((err) => {
-      next(err);
-    });
+  next();
 });
 
 /**
@@ -156,7 +91,7 @@ router.get('/heatmap/:z/:x/:y', (req, res, next) => {
  * @todo Change 'meetpunten' to an English name for consistency.
  */
 router.get('/meetpunten', (req, res, next) => {
-  SensorHub.find({}).exec()
+  getCachedData(SensorHub, {})
     .then((sensorHubs) => {
       res.render('meetpunten', {
         layout: false,
@@ -168,19 +103,14 @@ router.get('/meetpunten', (req, res, next) => {
     });
 });
 
-/** Handles caching. */
+/* Handles caching. */
 router.get('/:host/:z/:x/:y', (req, res, next) => {
-  const tempCachePath = path.resolve(`${__dirname}./../cache/`);
-  if (!fs.existsSync(tempCachePath)) {
-    fs.mkdirSync(tempCachePath);
-  }
-
   const cachePath = path.resolve(`${tempCachePath}/${req.params.host}/`);
   if (!fs.existsSync(cachePath)) {
     fs.mkdirSync(cachePath);
   }
 
-  const filePath = path.resolve(cachePath, `${req.params.z}_${req.params.x}_${req.params.y}.jpg`);
+  const filePath = path.resolve(cachePath, `${req.params.z}_${req.params.x}_${req.params.y}.png`);
   if (fs.existsSync(filePath)) {
     res.sendFile(filePath);
     return;
@@ -196,8 +126,12 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
       url = `https://a.tiles.mapbox.com/v3/planet.jh0b3oee/${req.params.z}/${req.params.x}/${req.params.y}.png`;
       break;
 
+    case 'heatmap':
+      next();
+      return;
+
     default:
-      res.sendFile(path.resolve(cachePath, '-1_-1_-1.jpg'));
+      res.sendFile(path.resolve(cachePath, '-1_-1_-1.png'));
       return;
   }
 
@@ -210,19 +144,48 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
     }
 
     base64.decode(image, {
-      filename: filePath.replace('.jpg', ''),
+      filename: filePath,
     }, (err2) => {
       if (err2) {
         next(err);
         return;
       }
 
-      res.sendFile(filePath);
+      fs.rename(`${filePath}.jpg`, filePath, (err3) => {
+        if (err3) {
+          next(err3);
+        }
+
+        res.sendFile(filePath);
+      });
     });
   });
 });
 
-/** Redirects * to the map page. */
+router.get('/heatmap/:z/:x/:y', (req, res, next) => {
+  const filePath = path.resolve(`${tempCachePath}/heatmap/`, `${req.params.z}_${req.params.x}_${req.params.y}.png`);
+
+  getCachedData(SensorHub, {})
+    .then(allSensorHubs => getCachedData(Data, {}).then(data => [allSensorHubs, data]))
+    .then(([allSensorHubs, data]) => {
+      const image = generateImage(req.params, allSensorHubs, data);
+      image.write(filePath);
+      image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
+        if (err) {
+          next(err);
+          return;
+        }
+
+        res.set('Content-Type', Jimp.MIME_PNG);
+        res.send(buffer);
+      });
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+/* Redirects * to the map page. */
 router.get('*', (req, res) => {
   res.redirect('/map');
 });
@@ -238,7 +201,9 @@ module.exports = router;
 		<h2><a href="index.html">Home</a></h2>
 		<h3>Modules</h3>
 		<ul>
+			<li><a href="module-lib.html">lib</a></li>
 			<li><a href="module-lib_converter.html">lib/converter</a></li>
+			<li><a href="module-lib_generator.html">lib/generator</a></li>
 			<li><a href="module-middleware.html">middleware</a></li>
 			<li><a href="module-middleware_errorHandler.html">middleware/errorHandler</a></li>
 			<li><a href="module-middleware_isAdmin.html">middleware/isAdmin</a></li>
@@ -262,7 +227,7 @@ module.exports = router;
 	<br class="clear">
 
 	<footer>
-		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Apr 14 2018 11:05:47 GMT+0200 (W. Europe Daylight Time)
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Apr 15 2018 13:48:26 GMT+0200 (W. Europe Daylight Time)
 	</footer>
 
 	<script>

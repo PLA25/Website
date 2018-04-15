@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Source: middleware/isLoggedIn.js</title>
+	<title>JSDoc: Source: lib/index.js</title>
 
 	<script src="scripts/prettify/prettify.js">
 
@@ -24,27 +24,31 @@
 
 	<div id="main">
 
-		<h1 class="page-title">Source: middleware/isLoggedIn.js</h1>
+		<h1 class="page-title">Source: lib/index.js</h1>
 
 		<section>
 			<article>
 				<pre class="prettyprint source linenums"><code>/**
- * Check if the user is logged in.
- *
- * @function
- * @see module:middleware
- * @module middleware/isLoggedIn
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- * @param {Function} next - Express next middleware function
- * @return {undefined}
+ * @module lib
  */
-module.exports = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.redirect('/login');
-  }
+
+const {
+  tempToColor,
+  tempToDegrees,
+  tileToLat,
+  tileToLong,
+} = require('./converter');
+
+const {
+  generateImage,
+} = require('./generator');
+
+module.exports = {
+  generateImage,
+  tempToColor,
+  tempToDegrees,
+  tileToLat,
+  tileToLong,
 };
 </code></pre>
 			</article>
