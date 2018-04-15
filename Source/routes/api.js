@@ -102,7 +102,7 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
       return;
 
     default:
-      res.sendFile(path.resolve(cachePath, '-1_-1_-1.png'));
+      res.status(404).sendFile(path.resolve(tempCachePath, '-1_-1_-1.png'));
       return;
   }
 

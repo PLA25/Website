@@ -6,6 +6,7 @@ const tileToLong = require('./lib/converter.tileToLong.test');
 
 /* Generator */
 const generateImage = require('./lib/generator.generateImage.test');
+const getIncrement = require('./lib/generator.getIncrement.test');
 
 describe('Lib', () => {
   describe('Converter', () => {
@@ -20,5 +21,7 @@ describe('Lib', () => {
 
   describe('Generator', () => {
     describe('generateImage', generateImage);
+
+    describe('getIncrement', getIncrement);
   });
 });
