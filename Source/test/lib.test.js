@@ -1,14 +1,24 @@
+/* Converter */
 const tempToColor = require('./lib/converter.tempToColor.test');
 const tempToDegrees = require('./lib/converter.tempToDegrees.test');
 const tileToLat = require('./lib/converter.tileToLat.test');
 const tileToLong = require('./lib/converter.tileToLong.test');
 
+/* Generator */
+const generateImage = require('./lib/generator.generateImage.test');
+
 describe('Lib', () => {
-  describe('tempToColor', tempToColor);
+  describe('Converter', () => {
+    describe('tempToColor', tempToColor);
 
-  describe('tempToDegrees', tempToDegrees);
+    describe('tempToDegrees', tempToDegrees);
 
-  describe('tileToLat', tileToLat);
+    describe('tileToLat', tileToLat);
 
-  describe('tileToLong', tileToLong);
+    describe('tileToLong', tileToLong);
+  });
+
+  describe('Generator', () => {
+    describe('generateImage', generateImage);
+  });
 });
