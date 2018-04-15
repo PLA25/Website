@@ -1,3 +1,8 @@
+/**
+ * @see module:lib
+ * @module lib/generator
+ */
+
 const Jimp = require('jimp');
 const distance = require('fast-haversine');
 

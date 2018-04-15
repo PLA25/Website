@@ -25,7 +25,7 @@ const router = express.Router();
 /* Helpers */
 const {
   generateImage,
-} = require('./../lib/generator');
+} = require('./../lib');
 
 const cacheData = [];
 function getCachedData(model, options) {

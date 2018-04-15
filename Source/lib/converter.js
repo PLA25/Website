@@ -1,5 +1,5 @@
 /**
- * @see module:middleware
+ * @see module:lib
  * @module lib/converter
  */
 
@@ -103,8 +103,8 @@ function tileToLat(y, z) {
 }
 
 module.exports = {
-  tempToDegrees,
   tempToColor,
+  tempToDegrees,
   tileToLat,
   tileToLong,
 };

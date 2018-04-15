@@ -2,7 +2,7 @@
 require('chai').should();
 
 /* Lib */
-const { tempToColor } = require('./../../lib/converter');
+const { tempToColor } = require('./../../lib');
 
 describe('tempToColor', () => {
   // Arrange
