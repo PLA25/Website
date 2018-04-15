@@ -71,7 +71,10 @@ module.exports = () => {
     });
 
     it('should return a 200 response for /mapbox/8/132/86', (done) => {
-      fs.unlinkSync(path.resolve(`${__dirname}./../../cache/mapbox/8_132_86.png`));
+      const imagePath = path.resolve(`${__dirname}./../../cache/mapbox/8_132_86.png`);
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+      }
 
       authenticatedUser.get('/api/mapbox/8/132/86')
         .end((err, res) => {
@@ -81,7 +84,10 @@ module.exports = () => {
     });
 
     it('should return a 200 response for /planet/8/132/86', (done) => {
-      fs.unlinkSync(path.resolve(`${__dirname}./../../cache/planet/8_132_86.png`));
+      const imagePath = path.resolve(`${__dirname}./../../cache/planet/8_132_86.png`);
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+      }
 
       authenticatedUser.get('/api/planet/8/132/86')
         .end((err, res) => {
@@ -101,7 +107,10 @@ module.exports = () => {
     });
 
     it('should return a 200 response', (done) => {
-      fs.unlinkSync(path.resolve(`${__dirname}./../../cache/heatmap/8_132_86.png`));
+      const imagePath = path.resolve(`${__dirname}./../../cache/heatmap/8_132_86.png`);
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+      }
 
       authenticatedUser.get('/api/heatmap/8/132/86')
         .end((err, res) => {
