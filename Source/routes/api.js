@@ -57,7 +57,10 @@ router.get('*', (req, res, next) => {
 });
 
 /**
- * Creates route for meetpunten.
+ * Renders a KML file containing all locations of the SensorHubs.
+ *
+ * @name Meetpunten
+ * @path {GET} /api/meetpunten
  * @todo Change 'meetpunten' to an English name for consistency.
  */
 router.get('/meetpunten', (req, res, next) => {
@@ -74,7 +77,17 @@ router.get('/meetpunten', (req, res, next) => {
     });
 });
 
-/* Handles caching. */
+/*
+ * Handles Planet and Mapbox tile services,
+ * also used for all cached images.
+ *
+ * @name ZXY
+ * @path {GET} /api/:host/:z/:x/:y
+ * @params {String} :host is the provider of the tile service.
+ * @params {String} :z is the z-coordinate.
+ * @params {String} :x is the x-coordinate.
+ * @params {String} :y is the y-coordinate.
+ */
 router.get('/:host/:z/:x/:y', (req, res, next) => {
   const cachePath = path.resolve(`${tempCachePath}/${req.params.host}/`);
   if (!fs.existsSync(cachePath)) {
@@ -133,6 +146,16 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
   });
 });
 
+/**
+ * Renders a 256x256 pixels PNG-image based,
+ * on the temperature of the three nearest SensorHubs.
+ *
+ * @name Heatmap
+ * @path {GET} /api/heatmap/:z/:x/:y
+ * @params {String} :z is the z-coordinate.
+ * @params {String} :x is the x-coordinate.
+ * @params {String} :y is the y-coordinate.
+ */
 router.get('/heatmap/:z/:x/:y', (req, res, next) => {
   const filePath = path.resolve(`${tempCachePath}/heatmap/`, `${req.params.z}_${req.params.x}_${req.params.y}.png`);
 
@@ -156,8 +179,13 @@ router.get('/heatmap/:z/:x/:y', (req, res, next) => {
     });
 });
 
-/* Redirects * to the map page. */
-router.get('*', (req, res) => {
+/**
+ * Redirects all unhandled request the the /map page.
+ *
+ * @name Unhandled
+ * @path {ALL} /api/*
+ */
+router.all('*', (req, res) => {
   res.redirect('/map');
 });
 
