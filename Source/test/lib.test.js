@@ -29,6 +29,6 @@ describe('Lib', () => {
   });
 
   describe('Helpers', () => {
-  //  describe('downloadImage', downloadImage);
+    describe('downloadImage', downloadImage);
   });
 });

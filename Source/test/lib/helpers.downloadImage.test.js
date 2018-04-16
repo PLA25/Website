@@ -54,19 +54,4 @@ module.exports = () => {
         });
     });
   });
-
-  describe('Test cases', () => {
-    it('mapbox 8_131_84', () => {
-      if (fs.existsSync(imagePath)) {
-        fs.unlinkSync(imagePath);
-      }
-
-      // Act
-      downloadImage(url, imagePath)
-        .then((image) => {
-          // Assert
-          fs.readFileSync(image).should.deep.equal(fs.readFileSync(path.resolve(`${__dirname}./../expected/mapbox_8_131_84.png`)));
-        });
-    });
-  });
 };
