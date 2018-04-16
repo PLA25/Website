@@ -8,6 +8,9 @@ const tileToLong = require('./lib/converter.tileToLong.test');
 const generateImage = require('./lib/generator.generateImage.test');
 const getIncrement = require('./lib/generator.getIncrement.test');
 
+/* Helpers */
+const downloadImage = require('./lib/helpers.downloadImage.test');
+
 describe('Lib', () => {
   describe('Converter', () => {
     describe('tempToColor', tempToColor);
@@ -23,5 +26,9 @@ describe('Lib', () => {
     describe('generateImage', generateImage);
 
     describe('getIncrement', getIncrement);
+  });
+
+  describe('Helpers', () => {
+    describe('downloadImage', downloadImage);
   });
 });

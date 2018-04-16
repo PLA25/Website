@@ -27,9 +27,9 @@
     "jimp": "0.2.28",
     "mongoose": "5.0.14",
     "morgan": "1.9.0",
-    "node-base64-image": "1.0.4",
     "passport": "0.4.0",
     "passport-local": "1.0.0",
+    "request": "2.85.0",
     "serve-favicon": "2.5.0"
   },
   "devDependencies": {

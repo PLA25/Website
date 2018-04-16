@@ -94,7 +94,7 @@ module.exports = () => {
           res.statusCode.should.equal(200);
           done();
         });
-    });
+    }).timeout(2500);
   });
 
   describe('GET /heatmap/:z/:x/:y', () => {
