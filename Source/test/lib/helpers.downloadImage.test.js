@@ -12,6 +12,10 @@ module.exports = () => {
   // Arrange
   const url = 'https://a.tiles.mapbox.com/v3/planet.jh0b3oee/8/131/84.png';
   const imagePath = path.resolve(`${__dirname}./../../cache/mapbox/8_131_84.png`);
+  const image = {
+    host: 'mapbox',
+    name: '8_131_84.png',
+  };
 
   describe('Output', () => {
     it('should return a string', () => {
@@ -20,10 +24,10 @@ module.exports = () => {
       }
 
       // Act
-      downloadImage(url, imagePath)
-        .then((image) => {
+      downloadImage(url, image)
+        .then((img) => {
           // Assert
-          image.should.be.a('string');
+          img.should.be.a('string');
         });
     });
 
@@ -33,7 +37,7 @@ module.exports = () => {
       }
 
       // Act
-      downloadImage('asdf', imagePath)
+      downloadImage('asdf', image)
         .catch((err) => {
           err.should.be.an.instanceOf(Error);
           err.should.have.property('message', 'Invalid URI "asdf"');
@@ -46,11 +50,26 @@ module.exports = () => {
       }
 
       // Act
-      downloadImage(url, imagePath)
-        .then(() => downloadImage(url, imagePath))
+      downloadImage(url, image)
+        .then(() => downloadImage(url, image))
         .catch((err) => {
           err.should.be.an.instanceOf(Error);
           err.should.have.property('message', 'File already exists!');
+        });
+    });
+  });
+
+  describe('Test cases', () => {
+    it('mapbox 8_131_84', () => {
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+      }
+
+      // Act
+      downloadImage(url, image)
+        .then((img) => {
+          // Assert
+          fs.readFileSync(img).should.deep.equal(fs.readFileSync(path.resolve(`${__dirname}./../expected/mapbox_8_131_84.png`)));
         });
     });
   });

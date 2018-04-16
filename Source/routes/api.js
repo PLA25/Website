@@ -121,9 +121,12 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
       return;
   }
 
-  downloadImage(url, filePath)
-    .then(() => {
-      res.sendFile(filePath);
+  downloadImage(url, {
+    host: req.params.host,
+    name: `${req.params.z}_${req.params.x}_${req.params.y}.png`,
+  })
+    .then((img) => {
+      res.sendFile(img);
     })
     .catch((err) => {
       next(err);
