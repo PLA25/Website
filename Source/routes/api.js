@@ -5,6 +5,7 @@
  * @see module:routes
  */
 
+/* Config */
 const config = require('./../config/all');
 
 /* Packages */
@@ -12,7 +13,6 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const base64 = require('node-base64-image');
-const distance = require('fast-haversine');
 const Jimp = require('jimp');
 
 /* Models */
@@ -23,89 +23,147 @@ const SensorHub = require('./../models/sensorhub');
 const router = express.Router();
 
 /* Helpers */
-const { tempToColor, tileToLong, tileToLat } = require('./../lib/converter');
+const {
+  generateImage,
+} = require('./../lib/generator');
+
+const cacheData = [];
+function getCachedData(model, options) {
+  return new Promise(((resolve, reject) => {
+    const modelName = model.collection.name;
+    if (cacheData[modelName] !== undefined) {
+      resolve(cacheData[modelName]);
+      return;
+    }
+
+    model.find(options).exec()
+      .then((data) => {
+        cacheData[modelName] = data;
+        resolve(data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  }));
+}
+
+const tempCachePath = path.resolve(`${__dirname}./../cache/`);
+router.get('*', (req, res, next) => {
+  if (!fs.existsSync(tempCachePath)) {
+    fs.mkdirSync(tempCachePath);
+  }
+
+  next();
+});
 
 /**
- * @param options
- * @todo Change 'GetData' to 'getData' in accordance of code style.
+ * Renders a KML file containing all locations of the SensorHubs.
+ *
+ * @name Meetpunten
+ * @path {GET} /api/meetpunten
+ * @todo Change 'meetpunten' to an English name for consistency.
  */
-function GetData(options) {
-  return new Promise((resolve, reject) => {
-    Data.findOne(options, (err, data) => {
-      if (err) {
-        reject(err);
+router.get('/meetpunten', (req, res, next) => {
+  getCachedData(SensorHub, {})
+    .then((sensorHubs) => {
+      res.set('Content-Type', 'application/vnd.google-earth.kml+xml');
+      res.render('meetpunten', {
+        layout: false,
+        sensorHubs,
+      });
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+/*
+ * Handles Planet and Mapbox tile services,
+ * also used for all cached images.
+ *
+ * @name ZXY
+ * @path {GET} /api/:host/:z/:x/:y
+ * @params {String} :host is the provider of the tile service.
+ * @params {String} :z is the z-coordinate.
+ * @params {String} :x is the x-coordinate.
+ * @params {String} :y is the y-coordinate.
+ */
+router.get('/:host/:z/:x/:y', (req, res, next) => {
+  const cachePath = path.resolve(`${tempCachePath}/${req.params.host}/`);
+  if (!fs.existsSync(cachePath)) {
+    fs.mkdirSync(cachePath);
+  }
+
+  const filePath = path.resolve(cachePath, `${req.params.z}_${req.params.x}_${req.params.y}.png`);
+  if (fs.existsSync(filePath)) {
+    res.sendFile(filePath);
+    return;
+  }
+
+  let url = '';
+  switch (req.params.host) {
+    case 'planet':
+      url = `https://tiles.planet.com/basemaps/v1/planet-tiles/global_monthly_2018_02_mosaic/gmap/${req.params.z}/${req.params.x}/${req.params.y}.png?api_key=${config.Planet.Key}`;
+      break;
+
+    case 'mapbox':
+      url = `https://a.tiles.mapbox.com/v3/planet.jh0b3oee/${req.params.z}/${req.params.x}/${req.params.y}.png`;
+      break;
+
+    case 'heatmap':
+      next();
+      return;
+
+    default:
+      res.status(404).sendFile(path.resolve(tempCachePath, '-1_-1_-1.png'));
+      return;
+  }
+
+  base64.encode(url, {
+    string: false,
+  }, (err, image) => {
+    if (err) {
+      next(err);
+      return;
+    }
+
+    base64.decode(image, {
+      filename: filePath,
+    }, (err2) => {
+      if (err2) {
+        next(err);
         return;
       }
 
-      resolve(data);
+      fs.rename(`${filePath}.jpg`, filePath, (err3) => {
+        if (err3) {
+          next(err3);
+        }
+
+        res.sendFile(filePath);
+      });
     });
   });
-}
+});
 
+/**
+ * Renders a 256x256 pixels PNG-image based,
+ * on the temperature of the three nearest SensorHubs.
+ *
+ * @name Heatmap
+ * @path {GET} /api/heatmap/:z/:x/:y
+ * @params {String} :z is the z-coordinate.
+ * @params {String} :x is the x-coordinate.
+ * @params {String} :y is the y-coordinate.
+ */
 router.get('/heatmap/:z/:x/:y', (req, res, next) => {
-  SensorHub.find({}).exec()
-    .then((sensorHubs) => {
-      const latitude = tileToLat(req.params.y, req.params.z);
-      const longitude = tileToLong(req.params.x, req.params.z);
+  const filePath = path.resolve(`${tempCachePath}/heatmap/`, `${req.params.z}_${req.params.x}_${req.params.y}.png`);
 
-      const calculatedHubs = [];
-      for (let i = 0; i < sensorHubs.length; i += 1) {
-        const sensorHub = sensorHubs[i];
-
-        const from = {
-          lat: parseFloat(sensorHub.Latitude, 10),
-          lon: parseFloat(sensorHub.Longitude, 10),
-        };
-
-        const to = {
-          lat: parseFloat(latitude, 10),
-          lon: parseFloat(longitude, 10),
-        };
-
-        sensorHub.Distance = distance(from, to);
-        calculatedHubs.push(sensorHub);
-      }
-
-      return calculatedHubs.sort((a, b) => a.Distance - b.Distance).slice(0, 3);
-    })
-    .then((selectedNodes) => {
-      const promises = [];
-      for (let i = 0; i < selectedNodes.length; i += 1) {
-        promises.push(GetData({
-          Type: 'temperature',
-          SensorHub: selectedNodes[i].SerialID,
-        }));
-      }
-
-      return Promise.all(promises).then(data => [selectedNodes, data]);
-    })
-    .then(([selectedNodes, data]) => {
-      let divider = 0;
-      for (let i = 0; i < selectedNodes.length; i += 1) {
-        divider += (1 / parseFloat(selectedNodes[i].Distance, 10));
-      }
-
-      let calculatedValue = 0;
-      for (let i = 0; i < data.length; i += 1) {
-        const dataNode = data[i];
-        const sensorHub = selectedNodes[i];
-
-        const weight = (1 / sensorHub.Distance) / divider;
-        calculatedValue += (parseFloat(dataNode.Value, 10) * weight);
-      }
-
-      return calculatedValue;
-    })
-    .then((calculatedValue) => {
-      const image = new Jimp(256, 256, 0x0);
-      const rgb = tempToColor(calculatedValue);
-
-      for (let x = 0; x < 256; x += 1) {
-        for (let y = 0; y < 256; y += 1) {
-          image.setPixelColor(Jimp.rgbaToInt(rgb[0], rgb[1], rgb[2], parseFloat(0.25 * 255)), x, y);
-        }
-      }
-
+  getCachedData(SensorHub, {})
+    .then(allSensorHubs => getCachedData(Data, {}).then(data => [allSensorHubs, data]))
+    .then(([allSensorHubs, data]) => {
+      const image = generateImage(req.params, allSensorHubs, data);
+      image.write(filePath);
       image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
         if (err) {
           next(err);
@@ -122,78 +180,12 @@ router.get('/heatmap/:z/:x/:y', (req, res, next) => {
 });
 
 /**
- * Creates route for meetpunten.
- * @todo Change 'meetpunten' to an English name for consistency.
+ * Redirects all unhandled request the the /map page.
+ *
+ * @name Unhandled
+ * @path {ALL} /api/*
  */
-router.get('/meetpunten', (req, res, next) => {
-  SensorHub.find({}).exec()
-    .then((sensorHubs) => {
-      res.render('meetpunten', {
-        layout: false,
-        sensorHubs,
-      });
-    })
-    .catch((err) => {
-      next(err);
-    });
-});
-
-/** Handles caching. */
-router.get('/:host/:z/:x/:y', (req, res, next) => {
-  const tempCachePath = path.resolve(`${__dirname}./../cache/`);
-  if (!fs.existsSync(tempCachePath)) {
-    fs.mkdirSync(tempCachePath);
-  }
-
-  const cachePath = path.resolve(`${tempCachePath}/${req.params.host}/`);
-  if (!fs.existsSync(cachePath)) {
-    fs.mkdirSync(cachePath);
-  }
-
-  const filePath = path.resolve(cachePath, `${req.params.z}_${req.params.x}_${req.params.y}.jpg`);
-  if (fs.existsSync(filePath)) {
-    res.sendFile(filePath);
-    return;
-  }
-
-  let url = '';
-  switch (req.params.host) {
-    case 'planet':
-      url = `https://tiles.planet.com/basemaps/v1/planet-tiles/global_monthly_2018_02_mosaic/gmap/${req.params.z}/${req.params.x}/${req.params.y}.png?api_key=${config.Planet.Key}`;
-      break;
-
-    case 'mapbox':
-      url = `https://a.tiles.mapbox.com/v3/planet.jh0b3oee/${req.params.z}/${req.params.x}/${req.params.y}.png`;
-      break;
-
-    default:
-      res.sendFile(path.resolve(cachePath, '-1_-1_-1.jpg'));
-      return;
-  }
-
-  base64.encode(url, {
-    string: false,
-  }, (err, image) => {
-    if (err) {
-      next(err);
-      return;
-    }
-
-    base64.decode(image, {
-      filename: filePath.replace('.jpg', ''),
-    }, (err2) => {
-      if (err2) {
-        next(err);
-        return;
-      }
-
-      res.sendFile(filePath);
-    });
-  });
-});
-
-/** Redirects * to the map page. */
-router.get('*', (req, res) => {
+router.all('*', (req, res) => {
   res.redirect('/map');
 });
 

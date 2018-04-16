@@ -9,6 +9,7 @@ const flash = require('connect-flash');
 const hbs = require('hbs');
 const mongoose = require('mongoose');
 const i18n = require('i18n');
+const logger = require('morgan');
 
 /* Requires the configuration, passport and routes. */
 const config = require('./config/all');
@@ -42,6 +43,7 @@ app.set('view engine', 'hbs');
 
 /* Sets a favicon for browsers. */
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false,
