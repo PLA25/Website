@@ -4,7 +4,7 @@ const center = ol.proj.transform([4.895168, 52.370216], 'EPSG:4326', 'EPSG:3857'
 
 const view = new ol.View({
   center,
-  zoom: 11,
+  zoom: 8,
   minZoom: 8,
   maxZoom: 15,
   extent: [
