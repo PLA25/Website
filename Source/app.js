@@ -43,7 +43,11 @@ app.set('view engine', 'hbs');
 
 /* Sets a favicon for browsers. */
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+
+if (process.env.NODE_ENV !== 'testing') {
+  app.use(logger('dev'));
+}
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false,
