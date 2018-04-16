@@ -64,8 +64,12 @@ module.exports = () => {
       // Act
       downloadImage(url, imagePath)
         .then((image) => {
+          const expectedImage = path.resolve(`${__dirname}./../expected/mapbox_8_131_84.png`);
+          console.log(expectedImage);
+          console.log(image);
+
           // Assert
-          fs.readFileSync(image).should.deep.equal(fs.readFileSync(path.resolve(`${__dirname}./../expected/mapbox_8_131_84.png`)));
+          fs.readFileSync(image).should.deep.equal(fs.readFileSync(expectedImage));
         });
     });
   });
