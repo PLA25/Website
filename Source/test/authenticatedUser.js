@@ -1,3 +1,6 @@
+/* Environment */
+process.env.NODE_ENV = 'testing';
+
 /* Packages */
 const chai = require('chai');
 const request = require('supertest');
