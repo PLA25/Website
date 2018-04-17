@@ -14,7 +14,7 @@ const request = require('request');
  * @function
  * @param {string} imageURL - URL of the image to download.
  * @param {string} localPath - Absolute path of the location to save to.
- * @returns {string} Path of the saved image.
+ * @returns {Promise} Promise object represents the path of the saved image.
  */
 function downloadImage(imageURL, { host, name }) {
   const cacheFolder = path.resolve(`${__dirname}./../cache/`);

@@ -43,6 +43,7 @@ module.exports = () => {
 
   describe('Output', () => {
     it('should return a string', () => {
+      // Arrange
       if (fs.existsSync(imagePath)) {
         fs.unlinkSync(imagePath);
       }
@@ -67,6 +68,7 @@ module.exports = () => {
 
   describe('Expected errors', () => {
     it('should return an error if the url is invalid', () => {
+      // Arrange
       if (fs.existsSync(imagePath)) {
         fs.unlinkSync(imagePath);
       }
@@ -83,6 +85,7 @@ module.exports = () => {
 
   describe('Test cases', () => {
     it('should download mapbox 8_131_84 to cache/mapbox/8_131_84.png', () => {
+      // Arrange
       if (fs.existsSync(imagePath)) {
         fs.unlinkSync(imagePath);
       }
@@ -97,15 +100,9 @@ module.exports = () => {
 
     it('should give the previously downloaded mapbox 8_131_84', () => {
       // Arrange
-      if (!fs.existsSync(imagePath)) {
-        downloadImage(url, image)
-          .then((img) => {
-            fs.readFileSync(img).should.deep.equal(fs.readFileSync(path.resolve(`${__dirname}./../expected/mapbox_8_131_84.png`)));
-          });
-      }
-
-      // Act
       downloadImage(url, image)
+        // Act
+        .then(() => downloadImage(url, image))
         .then((img) => {
           // Assert
           fs.readFileSync(img).should.deep.equal(fs.readFileSync(path.resolve(`${__dirname}./../expected/mapbox_8_131_84.png`)));
