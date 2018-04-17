@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Source: models/user.js</title>
+	<title>JSDoc: Source: lib/helpers.js</title>
 	<script src="scripts/prettify/prettify.js">
 
 
@@ -21,64 +21,63 @@
 
 <body>
 	<div id="main">
-		<h1 class="page-title">Source: models/user.js</h1>
+		<h1 class="page-title">Source: lib/helpers.js</h1>
 		<section>
 			<article>
-				<pre class="prettyprint source linenums"><code>/* Packages */
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt-nodejs');
+				<pre class="prettyprint source linenums"><code>/**
+ * @see module:lib
+ * @module lib/helpers
+ */
 
-const schema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  isAdmin: {
-    type: Boolean,
-  },
-});
+/* Packages */
+const fs = require('fs');
+const path = require('path');
+const request = require('request');
 
 /**
- * Class representing a user.
- * @class
+ * Downloads an image from the given URL and saves it to the specified location.
+ *
+ * @function
+ * @param {string} imageURL - URL of the image to download.
+ * @param {string} localPath - Absolute path of the location to save to.
+ * @returns {string} Path of the saved image.
  */
-class User {
-  /**
-   * Creates a new user.
-   * @param {string} username - The username value.
-   * @param {string} password - The password value.
-   */
-  constructor(username, password) {
-    this.email = username;
-    this.password = User.encryptPassword(password);
+function downloadImage(imageURL, { host, name }) {
+  const cacheFolder = path.resolve(`${__dirname}./../cache/`);
+  if (!fs.existsSync(cacheFolder)) {
+    fs.mkdirSync(cacheFolder);
   }
 
-  /**
-   * Encrypts the given password.
-   * @param {string} password - The password value.
-   * @return {string} An encrypted password.
-   */
-  static encryptPassword(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+  const hostFolder = path.resolve(cacheFolder, host);
+  if (!fs.existsSync(hostFolder)) {
+    fs.mkdirSync(hostFolder);
   }
 
-  /**
-   * Validates a password.
-   * @param {string} password - The password value.
-   * @return {boolean} If the given password matches.
-   */
-  validatePassword(password) {
-    return bcrypt.compareSync(password, this.password);
-  }
+  return new Promise((resolve, reject) => {
+    const localPath = path.resolve(hostFolder, name);
+    if (fs.existsSync(localPath)) {
+      reject(new Error('File already exists!'));
+      return;
+    }
+
+    request.head(imageURL, (err) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      request(imageURL)
+        .pipe(fs.createWriteStream(localPath))
+        .on('close', () => {
+          resolve(localPath);
+        });
+    });
+  });
 }
 
-schema.loadClass(User);
-module.exports = mongoose.model('User', schema);
+module.exports = {
+  downloadImage,
+};
 </code></pre>
 			</article>
 		</section>
