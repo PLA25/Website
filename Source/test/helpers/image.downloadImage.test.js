@@ -19,7 +19,7 @@ function deleteFolderRecursive(folderPath) {
         fs.unlinkSync(curPath);
       }
     });
-    fs.rmdirSync(path);
+    fs.rmdirSync(folderPath);
   }
 }
 
