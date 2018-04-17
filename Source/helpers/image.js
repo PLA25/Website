@@ -1,6 +1,6 @@
 /**
- * @see module:lib
- * @module lib/helpers
+ * @see module:helpers
+ * @module helpers/image
  */
 
 /* Packages */
@@ -30,7 +30,7 @@ function downloadImage(imageURL, { host, name }) {
   return new Promise((resolve, reject) => {
     const localPath = path.resolve(hostFolder, name);
     if (fs.existsSync(localPath)) {
-      reject(new Error('File already exists!'));
+      resolve(localPath);
       return;
     }
 
