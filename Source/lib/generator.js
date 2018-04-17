@@ -1,6 +1,7 @@
 /**
  * @see module:lib
  * @module lib/generator
+ * @todo Unit Tests
  */
 
 const Jimp = require('jimp');
