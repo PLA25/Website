@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Source: models/user.js</title>
+	<title>JSDoc: Module: lib/helpers</title>
 	<script src="scripts/prettify/prettify.js">
 
 
@@ -21,65 +21,66 @@
 
 <body>
 	<div id="main">
-		<h1 class="page-title">Source: models/user.js</h1>
+		<h1 class="page-title">Module: lib/helpers</h1>
 		<section>
+			<header>
+			</header>
 			<article>
-				<pre class="prettyprint source linenums"><code>/* Packages */
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt-nodejs');
-
-const schema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  isAdmin: {
-    type: Boolean,
-  },
-});
-
-/**
- * Class representing a user.
- * @class
- */
-class User {
-  /**
-   * Creates a new user.
-   * @param {string} username - The username value.
-   * @param {string} password - The password value.
-   */
-  constructor(username, password) {
-    this.email = username;
-    this.password = User.encryptPassword(password);
-  }
-
-  /**
-   * Encrypts the given password.
-   * @param {string} password - The password value.
-   * @return {string} An encrypted password.
-   */
-  static encryptPassword(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-  }
-
-  /**
-   * Validates a password.
-   * @param {string} password - The password value.
-   * @return {boolean} If the given password matches.
-   */
-  validatePassword(password) {
-    return bcrypt.compareSync(password, this.password);
-  }
-}
-
-schema.loadClass(User);
-module.exports = mongoose.model('User', schema);
-</code></pre>
+				<div class="container-overview">
+				</div>
+				<h3 class="subsection-title">Methods</h3>
+				<h4 class="name" id="~downloadImage"><span class="type-signature">(inner) </span>downloadImage<span class="signature">(imageURL, localPath)</span><span class="type-signature"> &rarr; {string}</span></h4>
+				<div class="description">
+					Downloads an image from the given URL and saves it to the specified location.
+				</div>
+				<h5>Parameters:</h5>
+				<table class="params">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Type</th>
+							<th class="last">Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="name"><code>imageURL</code></td>
+							<td class="type">
+								<span class="param-type">string</span>
+							</td>
+							<td class="description last">URL of the image to download.</td>
+						</tr>
+						<tr>
+							<td class="name"><code>localPath</code></td>
+							<td class="type">
+								<span class="param-type">string</span>
+							</td>
+							<td class="description last">Absolute path of the location to save to.</td>
+						</tr>
+					</tbody>
+				</table>
+				<dl class="details">
+					<dt class="tag-source">Source:</dt>
+					<dd class="tag-source">
+						<ul class="dummy">
+							<li>
+								<a href="lib_helpers.js.html">lib/helpers.js</a>, <a href="lib_helpers.js.html#line19">line 19</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<h5>Returns:</h5>
+				<div class="param-desc">
+					Path of the saved image.
+				</div>
+				<dl>
+					<dt>
+        Type
+    </dt>
+					<dd>
+						<span class="param-type">string</span>
+					</dd>
+				</dl>
 			</article>
 		</section>
 	</div>

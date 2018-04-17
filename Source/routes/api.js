@@ -12,7 +12,6 @@ const config = require('./../config/all');
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const base64 = require('node-base64-image');
 const Jimp = require('jimp');
 
 /* Models */
@@ -26,6 +25,9 @@ const router = express.Router();
 const {
   generateImage,
 } = require('./../lib/generator');
+const {
+  downloadImage,
+} = require('./../lib/helpers');
 
 const cacheData = [];
 function getCachedData(model, options) {
@@ -119,31 +121,16 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
       return;
   }
 
-  base64.encode(url, {
-    string: false,
-  }, (err, image) => {
-    if (err) {
+  downloadImage(url, {
+    host: req.params.host,
+    name: `${req.params.z}_${req.params.x}_${req.params.y}.png`,
+  })
+    .then((img) => {
+      res.sendFile(img);
+    })
+    .catch((err) => {
       next(err);
-      return;
-    }
-
-    base64.decode(image, {
-      filename: filePath,
-    }, (err2) => {
-      if (err2) {
-        next(err);
-        return;
-      }
-
-      fs.rename(`${filePath}.jpg`, filePath, (err3) => {
-        if (err3) {
-          next(err3);
-        }
-
-        res.sendFile(filePath);
-      });
     });
-  });
 });
 
 /**
