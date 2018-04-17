@@ -99,4 +99,6 @@ hbs.registerHelper(
   },
 );
 
-module.exports = routes(app, passport);
+app.use(routes);
+
+module.exports = app;
