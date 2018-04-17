@@ -96,6 +96,14 @@ module.exports = () => {
     });
 
     it('should give the previously downloaded mapbox 8_131_84', () => {
+      // Arrange
+      if (!fs.existsSync(imagePath)) {
+        downloadImage(url, image)
+          .then((img) => {
+            fs.readFileSync(img).should.deep.equal(fs.readFileSync(path.resolve(`${__dirname}./../expected/mapbox_8_131_84.png`)));
+          });
+      }
+
       // Act
       downloadImage(url, image)
         .then((img) => {
