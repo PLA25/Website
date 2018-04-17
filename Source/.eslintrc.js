@@ -16,6 +16,9 @@ module.exports = {
       "maxBOF": 0,
       "maxEOF": 1
     }],
+    "no-use-before-define": ["error", {
+      "functions": false
+    }],
     "object-property-newline": ["error", {
       "allowAllPropertiesOnSameLine": false
     }],
