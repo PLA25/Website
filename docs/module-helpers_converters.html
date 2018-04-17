@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Module: lib/converter</title>
+	<title>JSDoc: Module: helpers/converters</title>
 	<script src="scripts/prettify/prettify.js">
 
 
@@ -21,7 +21,7 @@
 
 <body>
 	<div id="main">
-		<h1 class="page-title">Module: lib/converter</h1>
+		<h1 class="page-title">Module: helpers/converters</h1>
 		<section>
 			<header>
 			</header>
@@ -29,9 +29,9 @@
 				<div class="container-overview">
 				</div>
 				<h3 class="subsection-title">Methods</h3>
-				<h4 class="name" id="~tempToColor"><span class="type-signature">(inner) </span>tempToColor<span class="signature">(temp)</span><span class="type-signature"> &rarr; {Array.&lt;number>}</span></h4>
+				<h4 class="name" id="~calculateDegrees"><span class="type-signature">(inner) </span>calculateDegrees<span class="signature">(input, min, max)</span><span class="type-signature"> &rarr; {number}</span></h4>
 				<div class="description">
-					Converts temperature, in celsius, to RGB.
+					Converts the given input to degrees, using the provided min and max values.
 				</div>
 				<h5>Parameters:</h5>
 				<table class="params">
@@ -44,11 +44,25 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td class="name"><code>temp</code></td>
+							<td class="name"><code>input</code></td>
 							<td class="type">
 								<span class="param-type">number</span>
 							</td>
-							<td class="description last">temperature in celsius</td>
+							<td class="description last"></td>
+						</tr>
+						<tr>
+							<td class="name"><code>min</code></td>
+							<td class="type">
+								<span class="param-type">number</span>
+							</td>
+							<td class="description last"></td>
+						</tr>
+						<tr>
+							<td class="name"><code>max</code></td>
+							<td class="type">
+								<span class="param-type">number</span>
+							</td>
+							<td class="description last"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -57,14 +71,59 @@
 					<dd class="tag-source">
 						<ul class="dummy">
 							<li>
-								<a href="lib_converter.js.html">lib/converter.js</a>, <a href="lib_converter.js.html#line40">line 40</a>
+								<a href="helpers_converters.js.html">helpers/converters.js</a>, <a href="helpers_converters.js.html#line15">line 15</a>
 							</li>
 						</ul>
 					</dd>
 				</dl>
 				<h5>Returns:</h5>
 				<div class="param-desc">
-					Red, Green, Blue (RGB)
+					0 - 360
+				</div>
+				<dl>
+					<dt>
+        Type
+    </dt>
+					<dd>
+						<span class="param-type">number</span>
+					</dd>
+				</dl>
+				<h4 class="name" id="~degreesToColor"><span class="type-signature">(inner) </span>degreesToColor<span class="signature">(degrees)</span><span class="type-signature"> &rarr; {Array.&lt;number>}</span></h4>
+				<div class="description">
+					Converts degrees to a color (RGB).
+				</div>
+				<h5>Parameters:</h5>
+				<table class="params">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Type</th>
+							<th class="last">Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="name"><code>degrees</code></td>
+							<td class="type">
+								<span class="param-type">number</span>
+							</td>
+							<td class="description last"></td>
+						</tr>
+					</tbody>
+				</table>
+				<dl class="details">
+					<dt class="tag-source">Source:</dt>
+					<dd class="tag-source">
+						<ul class="dummy">
+							<li>
+								<a href="helpers_converters.js.html">helpers/converters.js</a>, <a href="helpers_converters.js.html#line47">line 47</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<h5>Returns:</h5>
+				<div class="param-desc">
+					Red, Green and Blue
 				</div>
 				<dl>
 					<dt>
@@ -74,9 +133,9 @@
 						<span class="param-type">Array.&lt;number></span>
 					</dd>
 				</dl>
-				<h4 class="name" id="~tempToDegrees"><span class="type-signature">(inner) </span>tempToDegrees<span class="signature">(temp)</span><span class="type-signature"> &rarr; {number}</span></h4>
+				<h4 class="name" id="~temperatureToColor"><span class="type-signature">(inner) </span>temperatureToColor<span class="signature">(temperature)</span><span class="type-signature"> &rarr; {Array.&lt;number>}</span></h4>
 				<div class="description">
-					Converts temperature, in celsius, to degrees.
+					Converts temperature, in °C, to a color (RGB).
 				</div>
 				<h5>Parameters:</h5>
 				<table class="params">
@@ -89,11 +148,11 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td class="name"><code>temp</code></td>
+							<td class="name"><code>temperature</code></td>
 							<td class="type">
 								<span class="param-type">number</span>
 							</td>
-							<td class="description last">temperature in celsius</td>
+							<td class="description last"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -102,14 +161,59 @@
 					<dd class="tag-source">
 						<ul class="dummy">
 							<li>
-								<a href="lib_converter.js.html">lib/converter.js</a>, <a href="lib_converter.js.html#line13">line 13</a>
+								<a href="helpers_converters.js.html">helpers/converters.js</a>, <a href="helpers_converters.js.html#line100">line 100</a>
 							</li>
 						</ul>
 					</dd>
 				</dl>
 				<h5>Returns:</h5>
 				<div class="param-desc">
-					0 - 360
+					Red, Green and Blue
+				</div>
+				<dl>
+					<dt>
+        Type
+    </dt>
+					<dd>
+						<span class="param-type">Array.&lt;number></span>
+					</dd>
+				</dl>
+				<h4 class="name" id="~temperatureToDegrees"><span class="type-signature">(inner) </span>temperatureToDegrees<span class="signature">(temperature)</span><span class="type-signature"> &rarr; {number}</span></h4>
+				<div class="description">
+					Converts temperature, in °C, to degrees.
+				</div>
+				<h5>Parameters:</h5>
+				<table class="params">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Type</th>
+							<th class="last">Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="name"><code>temperature</code></td>
+							<td class="type">
+								<span class="param-type">number</span>
+							</td>
+							<td class="description last"></td>
+						</tr>
+					</tbody>
+				</table>
+				<dl class="details">
+					<dt class="tag-source">Source:</dt>
+					<dd class="tag-source">
+						<ul class="dummy">
+							<li>
+								<a href="helpers_converters.js.html">helpers/converters.js</a>, <a href="helpers_converters.js.html#line120">line 120</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<h5>Returns:</h5>
+				<div class="param-desc">
+					0 - 300
 				</div>
 				<dl>
 					<dt>
@@ -154,7 +258,7 @@
 					<dd class="tag-source">
 						<ul class="dummy">
 							<li>
-								<a href="lib_converter.js.html">lib/converter.js</a>, <a href="lib_converter.js.html#line100">line 100</a>
+								<a href="helpers_converters.js.html">helpers/converters.js</a>, <a href="helpers_converters.js.html#line140">line 140</a>
 							</li>
 						</ul>
 					</dd>
@@ -206,7 +310,7 @@
 					<dd class="tag-source">
 						<ul class="dummy">
 							<li>
-								<a href="lib_converter.js.html">lib/converter.js</a>, <a href="lib_converter.js.html#line89">line 89</a>
+								<a href="helpers_converters.js.html">helpers/converters.js</a>, <a href="helpers_converters.js.html#line160">line 160</a>
 							</li>
 						</ul>
 					</dd>
@@ -230,7 +334,7 @@
 		<h2><a href="index.html">Home</a></h2>
 		<h3>Modules</h3>
 		<ul>
-			<li><a href="module-lib_converter.html">lib/converter</a></li>
+			<li><a href="module-helpers_converters.html">helpers/converters</a></li>
 			<li><a href="module-lib_generator.html">lib/generator</a></li>
 			<li><a href="module-lib_helpers.html">lib/helpers</a></li>
 			<li><a href="module-middleware.html">middleware</a></li>
@@ -254,7 +358,7 @@
 	</nav>
 	<br class="clear">
 	<footer>
-		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Apr 16 2018 19:44:26 GMT+0200 (W. Europe Daylight Time)
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Apr 17 2018 18:21:44 GMT+0200 (W. Europe Daylight Time)
 	</footer>
 	<script>
 		prettyPrint();
