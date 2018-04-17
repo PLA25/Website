@@ -96,10 +96,6 @@ module.exports = () => {
     });
 
     it('should give the previously downloaded mapbox 8_131_84', () => {
-      if (fs.existsSync(imagePath)) {
-        fs.unlinkSync(imagePath);
-      }
-
       // Act
       downloadImage(url, image)
         .then((img) => {
