@@ -27,7 +27,7 @@ const {
 } = require('./../lib/generator');
 const {
   downloadImage,
-} = require('./../lib/helpers');
+} = require('./../helpers/image');
 
 const cacheData = [];
 function getCachedData(model, options) {
