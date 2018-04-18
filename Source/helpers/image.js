@@ -1,6 +1,6 @@
 /**
- * @see module:lib
- * @module lib/helpers
+ * @see module:helpers
+ * @module helpers/image
  */
 
 /* Packages */
@@ -14,7 +14,7 @@ const request = require('request');
  * @function
  * @param {string} imageURL - URL of the image to download.
  * @param {string} localPath - Absolute path of the location to save to.
- * @returns {string} Path of the saved image.
+ * @returns {Promise} Promise object represents the path of the saved image.
  */
 function downloadImage(imageURL, { host, name }) {
   const cacheFolder = path.resolve(`${__dirname}./../cache/`);
@@ -30,7 +30,7 @@ function downloadImage(imageURL, { host, name }) {
   return new Promise((resolve, reject) => {
     const localPath = path.resolve(hostFolder, name);
     if (fs.existsSync(localPath)) {
-      reject(new Error('File already exists!'));
+      resolve(localPath);
       return;
     }
 

@@ -1,15 +1,24 @@
 /**
  * @see module:lib
  * @module lib/generator
+ * @todo Unit Tests
  */
 
 const Jimp = require('jimp');
 const distance = require('fast-haversine');
 
 const {
-  tempToColor,
-  getLatLong,
-} = require('./converter');
+  tileToLat,
+  tileToLong,
+  temperatureToColor,
+} = require('./../helpers/converters');
+
+function getLatLong({ z, x, y }) {
+  const latitude = tileToLat(parseInt(y, 10), parseInt(z, 10));
+  const longitude = tileToLong(parseInt(x, 10), parseInt(z, 10));
+
+  return [latitude, longitude];
+}
 
 function getColorFromLatLong(latitude, longitude, allSensorHubs, data) {
   const to = {
@@ -46,7 +55,7 @@ function getColorFromLatLong(latitude, longitude, allSensorHubs, data) {
     calculatedValue += (parseFloat(dataNode.Value, 10) * weight);
   });
 
-  const rgb = tempToColor(calculatedValue);
+  const rgb = temperatureToColor(calculatedValue);
   return Jimp.rgbaToInt(rgb[0], rgb[1], rgb[2], parseFloat(0.25 * 255));
 }
 

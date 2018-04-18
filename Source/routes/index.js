@@ -1,5 +1,6 @@
 /**
  * Routes
+ *
  * @module routes
  * @see module:routes/admin
  * @see module:routes/api
@@ -7,34 +8,40 @@
  * @see module:routes/map
  */
 
+/* Packages */
+const express = require('express');
+
+/* Constants */
+const router = express.Router();
+
+/* Middleware */
+const {
+  errorHandler,
+  isLoggedIn,
+  setUser,
+  pageNotFoundHandler,
+} = require('./../middleware');
+
 /* Routes */
 const home = require('./home');
 const admin = require('./admin');
 const api = require('./api');
 const map = require('./map');
 
-/* Middleware */
-const {
-  errorHandler, isLoggedIn, setUser, pageNotFoundHandler,
-} = require('./../middleware');
+router.use(setUser);
 
-module.exports = (app) => {
-  app.use(setUser);
+router.use('/', home);
 
-  app.use('/', home);
+/* Only allow authenticated user */
+router.use(isLoggedIn);
 
-  /* Only allow authenticated user */
-  app.use(isLoggedIn);
+/* Sets addresses for each page instance. */
+router.use('/admin', admin);
+router.use('/api', api);
+router.use('/map', map);
 
-  /* Sets addresses for each page instance. */
-  app.use('/admin', admin);
-  app.use('/api', api);
-  app.use('/map', map);
+/* Handlers */
+router.use(pageNotFoundHandler);
+router.use(errorHandler);
 
-  /* Handlers */
-  app.use(pageNotFoundHandler);
-  app.use(errorHandler);
-
-  /* Returns the application instance. */
-  return app;
-};
+module.exports = router;
