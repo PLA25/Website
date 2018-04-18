@@ -14,6 +14,12 @@ try {
     Planet: {
       Key: process.env.Planet_Key,
     },
+    Redis: {
+      host: process.env.Redis_Host,
+      port: process.env.Redis_Port,
+      pass: process.env.Redis_Pass,
+      db: 0,
+    },
   };
 }
 

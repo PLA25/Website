@@ -1,6 +1,7 @@
 /* Packages */
 const express = require('express');
 const session = require('express-session');
+const Redis = require('connect-redis')(session);
 const path = require('path');
 const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
@@ -56,7 +57,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
-  secret: 'PolutionDetectionSystem',
+  store: new Redis(config.Redis),
+  secret: 'PollutionDetectionSystem',
   secure: false,
   HttpOnly: true,
   rolling: true,
