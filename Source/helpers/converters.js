@@ -146,7 +146,7 @@ function tileToLat(y, z) {
     throw new Error('Expected \'z\' to be a number!');
   }
 
-  const n = Math.PI - (((2 * Math.PI) * y) / (2 ** z));
+  const n = Math.PI - (((2 * Math.PI) * (y + 0.75)) / (2 ** z));
   return ((180 / Math.PI) * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n))));
 }
 
@@ -166,7 +166,7 @@ function tileToLong(x, z) {
     throw new Error('Expected \'z\' to be a number!');
   }
 
-  return (((x / (2 ** z)) * 360) - 180);
+  return ((((x + 0.75) / (2 ** z)) * 360) - 180);
 }
 
 module.exports = {
