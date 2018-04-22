@@ -21,7 +21,7 @@ const userCredentials = {
 const authenticatedAdmin = request.agent(app);
 const authenticatedUser = request.agent(app);
 
-before((done) => {
+beforeEach((done) => {
   authenticatedAdmin
     .post('/login')
     .send(adminCredentials)
@@ -32,7 +32,7 @@ before((done) => {
     });
 });
 
-before((done) => {
+beforeEach((done) => {
   authenticatedUser
     .post('/login')
     .send(userCredentials)

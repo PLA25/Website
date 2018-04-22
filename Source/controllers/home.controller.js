@@ -65,5 +65,15 @@ router.get('/logout', isLoggedIn, (req, res) => {
   res.redirect('/login');
 });
 
+/**
+ * Renders the map page.
+ *
+ * @name Map
+ * @path {GET} /map
+ */
+router.get('/map', isLoggedIn, (req, res) => {
+  res.render('map');
+});
+
 /* Exports */
 module.exports = router;
