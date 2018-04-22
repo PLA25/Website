@@ -171,5 +171,24 @@ router.get('/heatmap/:z/:x/:y', (req, res, next) => {
     });
 });
 
+/**
+ * Renders a KML file containing the locations of all SensorHubs.
+ *
+ * @name SensorHubs
+ * @path {GET} /api/sensorhubs
+ */
+router.get('/sensorhubs', isLoggedIn, (req, res, next) => {
+  getCachedData(SensorHub, {})
+    .then((sensorHubs) => {
+      res.render('sensorhubs', {
+        layout: false,
+        SensorHubs: sensorHubs,
+      });
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
 /* Exports */
 module.exports = router;

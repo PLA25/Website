@@ -181,4 +181,36 @@ module.exports = () => {
       });
     });
   });
+
+  describe('GET /sensorhubs', () => {
+    describe('Not logged in', () => {
+      it('should redirect to /login', (done) => {
+        request(app).get('/api/sensorhubs')
+          .end((err, res) => {
+            res.headers.location.should.equal('/login');
+            done();
+          });
+      });
+    });
+
+    describe('Logged in admin', () => {
+      it('should return a 200 response', (done) => {
+        authenticatedAdmin.get('/api/sensorhubs')
+          .end((err, res) => {
+            res.statusCode.should.equal(200);
+            done();
+          });
+      });
+    });
+
+    describe('Logged in user', () => {
+      it('should return a 200 response', (done) => {
+        authenticatedUser.get('/api/sensorhubs')
+          .end((err, res) => {
+            res.statusCode.should.equal(200);
+            done();
+          });
+      });
+    });
+  });
 };
