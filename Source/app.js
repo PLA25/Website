@@ -12,11 +12,9 @@ const mongoose = require('mongoose');
 const i18n = require('i18n');
 const logger = require('morgan');
 
-/* Requires the configuration, passport and routes. */
 const config = require('./config/all');
-
 const passport = require('./config/passport');
-const routes = require('./routes');
+const controllers = require('./controllers');
 
 /* Connects to the MongoDB database with the configured settings. */
 mongoose.connect(`mongodb://${config.MongoDB.User}:${config.MongoDB.Pass}@${config.MongoDB.Host}:${config.MongoDB.Port}/${config.MongoDB.Name}`);
@@ -73,21 +71,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-/* Sets locale if there's a session with a locale. */
-app.use((req, res, next) => {
-  if (req.session.locale) {
-    i18n.setLocale(req.session.locale);
-  }
-
-  next();
-});
-
-/* Changes the language on command. */
-app.post('/locale-:locale', (req, res) => {
-  req.session.locale = req.params.locale;
-  res.redirect('back');
-});
-
 /* Binds i18n to Handlebars. */
 hbs.registerHelper(
   'i18n',
@@ -101,6 +84,6 @@ hbs.registerHelper(
   },
 );
 
-app.use(routes);
+app.use(controllers);
 
 module.exports = app;

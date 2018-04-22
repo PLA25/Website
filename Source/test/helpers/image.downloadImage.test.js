@@ -1,6 +1,6 @@
 /* Packages */
-const fs = require('fs');
 const chai = require('chai');
+const fs = require('fs');
 const isCI = require('is-ci');
 const path = require('path');
 
@@ -23,10 +23,12 @@ function deleteFolderRecursive(folderPath) {
   }
 }
 
+/* Constants */
+const cacheFolder = path.resolve(`${__dirname}./../../cache`);
+
 module.exports = () => {
   before((done) => {
     if (isCI) {
-      const cacheFolder = path.resolve(`${__dirname}./../../cache/`);
       deleteFolderRecursive(cacheFolder);
     }
 
@@ -35,7 +37,7 @@ module.exports = () => {
 
   // Arrange
   const url = 'https://a.tiles.mapbox.com/v3/planet.jh0b3oee/8/131/84.png';
-  const imagePath = path.resolve(`${__dirname}./../../cache/mapbox/8_131_84.png`);
+  const imagePath = path.resolve(cacheFolder, 'mapbox', '8_131_84.png');
   const image = {
     host: 'mapbox',
     name: '8_131_84.png',

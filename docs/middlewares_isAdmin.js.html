@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Source: models/data.js</title>
+	<title>JSDoc: Source: middlewares/isAdmin.js</title>
 	<script src="scripts/prettify/prettify.js">
 
 
@@ -21,39 +21,37 @@
 
 <body>
 	<div id="main">
-		<h1 class="page-title">Source: models/data.js</h1>
+		<h1 class="page-title">Source: middlewares/isAdmin.js</h1>
 		<section>
 			<article>
-				<pre class="prettyprint source linenums"><code>/* Packages */
-const mongoose = require('mongoose');
-
-const schema = new mongoose.Schema({
-  SensorHub: {
-    type: String,
-    required: true,
-  },
-  Type: {
-    type: String,
-    required: true,
-  },
-  Timestamp: {
-    type: Date,
-    required: true,
-  },
-  Value: {
-    type: String,
-    required: true,
-  },
-});
+				<pre class="prettyprint source linenums"><code>/* Constants */
+const has = Object.prototype.hasOwnProperty;
 
 /**
- * Class representing a data.
- * @class
+ * Checks if the user has the admin role;
+ * If the user is an admin then the request is continued;
+ * If the user is not an admin then he is redirect to the 404-page.
+ *
+ * @function
+ * @see module:middleware
+ * @module middleware/isAdmin
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @param {Function} next - Express next middleware function
+ * @returns {undefined}
  */
-class Data {}
+module.exports = (req, res, next) => {
+  if (!has.call(res.locals, 'user')) {
+    res.redirect('/login');
+    return;
+  }
 
-schema.loadClass(Data);
-module.exports = mongoose.model('Data', schema);
+  if (req.user.isAdmin) {
+    next();
+  } else {
+    res.redirect('/404');
+  }
+};
 </code></pre>
 			</article>
 		</section>
