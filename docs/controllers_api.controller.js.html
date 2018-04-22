@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Source: routes/api.js</title>
+	<title>JSDoc: Source: controllers/api.controller.js</title>
 	<script src="scripts/prettify/prettify.js">
 
 
@@ -21,14 +21,14 @@
 
 <body>
 	<div id="main">
-		<h1 class="page-title">Source: routes/api.js</h1>
+		<h1 class="page-title">Source: controllers/api.controller.js</h1>
 		<section>
 			<article>
 				<pre class="prettyprint source linenums"><code>/**
- * API route
+ * API controller
  *
- * @module routes/api
- * @see module:routes
+ * @module controllers/api
+ * @see module:controllers
  */
 
 /* Config */
@@ -36,9 +36,9 @@ const config = require('./../config/all');
 
 /* Packages */
 const express = require('express');
-const path = require('path');
 const fs = require('fs');
 const Jimp = require('jimp');
+const path = require('path');
 
 /* Models */
 const Data = require('./../models/data');
@@ -47,13 +47,18 @@ const SensorHub = require('./../models/sensorhub');
 /* Constants */
 const router = express.Router();
 
-/* Helpers */
+/* Middlewares */
 const {
-  generateImage,
-} = require('./../lib/generator');
+  isLoggedIn,
+} = require('./../middlewares');
+
+/* Helpers */
 const {
   downloadImage,
 } = require('./../helpers/image');
+const {
+  generateImage,
+} = require('./../lib/generator');
 
 const cacheData = [];
 function getCachedData(model, options) {
@@ -75,34 +80,23 @@ function getCachedData(model, options) {
   }));
 }
 
-const tempCachePath = path.resolve(`${__dirname}./../cache/`);
-router.get('*', (req, res, next) => {
-  if (!fs.existsSync(tempCachePath)) {
-    fs.mkdirSync(tempCachePath);
+const cacheFolder = path.resolve(`${__dirname}./../cache/`);
+router.use((req, res, next) => {
+  if (!fs.existsSync(cacheFolder)) {
+    fs.mkdirSync(cacheFolder);
   }
 
   next();
 });
 
-/**
- * Renders a KML file containing all locations of the SensorHubs.
- *
- * @name Meetpunten
- * @path {GET} /api/meetpunten
- * @todo Change 'meetpunten' to an English name for consistency.
- */
-router.get('/meetpunten', (req, res, next) => {
-  getCachedData(SensorHub, {})
-    .then((sensorHubs) => {
-      res.set('Content-Type', 'application/vnd.google-earth.kml+xml');
-      res.render('meetpunten', {
-        layout: false,
-        sensorHubs,
-      });
-    })
-    .catch((err) => {
-      next(err);
-    });
+const errorImage = path.resolve(cacheFolder, '-1_-1_-1.png');
+router.use((req, res, next) => {
+  if (!fs.existsSync(errorImage)) {
+    const image = new Jimp(256, 256, 0x0);
+    image.write(errorImage);
+  }
+
+  next();
 });
 
 /*
@@ -116,40 +110,49 @@ router.get('/meetpunten', (req, res, next) => {
  * @params {String} :x is the x-coordinate.
  * @params {String} :y is the y-coordinate.
  */
-router.get('/:host/:z/:x/:y', (req, res, next) => {
-  const cachePath = path.resolve(`${tempCachePath}/${req.params.host}/`);
-  if (!fs.existsSync(cachePath)) {
-    fs.mkdirSync(cachePath);
+router.get('/:host/:z/:x/:y', isLoggedIn, (req, res, next) => {
+  const hosts = ['heatmap', 'mapbox', 'planet'];
+  const { host } = req.params;
+  const z = parseInt(req.params.z, 10);
+  const x = parseInt(req.params.x, 10);
+  const y = parseInt(req.params.y, 10);
+
+  if (!hosts.includes(host)) {
+    res.sendFile(errorImage);
+    return;
   }
 
-  const filePath = path.resolve(cachePath, `${req.params.z}_${req.params.x}_${req.params.y}.png`);
+  const hostFolder = path.resolve(cacheFolder, host);
+  if (!fs.existsSync(hostFolder)) {
+    fs.mkdirSync(hostFolder);
+  }
+
+  const filePath = path.resolve(hostFolder, `${z}_${x}_${y}.png`);
   if (fs.existsSync(filePath)) {
     res.sendFile(filePath);
     return;
   }
 
   let url = '';
-  switch (req.params.host) {
-    case 'planet':
-      url = `https://tiles.planet.com/basemaps/v1/planet-tiles/global_monthly_2018_02_mosaic/gmap/${req.params.z}/${req.params.x}/${req.params.y}.png?api_key=${config.Planet.Key}`;
-      break;
-
-    case 'mapbox':
-      url = `https://a.tiles.mapbox.com/v3/planet.jh0b3oee/${req.params.z}/${req.params.x}/${req.params.y}.png`;
-      break;
-
+  switch (host) {
     case 'heatmap':
       next();
       return;
+    case 'mapbox':
+      url = `https://a.tiles.mapbox.com/v3/planet.jh0b3oee/${z}/${x}/${y}.png`;
+      break;
+    case 'planet':
+      url = `https://tiles.planet.com/basemaps/v1/planet-tiles/global_monthly_2018_02_mosaic/gmap/${z}/${x}/${y}.png?api_key=${config.Planet.Key}`;
+      break;
 
     default:
-      res.status(404).sendFile(path.resolve(tempCachePath, '-1_-1_-1.png'));
+      res.sendFile(errorImage);
       return;
   }
 
   downloadImage(url, {
-    host: req.params.host,
-    name: `${req.params.z}_${req.params.x}_${req.params.y}.png`,
+    host,
+    name: `${z}_${x}_${y}.png`,
   })
     .then((img) => {
       res.sendFile(img);
@@ -160,8 +163,8 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
 });
 
 /**
- * Renders a 256x256 pixels PNG-image based,
- * on the temperature of the three nearest SensorHubs.
+ * Renders a 256x256 pixels PNG-image based on the temperature
+ * of the five nearest SensorHubs.
  *
  * @name Heatmap
  * @path {GET} /api/heatmap/:z/:x/:y
@@ -170,7 +173,10 @@ router.get('/:host/:z/:x/:y', (req, res, next) => {
  * @params {String} :y is the y-coordinate.
  */
 router.get('/heatmap/:z/:x/:y', (req, res, next) => {
-  const filePath = path.resolve(`${tempCachePath}/heatmap/`, `${req.params.z}_${req.params.x}_${req.params.y}.png`);
+  const z = parseInt(req.params.z, 10);
+  const x = parseInt(req.params.x, 10);
+  const y = parseInt(req.params.y, 10);
+  const filePath = path.resolve(cacheFolder, 'heatmap', `${z}_${x}_${y}.png`);
 
   getCachedData(SensorHub, {})
     .then(allSensorHubs => getCachedData(Data, {}).then(data => [allSensorHubs, data]))
@@ -183,7 +189,6 @@ router.get('/heatmap/:z/:x/:y', (req, res, next) => {
           return;
         }
 
-        res.set('Content-Type', Jimp.MIME_PNG);
         res.send(buffer);
       });
     })
@@ -193,15 +198,25 @@ router.get('/heatmap/:z/:x/:y', (req, res, next) => {
 });
 
 /**
- * Redirects all unhandled request the the /map page.
+ * Renders a KML file containing the locations of all SensorHubs.
  *
- * @name Unhandled
- * @path {ALL} /api/*
+ * @name SensorHubs
+ * @path {GET} /api/sensorhubs
  */
-router.all('*', (req, res) => {
-  res.redirect('/map');
+router.get('/sensorhubs', isLoggedIn, (req, res, next) => {
+  getCachedData(SensorHub, {})
+    .then((sensorHubs) => {
+      res.render('sensorhubs', {
+        layout: false,
+        SensorHubs: sensorHubs,
+      });
+    })
+    .catch((err) => {
+      next(err);
+    });
 });
 
+/* Exports */
 module.exports = router;
 </code></pre>
 			</article>
@@ -211,20 +226,16 @@ module.exports = router;
 		<h2><a href="index.html">Home</a></h2>
 		<h3>Modules</h3>
 		<ul>
+			<li><a href="module-controllers.html">controllers</a></li>
+			<li><a href="module-controllers_api.html">controllers/api</a></li>
+			<li><a href="module-controllers_home.html">controllers/home</a></li>
 			<li><a href="module-helpers_converters.html">helpers/converters</a></li>
 			<li><a href="module-helpers_image.html">helpers/image</a></li>
 			<li><a href="module-lib_generator.html">lib/generator</a></li>
 			<li><a href="module-middleware.html">middleware</a></li>
-			<li><a href="module-middleware_errorHandler.html">middleware/errorHandler</a></li>
 			<li><a href="module-middleware_isAdmin.html">middleware/isAdmin</a></li>
 			<li><a href="module-middleware_isLoggedIn.html">middleware/isLoggedIn</a></li>
-			<li><a href="module-middleware_pageNotFoundHandler.html">middleware/pageNotFoundHandler</a></li>
-			<li><a href="module-middleware_setUser.html">middleware/setUser</a></li>
-			<li><a href="module-routes.html">routes</a></li>
-			<li><a href="module-routes_admin.html">routes/admin</a></li>
-			<li><a href="module-routes_api.html">routes/api</a></li>
-			<li><a href="module-routes_home.html">routes/home</a></li>
-			<li><a href="module-routes_map.html">routes/map</a></li>
+			<li><a href="module-middleware_isNotLoggedIn.html">middleware/isNotLoggedIn</a></li>
 		</ul>
 		<h3>Classes</h3>
 		<ul>
@@ -235,7 +246,7 @@ module.exports = router;
 	</nav>
 	<br class="clear">
 	<footer>
-		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Apr 17 2018 22:12:19 GMT+0200 (W. Europe Daylight Time)
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Apr 22 2018 17:06:02 GMT+0200 (W. Europe Daylight Time)
 	</footer>
 	<script>
 		prettyPrint();
