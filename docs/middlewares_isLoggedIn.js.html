@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Source: models/data.js</title>
+	<title>JSDoc: Source: middlewares/isLoggedIn.js</title>
 	<script src="scripts/prettify/prettify.js">
 
 
@@ -21,39 +21,29 @@
 
 <body>
 	<div id="main">
-		<h1 class="page-title">Source: models/data.js</h1>
+		<h1 class="page-title">Source: middlewares/isLoggedIn.js</h1>
 		<section>
 			<article>
-				<pre class="prettyprint source linenums"><code>/* Packages */
-const mongoose = require('mongoose');
-
-const schema = new mongoose.Schema({
-  SensorHub: {
-    type: String,
-    required: true,
-  },
-  Type: {
-    type: String,
-    required: true,
-  },
-  Timestamp: {
-    type: Date,
-    required: true,
-  },
-  Value: {
-    type: String,
-    required: true,
-  },
-});
-
-/**
- * Class representing a data.
- * @class
+				<pre class="prettyprint source linenums"><code>/**
+ * Checks if the user is logged in;
+ * If the user is logged in then the request continued;
+ * If the user is not logged in then the user is redirect to the login page.
+ *
+ * @function
+ * @see module:middleware
+ * @module middleware/isLoggedIn
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @param {Function} next - Express next middleware function
+ * @returns {undefined}
  */
-class Data {}
-
-schema.loadClass(Data);
-module.exports = mongoose.model('Data', schema);
+module.exports = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res.redirect('/login');
+  }
+};
 </code></pre>
 			</article>
 		</section>

@@ -1,6 +1,6 @@
 $(() => {
   function changeLocale(locale) {
-    $.post(`/locale-${locale}`, () => {
+    $.get(`/locale-${locale}`, () => {
       window.location.reload();
     }).fail(() => {
       // TODO: How do we want to handle this error?

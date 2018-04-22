@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Module: middleware</title>
+	<title>JSDoc: Module: middleware/isNotLoggedIn</title>
 	<script src="scripts/prettify/prettify.js">
 
 
@@ -21,29 +21,69 @@
 
 <body>
 	<div id="main">
-		<h1 class="page-title">Module: middleware</h1>
+		<h1 class="page-title">Module: middleware/isNotLoggedIn</h1>
 		<section>
 			<header>
 			</header>
 			<article>
 				<div class="container-overview">
-					<div class="description">Middlewares</div>
+					<div class="description">Checks if the user is not logged in; If the user is not logged in then the request continued; If the user is logged in then the user is redirect to the index page.</div>
+					<h5>Parameters:</h5>
+					<table class="params">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Type</th>
+								<th class="last">Description</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="name"><code>req</code></td>
+								<td class="type">
+									<span class="param-type">Object</span>
+								</td>
+								<td class="description last">Express request object</td>
+							</tr>
+							<tr>
+								<td class="name"><code>res</code></td>
+								<td class="type">
+									<span class="param-type">Object</span>
+								</td>
+								<td class="description last">Express response object</td>
+							</tr>
+							<tr>
+								<td class="name"><code>next</code></td>
+								<td class="type">
+									<span class="param-type">function</span>
+								</td>
+								<td class="description last">Express next middleware function</td>
+							</tr>
+						</tbody>
+					</table>
 					<dl class="details">
 						<dt class="tag-source">Source:</dt>
 						<dd class="tag-source">
 							<ul class="dummy">
 								<li>
-									<a href="middlewares_index.js.html">middlewares/index.js</a>, <a href="middlewares_index.js.html#line1">line 1</a>
+									<a href="middlewares_isNotLoggedIn.js.html">middlewares/isNotLoggedIn.js</a>, <a href="middlewares_isNotLoggedIn.js.html#line1">line 1</a>
 								</li>
 							</ul>
 						</dd>
 						<dt class="tag-see">See:</dt>
 						<dd class="tag-see">
 							<ul>
-								<li><a href="module-middleware_isAdmin.html">module:middleware/isAdmin</a></li>
-								<li><a href="module-middleware_isLoggedIn.html">module:middleware/isLoggedIn</a></li>
-								<li><a href="module-middleware_isNotLoggedIn.html">module:middleware/isNotLoggedIn</a></li>
+								<li><a href="module-middleware.html">module:middleware</a></li>
 							</ul>
+						</dd>
+					</dl>
+					<h5>Returns:</h5>
+					<dl>
+						<dt>
+        Type
+    </dt>
+						<dd>
+							<span class="param-type">undefined</span>
 						</dd>
 					</dl>
 				</div>

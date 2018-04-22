@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Source: models/data.js</title>
+	<title>JSDoc: Source: middlewares/index.js</title>
 	<script src="scripts/prettify/prettify.js">
 
 
@@ -21,39 +21,28 @@
 
 <body>
 	<div id="main">
-		<h1 class="page-title">Source: models/data.js</h1>
+		<h1 class="page-title">Source: middlewares/index.js</h1>
 		<section>
 			<article>
-				<pre class="prettyprint source linenums"><code>/* Packages */
-const mongoose = require('mongoose');
-
-const schema = new mongoose.Schema({
-  SensorHub: {
-    type: String,
-    required: true,
-  },
-  Type: {
-    type: String,
-    required: true,
-  },
-  Timestamp: {
-    type: Date,
-    required: true,
-  },
-  Value: {
-    type: String,
-    required: true,
-  },
-});
-
-/**
- * Class representing a data.
- * @class
+				<pre class="prettyprint source linenums"><code>/**
+ * Middlewares
+ *
+ * @module middleware
+ * @see module:middleware/isAdmin
+ * @see module:middleware/isLoggedIn
+ * @see module:middleware/isNotLoggedIn
  */
-class Data {}
 
-schema.loadClass(Data);
-module.exports = mongoose.model('Data', schema);
+/* Middlewares */
+const isAdmin = require('./isAdmin');
+const isLoggedIn = require('./isLoggedIn');
+const isNotLoggedIn = require('./isNotLoggedIn');
+
+module.exports = {
+  isAdmin,
+  isLoggedIn,
+  isNotLoggedIn,
+};
 </code></pre>
 			</article>
 		</section>

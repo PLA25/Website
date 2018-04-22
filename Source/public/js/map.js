@@ -30,7 +30,7 @@ const map = new ol.Map({
     }),
     new ol.layer.Vector({
       source: new ol.source.Vector({
-        url: '/api/meetpunten',
+        url: '/api/sensorhubs',
         format: new ol.format.KML(),
       }),
     }),
