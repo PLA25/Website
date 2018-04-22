@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Module: lib/generator</title>
+	<title>JSDoc: Source: middleware/isAdmin.js</title>
 	<script src="scripts/prettify/prettify.js">
 
 
@@ -21,13 +21,28 @@
 
 <body>
 	<div id="main">
-		<h1 class="page-title">Module: lib/generator</h1>
+		<h1 class="page-title">Source: middleware/isAdmin.js</h1>
 		<section>
-			<header>
-			</header>
 			<article>
-				<div class="container-overview">
-				</div>
+				<pre class="prettyprint source linenums"><code>/**
+ * Verifies if user has the role admin, if not redirect to 404.
+ *
+ * @function
+ * @see module:middleware
+ * @module middleware/isAdmin
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @param {Function} next - Express next middleware function
+ * @return {undefined}
+ */
+module.exports = (req, res, next) => {
+  if (req.user.isAdmin) {
+    next();
+  } else {
+    res.redirect('/404');
+  }
+};
+</code></pre>
 			</article>
 		</section>
 	</div>

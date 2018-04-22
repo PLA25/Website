@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Module: lib/generator</title>
+	<title>JSDoc: Source: middleware/index.js</title>
 	<script src="scripts/prettify/prettify.js">
 
 
@@ -21,13 +21,33 @@
 
 <body>
 	<div id="main">
-		<h1 class="page-title">Module: lib/generator</h1>
+		<h1 class="page-title">Source: middleware/index.js</h1>
 		<section>
-			<header>
-			</header>
 			<article>
-				<div class="container-overview">
-				</div>
+				<pre class="prettyprint source linenums"><code>/**
+ * middleware
+ * @module middleware
+ * @see module:middleware/errorHandler
+ * @see module:middleware/isAdmin
+ * @see module:middleware/isLoggedIn
+ * @see module:middleware/setUser
+ * @see module:middleware/pageNotFoundHandler
+ */
+
+const errorHandler = require('./errorHandler');
+const isAdmin = require('./isAdmin');
+const isLoggedIn = require('./isLoggedIn');
+const setUser = require('./setUser');
+const pageNotFoundHandler = require('./pageNotFoundHandler');
+
+module.exports = {
+  errorHandler,
+  isAdmin,
+  isLoggedIn,
+  setUser,
+  pageNotFoundHandler,
+};
+</code></pre>
 			</article>
 		</section>
 	</div>

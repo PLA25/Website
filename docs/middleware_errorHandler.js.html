@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Module: lib/generator</title>
+	<title>JSDoc: Source: middleware/errorHandler.js</title>
 	<script src="scripts/prettify/prettify.js">
 
 
@@ -21,13 +21,35 @@
 
 <body>
 	<div id="main">
-		<h1 class="page-title">Module: lib/generator</h1>
+		<h1 class="page-title">Source: middleware/errorHandler.js</h1>
 		<section>
-			<header>
-			</header>
 			<article>
-				<div class="container-overview">
-				</div>
+				<pre class="prettyprint source linenums"><code>/**
+ * Catches and handles all unhandled errors.
+ *
+ * @function
+ * @see module:middleware
+ * @module middleware/errorHandler
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @param {Function} next - Express next middleware function
+ * @return {undefined}
+ */
+module.exports = (err, req, res) => {
+  /* Sets locals, only providing error in development. */
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  /*
+   * Sets the appropriate error status, if it doesn't exist then set it as the 500 error, which
+   * is known for unspecificity.
+   */
+  res.status(err.status || 500);
+
+  /* Renders the error page from its view. */
+  res.render('error');
+};
+</code></pre>
 			</article>
 		</section>
 	</div>

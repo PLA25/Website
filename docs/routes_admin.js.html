@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Module: lib/generator</title>
+	<title>JSDoc: Source: routes/admin.js</title>
 	<script src="scripts/prettify/prettify.js">
 
 
@@ -21,13 +21,53 @@
 
 <body>
 	<div id="main">
-		<h1 class="page-title">Module: lib/generator</h1>
+		<h1 class="page-title">Source: routes/admin.js</h1>
 		<section>
-			<header>
-			</header>
 			<article>
-				<div class="container-overview">
-				</div>
+				<pre class="prettyprint source linenums"><code>/**
+ * Admin route
+ *
+ * @module routes/admin
+ * @see module:routes
+ */
+
+/* Packages */
+const express = require('express');
+
+/* Middleware */
+const isAdmin = require('./../middleware/isAdmin');
+
+/* Models */
+const User = require('./../models/user');
+const SensorHub = require('./../models/sensorhub');
+
+/* Constants */
+const router = express.Router();
+
+/**
+ * Renders the admin index page.
+ *
+ * @name Admin index
+ * @path {GET} /admin/
+ * @code {200} if the request is sucesfull
+ * @code {500} if the request fail because the database isn't accesible
+ */
+router.get('/', isAdmin, (req, res, next) => {
+  User.find({}).exec()
+    .then(users => SensorHub.find({}).exec().then(sensorHubs => [users, sensorHubs]))
+    .then(([users, sensorHubs]) => {
+      res.render('admin', {
+        users,
+        sensorHubs,
+      });
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+module.exports = router;
+</code></pre>
 			</article>
 		</section>
 	</div>
