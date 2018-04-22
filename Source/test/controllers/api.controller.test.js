@@ -38,7 +38,7 @@ module.exports = () => {
   describe('GET /:host/:z/:x/:y', () => {
     describe('Not logged in', () => {
       it('should redirect to /login', (done) => {
-        request(app).get('/')
+        request(app).get('/api/mapbox/8/132/86')
           .end((err, res) => {
             res.headers.location.should.equal('/login');
             done();
@@ -127,6 +127,53 @@ module.exports = () => {
 
       it('should return the errorImage for any unknown host', (done) => {
         authenticatedUser.get('/api/asdf/1/1/1')
+          .end((err, res) => {
+            res.statusCode.should.equal(200);
+            done();
+          });
+      });
+    });
+  });
+
+  describe('GET /heatmap/:z/:x/:y', () => {
+    describe('Not logged in', () => {
+      it('should redirect to /login', (done) => {
+        const imagePath = path.resolve(cacheFolder, 'heatmap', '8_132_86.png');
+        if (fs.existsSync(imagePath)) {
+          fs.unlinkSync(imagePath);
+        }
+
+        request(app).get('/api/heatmap/8/132/86')
+          .end((err, res) => {
+            res.headers.location.should.equal('/login');
+            done();
+          });
+      });
+    });
+
+    describe('Logged in admin', () => {
+      it('should return a 200 response for /heatmap/8/132/86', (done) => {
+        const imagePath = path.resolve(cacheFolder, 'heatmap', '8_132_86.png');
+        if (fs.existsSync(imagePath)) {
+          fs.unlinkSync(imagePath);
+        }
+
+        authenticatedAdmin.get('/api/heatmap/8/132/86')
+          .end((err, res) => {
+            res.statusCode.should.equal(200);
+            done();
+          });
+      });
+    });
+
+    describe('Logged in user', () => {
+      it('should return a 200 response for /heatmap/8/132/86', (done) => {
+        const imagePath = path.resolve(cacheFolder, 'heatmap', '8_132_86.png');
+        if (fs.existsSync(imagePath)) {
+          fs.unlinkSync(imagePath);
+        }
+
+        authenticatedAdmin.get('/api/heatmap/8/132/86')
           .end((err, res) => {
             res.statusCode.should.equal(200);
             done();

@@ -14,6 +14,10 @@ const fs = require('fs');
 const Jimp = require('jimp');
 const path = require('path');
 
+/* Models */
+const Data = require('./../models/data');
+const SensorHub = require('./../models/sensorhub');
+
 /* Constants */
 const router = express.Router();
 
@@ -26,6 +30,29 @@ const {
 const {
   downloadImage,
 } = require('./../helpers/image');
+const {
+  generateImage,
+} = require('./../lib/generator');
+
+const cacheData = [];
+function getCachedData(model, options) {
+  return new Promise(((resolve, reject) => {
+    const modelName = model.collection.name;
+    if (cacheData[modelName] !== undefined) {
+      resolve(cacheData[modelName]);
+      return;
+    }
+
+    model.find(options).exec()
+      .then((data) => {
+        cacheData[modelName] = data;
+        resolve(data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  }));
+}
 
 const cacheFolder = path.resolve(`${__dirname}./../cache/`);
 router.use((req, res, next) => {
@@ -103,6 +130,41 @@ router.get('/:host/:z/:x/:y', isLoggedIn, (req, res, next) => {
   })
     .then((img) => {
       res.sendFile(img);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+/**
+ * Renders a 256x256 pixels PNG-image based on the temperature
+ * of the five nearest SensorHubs.
+ *
+ * @name Heatmap
+ * @path {GET} /api/heatmap/:z/:x/:y
+ * @params {String} :z is the z-coordinate.
+ * @params {String} :x is the x-coordinate.
+ * @params {String} :y is the y-coordinate.
+ */
+router.get('/heatmap/:z/:x/:y', (req, res, next) => {
+  const z = parseInt(req.params.z, 10);
+  const x = parseInt(req.params.x, 10);
+  const y = parseInt(req.params.y, 10);
+  const filePath = path.resolve(cacheFolder, 'heatmap', `${z}_${x}_${y}.png`);
+
+  getCachedData(SensorHub, {})
+    .then(allSensorHubs => getCachedData(Data, {}).then(data => [allSensorHubs, data]))
+    .then(([allSensorHubs, data]) => {
+      const image = generateImage(req.params, allSensorHubs, data);
+      image.write(filePath);
+      image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
+        if (err) {
+          next(err);
+          return;
+        }
+
+        res.send(buffer);
+      });
     })
     .catch((err) => {
       next(err);
