@@ -2,6 +2,7 @@
  * Controllers
  *
  * @module controllers
+ * @see module:controllers/api
  * @see module:controllers/home
  */
 
@@ -9,6 +10,7 @@
 const express = require('express');
 
 /* Controllers */
+const apiController = require('./api.controller.js');
 const homeController = require('./home.controller.js');
 
 /* Constants */
@@ -26,6 +28,7 @@ router.use((req, res, next) => {
 });
 
 router.use('/', homeController);
+router.use('/api', apiController);
 
 /* Exports */
 module.exports = router;

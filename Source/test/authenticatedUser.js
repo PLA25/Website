@@ -18,32 +18,34 @@ const userCredentials = {
   password: 'user',
 };
 
-const authenticatedAdmin = request.agent(app);
-const authenticatedUser = request.agent(app);
+module.exports = () => {
+  const authenticatedAdmin = request.agent(app);
+  const authenticatedUser = request.agent(app);
 
-beforeEach((done) => {
-  authenticatedAdmin
-    .post('/login')
-    .send(adminCredentials)
-    .end((err, res) => {
-      res.statusCode.should.equal(302);
-      res.headers.location.should.equal('/');
-      done();
-    });
-});
+  before((done) => {
+    authenticatedAdmin
+      .post('/login')
+      .send(adminCredentials)
+      .end((err, res) => {
+        res.statusCode.should.equal(302);
+        res.headers.location.should.equal('/');
+        done();
+      });
+  });
 
-beforeEach((done) => {
-  authenticatedUser
-    .post('/login')
-    .send(userCredentials)
-    .end((err, res) => {
-      res.statusCode.should.equal(302);
-      res.headers.location.should.equal('/');
-      done();
-    });
-});
+  before((done) => {
+    authenticatedUser
+      .post('/login')
+      .send(userCredentials)
+      .end((err, res) => {
+        res.statusCode.should.equal(302);
+        res.headers.location.should.equal('/');
+        done();
+      });
+  });
 
-module.exports = {
-  authenticatedAdmin,
-  authenticatedUser,
+  return {
+    authenticatedAdmin,
+    authenticatedUser,
+  };
 };

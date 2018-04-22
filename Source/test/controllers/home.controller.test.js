@@ -7,7 +7,7 @@ const app = require('./../../bin/www');
 const {
   authenticatedAdmin,
   authenticatedUser,
-} = require('./../authenticatedUser');
+} = require('./../authenticatedUser')();
 
 chai.should();
 
@@ -76,38 +76,6 @@ module.exports = () => {
     });
   });
 
-  describe('GET /logout', () => {
-    describe('Not logged in', () => {
-      it('should redirect to /login', (done) => {
-        request(app).get('/logout')
-          .end((err, res) => {
-            res.headers.location.should.equal('/login');
-            done();
-          });
-      });
-    });
-
-    describe('Logged in admin', () => {
-      it('should redirect to /login', (done) => {
-        authenticatedAdmin.get('/logout')
-          .end((err, res) => {
-            res.headers.location.should.equal('/login');
-            done();
-          });
-      });
-    });
-
-    describe('Logged in user', () => {
-      it('should redirect to /login', (done) => {
-        authenticatedUser.get('/logout')
-          .end((err, res) => {
-            res.headers.location.should.equal('/login');
-            done();
-          });
-      });
-    });
-  });
-
   describe('GET /map', () => {
     describe('Not logged in', () => {
       it('should redirect to /login', (done) => {
@@ -134,6 +102,38 @@ module.exports = () => {
         authenticatedUser.get('/map')
           .end((err, res) => {
             res.statusCode.should.equal(200);
+            done();
+          });
+      });
+    });
+  });
+
+  describe('GET /logout', () => {
+    describe('Not logged in', () => {
+      it('should redirect to /login', (done) => {
+        request(app).get('/logout')
+          .end((err, res) => {
+            res.headers.location.should.equal('/login');
+            done();
+          });
+      });
+    });
+
+    describe('Logged in admin', () => {
+      it('should redirect to /login', (done) => {
+        authenticatedAdmin.get('/logout')
+          .end((err, res) => {
+            res.headers.location.should.equal('/login');
+            done();
+          });
+      });
+    });
+
+    describe('Logged in user', () => {
+      it('should redirect to /login', (done) => {
+        authenticatedUser.get('/logout')
+          .end((err, res) => {
+            res.headers.location.should.equal('/login');
             done();
           });
       });
