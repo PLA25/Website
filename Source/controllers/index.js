@@ -2,7 +2,7 @@
  * Controllers
  *
  * @module controllers
- * @see controllers/home
+ * @see module:controllers/home
  */
 
 /* Packages */
