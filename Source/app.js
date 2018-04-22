@@ -16,7 +16,6 @@ const logger = require('morgan');
 const config = require('./config/all');
 
 const passport = require('./config/passport');
-const routes = require('./routes');
 
 /* Connects to the MongoDB database with the configured settings. */
 mongoose.connect(`mongodb://${config.MongoDB.User}:${config.MongoDB.Pass}@${config.MongoDB.Host}:${config.MongoDB.Port}/${config.MongoDB.Name}`);
@@ -100,7 +99,5 @@ hbs.registerHelper(
     return i18n.__(str);
   },
 );
-
-app.use(routes);
 
 module.exports = app;
