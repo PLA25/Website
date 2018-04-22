@@ -71,21 +71,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-/* Sets locale if there's a session with a locale. */
-app.use((req, res, next) => {
-  if (req.session.locale) {
-    i18n.setLocale(req.session.locale);
-  }
-
-  next();
-});
-
-/* Changes the language on command. */
-app.post('/locale-:locale', (req, res) => {
-  req.session.locale = req.params.locale;
-  res.redirect('back');
-});
-
 /* Binds i18n to Handlebars. */
 hbs.registerHelper(
   'i18n',

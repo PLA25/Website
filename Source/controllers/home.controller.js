@@ -68,6 +68,17 @@ router.get('/login', isNotLoggedIn, (req, res) => {
 });
 
 /**
+ * Changes the language of the interface.
+ *
+ * @name Locale
+ * @path {GET} /locale-:locale
+ */
+router.get('/locale-:locale', (req, res) => {
+  req.session.locale = req.params.locale;
+  res.redirect('back');
+});
+
+/**
  * Handles all post-data for login.
  *
  * @name Login

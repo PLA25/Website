@@ -8,6 +8,7 @@
 
 /* Packages */
 const express = require('express');
+const i18n = require('i18n');
 
 /* Controllers */
 const apiController = require('./api.controller.js');
@@ -21,6 +22,16 @@ router.use((req, res, next) => {
   if (!has.call(res.locals, 'user')) {
     if (req.isAuthenticated()) {
       res.locals.user = req.user;
+    }
+  }
+
+  next();
+});
+
+router.use((req, res, next) => {
+  if (has.call(req.session, 'locale')) {
+    if (req.session.locale) {
+      i18n.setLocale(req.session.locale);
     }
   }
 
