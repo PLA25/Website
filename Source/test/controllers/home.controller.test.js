@@ -44,6 +44,38 @@ module.exports = () => {
     });
   });
 
+  describe('GET /admin', () => {
+    describe('Not logged in', () => {
+      it('should redirect to /login', (done) => {
+        request(app).get('/admin')
+          .end((err, res) => {
+            res.headers.location.should.equal('/login');
+            done();
+          });
+      });
+    });
+
+    describe('Logged in admin', () => {
+      it('should return a 200 response', (done) => {
+        authenticatedAdmin.get('/admin')
+          .end((err, res) => {
+            res.statusCode.should.equal(200);
+            done();
+          });
+      });
+    });
+
+    describe('Logged in user', () => {
+      it('should return a 200 response', (done) => {
+        authenticatedUser.get('/admin')
+          .end((err, res) => {
+            res.headers.location.should.equal('/404');
+            done();
+          });
+      });
+    });
+  });
+
   describe('GET /login', () => {
     describe('Not logged in', () => {
       it('should return a 200 response', (done) => {
