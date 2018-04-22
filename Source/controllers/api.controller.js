@@ -73,7 +73,7 @@ router.use((req, res, next) => {
   next();
 });
 
-/*
+/**
  * Handles Planet and Mapbox tile services,
  * also used for all cached images.
  *
