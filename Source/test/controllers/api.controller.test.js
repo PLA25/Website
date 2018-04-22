@@ -2,6 +2,7 @@
 const app = require('./../../bin/www');
 const chai = require('chai');
 const fs = require('fs');
+const isCI = require('is-ci');
 const path = require('path');
 const request = require('supertest');
 
@@ -13,17 +14,17 @@ const {
 
 chai.should();
 
-function deleteFolderRecursive(localPath) {
-  if (fs.existsSync(localPath)) {
-    fs.readdirSync(localPath).forEach((file) => {
-      const curPath = `${localPath}/${file}`;
+function deleteFolderRecursive(folderPath) {
+  if (fs.existsSync(folderPath)) {
+    fs.readdirSync(folderPath).forEach((file) => {
+      const curPath = `${folderPath}/${file}`;
       if (fs.lstatSync(curPath).isDirectory()) {
         deleteFolderRecursive(curPath);
       } else {
         fs.unlinkSync(curPath);
       }
     });
-    fs.rmdirSync(localPath);
+    fs.rmdirSync(folderPath);
   }
 }
 
@@ -31,8 +32,12 @@ function deleteFolderRecursive(localPath) {
 const cacheFolder = path.resolve(`${__dirname}./../../cache`);
 
 module.exports = () => {
-  before(() => {
-    deleteFolderRecursive(path.resolve(cacheFolder));
+  before((done) => {
+    if (isCI) {
+      deleteFolderRecursive(cacheFolder);
+    }
+
+    done();
   });
 
   describe('GET /:host/:z/:x/:y', () => {
@@ -152,6 +157,16 @@ module.exports = () => {
     });
 
     describe('Logged in admin', () => {
+      it('should create any missing folder(s)', (done) => {
+        deleteFolderRecursive(cacheFolder);
+
+        authenticatedAdmin.get('/api/heatmap/8/132/86')
+          .end((err, res) => {
+            res.statusCode.should.equal(200);
+            done();
+          });
+      });
+
       it('should return a 200 response for /heatmap/8/132/86', (done) => {
         const imagePath = path.resolve(cacheFolder, 'heatmap', '8_132_86.png');
         if (fs.existsSync(imagePath)) {
@@ -167,6 +182,16 @@ module.exports = () => {
     });
 
     describe('Logged in user', () => {
+      it('should create any missing folder(s)', (done) => {
+        deleteFolderRecursive(cacheFolder);
+
+        authenticatedAdmin.get('/api/heatmap/8/132/86')
+          .end((err, res) => {
+            res.statusCode.should.equal(200);
+            done();
+          });
+      });
+
       it('should return a 200 response for /heatmap/8/132/86', (done) => {
         const imagePath = path.resolve(cacheFolder, 'heatmap', '8_132_86.png');
         if (fs.existsSync(imagePath)) {
