@@ -12,10 +12,9 @@ const mongoose = require('mongoose');
 const i18n = require('i18n');
 const logger = require('morgan');
 
-/* Requires the configuration, passport and routes. */
 const config = require('./config/all');
-
 const passport = require('./config/passport');
+const controllers = require('./controllers');
 
 /* Connects to the MongoDB database with the configured settings. */
 mongoose.connect(`mongodb://${config.MongoDB.User}:${config.MongoDB.Pass}@${config.MongoDB.Host}:${config.MongoDB.Port}/${config.MongoDB.Name}`);
@@ -99,5 +98,7 @@ hbs.registerHelper(
     return i18n.__(str);
   },
 );
+
+app.use(controllers);
 
 module.exports = app;
