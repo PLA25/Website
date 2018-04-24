@@ -1,0 +1,38 @@
+﻿#sidebar {
+	position: absolute;
+	margin: 0px;
+	padding: 5px;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	width: 20%;
+	max-width: 20%;
+	border-right: 1px solid black;
+}
+
+main {
+	padding: 0px;
+	position: absolute;
+	width: 100%;
+}
+
+body {
+	overflow: hidden;
+}
+
+#map {
+	left: 20%;
+	right: 0px;
+	bottom: 100px;
+	top: 0px;
+	position: relative;
+}
+
+/* Weet niet of die weg moet of niet, aangezien die er eerst ook niet stond. */
+footer {
+	display: none;
+}
+
+@media (max-width: 900px) {
+	/* css als de sidebar niet meer past in de normale vorm */
+}
