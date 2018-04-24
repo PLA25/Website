@@ -94,8 +94,8 @@ function generateImage(params, allSensorHubs, data) {
 
       image.setPixelColor(color, x, y);
 
-      for (let i = 1; i < incr; i += 1) {
-        for (let l = 1; l < incr; l += 1) {
+      for (let i = 0; i < incr; i += 1) {
+        for (let l = 0; l < incr; l += 1) {
           image.setPixelColor(color, (x + i), (y + l));
         }
       }
