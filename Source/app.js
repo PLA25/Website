@@ -65,7 +65,7 @@ app.post('/upload', (req, res) => {
   }
 
   /* The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file. */
-  const { sampleFile: sampleFile } = req.files;
+  const { sampleFile } = req.files;
 
   /* Uses the mv() method to save this file. */
   sampleFile.mv(`${__dirname}/uploads/Naamloos.png`, (err) => {
