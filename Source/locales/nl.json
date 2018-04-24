@@ -13,7 +13,8 @@
     "delete": "Verwijderen",
     "serial-id": "SerieID",
     "longitude": "Lengtegraad",
-    "latitude": "Breedtegraad"
+    "latitude": "Breedtegraad",
+    "change-logo": "Logo veranderen"
   },
   "index": {
     "heading": "Home"

@@ -1,6 +1,7 @@
 /* Packages */
 const express = require('express');
 const session = require('express-session');
+const fileUpload = require('express-fileupload');
 const Redis = require('connect-redis')(session);
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -53,6 +54,32 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+/* Integrates file uploading in the app. */
+app.use(fileUpload());
+
+/* Executes this when uploading a logo. */
+app.post('/upload', (req, res) => {
+  if (!req.files) {
+    return res.status(400).send('No files were uploaded.');
+  }
+
+  /* The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file. */
+  const { sampleFile: sampleFile } = req.files;
+
+  /* Uses the mv() method to save this file. */
+  sampleFile.mv(`${__dirname}/uploads/Naamloos.png`, (err) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+
+    res.send('File uploaded!');
+
+    return false;
+  });
+
+  return false;
+});
 
 app.use(session({
   store: new Redis(config.Redis),

@@ -13,7 +13,8 @@
     "delete": "Delete",
     "serial-id": "SerialID",
     "longitude": "Longitude",
-    "latitude": "Latitude"
+    "latitude": "Latitude",
+    "change-logo": "Change logo"
   },
   "index": {
     "heading": "Home"
