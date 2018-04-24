@@ -2,6 +2,7 @@
  * Controllers
  *
  * @module controllers
+ * @see module:controllers/admin
  * @see module:controllers/api
  * @see module:controllers/home
  */
@@ -11,6 +12,7 @@ const express = require('express');
 const i18n = require('i18n');
 
 /* Controllers */
+const adminController = require('./admin.controller.js');
 const apiController = require('./api.controller.js');
 const homeController = require('./home.controller.js');
 
@@ -39,6 +41,7 @@ router.use((req, res, next) => {
 });
 
 router.use('/', homeController);
+router.use('/admin', adminController);
 router.use('/api', apiController);
 
 /* Exports */

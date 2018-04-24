@@ -2,13 +2,13 @@
 
   <div class="col-12 col-xl-6">
     <h1>{{i18n "admin.change-logo"}}</h1>
-    <form class="change-logo" ref='uploadForm' 
-      id='uploadForm' 
-      action='/upload' 
-      method='post' 
+    <form ref="uploadLogoForm" 
+      id="uploadLogoForm" 
+      action="/upload-logo"  
+      method="post" 
       encType="multipart/form-data">
-        <input type="file" name="sampleFile" />
-        <input type='submit' value='Upload!' />
+        <input type="file" name="logo" />
+        <input type="submit" value="{{i18n "admin.upload"}}" />
     </form>
 
     <h1>{{i18n "admin.users"}}</h1>

@@ -6,6 +6,8 @@
     "after-link": " to return to the home page."
   },
   "admin": {
+    "change-logo": "Change logo",
+    "upload": "Upload",
     "users": "Users",
     "email": "Email",
     "admin": "Admin",
@@ -13,8 +15,7 @@
     "delete": "Delete",
     "serial-id": "SerialID",
     "longitude": "Longitude",
-    "latitude": "Latitude",
-    "change-logo": "Change logo"
+    "latitude": "Latitude"
   },
   "index": {
     "heading": "Home"

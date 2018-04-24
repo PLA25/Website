@@ -43,6 +43,13 @@ footer {
 	width: 48px;
 }
 
+.card .logo {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 15px;
+  width: 200px;
+}
+
 .card .flag {
 	cursor: pointer;
 	float: left;
@@ -55,6 +62,6 @@ footer {
 	width: 48px;
 }
 
-.change-logo {
+#uploadLogoForm {
   margin-bottom: 30px;
 }

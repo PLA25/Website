@@ -9,16 +9,11 @@
 const express = require('express');
 const passport = require('passport');
 
-/* Models */
-const SensorHub = require('./../models/sensorhub');
-const User = require('./../models/user');
-
 /* Constants */
 const router = express.Router();
 
 /* Middlewares */
 const {
-  isAdmin,
   isLoggedIn,
   isNotLoggedIn,
 } = require('./../middlewares');
@@ -31,26 +26,6 @@ const {
  */
 router.get('/', isLoggedIn, (req, res) => {
   res.render('index');
-});
-
-/**
- * Renders the admin page.
- *
- * @name Admin
- * @path {GET} /admin
- */
-router.get('/admin', isAdmin, (req, res, next) => {
-  User.find({}).exec()
-    .then(users => SensorHub.find({}).exec().then(sensorHubs => [users, sensorHubs]))
-    .then(([users, sensorHubs]) => {
-      res.render('admin', {
-        users,
-        sensorHubs,
-      });
-    })
-    .catch((err) => {
-      next(err);
-    });
 });
 
 /**

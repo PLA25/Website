@@ -6,6 +6,8 @@
     "after-link": " om terug te gaan naar de homepagina."
   },
   "admin": {
+    "change-logo": "Logo veranderen",
+    "upload": "Uploaden",
     "users": "Gebruikers",
     "email": "E-mail",
     "admin": "Admin",
@@ -13,8 +15,7 @@
     "delete": "Verwijderen",
     "serial-id": "SerieID",
     "longitude": "Lengtegraad",
-    "latitude": "Breedtegraad",
-    "change-logo": "Logo veranderen"
+    "latitude": "Breedtegraad"
   },
   "index": {
     "heading": "Home"

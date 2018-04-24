@@ -42,7 +42,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 /* Sets a favicon for browsers. */
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'logo.png')));
 
 if (process.env.NODE_ENV !== 'testing') {
   app.use(logger('dev'));
@@ -59,21 +59,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload());
 
 /* Executes this when uploading a logo. */
-app.post('/upload', (req, res) => {
+app.post('/upload-logo', (req, res) => {
   if (!req.files) {
     return res.status(400).send('No files were uploaded.');
   }
 
-  /* The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file. */
-  const { sampleFile } = req.files;
+  /* The name of the input field is used to retrieve the uploaded file. */
+  const { logo } = req.files;
 
   /* Uses the mv() method to save this file. */
-  sampleFile.mv(`${__dirname}/uploads/Naamloos.png`, (err) => {
+  logo.mv(`${__dirname}/public/logo.png`, (err) => {
     if (err) {
       return res.status(500).send(err);
     }
 
-    res.send('File uploaded!');
+    res.redirect('/admin');
 
     return false;
   });
