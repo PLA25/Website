@@ -64,7 +64,7 @@ module.exports = () => {
         authenticatedAdmin
           .post('/admin/upload-logo')
           .field('name', 'my awesome avatar')
-          .attach('avatar', '../../public/logo.png')
+          .attach('avatar', './public/logo.png')
           .end((err, res) => {
             res.statusCode.should.equal(200);
             done();
