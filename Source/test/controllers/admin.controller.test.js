@@ -59,7 +59,7 @@ module.exports = () => {
       it('should return a 200 response', (done) => {
         authenticatedAdmin.post('/admin/upload-logo')
           .end((err, res) => {
-            res.statusCode.should.equal(200);
+            res.statusCode.should.equal(400);
             done();
           });
       });
