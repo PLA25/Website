@@ -58,29 +58,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 /* Integrates file uploading in the app. */
 app.use(fileUpload());
 
-/* Executes this when uploading a logo. */
-app.post('/upload-logo', (req, res) => {
-  if (!req.files) {
-    return res.status(400).send('No files were uploaded.');
-  }
-
-  /* The name of the input field is used to retrieve the uploaded file. */
-  const { logo } = req.files;
-
-  /* Uses the mv() method to save this file. */
-  logo.mv(`${__dirname}/public/logo.png`, (err) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
-
-    res.redirect('/admin');
-
-    return false;
-  });
-
-  return false;
-});
-
 app.use(session({
   store: new Redis(config.Redis),
   secret: 'PollutionDetectionSystem',
