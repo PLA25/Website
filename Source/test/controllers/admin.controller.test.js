@@ -60,7 +60,17 @@ module.exports = () => {
     });
 
     describe('Logged in admin', () => {
-      it('should return a 400 response', (done) => {
+      it('should return a 302 response', (done) => {
+        authenticatedAdmin
+          .post('/admin/upload-logo')
+          .attach('logo', './public/logo.jpg')
+          .end((err, res) => {
+            res.statusCode.should.equal(302);
+            done();
+          });
+      });
+
+      it('should return a 200 response', (done) => {
         authenticatedAdmin
           .post('/admin/upload-logo')
           .attach('logo', './public/logo.png')
