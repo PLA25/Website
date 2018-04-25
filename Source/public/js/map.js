@@ -43,3 +43,25 @@ const map = new ol.Map({
   target: 'map',
   view,
 });
+
+let isShowing = false;
+const sb = document.getElementById('sidebar');
+const button = document.getElementById('sidebar-button');
+
+/**
+ *
+ * Makes the sidebar show / hide.
+ *
+ */
+function slide() {
+  if (isShowing) {
+    sb.style.display = 'none';
+    button.style.left = '0px';
+  } else {
+    sb.style.display = 'initial';
+    button.style.left = '20%';
+  }
+  isShowing = !isShowing;
+}
+
+button.addEventListener('click', slide);

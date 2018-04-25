@@ -1,3 +1,7 @@
+#sidebar-button {
+	display: none;
+}
+
 #sidebar {
 	position: absolute;
 	margin: 0px;
@@ -8,6 +12,7 @@
 	width: 20%;
 	max-width: 20%;
 	border-right: 1px solid black;
+	background-color: white;
 }
 
 main {
@@ -48,6 +53,25 @@ footer {
 
 	#sidebar {
 		display: none;
+	}
+
+	#sidebar-button {
+		display: initial;
+		position: absolute;
+		top: 50%;
+		left: 0px;
+		transform: translateY(-50%);
+		background-color: white;
+		border: 1px solid black;
+		padding: 2px;
+	}
+
+}
+
+@media (min-width: 900px) {
+
+	#sidebar {
+		display: initial !important;
 	}
 
 }
