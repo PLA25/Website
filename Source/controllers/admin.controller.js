@@ -44,9 +44,9 @@ router.get('/', isAdmin, (req, res, next) => {
  * Uploads a logo.
  *
  * @name Upload logo
- * @path {POST} /upload-logo
+ * @path {POST} /admin/upload-logo
  */
-router.post('/upload-logo', (req, res) => {
+router.post('/upload-logo', isAdmin, (req, res) => {
   if (!req.files) {
     return res.status(400).send('No files were uploaded.');
   }
@@ -54,16 +54,23 @@ router.post('/upload-logo', (req, res) => {
   /* The name of the input field is used to retrieve the uploaded file. */
   const { logo } = req.files;
 
-  /* Uses the mv() method to save this file. */
-  logo.mv(`${__dirname}/public/logo.png`, (err) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
+  /* Checks if image is a PNG file. */
+  if (logo.mimetype === 'image/png') {
+    /* Uses the mv() method to save this file. */
+    logo.mv('./public/logo.png', (err) => {
+      if (err) {
+        return res.status(500).send(err);
+      }
 
-    res.redirect('/admin');
+      res.redirect('/admin');
+
+      return false;
+    });
 
     return false;
-  });
+  }
+
+  res.redirect('/admin');
 
   return false;
 });
