@@ -15,7 +15,7 @@ const {
 
 /**
  * Gets the latitude and longitude of a specific location.
- * 
+ *
  * @function
  * @param {Number} z - The z coordinate.
  * @param {Number} x - The x coordinate.
@@ -31,7 +31,7 @@ function getLatLong({ z, x, y }) {
 
 /**
  * Gets color from a specific latitude and longitude.
- * 
+ *
  * @function
  * @param {Number} latitude - The latitude.
  * @param {Number} longitude - The longitude.
@@ -80,7 +80,7 @@ function getColorFromLatLong(latitude, longitude, allSensorHubs, data) {
 
 /**
  * Gets the increment of a specific z coordinate.
- * 
+ *
  * @function
  * @param {Number} z - The z coordinate.
  * @returns {Number} - returns the increment.
@@ -91,7 +91,7 @@ function getIncrement(z) {
 
 /**
  * Generates the map image.
- * 
+ *
  * @function
  * @param {Object} params - The parameters.
  * @param {Object} allSensorHubs - A variable containing all SensorHubs.
