@@ -67,7 +67,7 @@ router.post('/upload-logo', isAdmin, (req, res) => {
       res.status(500).send(err);
     }
 
-    res.redirect('/admin');
+    res.redirect(200, '/admin');
   });
 });
 
