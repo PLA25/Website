@@ -24,8 +24,8 @@ const schema = new mongoose.Schema({
 class User {
   /**
    * Validates a password.
-   * @param {string} password - The password value.
-   * @return {boolean} If the given password matches.
+   * @param {String} password - The password value.
+   * @returns {Boolean} If the given password matches.
    */
   validatePassword(password) {
     return bcrypt.compareSync(password, this.password);
