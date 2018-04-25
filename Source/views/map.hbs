@@ -6,29 +6,29 @@
     <label>Map Type:</label>
     <div class="btn-group" data-toggle="buttons" style="width: 100%;">
       <label class="btn btn-default active form-check-label" style="width: 50%;">
-        <input class="form-check-input" type="radio" checked autocomplete="off"> Satellite
+        <input class="form-check-input" type="radio" id="typeSat" checked autocomplete="off"> Satellite
       </label>
 
       <label class="btn btn-default form-check-label" style="width: 50%;">
-          <input class="form-check-input" type="radio" autocomplete="off"> Map
+          <input class="form-check-input" type="radio" id="typeMap" autocomplete="off"> Map
       </label>
     </div>
     <hr>
 
     <label>Layers:</label>
     <div class="custom-control custom-checkbox">
-      <input type="checkbox" class="custom-control-input" id="customCheck1">
-      <label class="custom-control-label" for="customCheck1">Navigation</label>
+      <input type="checkbox" class="custom-control-input" id="mapboxLayer">
+      <label class="custom-control-label" for="mapboxLayer">Navigation</label>
     </div>
 
     <div class="custom-control custom-checkbox">
-      <input type="checkbox" class="custom-control-input" id="customCheck2">
-      <label class="custom-control-label" for="customCheck2">Temperature</label>
+      <input type="checkbox" class="custom-control-input" id="heatmapLayer">
+      <label class="custom-control-label" for="heatmapLayer">Temperature</label>
     </div>
 
     <div class="custom-control custom-checkbox">
-      <input type="checkbox" class="custom-control-input" id="customCheck3">
-      <label class="custom-control-label" for="customCheck3">Exhaust gases</label>
+      <input type="checkbox" class="custom-control-input" id="sensorhubLayer">
+      <label class="custom-control-label" for="sensorhubLayer">SensorHubs</label>
     </div>
     <hr>
 
