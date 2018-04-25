@@ -63,7 +63,6 @@ module.exports = () => {
       it('should return a 400 response', (done) => {
         authenticatedAdmin
           .post('/admin/upload-logo')
-          .field('logo', 'Logo')
           .attach('logo', './public/logo.png')
           .end((err, res) => {
             res.statusCode.should.equal(200);
