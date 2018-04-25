@@ -64,7 +64,7 @@ router.post('/upload-logo', isAdmin, (req, res) => {
   /* Uses the mv() method to save this file. */
   logo.mv('./public/logo.png', (err) => {
     if (err) {
-      res.redirect(500, '/admin');
+      res.status(500).send(err);
     }
 
     res.redirect(200, '/admin');

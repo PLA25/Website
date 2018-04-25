@@ -84,8 +84,10 @@ module.exports = () => {
         authenticatedAdmin
           .post('/admin/upload-logo')
           .attach('logo', 'non-existing-file.png')
-          .end((err, res) => {
-            res.statusCode.should.equal(500);
+          .end((err) => {
+            if (err) {
+              throw err;
+            }
             done();
           });
       });
