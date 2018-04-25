@@ -69,8 +69,6 @@ router.post('/upload-logo', isAdmin, (req, res) => {
 
     res.redirect('/admin');
   });
-
-  return;
 });
 
 /* Exports */
