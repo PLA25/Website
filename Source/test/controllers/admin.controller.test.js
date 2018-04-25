@@ -65,7 +65,7 @@ module.exports = () => {
           .post('/admin/upload-logo')
           .attach('logo', './public/logo.png')
           .end((err, res) => {
-            res.statusCode.should.equal(200);
+            res.statusCode.should.equal(302);
             done();
           });
       });
