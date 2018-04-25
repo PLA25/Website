@@ -35,6 +35,16 @@ const {
 } = require('./../lib/generator');
 
 const cacheData = [];
+
+/**
+ * Checks if the requested data already exists in the cache;
+ * if it doesn't exist fetch and save in the cache.
+ *
+ * @function
+ * @param {Object} model - Model object from MongoDB.
+ * @param {Object} options - Any options for the request.
+ * @returns {Object} - returns the saved object.
+ */
 function getCachedData(model, options) {
   return new Promise(((resolve, reject) => {
     const modelName = model.collection.name;
@@ -86,7 +96,9 @@ router.use((req, res, next) => {
  */
 router.get('/:host/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const hosts = ['heatmap', 'mapbox', 'planet'];
-  const { host } = req.params;
+  const {
+    host,
+  } = req.params;
   const z = parseInt(req.params.z, 10);
   const x = parseInt(req.params.x, 10);
   const y = parseInt(req.params.y, 10);
