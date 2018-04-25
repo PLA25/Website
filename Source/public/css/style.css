@@ -70,7 +70,7 @@ footer {
 }
 
 .sidebar {
-	height: 85vh;
+	height: 84vh;
 	width: 25vw;
 	float: left;
 }
@@ -78,7 +78,7 @@ footer {
 .map {
 	float: right;
 	width: 70vw;
-	height: 85vh;
+	height: 84vh;
 }
 
 .card-body {
