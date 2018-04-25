@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
  * @see module:lib
  * @module lib/generator
