@@ -1,2 +1,48 @@
-<div id="map" class="map"></div>
+<div class="card z-depth-2 sidebar">
+  <div class="card-header info-color lighten-1 white-text">
+    Options
+  </div>
+  <div class="card-body">
+    <label>Map Type:</label>
+    <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+      <label class="btn btn-default active form-check-label" style="width: 50%;">
+        <input class="form-check-input" type="radio" checked autocomplete="off"> Satellite
+      </label>
+
+      <label class="btn btn-default form-check-label" style="width: 50%;">
+          <input class="form-check-input" type="radio" autocomplete="off"> Map
+      </label>
+    </div>
+    <hr>
+
+    <label>Layers:</label>
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="customCheck1">
+      <label class="custom-control-label" for="customCheck1">Navigation</label>
+    </div>
+
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="customCheck2">
+      <label class="custom-control-label" for="customCheck2">Temperature</label>
+    </div>
+
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="customCheck3">
+      <label class="custom-control-label" for="customCheck3">Exhaust gases</label>
+    </div>
+    <hr>
+
+  </div>
+</div>
+
+<div class="card text-center z-depth-2 map">
+  <div class="card-header info-color lighten-1 white-text">
+    Map
+  </div>
+  <div class="card-body">
+    <div id="map"></div>
+  </div>
+</div>
+
+<!-- Scripts -->
 <script src="/js/map.js" crossorigin="anonymous"></script>
