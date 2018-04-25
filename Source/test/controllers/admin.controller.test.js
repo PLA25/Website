@@ -15,7 +15,8 @@ module.exports = () => {
   describe('GET /', () => {
     describe('Not logged in', () => {
       it('should redirect to /login', (done) => {
-        request(app).get('/admin')
+        request(app)
+          .get('/admin')
           .end((err, res) => {
             res.headers.location.should.equal('/login');
             done();
@@ -25,7 +26,8 @@ module.exports = () => {
 
     describe('Logged in admin', () => {
       it('should return a 200 response', (done) => {
-        authenticatedAdmin.get('/admin')
+        authenticatedAdmin
+          .get('/admin')
           .end((err, res) => {
             res.statusCode.should.equal(200);
             done();
@@ -35,7 +37,8 @@ module.exports = () => {
 
     describe('Logged in user', () => {
       it('should return a 200 response', (done) => {
-        authenticatedUser.get('/admin')
+        authenticatedUser
+          .get('/admin')
           .end((err, res) => {
             res.headers.location.should.equal('/404');
             done();
@@ -47,7 +50,8 @@ module.exports = () => {
   describe('POST /upload-logo', () => {
     describe('Not logged in', () => {
       it('should redirect to /login', (done) => {
-        request(app).post('/admin/upload-logo')
+        request(app)
+          .post('/admin/upload-logo')
           .end((err, res) => {
             res.headers.location.should.equal('/login');
             done();
@@ -56,10 +60,13 @@ module.exports = () => {
     });
 
     describe('Logged in admin', () => {
-      it('should return a 200 response', (done) => {
-        authenticatedAdmin.post('/admin/upload-logo')
+      it('should return a 400 response', (done) => {
+        authenticatedAdmin
+          .post('/admin/upload-logo')
+          .field('name', 'my awesome avatar')
+          .attach('avatar', '../../public/logo.png')
           .end((err, res) => {
-            res.statusCode.should.equal(400);
+            res.statusCode.should.equal(200);
             done();
           });
       });
@@ -67,7 +74,8 @@ module.exports = () => {
 
     describe('Logged in user', () => {
       it('should return a 200 response', (done) => {
-        authenticatedUser.post('/admin/upload-logo')
+        authenticatedUser
+          .post('/admin/upload-logo')
           .end((err, res) => {
             res.headers.location.should.equal('/404');
             done();
