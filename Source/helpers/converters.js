@@ -7,10 +7,10 @@
  * Converts the given input to degrees, using the provided min and max values.
  *
  * @function
- * @param {Number} input
- * @param {Number} min
- * @param {Number} max
- * @returns {Number} 0 - 360
+ * @param {Number} input - Variable to convert to degrees.
+ * @param {Number} min - Minimum value of the range.
+ * @param {Number} max - Maximu value of the range.
+ * @returns {Number} - Returns a between or equal to 0 - 360.
  */
 function calculateDegrees(input, min, max) {
   if (typeof input !== 'number') {
@@ -41,8 +41,8 @@ function calculateDegrees(input, min, max) {
  * Converts degrees to a color (RGB).
  *
  * @function
- * @param {Number} degrees
- * @returns {Number[]} Red, Green and Blue
+ * @param {Number} degrees - Degrees to convert to a color.
+ * @returns {Number[]} - Red, Green and Blue
  */
 function degreesToColor(degrees) {
   if (typeof degrees !== 'number') {
@@ -94,8 +94,8 @@ function degreesToColor(degrees) {
  * Converts temperature, in °C, to a color (RGB).
  *
  * @function
- * @param {Number} temperature
- * @returns {Number[]} Red, Green and Blue
+ * @param {Number} temperature - Temperature to convert to a color.
+ * @returns {Number[]} - Red, Green and Blue
  */
 function temperatureToColor(temperature) {
   if (typeof temperature !== 'number') {
@@ -114,7 +114,7 @@ function temperatureToColor(temperature) {
  * Converts temperature, in °C, to degrees.
  *
  * @function
- * @param {Number} temperature
+ * @param {Number} temperature - Temperature to convert to degrees.
  * @returns {Number} 0 - 300
  */
 function temperatureToDegrees(temperature) {
