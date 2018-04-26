@@ -43,7 +43,10 @@ router.get('/sensor/:SerialID', isLoggedIn, (req, res, next) => {
   const today = new Date();
   const temp = new Date().setDate(today.getDate() - 500);
   const yesterday = new Date(temp);
-  SensorHub.findOne({ SerialID: req.params.SerialID }).exec()
+
+  SensorHub.findOne({
+    SerialID: req.params.SerialID,
+  }).exec()
     .then(sensorHub => Data.find({
       SensorHub: req.params.SerialID,
       Timestamp: {
@@ -53,20 +56,15 @@ router.get('/sensor/:SerialID', isLoggedIn, (req, res, next) => {
     }).exec()
       .then((data) => {
         const sensorHubData = [];
-        const dateOptions = {
-          year: '2-digit',
-          month: '2-digit',
-          day: '2-digit',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-        };
         for (let i = 0; i < data.length; i += 1) {
           const objData = data[i].toObject();
-          objData.formatDate = data[i].Timestamp.toLocaleString(dateOptions);
+          objData.formatDate = data[i].Timestamp.toLocaleString('nl-NL', {
+            timeZone: 'Europe/Amsterdam',
+          });
 
           sensorHubData.push(objData);
         }
+
         return sensorHubData;
       }).then(sensorHubData => [sensorHub, sensorHubData]))
     .then(([sensorHub, sensorHubData]) => {
