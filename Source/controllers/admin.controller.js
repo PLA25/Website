@@ -49,15 +49,17 @@ router.get('/', isAdmin, (req, res, next) => {
 router.post('/upload-logo', isAdmin, (req, res) => {
   if (!req.files) {
     res.status(400).send('No files were uploaded.');
+    return;
   }
 
   /* The name of the input field is used to retrieve the uploaded file. */
-  const { logo } = req.files;
+  const {
+    logo,
+  } = req.files;
 
   /* Checks if image is a PNG file. */
   if (logo.mimetype !== 'image/png') {
     res.redirect('/admin');
-
     return;
   }
 
@@ -65,6 +67,7 @@ router.post('/upload-logo', isAdmin, (req, res) => {
   logo.mv('./public/logo.png', (err) => {
     if (err) {
       res.status(500).send(err);
+      return;
     }
 
     res.redirect(200, '/admin');
