@@ -1,369 +1,1123 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta charset="utf-8">
-	<title>JSDoc: Module: helpers/converters</title>
-	<script src="scripts/prettify/prettify.js">
+    <meta charset="utf-8">
+    <title>JSDoc: Module: helpers/converters</title>
 
-
-	</script>
-	<script src="scripts/prettify/lang-css.js">
-
-
-	</script>
-	<!--[if lt IE 9]>
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-	<link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-	<link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
 </head>
 
 <body>
-	<div id="main">
-		<h1 class="page-title">Module: helpers/converters</h1>
-		<section>
-			<header>
-			</header>
-			<article>
-				<div class="container-overview">
-				</div>
-				<h3 class="subsection-title">Methods</h3>
-				<h4 class="name" id="~calculateDegrees"><span class="type-signature">(inner) </span>calculateDegrees<span class="signature">(input, min, max)</span><span class="type-signature"> &rarr; {Number}</span></h4>
-				<div class="description">
-					Converts the given input to degrees, using the provided min and max values.
-				</div>
-				<h5>Parameters:</h5>
-				<table class="params">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Type</th>
-							<th class="last">Description</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="name"><code>input</code></td>
-							<td class="type">
-								<span class="param-type">Number</span>
-							</td>
-							<td class="description last">Variable to convert to degrees.</td>
-						</tr>
-						<tr>
-							<td class="name"><code>min</code></td>
-							<td class="type">
-								<span class="param-type">Number</span>
-							</td>
-							<td class="description last">Minimum value of the range.</td>
-						</tr>
-						<tr>
-							<td class="name"><code>max</code></td>
-							<td class="type">
-								<span class="param-type">Number</span>
-							</td>
-							<td class="description last">Maximu value of the range.</td>
-						</tr>
-					</tbody>
-				</table>
-				<dl class="details">
-					<dt class="tag-source">Source:</dt>
-					<dd class="tag-source">
-						<ul class="dummy">
-							<li>
-								<a href="helpers_converters.js.html">helpers/converters.js</a>, <a href="helpers_converters.js.html#line15">line 15</a>
-							</li>
-						</ul>
-					</dd>
-				</dl>
-				<h5>Returns:</h5>
-				<div class="param-desc">
-					- Returns a between or equal to 0 - 360.
-				</div>
-				<dl>
-					<dt>
-        Type
-    </dt>
-					<dd>
-						<span class="param-type">Number</span>
-					</dd>
-				</dl>
-				<h4 class="name" id="~degreesToColor"><span class="type-signature">(inner) </span>degreesToColor<span class="signature">(degrees)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
-				<div class="description">
-					Converts degrees to a color (RGB).
-				</div>
-				<h5>Parameters:</h5>
-				<table class="params">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Type</th>
-							<th class="last">Description</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="name"><code>degrees</code></td>
-							<td class="type">
-								<span class="param-type">Number</span>
-							</td>
-							<td class="description last">Degrees to convert to a color.</td>
-						</tr>
-					</tbody>
-				</table>
-				<dl class="details">
-					<dt class="tag-source">Source:</dt>
-					<dd class="tag-source">
-						<ul class="dummy">
-							<li>
-								<a href="helpers_converters.js.html">helpers/converters.js</a>, <a href="helpers_converters.js.html#line47">line 47</a>
-							</li>
-						</ul>
-					</dd>
-				</dl>
-				<h5>Returns:</h5>
-				<div class="param-desc">
-					- Red, Green and Blue
-				</div>
-				<dl>
-					<dt>
-        Type
-    </dt>
-					<dd>
-						<span class="param-type">Array.&lt;Number></span>
-					</dd>
-				</dl>
-				<h4 class="name" id="~temperatureToColor"><span class="type-signature">(inner) </span>temperatureToColor<span class="signature">(temperature)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
-				<div class="description">
-					Converts temperature, in °C, to a color (RGB).
-				</div>
-				<h5>Parameters:</h5>
-				<table class="params">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Type</th>
-							<th class="last">Description</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="name"><code>temperature</code></td>
-							<td class="type">
-								<span class="param-type">Number</span>
-							</td>
-							<td class="description last">Temperature to convert to a color.</td>
-						</tr>
-					</tbody>
-				</table>
-				<dl class="details">
-					<dt class="tag-source">Source:</dt>
-					<dd class="tag-source">
-						<ul class="dummy">
-							<li>
-								<a href="helpers_converters.js.html">helpers/converters.js</a>, <a href="helpers_converters.js.html#line100">line 100</a>
-							</li>
-						</ul>
-					</dd>
-				</dl>
-				<h5>Returns:</h5>
-				<div class="param-desc">
-					- Red, Green and Blue
-				</div>
-				<dl>
-					<dt>
-        Type
-    </dt>
-					<dd>
-						<span class="param-type">Array.&lt;Number></span>
-					</dd>
-				</dl>
-				<h4 class="name" id="~temperatureToDegrees"><span class="type-signature">(inner) </span>temperatureToDegrees<span class="signature">(temperature)</span><span class="type-signature"> &rarr; {Number}</span></h4>
-				<div class="description">
-					Converts temperature, in °C, to degrees.
-				</div>
-				<h5>Parameters:</h5>
-				<table class="params">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Type</th>
-							<th class="last">Description</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="name"><code>temperature</code></td>
-							<td class="type">
-								<span class="param-type">Number</span>
-							</td>
-							<td class="description last">Temperature to convert to degrees.</td>
-						</tr>
-					</tbody>
-				</table>
-				<dl class="details">
-					<dt class="tag-source">Source:</dt>
-					<dd class="tag-source">
-						<ul class="dummy">
-							<li>
-								<a href="helpers_converters.js.html">helpers/converters.js</a>, <a href="helpers_converters.js.html#line120">line 120</a>
-							</li>
-						</ul>
-					</dd>
-				</dl>
-				<h5>Returns:</h5>
-				<div class="param-desc">
-					0 - 300
-				</div>
-				<dl>
-					<dt>
-        Type
-    </dt>
-					<dd>
-						<span class="param-type">Number</span>
-					</dd>
-				</dl>
-				<h4 class="name" id="~tileToLat"><span class="type-signature">(inner) </span>tileToLat<span class="signature">(y, z)</span><span class="type-signature"> &rarr; {Number}</span></h4>
-				<div class="description">
-					Converts a tile with y- and z-coordinates to a latitude.
-				</div>
-				<h5>Parameters:</h5>
-				<table class="params">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Type</th>
-							<th class="last">Description</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="name"><code>y</code></td>
-							<td class="type">
-								<span class="param-type">Number</span>
-							</td>
-							<td class="description last">The y-coordinate.</td>
-						</tr>
-						<tr>
-							<td class="name"><code>z</code></td>
-							<td class="type">
-								<span class="param-type">Number</span>
-							</td>
-							<td class="description last">The z-coordinate.</td>
-						</tr>
-					</tbody>
-				</table>
-				<dl class="details">
-					<dt class="tag-source">Source:</dt>
-					<dd class="tag-source">
-						<ul class="dummy">
-							<li>
-								<a href="helpers_converters.js.html">helpers/converters.js</a>, <a href="helpers_converters.js.html#line140">line 140</a>
-							</li>
-						</ul>
-					</dd>
-				</dl>
-				<h5>Returns:</h5>
-				<div class="param-desc">
-					- The latitude.
-				</div>
-				<dl>
-					<dt>
-        Type
-    </dt>
-					<dd>
-						<span class="param-type">Number</span>
-					</dd>
-				</dl>
-				<h4 class="name" id="~tileToLong"><span class="type-signature">(inner) </span>tileToLong<span class="signature">(x, z)</span><span class="type-signature"> &rarr; {Number}</span></h4>
-				<div class="description">
-					Converts a tile with x- and z-coordinates to a longitude.
-				</div>
-				<h5>Parameters:</h5>
-				<table class="params">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Type</th>
-							<th class="last">Description</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="name"><code>x</code></td>
-							<td class="type">
-								<span class="param-type">Number</span>
-							</td>
-							<td class="description last">The x-coordinate.</td>
-						</tr>
-						<tr>
-							<td class="name"><code>z</code></td>
-							<td class="type">
-								<span class="param-type">Number</span>
-							</td>
-							<td class="description last">The z-coordinate.</td>
-						</tr>
-					</tbody>
-				</table>
-				<dl class="details">
-					<dt class="tag-source">Source:</dt>
-					<dd class="tag-source">
-						<ul class="dummy">
-							<li>
-								<a href="helpers_converters.js.html">helpers/converters.js</a>, <a href="helpers_converters.js.html#line160">line 160</a>
-							</li>
-						</ul>
-					</dd>
-				</dl>
-				<h5>Returns:</h5>
-				<div class="param-desc">
-					- The longitude.
-				</div>
-				<dl>
-					<dt>
-        Type
-    </dt>
-					<dd>
-						<span class="param-type">Number</span>
-					</dd>
-				</dl>
-			</article>
-		</section>
-	</div>
-	<nav>
-		<h2><a href="index.html">Home</a></h2>
-		<h3>Modules</h3>
-		<ul>
-			<li><a href="module-controllers.html">controllers</a></li>
-			<li><a href="module-controllers_api.html">controllers/api</a></li>
-			<li><a href="module-controllers_home.html">controllers/home</a></li>
-			<li><a href="module-helpers_converters.html">helpers/converters</a></li>
-			<li><a href="module-helpers_image.html">helpers/image</a></li>
-			<li><a href="module-lib_generator.html">lib/generator</a></li>
-			<li><a href="module-middleware.html">middleware</a></li>
-			<li><a href="module-middleware_isAdmin.html">middleware/isAdmin</a></li>
-			<li><a href="module-middleware_isLoggedIn.html">middleware/isLoggedIn</a></li>
-			<li><a href="module-middleware_isNotLoggedIn.html">middleware/isNotLoggedIn</a></li>
-		</ul>
-		<h3>Classes</h3>
-		<ul>
-			<li><a href="Data.html">Data</a></li>
-			<li><a href="SensorHub.html">SensorHub</a></li>
-			<li><a href="User.html">User</a></li>
-		</ul>
-	</nav>
-	<br class="clear">
-	<footer>
-		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Apr 25 2018 12:52:14 GMT+0200 (W. Europe Daylight Time)
-	</footer>
-	<script>
-		prettyPrint();
 
-	</script>
-	<script src="scripts/linenumber.js">
+<div id="main">
+
+    <h1 class="page-title">Module: helpers/converters</h1>
+
+    
 
 
-	</script>
+
+
+<section>
+
+<header>
+    
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~calculateDegrees"><span class="type-signature">(inner) </span>calculateDegrees<span class="signature">(input, min, max)</span><span class="type-signature"> &rarr; {Number}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Converts the given input to degrees, using the provided min and max values.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>input</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Variable to convert to degrees.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>min</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Minimum value of the range.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>max</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Maximu value of the range.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="helpers_converters.js.html">helpers/converters.js</a>, <a href="helpers_converters.js.html#line15">line 15</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - Returns a between or equal to 0 - 360.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~degreesToColor"><span class="type-signature">(inner) </span>degreesToColor<span class="signature">(degrees)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Converts degrees to a color (RGB).
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>degrees</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Degrees to convert to a color.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="helpers_converters.js.html">helpers/converters.js</a>, <a href="helpers_converters.js.html#line47">line 47</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - Red, Green and Blue
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~temperatureToColor"><span class="type-signature">(inner) </span>temperatureToColor<span class="signature">(temperature)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Converts temperature, in °C, to a color (RGB).
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>temperature</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Temperature to convert to a color.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="helpers_converters.js.html">helpers/converters.js</a>, <a href="helpers_converters.js.html#line100">line 100</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - Red, Green and Blue
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Number></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~temperatureToDegrees"><span class="type-signature">(inner) </span>temperatureToDegrees<span class="signature">(temperature)</span><span class="type-signature"> &rarr; {Number}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Converts temperature, in °C, to degrees.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>temperature</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Temperature to convert to degrees.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="helpers_converters.js.html">helpers/converters.js</a>, <a href="helpers_converters.js.html#line120">line 120</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    0 - 300
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~tileToLat"><span class="type-signature">(inner) </span>tileToLat<span class="signature">(y, z)</span><span class="type-signature"> &rarr; {Number}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Converts a tile with y- and z-coordinates to a latitude.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The y-coordinate.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>z</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The z-coordinate.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="helpers_converters.js.html">helpers/converters.js</a>, <a href="helpers_converters.js.html#line140">line 140</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - The latitude.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~tileToLong"><span class="type-signature">(inner) </span>tileToLong<span class="signature">(x, z)</span><span class="type-signature"> &rarr; {Number}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Converts a tile with x- and z-coordinates to a longitude.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The x-coordinate.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>z</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The z-coordinate.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="helpers_converters.js.html">helpers/converters.js</a>, <a href="helpers_converters.js.html#line160">line 160</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - The longitude.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-controllers.html">controllers</a></li><li><a href="module-controllers_admin.html">controllers/admin</a></li><li><a href="module-controllers_api.html">controllers/api</a></li><li><a href="module-controllers_home.html">controllers/home</a></li><li><a href="module-helpers_converters.html">helpers/converters</a></li><li><a href="module-helpers_image.html">helpers/image</a></li><li><a href="module-lib_generator.html">lib/generator</a></li><li><a href="module-middleware.html">middleware</a></li><li><a href="module-middleware_isAdmin.html">middleware/isAdmin</a></li><li><a href="module-middleware_isLoggedIn.html">middleware/isLoggedIn</a></li><li><a href="module-middleware_isNotLoggedIn.html">middleware/isNotLoggedIn</a></li></ul><h3>Classes</h3><ul><li><a href="Data.html">Data</a></li><li><a href="SensorHub.html">SensorHub</a></li><li><a href="User.html">User</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Apr 26 2018 13:23:30 GMT+0200 (W. Europe Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
 </body>
-
 </html>
