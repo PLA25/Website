@@ -72,24 +72,24 @@ router.get('/sensor/:SerialID', isLoggedIn, (req, res, next) => {
         $lt: today,
       },
     }).exec()
-    .then(data => {
-      const sensorHubData = [];
-      const dateOptions = {
-        year: '2-digit',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-      };
-      for (let i = 0; i < data.length; i += 1) {
-        const objData = data[i].toObject();
-        objData.formatDate = data[i].Timestamp.toLocaleString(dateOptions);
+      .then((data) => {
+        const sensorHubData = [];
+        const dateOptions = {
+          year: '2-digit',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+        };
+        for (let i = 0; i < data.length; i += 1) {
+          const objData = data[i].toObject();
+          objData.formatDate = data[i].Timestamp.toLocaleString(dateOptions);
 
-        sensorHubData.push(objData);
-      }
-      return sensorHubData;
-    }).then(sensorHubData => [sensorHub, sensorHubData]))
+          sensorHubData.push(objData);
+        }
+        return sensorHubData;
+      }).then(sensorHubData => [sensorHub, sensorHubData]))
     .then(([sensorHub, sensorHubData]) => {
       res.render('sensor', {
         sensorHub,
