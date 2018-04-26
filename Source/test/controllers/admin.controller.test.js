@@ -1,5 +1,7 @@
 /* Packages */
 const chai = require('chai');
+const fs = require('fs');
+const path = require('path');
 const request = require('supertest');
 const app = require('./../../bin/www');
 
@@ -10,6 +12,11 @@ const {
 } = require('./../authenticatedUser')();
 
 chai.should();
+
+/* Constants */
+const logoPath = path.resolve(`${__dirname}./../../public`, 'logo.png');
+const defaultLogoPath = path.resolve(`${__dirname}./../../public`, 'default_logo.png');
+const expectedLogo = path.resolve(`${__dirname}./../expected`, 'polar_bear.png');
 
 module.exports = () => {
   describe('GET /', () => {
@@ -60,12 +67,14 @@ module.exports = () => {
     });
 
     describe('Logged in admin', () => {
-      it('should return a 302 response', (done) => {
+      it('should return a 200 response if the upload was succesful', (done) => {
         authenticatedAdmin
           .post('/admin/upload-logo')
-          .attach('logo', './public/logo.jpg')
+          .attach('logo', './test/expected/polar_bear.png')
           .end((err, res) => {
-            res.statusCode.should.equal(302);
+            res.statusCode.should.equal(200);
+            fs.readFileSync(logoPath).should.deep.equal(fs.readFileSync(expectedLogo));
+            fs.readFileSync(logoPath).should.not.deep.equal(fs.readFileSync(defaultLogoPath));
             done();
           });
       });
