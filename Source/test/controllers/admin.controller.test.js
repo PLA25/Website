@@ -79,18 +79,6 @@ module.exports = () => {
             done();
           });
       });
-
-      it('should return a 500 response', (done) => {
-        authenticatedAdmin
-          .post('/admin/upload-logo')
-          .attach('logo', 'non-existing-file.png')
-          .end((err) => {
-            if (err) {
-              throw err;
-            }
-            done();
-          });
-      });
     });
 
     describe('Logged in user', () => {
