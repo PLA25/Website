@@ -25,6 +25,7 @@ const {
  *
  * @name Admin
  * @path {GET} /admin
+ * @code {200} if the request is successful
  */
 router.get('/', isAdmin, (req, res, next) => {
   User.find({}).exec()
@@ -45,6 +46,8 @@ router.get('/', isAdmin, (req, res, next) => {
  *
  * @name Upload logo
  * @path {POST} /admin/upload-logo
+ * @code {200} if a PNG file is uploaded successfully
+ * @code {400} if no files or the wrong file type is uploaded
  */
 router.post('/upload-logo', isAdmin, (req, res) => {
   if (!req.files) {

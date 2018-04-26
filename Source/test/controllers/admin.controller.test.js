@@ -78,7 +78,7 @@ module.exports = () => {
           });
       });
 
-      it('should return a 302 response for any non-PNG', (done) => {
+      it('should return a 400 response for any non-PNG', (done) => {
         authenticatedAdmin
           .post('/admin/upload-logo')
           .attach('logo', './test/expected/default_logo.jpg')
