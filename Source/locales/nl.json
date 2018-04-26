@@ -6,6 +6,8 @@
     "after-link": " om terug te gaan naar de homepagina."
   },
   "admin": {
+    "change-logo": "Logo veranderen",
+    "upload": "Uploaden",
     "users": "Gebruikers",
     "email": "E-mail",
     "admin": "Admin",

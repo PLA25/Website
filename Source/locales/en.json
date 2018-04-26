@@ -6,6 +6,8 @@
     "after-link": " to return to the home page."
   },
   "admin": {
+    "change-logo": "Change logo",
+    "upload": "Upload",
     "users": "Users",
     "email": "Email",
     "admin": "Admin",

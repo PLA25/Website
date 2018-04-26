@@ -1,6 +1,7 @@
 /* Packages */
 const express = require('express');
 const session = require('express-session');
+const fileUpload = require('express-fileupload');
 const Redis = require('connect-redis')(session);
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -41,7 +42,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 /* Sets a favicon for browsers. */
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'logo.png')));
 
 if (process.env.NODE_ENV !== 'testing') {
   app.use(logger('dev'));
@@ -53,6 +54,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+/* Integrates file uploading in the app. */
+app.use(fileUpload());
 
 app.use(session({
   store: new Redis(config.Redis),
