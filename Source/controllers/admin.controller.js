@@ -59,7 +59,7 @@ router.post('/upload-logo', isAdmin, (req, res) => {
 
   /* Checks if image is a PNG file. */
   if (logo.mimetype !== 'image/png') {
-    res.redirect('/admin');
+    res.redirect(400, '/admin');
     return;
   }
 

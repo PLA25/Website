@@ -15,7 +15,7 @@ chai.should();
 
 /* Constants */
 const logoPath = path.resolve(`${__dirname}./../../public`, 'logo.png');
-const defaultLogoPath = path.resolve(`${__dirname}./../../public`, 'default_logo.png');
+const defaultLogoPath = path.resolve(`${__dirname}./../expected`, 'default_logo.png');
 const expectedLogo = path.resolve(`${__dirname}./../expected`, 'polar_bear.png');
 
 module.exports = () => {
@@ -67,7 +67,29 @@ module.exports = () => {
     });
 
     describe('Logged in admin', () => {
-      it('should return a 200 response if the upload was succesful', (done) => {
+      it('should return a 200 response for any PNG', (done) => {
+        authenticatedAdmin
+          .post('/admin/upload-logo')
+          .attach('logo', './public/logo.png')
+          .end((err, res) => {
+            res.statusCode.should.equal(200);
+            res.headers.location.should.equal('/admin');
+            done();
+          });
+      });
+
+      it('should return a 302 response for any non-PNG', (done) => {
+        authenticatedAdmin
+          .post('/admin/upload-logo')
+          .attach('logo', './test/expected/default_logo.jpg')
+          .end((err, res) => {
+            res.statusCode.should.equal(400);
+            res.headers.location.should.equal('/admin');
+            done();
+          });
+      });
+
+      it('should change the logo to the provided image', (done) => {
         authenticatedAdmin
           .post('/admin/upload-logo')
           .attach('logo', './test/expected/polar_bear.png')
@@ -79,12 +101,11 @@ module.exports = () => {
           });
       });
 
-      it('should return a 200 response', (done) => {
+      it('should return a 400 response if there are no files attached', (done) => {
         authenticatedAdmin
           .post('/admin/upload-logo')
-          .attach('logo', './public/logo.png')
           .end((err, res) => {
-            res.statusCode.should.equal(200);
+            res.statusCode.should.equal(400);
             done();
           });
       });
