@@ -7,6 +7,7 @@
 
 /* Packages */
 const express = require('express');
+const i18n = require('i18n');
 const passport = require('passport');
 
 /* Constants */
@@ -49,7 +50,7 @@ router.get('/login', isNotLoggedIn, (req, res) => {
  * @path {GET} /locale-:locale
  */
 router.get('/locale-:locale', (req, res) => {
-  req.session.locale = req.params.locale;
+  i18n.setLocale(req.params.locale);
   res.redirect('back');
 });
 
