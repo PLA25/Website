@@ -1,2 +1,55 @@
-<div id="map" class="map"></div>
+<div class="card z-depth-2 sidebar">
+  <div class="card-header info-color lighten-1 white-text">
+    Options
+  </div>
+  <div class="card-body">
+    <label for="form1">Go To:</label>
+    <div class="md-form" style="margin-top: 0px;">
+      <i class="fa fa-globe prefix"></i>
+      <input type="text" id="form1" class="form-control" placeholder="Amsterdam">
+    </div>
+    <hr>
+
+    <label>Map Type:</label>
+    <div class="btn-group" data-toggle="buttons" style="width: 100%;">
+      <label class="btn btn-default active form-check-label" style="width: 50%;">
+        <input class="form-check-input" type="radio" id="typeSat" checked autocomplete="off"> Satellite
+      </label>
+
+      <label class="btn btn-default form-check-label" style="width: 50%;">
+          <input class="form-check-input" type="radio" id="typeMap" autocomplete="off"> Map
+      </label>
+    </div>
+    <hr>
+
+    <label>Layers:</label>
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="mapboxLayer">
+      <label class="custom-control-label" for="mapboxLayer">Navigation</label>
+    </div>
+
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="heatmapLayer">
+      <label class="custom-control-label" for="heatmapLayer">Temperature</label>
+    </div>
+
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="sensorhubLayer">
+      <label class="custom-control-label" for="sensorhubLayer">SensorHubs</label>
+    </div>
+    <hr>
+
+  </div>
+</div>
+
+<div class="card text-center z-depth-2 map">
+  <div class="card-header info-color lighten-1 white-text">
+    Map
+  </div>
+  <div class="card-body">
+    <div id="map"></div>
+  </div>
+</div>
+
+<!-- Scripts -->
 <script src="/js/map.js" crossorigin="anonymous"></script>
