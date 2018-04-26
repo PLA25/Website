@@ -46,6 +46,8 @@ router.get('/sensor/:SerialID', isLoggedIn, (req, res, next) => {
 
   SensorHub.findOne({
     SerialID: req.params.SerialID,
+  }, function(err, sensorhub) {
+    if (sensorhub == null) res.redirect('/404');
   }).exec()
     .then(sensorHub => Data.find({
       SensorHub: req.params.SerialID,
