@@ -8,7 +8,21 @@ body {
 }
 
 main {
-	padding: 25px;
+	min-height: 87vh;
+	margin-left: 1vw;
+	margin-right: 1vw;
+}
+
+header {
+	height: 8vh;
+}
+
+.navbar {
+	z-index: 10;
+}
+
+[type='radio'] {
+	display: none;
 }
 
 footer {
@@ -43,6 +57,13 @@ footer {
 	width: 48px;
 }
 
+.card .logo {
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 15px;
+	width: 200px;
+}
+
 .card .flag {
 	cursor: pointer;
 	float: left;
@@ -53,4 +74,34 @@ footer {
 	border-radius: 0;
 	height: 27px;
 	width: 48px;
+}
+
+#uploadLogoForm {
+	margin-bottom: 30px;
+}
+
+.sidebar {
+	height: 84vh;
+	width: 25vw;
+	float: left;
+}
+
+.map {
+	float: right;
+	width: 70vw;
+	height: 84vh;
+}
+
+.card-body {
+	height: 100%;
+	width: 100%;
+}
+
+#map {
+	height: 95%;
+	width: 100%;
+}
+
+.form-check-label {
+	padding: 1vw !important;
 }

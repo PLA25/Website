@@ -12,8 +12,8 @@ const request = require('request');
  * Downloads an image from the given URL and saves it to the specified location.
  *
  * @function
- * @param {string} imageURL - URL of the image to download.
- * @param {string} localPath - Absolute path of the location to save to.
+ * @param {String} imageURL - URL of the image to download.
+ * @param {String} localPath - Absolute path of the location to save to.
  * @returns {Promise} Promise object represents the path of the saved image.
  */
 function downloadImage(imageURL, { host, name }) {
