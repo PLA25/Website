@@ -57,6 +57,13 @@ footer {
 	width: 48px;
 }
 
+.card .logo {
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 15px;
+	width: 200px;
+}
+
 .card .flag {
 	cursor: pointer;
 	float: left;
@@ -67,6 +74,10 @@ footer {
 	border-radius: 0;
 	height: 27px;
 	width: 48px;
+}
+
+#uploadLogoForm {
+	margin-bottom: 30px;
 }
 
 .sidebar {

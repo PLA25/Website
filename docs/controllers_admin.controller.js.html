@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Source: middlewares/isNotLoggedIn.js</title>
+	<title>JSDoc: Source: controllers/admin.controller.js</title>
 	<script src="scripts/prettify/prettify.js">
 
 
@@ -21,29 +21,90 @@
 
 <body>
 	<div id="main">
-		<h1 class="page-title">Source: middlewares/isNotLoggedIn.js</h1>
+		<h1 class="page-title">Source: controllers/admin.controller.js</h1>
 		<section>
 			<article>
 				<pre class="prettyprint source linenums"><code>/**
- * Checks if the user is not logged in;
- * If the user is not logged in then the request continued;
- * If the user is logged in then the user is redirect to the index page.
+ * Admin controller
  *
- * @function
- * @see module:middleware
- * @module middleware/isNotLoggedIn
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- * @param {Function} next - Express next middleware function
- * @returns {undefined}
+ * @module controllers/admin
+ * @see module:controllers
  */
-module.exports = (req, res, next) => {
-  if (!req.isAuthenticated()) {
-    next();
-  } else {
-    res.redirect('/');
+
+/* Packages */
+const express = require('express');
+
+/* Models */
+const SensorHub = require('./../models/sensorhub');
+const User = require('./../models/user');
+
+/* Constants */
+const router = express.Router();
+
+/* Middlewares */
+const {
+  isAdmin,
+} = require('./../middlewares');
+
+/**
+ * Renders the admin page.
+ *
+ * @name Admin
+ * @path {GET} /admin
+ * @code {200} if the request is successful
+ */
+router.get('/', isAdmin, (req, res, next) => {
+  User.find({}).exec()
+    .then(users => SensorHub.find({}).exec().then(sensorHubs => [users, sensorHubs]))
+    .then(([users, sensorHubs]) => {
+      res.render('admin', {
+        users,
+        sensorHubs,
+      });
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+/**
+ * Uploads a logo.
+ *
+ * @name Upload logo
+ * @path {POST} /admin/upload-logo
+ * @code {200} if a PNG file is uploaded successfully
+ * @code {400} if no files or the wrong file type is uploaded
+ */
+router.post('/upload-logo', isAdmin, (req, res) => {
+  if (!req.files) {
+    res.status(400).send('No files were uploaded.');
+    return;
   }
-};
+
+  /* The name of the input field is used to retrieve the uploaded file. */
+  const {
+    logo,
+  } = req.files;
+
+  /* Checks if image is a PNG file. */
+  if (logo.mimetype !== 'image/png') {
+    res.redirect(400, '/admin');
+    return;
+  }
+
+  /* Uses the mv() method to save this file. */
+  logo.mv('./public/logo.png', (err) => {
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+
+    res.redirect(200, '/admin');
+  });
+});
+
+/* Exports */
+module.exports = router;
 </code></pre>
 			</article>
 		</section>
