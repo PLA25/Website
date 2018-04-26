@@ -60,6 +60,7 @@
           <th>{{i18n "admin.latitude"}}</th>
           <th></th>
           <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -73,6 +74,17 @@
             </td>
             <td>
               {{this.Latitude}}
+            </td>
+            <td>
+              <a href="/sensor/{{this.SerialID}}" type="button" class="btn btn-primary btn-rounded btn-sm my-0">
+                <span class="d-block d-sm-none">
+                  Details
+                </span>
+
+                <span class="d-none d-sm-block">
+                  Details
+                </span>
+              </a>
             </td>
             <td>
               <button type="button" class="btn btn-primary btn-rounded btn-sm my-0">

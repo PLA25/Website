@@ -11,6 +11,7 @@ const passport = require('passport');
 
 /* Models */
 const SensorHub = require('./../models/sensorhub');
+const Data = require('./../models/data');
 const User = require('./../models/user');
 
 /* Constants */
@@ -46,6 +47,53 @@ router.get('/admin', isAdmin, (req, res, next) => {
       res.render('admin', {
         users,
         sensorHubs,
+      });
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+/**
+ * Renders a specific sensor page.
+ *
+ * @name Sensor
+ * @path {GET} /sensor/:SerialID
+ */
+router.get('/sensor/:SerialID', isLoggedIn, (req, res, next) => {
+  const today = new Date();
+  const temp = new Date().setDate(today.getDate() - 500);
+  const yesterday = new Date(temp);
+  SensorHub.findOne({ SerialID: req.params.SerialID }).exec()
+    .then(sensorHub => Data.find({
+      SensorHub: req.params.SerialID,
+      Timestamp: {
+        $gte: yesterday,
+        $lt: today,
+      },
+    }).exec()
+    .then(data => {
+      const sensorHubData = [];
+      const dateOptions = {
+        year: '2-digit',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+      };
+      for (let i = 0; i < data.length; i += 1) {
+        const objData = data[i].toObject();
+        objData.formatDate = data[i].Timestamp.toLocaleString(dateOptions);
+
+        sensorHubData.push(objData);
+      }
+      return sensorHubData;
+    }).then(sensorHubData => [sensorHub, sensorHubData]))
+    .then(([sensorHub, sensorHubData]) => {
+      res.render('sensor', {
+        sensorHub,
+        sensorHubData,
       });
     })
     .catch((err) => {
