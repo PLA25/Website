@@ -47,34 +47,6 @@ footer {
 	margin-right: 30px;
 }
 
-.navbar .flag {
-	cursor: pointer;
-	margin-left: 5px;
-}
-
-.navbar .flag img {
-	height: 27px;
-	width: 48px;
-}
-
-.card .logo {
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 15px;
-	width: 200px;
-}
-
-.card .flag {
-	cursor: pointer;
-	float: left;
-	margin-right: 10px;
-}
-
-.card .flag img {
-	border-radius: 0;
-	height: 27px;
-	width: 48px;
-}
 
 #uploadLogoForm {
 	margin-bottom: 30px;
