@@ -8,7 +8,7 @@
     </form>
 
     <h1>{{i18n "admin.users"}}</h1>
-    <table class="table table-responsive-md table-striped">
+    <table class="table table-responsive-md table-striped" id="table-users">
       <thead class="rgba-blue-dark darken-3">
         <tr class="text-white">
           <th>{{i18n "admin.email"}}</th>
@@ -58,7 +58,7 @@
 
   <div class="col-12 col-xl-6">
     <h1>SensorHubs</h1>
-    <table class="table table-responsive-md table-striped">
+    <table class="table table-responsive-md table-striped" id="table-sensorhubs">
       <thead class="rgba-blue-dark darken-3">
         <tr class="text-white">
           <th>{{i18n "admin.serial-id"}}</th>
@@ -111,3 +111,6 @@
   </div>
 
 </div>
+
+<!-- Scripts -->
+<script src="/js/admin.js" crossorigin="anonymous"></script>

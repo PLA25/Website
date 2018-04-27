@@ -15,6 +15,11 @@
   {{/if}}
 
   <!-- Style -->
+  {{#if @user}}
+    {{#if @user.isAdmin}}
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/css/jquery.dataTables.min.css" integrity="sha256-YY1izqyhIj4W3iyJOaGWOpXDSwrHWFL4Nfk+W0LyCHE=" crossorigin="anonymous" />
+    {{/if}}
+  {{/if}}
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet" integrity="sha384-Xs3HsmEnkn3GuuBg8nr2ntOPDKbIntZF4fC9XXL1hqsgaVVnKd6vHnf9YVT/R6Kj" crossorigin="anonymous">
@@ -96,6 +101,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.1/umd/popper.min.js" integrity="sha256-AoNQZpaRmemSTxMy9xcqXX5VLwI6IMPYugO7bFHOW+U=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha256-5+02zu5UULQkO7w1GIr6vftCgMfFdZcAHeDtFnKZsBs=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js" integrity="sha256-QZSO8dEprjUmbVDiez1Tpan+c4M7IKOHiEmYYZZJyaM=" crossorigin="anonymous"></script>
+  {{#if @user}}
+    {{#if @user.isAdmin}}
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/jquery.dataTables.min.js" integrity="sha256-qcV1wr+bn4NoBtxYqghmy1WIBvxeoe8vQlCowLG+cng=" crossorigin="anonymous"></script>
+    {{/if}}
+  {{/if}}
   <script src="/js/locales.js"></script>
 </body>
 
