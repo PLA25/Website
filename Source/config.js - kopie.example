@@ -1,0 +1,18 @@
+module.exports = {
+  MongoDB: {
+    Host: '',
+    Port: ,
+    User: '',
+    Pass: '',
+    Name: ''
+  }
+  Planet: {
+    Key: ''
+  },
+  Redis: {
+    host: '',
+    port: '',
+    pass: '',
+    db: 0,
+  },
+};
