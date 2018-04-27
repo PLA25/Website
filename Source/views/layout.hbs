@@ -58,20 +58,19 @@
             <li class="nav-item dropdown white-text">
               <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-user"></i> {{@user.name}} </a>
-                  <div class="dropdown-menu dropdown-menu-right dropdown-cyan" aria-labelledby="navbarDropdownMenuLink-4">
-                    <a class="dropdown-item" href="/logout">Log out</a>
-                  </div>
-                  <div class="dropdown-menu dropdown-menu-right dropdown-cyan" aria-labelledby="navbarDropdownMenuLink-4">
-                    <div class="flag" id="locale-en">
-                     <img alt="English" src="/lang_en.png" />
-                    </div>
-                  </div>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-cyan" aria-labelledby="navbarDropdownMenuLink-4">
-                      <div class="flag" id="locale-nl">
-                        <img alt="Nederlands" class="flag" src="/lang_nl.png" />
-                      </div>
-                    </div>
-                  </li>
+
+              <div class="dropdown-menu dropdown-menu-right dropdown-cyan" aria-labelledby="navbarDropdownMenuLink-4">
+                <a class="dropdown-item" href="/logout">Log out</a>
+
+                <div class="flag" id="locale-en">
+                  <img alt="English" src="/lang_en.png" />
+                </div>
+
+                <div class="flag" id="locale-nl">
+                  <img alt="Nederlands" class="flag" src="/lang_nl.png" />
+                </div>
+              </div>
+            </li>
           {{else}}
             <li class="nav-item">
               <a class="white-text nav-link" href="/login">
