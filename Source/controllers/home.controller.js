@@ -45,7 +45,7 @@ router.get('/sensor/:SerialID', isLoggedIn, (req, res, next) => {
   const makeDate = new Date().setDate(today.getDate() - amountOfDays);
   const yesterday = new Date(makeDate);
 
-  SensorHub.findOne({SerialID: req.params.SerialID}).exec()
+  SensorHub.findOne({ SerialID: req.params.SerialID }).exec()
     .then(sensorHub => Data.find({
       SensorHub: req.params.SerialID,
       Timestamp: {
