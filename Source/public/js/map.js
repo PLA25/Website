@@ -6,6 +6,7 @@ $(document).ready(() => {
       url: 'http://mt{0-3}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
     }),
   });
+  googleLayer.setVisible(false);
 
   const heatmapLayer = new ol.layer.Tile({
     source: new ol.source.XYZ({
