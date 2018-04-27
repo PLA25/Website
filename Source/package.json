@@ -14,7 +14,7 @@
     "precommit": "npm run lint-fix"
   },
   "dependencies": {
-    "bcrypt": "2.0.1",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "1.18.2",
     "connect-flash": "0.1.1",
     "connect-redis": "3.3.3",
