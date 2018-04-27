@@ -26,7 +26,7 @@
 
 <body>
   <header>
-    <nav class="navbar navbar-expand-lg rgba-blue-dark">
+    <nav class="mb-1 navbar navbar-expand-lg navbar-dark cyan">
       <span class="white-text navbar-brand mr-5">
         Pollution Detection System
       </span>
@@ -55,22 +55,24 @@
                 </a>
               </li>
             {{/if}}
-            <li class="nav-item dropdown white-text">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+
+            <li class="nav-item dropdown white-text float-right">
+              <ul class="navbar-nav ml-auto nav-flex-icons">
               <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-user"></i> {{@user.name}} </a>
 
               <div class="dropdown-menu dropdown-menu-right dropdown-cyan" aria-labelledby="navbarDropdownMenuLink-4">
                 <a class="dropdown-item" href="/logout">Log out</a>
 
-                <div class="flag" id="locale-en">
-                  <img alt="English" src="/lang_en.png" />
-                </div>
-
-                <div class="flag" id="locale-nl">
-                  <img alt="Nederlands" class="flag" src="/lang_nl.png" />
+                <div class="flag" >
+                  <img alt="English" id="locale-en" src="/lang_en.png" />
+                  <img alt="Nederlands" id="locale-nl"class="flag" src="/lang_nl.png" />
                 </div>
               </div>
+            </ul>
             </li>
+            </div>
           {{else}}
             <li class="nav-item">
               <a class="white-text nav-link" href="/login">
