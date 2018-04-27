@@ -31,5 +31,9 @@
     "your-email": "Uw e-mail",
     "your-password": "Uw wachtwoord",
     "login": "Inloggen"
+  },
+  "sensor": {
+    "temperature": "Temperatuur",
+    "timestamp": "Tijd"
   }
 }

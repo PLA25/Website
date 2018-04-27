@@ -5,15 +5,15 @@
     <table class="table table-responsive-md table-striped">
       <thead class="rgba-blue-dark darken-3">
         <tr class="text-white">
-          <th>Tempature</th>
-          <th>Timestamp</th>
+          <th>{{i18n "sensor.temperature"}}</th>
+          <th>{{i18n "sensor.timestamp"}}</th>
         </tr>
       </thead>
       <tbody>
         {{#each sensorHubData}}
           <tr>
             <td>
-              {{this.Value}}&#8451;
+              {{this.Value}}°C
             </td>
             <td>
               {{this.formatDate}}

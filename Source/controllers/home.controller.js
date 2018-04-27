@@ -41,19 +41,16 @@ router.get('/', isLoggedIn, (req, res) => {
  */
 router.get('/sensor/:SerialID', isLoggedIn, (req, res, next) => {
   const today = new Date();
-  const temp = new Date().setDate(today.getDate() - 500);
-  const yesterday = new Date(temp);
+  const amountOfDays = 500;
+  const makeDate = new Date().setDate(today.getDate() - amountOfDays);
+  const yesterday = new Date(makeDate);
 
-  SensorHub.findOne({
-    SerialID: req.params.SerialID,
-  }, function(err, sensorhub) {
-    if (sensorhub == null) res.redirect('/404');
-  }).exec()
+  SensorHub.findOne({SerialID: req.params.SerialID}).exec()
     .then(sensorHub => Data.find({
       SensorHub: req.params.SerialID,
       Timestamp: {
         $gte: yesterday,
-        $lt: today,
+        $lte: today,
       },
     }).exec()
       .then((data) => {

@@ -121,7 +121,7 @@ module.exports = () => {
 
     describe('Logged in admin', () => {
       it('should return a 200 response', (done) => {
-        authenticatedAdmin.get('/sensor/:SerialID')
+        authenticatedAdmin.get('/sensor/Groningen')
           .end((err, res) => {
             res.statusCode.should.equal(200);
             done();
@@ -131,7 +131,7 @@ module.exports = () => {
 
     describe('Logged in user', () => {
       it('should return a 200 response', (done) => {
-        authenticatedUser.get('/sensor/:SerialID')
+        authenticatedUser.get('/sensor/Groningen')
           .end((err, res) => {
             res.statusCode.should.equal(200);
             done();
