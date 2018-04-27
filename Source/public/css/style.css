@@ -98,8 +98,13 @@ footer {
 }
 
 #map {
-	height: 95%;
+	height: 90%;
 	width: 100%;
+}
+
+.scale {
+	margin: 0.5%;
+	float: right;
 }
 
 .form-check-label {
