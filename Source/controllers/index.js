@@ -33,5 +33,13 @@ router.use('/', homeController);
 router.use('/admin', adminController);
 router.use('/api', apiController);
 
+router.use((req, res, next) => {
+  if (!req.route) {
+    res.redirect('/404');
+  }
+
+  next();
+});
+
 /* Exports */
 module.exports = router;
