@@ -10,10 +10,6 @@ const express = require('express');
 const i18n = require('i18n');
 const passport = require('passport');
 
-/* Models */
-const SensorHub = require('./../models/sensorhub');
-const Data = require('./../models/data');
-
 /* Constants */
 const router = express.Router();
 
@@ -22,6 +18,11 @@ const {
   isLoggedIn,
   isNotLoggedIn,
 } = require('./../middlewares');
+
+/* Helpers */
+const {
+  getSensorhubData,
+} = require('./../helpers/sensorhub');
 
 /**
  * Renders the index page.
@@ -34,40 +35,15 @@ router.get('/', isLoggedIn, (req, res) => {
 });
 
 /**
- * Renders a specific sensor page.
+ * Renders a specific sensorhub page.
  *
- * @name Sensor
- * @path {GET} /sensor/:SerialID
+ * @name Sensorhub
+ * @path {GET} /sensorhub/:SerialID
  */
-router.get('/sensor/:SerialID', isLoggedIn, (req, res, next) => {
-  const today = new Date();
-  const amountOfDays = 500;
-  const makeDate = new Date().setDate(today.getDate() - amountOfDays);
-  const yesterday = new Date(makeDate);
-
-  SensorHub.findOne({ SerialID: req.params.SerialID }).exec()
-    .then(sensorHub => Data.find({
-      SensorHub: req.params.SerialID,
-      Timestamp: {
-        $gte: yesterday,
-        $lte: today,
-      },
-    }).exec()
-      .then((data) => {
-        const sensorHubData = [];
-        for (let i = 0; i < data.length; i += 1) {
-          const objData = data[i].toObject();
-          objData.formatDate = data[i].Timestamp.toLocaleString('nl-NL', {
-            timeZone: 'Europe/Amsterdam',
-          });
-
-          sensorHubData.push(objData);
-        }
-
-        return sensorHubData;
-      }).then(sensorHubData => [sensorHub, sensorHubData]))
+router.get('/sensorhub/:SerialID', isLoggedIn, (req, res, next) => {
+  getSensorhubData(req.params.SerialID, 1)
     .then(([sensorHub, sensorHubData]) => {
-      res.render('sensor', {
+      res.render('sensorhub', {
         sensorHub,
         sensorHubData,
       });
