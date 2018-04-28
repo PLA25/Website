@@ -166,7 +166,6 @@ module.exports = () => {
         authenticatedAdmin.get('/404')
           .end((err, res) => {
             res.statusCode.should.equal(302);
-            res.headers.location.should.equal('/404');
             done();
           });
       });
@@ -177,7 +176,6 @@ module.exports = () => {
         authenticatedUser.get('/404')
           .end((err, res) => {
             res.statusCode.should.equal(302);
-            res.headers.location.should.equal('/404');
             done();
           });
       });
