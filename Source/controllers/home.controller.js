@@ -20,16 +20,6 @@ const {
 } = require('./../middlewares');
 
 /**
- * Renders the 404 page.
- *
- * @name 404
- * @path {GET} /404
- */
-router.get('/404', isLoggedIn, (req, res) => {
-  res.render('index');
-});
-
-/**
  * Renders the index page.
  *
  * @name Index
@@ -95,6 +85,16 @@ router.get('/logout', isLoggedIn, (req, res) => {
  */
 router.get('/map', isLoggedIn, (req, res) => {
   res.render('map');
+});
+
+/**
+ * Renders the 404 page.
+ *
+ * @name 404
+ * @path {GET} /404
+ */
+router.get('/404', isLoggedIn, (req, res) => {
+  res.render('index');
 });
 
 /* Exports */
