@@ -108,7 +108,7 @@ module.exports = () => {
     });
   });
 
-  describe('GET /sensor/:SerialID', () => {
+  describe('GET /sensorhub/:SerialID', () => {
     describe('Not logged in', () => {
       it('should redirect to /login', (done) => {
         request(app).get('/')
@@ -121,7 +121,7 @@ module.exports = () => {
 
     describe('Logged in admin', () => {
       it('should return a 200 response', (done) => {
-        authenticatedAdmin.get('/sensor/Groningen')
+        authenticatedAdmin.get('/sensorhub/Groningen')
           .end((err, res) => {
             res.statusCode.should.equal(200);
             done();
@@ -131,7 +131,7 @@ module.exports = () => {
 
     describe('Logged in user', () => {
       it('should return a 200 response', (done) => {
-        authenticatedUser.get('/sensor/Groningen')
+        authenticatedUser.get('/sensorhub/Groningen')
           .end((err, res) => {
             res.statusCode.should.equal(200);
             done();
