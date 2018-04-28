@@ -187,7 +187,7 @@ module.exports = () => {
       it('should return a 302 response', (done) => {
         authenticatedAdmin.get('/404')
           .end((err, res) => {
-            res.headers.location.should.equal('/404');
+            res.statusCode.should.equal(302);
             done();
           });
       });
@@ -197,7 +197,7 @@ module.exports = () => {
       it('should return a 302 response', (done) => {
         authenticatedUser.get('/404')
           .end((err, res) => {
-            res.headers.location.should.equal('/404');
+            res.statusCode.should.equal(302);
             done();
           });
       });
