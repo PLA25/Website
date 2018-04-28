@@ -94,7 +94,7 @@ router.get('/map', isLoggedIn, (req, res) => {
  * @path {GET} /404
  */
 router.get('/404', isLoggedIn, (req, res) => {
-  res.render('index');
+  res.render('404');
 });
 
 /* Exports */
