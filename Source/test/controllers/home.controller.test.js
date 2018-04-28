@@ -141,12 +141,34 @@ module.exports = () => {
   });
 
   describe('GET non-existing page', () => {
-    it('should redirect to /404', (done) => {
-      request(app).get('/non-existing-page')
-        .end((err, res) => {
-          res.headers.location.should.equal('/404');
-          done();
-        });
+    describe('Not logged in', () => {
+      it('should redirect to /404', (done) => {
+        request(app).get('/non-existing-page')
+          .end((err, res) => {
+            res.headers.location.should.equal('/404');
+            done();
+          });
+      });
+    });
+
+    describe('Logged in admin', () => {
+      it('should redirect to /404', (done) => {
+        authenticatedAdmin.get('/404')
+          .end((err, res) => {
+            res.headers.location.should.equal('/404');
+            done();
+          });
+      });
+    });
+
+    describe('Logged in user', () => {
+      it('should redirect to /404', (done) => {
+        authenticatedUser.get('/404')
+          .end((err, res) => {
+            res.headers.location.should.equal('/404');
+            done();
+          });
+      });
     });
   });
 
