@@ -162,20 +162,22 @@ module.exports = () => {
     });
 
     describe('Logged in admin', () => {
-      it('should return a 200 response', (done) => {
+      it('should return a 302 response', (done) => {
         authenticatedAdmin.get('/404')
           .end((err, res) => {
             res.statusCode.should.equal(302);
+            res.headers.location.should.equal('/404');
             done();
           });
       });
     });
 
     describe('Logged in user', () => {
-      it('should return a 200 response', (done) => {
+      it('should return a 302 response', (done) => {
         authenticatedUser.get('/404')
           .end((err, res) => {
             res.statusCode.should.equal(302);
+            res.headers.location.should.equal('/404');
             done();
           });
       });
