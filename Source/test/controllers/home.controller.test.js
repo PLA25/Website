@@ -145,7 +145,7 @@ module.exports = () => {
       it('should redirect to /404', (done) => {
         request(app).get('/non-existing-page')
           .end((err, res) => {
-            res.headers.location.should.equal('/404');
+            res.statusCode.should.equal(302);
             done();
           });
       });
@@ -155,7 +155,7 @@ module.exports = () => {
       it('should redirect to /404', (done) => {
         authenticatedAdmin.get('/404')
           .end((err, res) => {
-            res.headers.location.should.equal('/404');
+            res.statusCode.should.equal(302);
             done();
           });
       });
@@ -165,7 +165,7 @@ module.exports = () => {
       it('should redirect to /404', (done) => {
         authenticatedUser.get('/404')
           .end((err, res) => {
-            res.headers.location.should.equal('/404');
+            res.statusCode.should.equal(302);
             done();
           });
       });
