@@ -19,6 +19,11 @@ const homeController = require('./home.controller.js');
 const has = Object.prototype.hasOwnProperty;
 const router = express.Router();
 
+/* Middlewares */
+const {
+  pageNotFound,
+} = require('./../middlewares');
+
 router.use((req, res, next) => {
   if (!has.call(res.locals, 'user')) {
     if (req.isAuthenticated()) {
@@ -29,9 +34,13 @@ router.use((req, res, next) => {
   next();
 });
 
+/* Routes */
 router.use('/', homeController);
 router.use('/admin', adminController);
 router.use('/api', apiController);
+
+/* Error Handling */
+router.use(pageNotFound);
 
 /* Exports */
 module.exports = router;
