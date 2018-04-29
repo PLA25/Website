@@ -108,6 +108,54 @@ module.exports = () => {
     });
   });
 
+  describe('GET /sensorhub/:SerialID', () => {
+    describe('Not logged in', () => {
+      it('should redirect to /login', (done) => {
+        request(app).get('/sensorhub/Groningen')
+          .end((err, res) => {
+            res.headers.location.should.equal('/login');
+            done();
+          });
+      });
+    });
+
+    describe('Logged in admin', () => {
+      it('should return a 200 response', (done) => {
+        authenticatedAdmin.get('/sensorhub/Groningen')
+          .end((err, res) => {
+            res.statusCode.should.equal(200);
+            done();
+          });
+      });
+
+      it('should return a 500 response for an unknown host', (done) => {
+        authenticatedAdmin.get('/sensorhub/asdf')
+          .end((err, res) => {
+            res.statusCode.should.equal(500);
+            done();
+          });
+      });
+    });
+
+    describe('Logged in user', () => {
+      it('should return a 200 response', (done) => {
+        authenticatedUser.get('/sensorhub/Groningen')
+          .end((err, res) => {
+            res.statusCode.should.equal(200);
+            done();
+          });
+      });
+
+      it('should return a 500 response for an unknown host', (done) => {
+        authenticatedUser.get('/sensorhub/asdf')
+          .end((err, res) => {
+            res.statusCode.should.equal(500);
+            done();
+          });
+      });
+    });
+  });
+
   describe('GET non-existing page', () => {
     describe('Not logged in', () => {
       it('should return a 404 response', (done) => {
