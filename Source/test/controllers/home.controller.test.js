@@ -108,38 +108,39 @@ module.exports = () => {
     });
   });
 
-  describe('GET /sensorhub/:SerialID', () => {
+  describe('GET non-existing page', () => {
     describe('Not logged in', () => {
-      it('should redirect to /login', (done) => {
-        request(app).get('/')
+      it('should return a 404 response', (done) => {
+        request(app).get('/non-existing-page')
           .end((err, res) => {
-            res.headers.location.should.equal('/login');
+            res.statusCode.should.equal(404);
             done();
           });
       });
     });
 
     describe('Logged in admin', () => {
-      it('should return a 200 response', (done) => {
-        authenticatedAdmin.get('/sensorhub/Groningen')
+      it('should return a 404 response', (done) => {
+        authenticatedAdmin.get('/non-existing-page')
           .end((err, res) => {
-            res.statusCode.should.equal(200);
+            res.statusCode.should.equal(404);
             done();
           });
       });
     });
 
     describe('Logged in user', () => {
-      it('should return a 200 response', (done) => {
-        authenticatedUser.get('/sensorhub/Groningen')
+      it('should return a 404 response', (done) => {
+        authenticatedUser.get('/non-existing-page')
           .end((err, res) => {
-            res.statusCode.should.equal(200);
+            res.statusCode.should.equal(404);
             done();
           });
       });
     });
   });
 
+  /* Must be last! */
   describe('GET /logout', () => {
     describe('Not logged in', () => {
       it('should redirect to /login', (done) => {
