@@ -34,10 +34,12 @@ router.use((req, res, next) => {
   next();
 });
 
+/* Routes */
 router.use('/', homeController);
 router.use('/admin', adminController);
 router.use('/api', apiController);
 
+/* Error Handling */
 router.use(pageNotFound);
 
 /* Exports */
