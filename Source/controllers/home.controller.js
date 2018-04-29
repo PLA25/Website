@@ -21,8 +21,8 @@ const {
 
 /* Helpers */
 const {
-  getSensorhubData,
-} = require('./../helpers/sensorhub');
+  getAllData,
+} = require('./../helpers/database');
 
 /**
  * Renders the index page.
@@ -39,9 +39,10 @@ router.get('/', isLoggedIn, (req, res) => {
  *
  * @name Sensorhub
  * @path {GET} /sensorhub/:SerialID
+ * @params {String} :SerialID is the SerialID of the SensorHub.
  */
 router.get('/sensorhub/:SerialID', isLoggedIn, (req, res, next) => {
-  getSensorhubData(req.params.SerialID, 1)
+  getAllData(req.params.SerialID, 365)
     .then(([sensorHub, sensorHubData]) => {
       res.render('sensorhub', {
         sensorHub,
