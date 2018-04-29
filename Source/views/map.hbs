@@ -1,3 +1,6 @@
+<!-- Style -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol.css" integrity="sha256-rQq4Fxpq3LlPQ8yP11i6Z2lAo82b6ACDgd35CKyNEBw=" crossorigin="anonymous" />
+
 <div class="card z-depth-2 sidebar">
   <div class="card-header info-color lighten-1 white-text">
     Options
@@ -47,9 +50,14 @@
     Map
   </div>
   <div class="card-body">
-    <div id="map"></div>
+    <div id="map">
+    </div>
+    <div class="scale">
+      -50°C <img src="/spectrum.png" style="border-radius: 5500px;" height="10%" width="100px"> 50°C
+    </div>
   </div>
 </div>
 
 <!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.5/ol.js" integrity="sha256-77IKwU93jwIX7zmgEBfYGHcmeO0Fx2MoWB/ooh9QkBA=" crossorigin="anonymous"></script>
 <script src="/js/map.js" crossorigin="anonymous"></script>
