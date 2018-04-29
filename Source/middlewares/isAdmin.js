@@ -23,7 +23,6 @@ module.exports = (req, res, next) => {
   if (req.user.isAdmin) {
     next();
   } else {
-    res.status(404);
-    res.render('404');
+    res.redirect('/404');
   }
 };
