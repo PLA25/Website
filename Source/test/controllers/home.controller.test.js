@@ -108,38 +108,6 @@ module.exports = () => {
     });
   });
 
-  describe('GET /logout', () => {
-    describe('Not logged in', () => {
-      it('should redirect to /login', (done) => {
-        request(app).get('/logout')
-          .end((err, res) => {
-            res.headers.location.should.equal('/login');
-            done();
-          });
-      });
-    });
-
-    describe('Logged in admin', () => {
-      it('should redirect to /login', (done) => {
-        authenticatedAdmin.get('/logout')
-          .end((err, res) => {
-            res.headers.location.should.equal('/login');
-            done();
-          });
-      });
-    });
-
-    describe('Logged in user', () => {
-      it('should redirect to /login', (done) => {
-        authenticatedUser.get('/logout')
-          .end((err, res) => {
-            res.headers.location.should.equal('/login');
-            done();
-          });
-      });
-    });
-  });
-
   describe('GET non-existing page', () => {
     describe('Not logged in', () => {
       it('should return a 404 response', (done) => {
@@ -166,6 +134,39 @@ module.exports = () => {
         authenticatedUser.get('/non-existing-page')
           .end((err, res) => {
             res.statusCode.should.equal(404);
+            done();
+          });
+      });
+    });
+  });
+
+  /* Must be last! */
+  describe('GET /logout', () => {
+    describe('Not logged in', () => {
+      it('should redirect to /login', (done) => {
+        request(app).get('/logout')
+          .end((err, res) => {
+            res.headers.location.should.equal('/login');
+            done();
+          });
+      });
+    });
+
+    describe('Logged in admin', () => {
+      it('should redirect to /login', (done) => {
+        authenticatedAdmin.get('/logout')
+          .end((err, res) => {
+            res.headers.location.should.equal('/login');
+            done();
+          });
+      });
+    });
+
+    describe('Logged in user', () => {
+      it('should redirect to /login', (done) => {
+        authenticatedUser.get('/logout')
+          .end((err, res) => {
+            res.headers.location.should.equal('/login');
             done();
           });
       });
