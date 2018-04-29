@@ -87,5 +87,15 @@ router.get('/map', isLoggedIn, (req, res) => {
   res.render('map');
 });
 
+/**
+ * Renders the 404 page.
+ *
+ * @name 404
+ * @path {GET} /404
+ */
+router.get('/404', isLoggedIn, (req, res) => {
+  res.render('404');
+});
+
 /* Exports */
 module.exports = router;
