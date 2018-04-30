@@ -26,56 +26,69 @@
 
 <body>
   <header>
-    <nav class="mb-1 navbar navbar-expand-lg navbar-dark cyan">
+    <nav class="mb-1 navbar navbar-expand-lg navbar-dark rgba-blue-dark">
       <span class="white-text navbar-brand mr-5">
         Pollution Detection System
       </span>
+
       <button id="hamburger-menu-toggler" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle menu">
         <span class="black-text">
           <i class="fa fa-bars fa-1x"></i>
         </span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent-3">
+
+      <div class="collapse navbar-collapse" id="navbar-content">
         <ul class="navbar-nav mr-auto">
+
           <li class="nav-item active">
             <a class="white-text nav-link" href="/">
               {{i18n "layout.home"}}
             </a>
           </li>
-            {{#if @user}}
-          <li class="nav-item">
-            <a class="white-text nav-link" href="/map">
-              {{i18n "layout.map"}}
-            </a>
-          </li>
-            {{#if @user.isAdmin}}
-          <li class="nav-item">
-            <a class="white-text nav-link" href="/admin">
-              {{i18n "layout.admin"}}
-            </a>
-          </li>
-            {{/if}}
-        </ul>
-          <ul class="navbar-nav ml-auto nav-flex-icons">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-user"></i> {{@user.name}} </a>
-                  <div class="dropdown-menu dropdown-menu-right dropdown-cyan" aria-labelledby="navbarDropdownMenuLink-4">
-                      <a class="dropdown-item" href="/logout">Log out</a>
-                        <div class="flag" >
-                          <img alt="English" id="locale-en" src="/lang_en.png" />
-                          <img alt="Nederlands" id="locale-nl"class="flag" src="/lang_nl.png" />
-                        </div>
-                  </div>
+
+          {{#if @user}}
+            <li class="nav-item">
+              <a class="white-text nav-link" href="/map">
+                {{i18n "layout.map"}}
+              </a>
             </li>
-                {{else}}
+
+            {{#if @user.isAdmin}}
+              <li class="nav-item">
+                <a class="white-text nav-link" href="/admin">
+                  {{i18n "layout.admin"}}
+                </a>
+              </li>
+            {{/if}}
+
+        </ul>
+
+        <ul class="navbar-nav ml-auto nav-flex-icons">
+          <li class="nav-item dropdown">
+
+            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-user"></i> {{@user.name}}
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-right dropdown-cyan" aria-labelledby="navbarDropdownMenuLink-4">
+              <a class="dropdown-item" href="/logout">
+                {{i18n "layout.logout"}}
+              </a>
+
+              <div class="flag">
+                <img alt="English" id="locale-en" src="/lang_en.png" />
+                <img alt="Nederlands" id="locale-nl" src="/lang_nl.png" />
+              </div>
+            </div>
+          </li>
+          {{else}}
             <li class="nav-item">
               <a class="white-text nav-link" href="/login">
                 {{i18n "layout.login"}}
               </a>
             </li>
-              {{/if}}
-          </ul>
+          {{/if}}
+        </ul>
       </div>
     </nav>
   </header>
