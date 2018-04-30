@@ -1,4 +1,4 @@
-/* global ol */
+/* global google, ol */
 $(document).ready(() => {
   /* Layers */
   const googleLayer = new ol.layer.Tile({
@@ -99,5 +99,26 @@ $(document).ready(() => {
     $('#mapboxLayer').prop('checked', false);
     $('#mapboxLayer').prop('disabled', true);
     mapboxLayer.setVisible(false);
+  });
+
+  const geocoder = new google.maps.Geocoder();
+
+  $('#goTo').click(() => {
+    const address = document.getElementById('address').value;
+
+    geocoder.geocode({ address }, (results, status) => {
+      if (status === 'OK') {
+        const geocodeLat = results[0].geometry.location.lat();
+        const geocodeLng = results[0].geometry.location.lng();
+        const convertedLocation = ol.proj.fromLonLat([geocodeLng, geocodeLat]);
+
+        view.animate({
+          center: convertedLocation,
+          duration: 500,
+        });
+      } else {
+        alert(`Geocode was not successful for the following reason: ${status}`);
+      }
+    });
   });
 });

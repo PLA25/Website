@@ -6,10 +6,10 @@
     Options
   </div>
   <div class="card-body">
-    <label for="form1">Go To:</label>
     <div class="md-form" style="margin-top: 0px;">
       <i class="fa fa-globe prefix"></i>
-      <input type="text" id="form1" class="form-control" placeholder="Amsterdam">
+      <input id="address" type="text" placeholder="Search location" class="form-control">
+      <input id="goTo" type="button" value="Go to" />
     </div>
     <hr>
 
@@ -41,7 +41,6 @@
       <label class="custom-control-label" for="sensorhubLayer">SensorHubs</label>
     </div>
     <hr>
-
   </div>
 </div>
 
@@ -59,5 +58,6 @@
 </div>
 
 <!-- Scripts -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxgkazSz27Oj0EwF4ihxIefC6_eaF79wk&callback=initMap" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.5/ol.js" integrity="sha256-77IKwU93jwIX7zmgEBfYGHcmeO0Fx2MoWB/ooh9QkBA=" crossorigin="anonymous"></script>
 <script src="/js/map.js" crossorigin="anonymous"></script>
