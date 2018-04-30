@@ -91,6 +91,29 @@ function degreesToColor(degrees) {
 }
 
 /**
+ * Subtracts a given number of days from a Date.
+ *
+ * @function
+ * @param {Date} date - Date object to subtract from.
+ * @param {Number} numberOfDays - Number of days to subtract.
+ * @returns {Date} - Red, Green and Blue
+ */
+function subtractDays(date, numberOfDays) {
+  if (!(date instanceof Date)) {
+    throw new Error('Expected \'date\' to be an instance of Date!');
+  }
+
+  if (typeof numberOfDays !== 'number') {
+    throw new Error('Expected \'numberOfDays\' to be a number!');
+  }
+
+  const unixDays = numberOfDays * (24 * 60 * 60 * 1000);
+  const unixDate = date.getTime();
+
+  return new Date(unixDate - unixDays);
+}
+
+/**
  * Converts temperature, in °C, to a color (RGB).
  *
  * @function
@@ -172,6 +195,7 @@ function tileToLong(x, z) {
 module.exports = {
   calculateDegrees,
   degreesToColor,
+  subtractDays,
   temperatureToColor,
   temperatureToDegrees,
   tileToLat,
