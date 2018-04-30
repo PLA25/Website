@@ -57,6 +57,10 @@ footer {
 	width: 48px;
 }
 
+.nav-right {
+	margin-right: 0;
+}
+
 .card .logo {
 	margin-left: auto;
 	margin-right: auto;
