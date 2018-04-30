@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Module: helpers/image</title>
+	<title>JSDoc: Module: helpers/database</title>
 	<script src="scripts/prettify/prettify.js">
 
 
@@ -21,7 +21,7 @@
 
 <body>
 	<div id="main">
-		<h1 class="page-title">Module: helpers/image</h1>
+		<h1 class="page-title">Module: helpers/database</h1>
 		<section>
 			<header>
 			</header>
@@ -29,9 +29,9 @@
 				<div class="container-overview">
 				</div>
 				<h3 class="subsection-title">Methods</h3>
-				<h4 class="name" id="~downloadImage"><span class="type-signature">(inner) </span>downloadImage<span class="signature">(imageURL, localPath)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+				<h4 class="name" id="~getAllData"><span class="type-signature">(inner) </span>getAllData<span class="signature">(serialID, numberOfDays)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
 				<div class="description">
-					Downloads an image from the given URL and saves it to the specified location.
+					Retrieves all data for a specified SensorHub between today and the given number of days back.
 				</div>
 				<h5>Parameters:</h5>
 				<table class="params">
@@ -44,18 +44,18 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td class="name"><code>imageURL</code></td>
+							<td class="name"><code>serialID</code></td>
 							<td class="type">
 								<span class="param-type">String</span>
 							</td>
-							<td class="description last">URL of the image to download.</td>
+							<td class="description last">SerialID of the SensorHub to look up.</td>
 						</tr>
 						<tr>
-							<td class="name"><code>localPath</code></td>
+							<td class="name"><code>numberOfDays</code></td>
 							<td class="type">
-								<span class="param-type">String</span>
+								<span class="param-type">Number</span>
 							</td>
-							<td class="description last">Absolute path of the location to save to.</td>
+							<td class="description last">How far back to look up data.</td>
 						</tr>
 					</tbody>
 				</table>
@@ -64,14 +64,14 @@
 					<dd class="tag-source">
 						<ul class="dummy">
 							<li>
-								<a href="helpers_image.js.html">helpers/image.js</a>, <a href="helpers_image.js.html#line19">line 19</a>
+								<a href="helpers_database.js.html">helpers/database.js</a>, <a href="helpers_database.js.html#line23">line 23</a>
 							</li>
 						</ul>
 					</dd>
 				</dl>
 				<h5>Returns:</h5>
 				<div class="param-desc">
-					Promise object represents the path of the saved image.
+					Promise object represents the SensorHub and an array containing all data.
 				</div>
 				<dl>
 					<dt>
