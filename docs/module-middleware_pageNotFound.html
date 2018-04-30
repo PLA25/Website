@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Source: models/sensorhub.js</title>
+	<title>JSDoc: Module: middleware/pageNotFound</title>
 	<script src="scripts/prettify/prettify.js">
 
 
@@ -21,36 +21,65 @@
 
 <body>
 	<div id="main">
-		<h1 class="page-title">Source: models/sensorhub.js</h1>
+		<h1 class="page-title">Module: middleware/pageNotFound</h1>
 		<section>
+			<header>
+			</header>
 			<article>
-				<pre class="prettyprint source linenums"><code>/* Packages */
-const mongoose = require('mongoose');
-
-const schema = new mongoose.Schema({
-  SerialID: {
-    type: String,
-    required: true,
-  },
-  Latitude: {
-    type: String,
-    required: true,
-  },
-  Longitude: {
-    type: String,
-    required: true,
-  },
-});
-
-/**
- * Class representing a SensorHub.
- * @class
- */
-class SensorHub {}
-
-schema.loadClass(SensorHub);
-module.exports = mongoose.model('SensorHub', schema);
-</code></pre>
+				<div class="container-overview">
+					<div class="description">Is called upon if a page could not be found; Renders the error 404 page.</div>
+					<h5>Parameters:</h5>
+					<table class="params">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Type</th>
+								<th class="last">Description</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="name"><code>req</code></td>
+								<td class="type">
+									<span class="param-type">Object</span>
+								</td>
+								<td class="description last">Express request object</td>
+							</tr>
+							<tr>
+								<td class="name"><code>res</code></td>
+								<td class="type">
+									<span class="param-type">Object</span>
+								</td>
+								<td class="description last">Express response object</td>
+							</tr>
+						</tbody>
+					</table>
+					<dl class="details">
+						<dt class="tag-source">Source:</dt>
+						<dd class="tag-source">
+							<ul class="dummy">
+								<li>
+									<a href="middlewares_pageNotFound.js.html">middlewares/pageNotFound.js</a>, <a href="middlewares_pageNotFound.js.html#line1">line 1</a>
+								</li>
+							</ul>
+						</dd>
+						<dt class="tag-see">See:</dt>
+						<dd class="tag-see">
+							<ul>
+								<li><a href="module-middleware.html">module:middleware</a></li>
+							</ul>
+						</dd>
+					</dl>
+					<h5>Returns:</h5>
+					<dl>
+						<dt>
+        Type
+    </dt>
+						<dd>
+							<span class="param-type">undefined</span>
+						</dd>
+					</dl>
+				</div>
 			</article>
 		</section>
 	</div>

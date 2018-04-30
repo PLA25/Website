@@ -31,5 +31,9 @@
     "your-email": "Your email",
     "your-password": "Your password",
     "login": "Login"
+  },
+  "sensor": {
+    "temperature": "Temperature",
+    "timestamp": "Timestamp"
   }
 }
