@@ -19,6 +19,11 @@ const {
   isNotLoggedIn,
 } = require('./../middlewares');
 
+/* Helpers */
+const {
+  getSensorhubData,
+} = require('./../helpers/sensorhub');
+
 /**
  * Renders the index page.
  *
@@ -27,6 +32,25 @@ const {
  */
 router.get('/', isLoggedIn, (req, res) => {
   res.render('index');
+});
+
+/**
+ * Renders a specific sensorhub page.
+ *
+ * @name Sensorhub
+ * @path {GET} /sensorhub/:SerialID
+ */
+router.get('/sensorhub/:SerialID', isLoggedIn, (req, res, next) => {
+  getSensorhubData(req.params.SerialID, 1)
+    .then(([sensorHub, sensorHubData]) => {
+      res.render('sensorhub', {
+        sensorHub,
+        sensorHubData,
+      });
+    })
+    .catch((err) => {
+      next(err);
+    });
 });
 
 /**
