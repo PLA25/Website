@@ -1,5 +1,7 @@
 /* global google, ol */
 $(document).ready(() => {
+  $('#goToError').hide();
+
   /* Layers */
   const googleLayer = new ol.layer.Tile({
     source: new ol.source.XYZ({
@@ -115,18 +117,44 @@ $(document).ready(() => {
   $('#goTo').click(() => {
     const address = document.getElementById('address').value;
 
-    geocoder.geocode({ address }, (results, status) => {
-      if (status === 'OK') {
-        const geocodeLat = results[0].geometry.location.lat();
-        const geocodeLng = results[0].geometry.location.lng();
-        const convertedLocation = ol.proj.fromLonLat([geocodeLng, geocodeLat]);
+    geocoder.geocode({
+      address,
+      componentRestrictions: { country: 'NL' },
+    }, (results, status) => {
+      switch (status) {
+        case 'OK': {
+          $('#goToError').hide();
 
-        view.animate({
-          center: convertedLocation,
-          duration: 500,
-        });
-      } else {
-        alert(`Geocode was not successful for the following reason: ${status}`);
+          const geocodeLat = results[0].geometry.location.lat();
+          const geocodeLng = results[0].geometry.location.lng();
+          const convertedLocation = ol.proj.fromLonLat([geocodeLng, geocodeLat]);
+
+          view.animate({
+            center: convertedLocation,
+            duration: 500,
+          });
+
+          break;
+        }
+
+        case 'ZERO_RESULTS': {
+          $('#goToError').text('There is no result matching your query.');
+          $('#goToError').show();
+
+          break;
+        }
+
+        case 'OVER_QUERY_LIMIT': {
+          $('#goToError').text('You are trying to search too much.');
+          $('#goToError').show();
+
+          break;
+        }
+
+        default: {
+          $('#goToError').text(`Geocode was not successful for the following reason: ${status}`);
+          $('#goToError').show();
+        }
       }
     });
   });
