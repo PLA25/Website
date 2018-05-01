@@ -102,10 +102,10 @@ $(document).ready(() => {
   });
 
   function addressAutocomplete() {
-    var input = document.getElementById('address');
-    var autocomplete = new google.maps.places.Autocomplete(input);
+    const input = document.getElementById('address');
+    const autocomplete = new google.maps.places.Autocomplete(input);
 
-    autocomplete.setComponentRestrictions({'country': ['nl']});
+    autocomplete.setComponentRestrictions({ country: ['nl'] });
   }
 
   google.maps.event.addDomListener(window, 'load', addressAutocomplete);
