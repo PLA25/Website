@@ -101,6 +101,15 @@ $(document).ready(() => {
     mapboxLayer.setVisible(false);
   });
 
+  function addressAutocomplete() {
+    var input = document.getElementById('address');
+    var autocomplete = new google.maps.places.Autocomplete(input);
+
+    autocomplete.setComponentRestrictions({'country': ['nl']});
+  }
+
+  google.maps.event.addDomListener(window, 'load', addressAutocomplete);
+
   const geocoder = new google.maps.Geocoder();
 
   $('#goTo').click(() => {
