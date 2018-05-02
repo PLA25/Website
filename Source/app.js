@@ -67,9 +67,9 @@ app.use(session({
   rolling: true,
   resave: true,
   saveUninitialized: true,
-  /* Stores the session as a cookie for 5 minutes. */
+  /* Stores the session as a cookie for 120 minutes. */
   cookie: {
-    maxAge: (5 * 60 * 1000),
+    maxAge: (120 * 60 * 1000),
   },
 }));
 app.use(passport.initialize());
