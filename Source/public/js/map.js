@@ -1,5 +1,7 @@
-/* global ol */
+/* global google, ol */
 $(document).ready(() => {
+  $('#goToError').hide();
+
   /* Layers */
   const googleLayer = new ol.layer.Tile({
     source: new ol.source.XYZ({
@@ -99,5 +101,69 @@ $(document).ready(() => {
     $('#mapboxLayer').prop('checked', false);
     $('#mapboxLayer').prop('disabled', true);
     mapboxLayer.setVisible(false);
+  });
+
+  function addressAutocomplete() {
+    const input = document.getElementById('address');
+    const autocomplete = new google.maps.places.Autocomplete(input);
+
+    autocomplete.setComponentRestrictions({
+      country: ['nl'],
+    });
+  }
+
+  google.maps.event.addDomListener(window, 'load', addressAutocomplete);
+
+  const geocoder = new google.maps.Geocoder();
+
+  $('#address').on('change blur', () => {
+    const address = document.getElementById('address').value;
+
+    geocoder.geocode({
+      address,
+      componentRestrictions: {
+        country: 'NL',
+      },
+    }, (results, status) => {
+      switch (status) {
+        case 'OK':
+        {
+          $('#goToError').hide();
+
+          const geocodeLat = results[0].geometry.location.lat();
+          const geocodeLng = results[0].geometry.location.lng();
+          const convertedLocation = ol.proj.fromLonLat([geocodeLng, geocodeLat]);
+
+          view.animate({
+            center: convertedLocation,
+            duration: 500,
+          });
+
+          break;
+        }
+
+        case 'ZERO_RESULTS':
+        {
+          $('#goToError').text('There is no result matching your query.');
+          $('#goToError').show();
+
+          break;
+        }
+
+        case 'OVER_QUERY_LIMIT':
+        {
+          $('#goToError').text('You are trying to search too much.');
+          $('#goToError').show();
+
+          break;
+        }
+
+        default:
+        {
+          $('#goToError').text(`Geocode was not successful for the following reason: ${status}`);
+          $('#goToError').show();
+        }
+      }
+    });
   });
 });
