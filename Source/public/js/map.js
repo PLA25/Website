@@ -107,22 +107,27 @@ $(document).ready(() => {
     const input = document.getElementById('address');
     const autocomplete = new google.maps.places.Autocomplete(input);
 
-    autocomplete.setComponentRestrictions({ country: ['nl'] });
+    autocomplete.setComponentRestrictions({
+      country: ['nl'],
+    });
   }
 
   google.maps.event.addDomListener(window, 'load', addressAutocomplete);
 
   const geocoder = new google.maps.Geocoder();
 
-  $('#goTo').click(() => {
+  $('#address').on('change blur', () => {
     const address = document.getElementById('address').value;
 
     geocoder.geocode({
       address,
-      componentRestrictions: { country: 'NL' },
+      componentRestrictions: {
+        country: 'NL',
+      },
     }, (results, status) => {
       switch (status) {
-        case 'OK': {
+        case 'OK':
+        {
           $('#goToError').hide();
 
           const geocodeLat = results[0].geometry.location.lat();
@@ -137,21 +142,24 @@ $(document).ready(() => {
           break;
         }
 
-        case 'ZERO_RESULTS': {
+        case 'ZERO_RESULTS':
+        {
           $('#goToError').text('There is no result matching your query.');
           $('#goToError').show();
 
           break;
         }
 
-        case 'OVER_QUERY_LIMIT': {
+        case 'OVER_QUERY_LIMIT':
+        {
           $('#goToError').text('You are trying to search too much.');
           $('#goToError').show();
 
           break;
         }
 
-        default: {
+        default:
+        {
           $('#goToError').text(`Geocode was not successful for the following reason: ${status}`);
           $('#goToError').show();
         }
