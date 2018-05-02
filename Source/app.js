@@ -45,7 +45,8 @@ app.set('view engine', 'hbs');
 app.use(favicon(path.join(__dirname, 'public', 'logo.png')));
 
 if (process.env.NODE_ENV !== 'testing') {
-  app.use(logger('dev'));
+  logger.token('worker', () => process.pid);
+  app.use(logger(':worker :method :url :status :response-time ms - :res[content-length]'));
 }
 
 app.use(bodyParser.json());
