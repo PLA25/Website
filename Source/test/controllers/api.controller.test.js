@@ -38,7 +38,7 @@ module.exports = () => {
     }
 
     done();
-  });
+  }).timeout(5000);
 
   describe('GET /:host/:z/:x/:y', () => {
     describe('Not logged in', () => {
