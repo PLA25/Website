@@ -83,32 +83,12 @@ router.use((req, res, next) => {
   next();
 });
 
-/**
- * Handles Planet and Mapbox tile services,
- * also used for all cached images.
- *
- * @name ZXY
- * @path {GET} /api/:host/:z/:x/:y
- * @params {String} :host is the provider of the tile service.
- * @params {String} :z is the z-coordinate.
- * @params {String} :x is the x-coordinate.
- * @params {String} :y is the y-coordinate.
- */
-router.get('/:host/:z/:x/:y', isLoggedIn, (req, res, next) => {
-  const hosts = ['heatmap', 'mapbox', 'planet'];
-  const {
-    host,
-  } = req.params;
+router.get('/mapbox/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const z = parseInt(req.params.z, 10);
   const x = parseInt(req.params.x, 10);
   const y = parseInt(req.params.y, 10);
 
-  if (!hosts.includes(host)) {
-    res.sendFile(errorImage);
-    return;
-  }
-
-  const hostFolder = path.resolve(cacheFolder, host);
+  const hostFolder = path.resolve(cacheFolder, 'mapbox');
   if (!fs.existsSync(hostFolder)) {
     fs.mkdirSync(hostFolder);
   }
@@ -119,26 +99,56 @@ router.get('/:host/:z/:x/:y', isLoggedIn, (req, res, next) => {
     return;
   }
 
-  let url = '';
-  switch (host) {
-    case 'heatmap':
-      next();
-      return;
-    case 'mapbox':
-      url = `https://a.tiles.mapbox.com/v3/planet.jh0b3oee/${z}/${x}/${y}.png`;
-      break;
-    case 'planet':
-      url = `https://tiles.planet.com/basemaps/v1/planet-tiles/global_monthly_2018_02_mosaic/gmap/${z}/${x}/${y}.png?api_key=${config.Planet.Key}`;
-      break;
+  downloadImage(`https://a.tiles.mapbox.com/v3/planet.jh0b3oee/${z}/${x}/${y}.png`, {
+    host: 'mapbox',
+    name: `${z}_${x}_${y}.png`,
+  })
+    .then((img) => {
+      res.sendFile(img);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
 
-    default:
-      res.sendFile(errorImage);
-      return;
+router.get('/:datetime/planet/:z/:x/:y', isLoggedIn, (req, res, next) => {
+  const z = parseInt(req.params.z, 10);
+  const x = parseInt(req.params.x, 10);
+  const y = parseInt(req.params.y, 10);
+
+  const hostFolder = path.resolve(cacheFolder, 'planet');
+  if (!fs.existsSync(hostFolder)) {
+    fs.mkdirSync(hostFolder);
   }
 
+  const unixTimestamp = parseInt(req.params.datetime, 10);
+  let currentdate = new Date(Math.floor(unixTimestamp / 1000 / 60 / 60 / 24) * 1000 * 60 * 60 * 24);
+  currentdate = currentdate.getTime() - (currentdate.getDate() * 24 * 60 * 60 * 1000);
+  const date = new Date(currentdate);
+  const unix = date.getTime();
+
+  const filePath = path.resolve(hostFolder, `${unix}_${z}_${x}_${y}.png`);
+  if (fs.existsSync(filePath)) {
+    res.sendFile(filePath);
+    return;
+  }
+
+  const today = new Date();
+  const month = today.getMonth(); // Jan = 0, Dec = 11
+  const year = today.getFullYear();
+
+  if (date.getFullYear() > year || date.getMonth() > month) {
+    res.sendFile(errorImage);
+    return;
+  }
+
+  const planetYear = date.getFullYear();
+  const planetMonth = (`0${date.getMonth()}`).slice(-2);
+  const url = `https://tiles.planet.com/basemaps/v1/planet-tiles/global_monthly_${planetYear}_${planetMonth}_mosaic/gmap/${z}/${x}/${y}.png?api_key=${config.Planet.Key}`;
+
   downloadImage(url, {
-    host,
-    name: `${z}_${x}_${y}.png`,
+    host: 'planet',
+    name: `${unix}_${z}_${x}_${y}.png`,
   })
     .then((img) => {
       res.sendFile(img);

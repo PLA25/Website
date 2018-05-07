@@ -22,10 +22,12 @@ $(document).ready(() => {
     }),
   });
 
+  const planetXYZ = new ol.source.XYZ({
+    url: '/api/planet/{z}/{x}/{y}',
+  });
+
   const planetLayer = new ol.layer.Tile({
-    source: new ol.source.XYZ({
-      url: '/api/planet/{z}/{x}/{y}',
-    }),
+    source: planetXYZ,
   });
 
   const sensorhubLayer = new ol.layer.Vector({
@@ -34,6 +36,8 @@ $(document).ready(() => {
       format: new ol.format.KML(),
     }),
   });
+
+  planetXYZ.setUrl(`/api/${new Date().getTime()}/planet/{z}/{x}/{y}`);
 
   const center = ol.proj.transform([4.895168, 52.370216], 'EPSG:4326', 'EPSG:3857');
   const view = new ol.View({
@@ -182,6 +186,8 @@ $(document).ready(() => {
       const offset = ((7 * 24) - value);
       const currentdate = new Date(Math.floor((dateNow - offset)) * 1000 * 60 * 60);
       value = `${currentdate.getDate()}/${currentdate.getMonth() + 1}/${currentdate.getFullYear()} @ ${currentdate.getHours()}`;
+
+      planetXYZ.setUrl(`/api/${currentdate.getTime()}/planet/{z}/{x}/{y}`);
 
       handle.text(value);
     },
