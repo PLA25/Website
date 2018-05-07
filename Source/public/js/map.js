@@ -166,4 +166,24 @@ $(document).ready(() => {
       }
     });
   });
+
+  const handle = $('#custom-handle');
+  $('#slider').slider({
+    min: 0,
+    max: 7 * 24,
+    value: 7 * 24,
+    step: 1,
+    slide(event, ui) {
+      let {
+        value,
+      } = ui;
+
+      const dateNow = new Date().getTime() / 1000 / 60 / 60;
+      const offset = ((7 * 24) - value);
+      const currentdate = new Date(Math.floor((dateNow - offset)) * 1000 * 60 * 60);
+      value = `${currentdate.getDate()}/${currentdate.getMonth() + 1}/${currentdate.getFullYear()} @ ${currentdate.getHours()}`;
+
+      handle.text(value);
+    },
+  });
 });
