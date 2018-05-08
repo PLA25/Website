@@ -7,5 +7,7 @@ parsers:
     enable_partials: yes
 
 coverage:
+  round: nearest
+  precision: 2
   status:
     patch: no
