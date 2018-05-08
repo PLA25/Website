@@ -8,6 +8,6 @@ parsers:
 
 coverage:
   round: nearest
-  precision: 2
+  precision: 0
   status:
     patch: no
