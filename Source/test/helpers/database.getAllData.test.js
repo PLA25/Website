@@ -76,10 +76,6 @@ module.exports = () => {
           data[0].Value.should.equal('20');
 
           done();
-        })
-        .catch((err) => {
-          console.error(err);
-          done();
         });
     });
   });
