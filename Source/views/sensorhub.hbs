@@ -35,9 +35,11 @@
     let myChart = new Chart(ctx, {
     type: 'bar',
     data: {
+      labels: [
       {{#each sensorHubData}}
-      labels: ["{{this.localDate}}"],
-      {{/each}}
+          "{{this.localDate}}",
+        {{/each}}
+      ],
       datasets: [
         {
           label: "Temparature in celsius",
