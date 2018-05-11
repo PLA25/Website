@@ -83,6 +83,16 @@ router.use((req, res, next) => {
   next();
 });
 
+/**
+ * Handles the Mapbox tile services;
+ * also used for caching the tiles.
+ *
+ * @name Mapbox
+ * @path {GET} /api/mapbox/:z/:x/:y
+ * @params {String} :z is the z-coordinate.
+ * @params {String} :x is the x-coordinate.
+ * @params {String} :y is the y-coordinate.
+ */
 router.get('/mapbox/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const z = parseInt(req.params.z, 10);
   const x = parseInt(req.params.x, 10);
@@ -113,6 +123,17 @@ router.get('/mapbox/:z/:x/:y', isLoggedIn, (req, res, next) => {
     });
 });
 
+/**
+ * Handles the Planet tile services;
+ * also used for caching the tiles.
+ *
+ * @name Planet
+ * @path {GET} /api/:datetime/planet/:z/:x/:y
+ * @params {String} :datetime unix-timestamp.
+ * @params {String} :z is the z-coordinate.
+ * @params {String} :x is the x-coordinate.
+ * @params {String} :y is the y-coordinate.
+ */
 router.get('/:datetime/planet/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const z = parseInt(req.params.z, 10);
   const x = parseInt(req.params.x, 10);
@@ -240,7 +261,13 @@ router.get('/sensorhubs', isLoggedIn, (req, res, next) => {
     });
 });
 
-router.get('/:host/:z/:x/:y', isLoggedIn, (req, res) => {
+/**
+ * Sends the errorImage to the user for any unhandled request.
+ *
+ * @name 404
+ * @path {GET} /api/*
+ */
+router.all('*', isLoggedIn, (req, res) => {
   res.status(404);
   res.sendFile(errorImage);
 });
