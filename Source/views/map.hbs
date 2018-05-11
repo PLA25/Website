@@ -1,11 +1,17 @@
 <!-- Style -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol.css" integrity="sha256-rQq4Fxpq3LlPQ8yP11i6Z2lAo82b6ACDgd35CKyNEBw=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha256-rByPlHULObEjJ6XQxW/flG2r+22R5dKiAoef+aXWfik=" crossorigin="anonymous" />
 
 <div class="card z-depth-2 sidebar">
   <div class="card-header info-color lighten-1 white-text">
     Options
   </div>
   <div class="card-body">
+    <label>
+      <b>
+        Go To:
+      </b>
+    </label>
     <div class="md-form" style="margin-top: 0px;">
       <i class="fa fa-globe prefix"></i>
       <input id="address" type="text" placeholder="Search location" class="form-control">
@@ -13,7 +19,11 @@
     </div>
     <hr>
 
-    <label>Map Type:</label>
+    <label>
+      <b>
+        Map Type:
+      </b>
+    </label>
     <div class="btn-group" data-toggle="buttons" style="width: 100%;">
       <label class="btn btn-default active form-check-label" style="width: 50%;">
         <input class="form-check-input" type="radio" id="typeSat" checked autocomplete="off"> Satellite
@@ -25,7 +35,11 @@
     </div>
     <hr>
 
-    <label>Layers:</label>
+    <label>
+      <b>
+        Layers:
+      </b>
+    </label>
     <div class="custom-control custom-checkbox">
       <input type="checkbox" class="custom-control-input" id="mapboxLayer">
       <label class="custom-control-label" for="mapboxLayer">Navigation</label>
@@ -41,6 +55,33 @@
       <label class="custom-control-label" for="sensorhubLayer">SensorHubs</label>
     </div>
     <hr>
+
+    <label>
+      <b>
+        Timeline:
+      </b>
+    </label>
+    <div class="btn-group" style="width: 100%;">
+      <div id="custom-handle" style="width: 50%;">
+        Latest data
+      </div>
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="time-button" style="width: 50%;">
+        2 uur
+      </button>
+
+      <div class="dropdown-menu" id="time-menu">
+        <a class="dropdown-item" href="#" id="time-1">1 uur</a>
+        <a class="dropdown-item" href="#" id="time-2" style="display: none;">2 uur</a>
+        <a class="dropdown-item" href="#" id="time-6">6 uur</a>
+        <a class="dropdown-item" href="#" id="time-12">12 uur</a>
+        <a class="dropdown-item" href="#" id="time-24">24 uur</a>
+      </div>
+    </div>
+
+    <div id="slider" style="margin-top: 15px;">
+      <div class="ui-slider-handle"></div>
+    </div>
+    <hr>
   </div>
 </div>
 
@@ -49,6 +90,7 @@
     Map
   </div>
   <div class="card-body">
+
     <div id="map">
     </div>
     <div class="scale">
@@ -60,4 +102,6 @@
 <!-- Scripts -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxgkazSz27Oj0EwF4ihxIefC6_eaF79wk&libraries=places" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.5/ol.js" integrity="sha256-77IKwU93jwIX7zmgEBfYGHcmeO0Fx2MoWB/ooh9QkBA=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="/js/map.js" crossorigin="anonymous"></script>

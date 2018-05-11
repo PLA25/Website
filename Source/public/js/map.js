@@ -22,10 +22,12 @@ $(document).ready(() => {
     }),
   });
 
+  const planetXYZ = new ol.source.XYZ({
+    url: '/api/planet/{z}/{x}/{y}',
+  });
+
   const planetLayer = new ol.layer.Tile({
-    source: new ol.source.XYZ({
-      url: '/api/planet/{z}/{x}/{y}',
-    }),
+    source: planetXYZ,
   });
 
   const sensorhubLayer = new ol.layer.Vector({
@@ -34,6 +36,8 @@ $(document).ready(() => {
       format: new ol.format.KML(),
     }),
   });
+
+  planetXYZ.setUrl(`/api/${new Date().getTime()}/planet/{z}/{x}/{y}`);
 
   const center = ol.proj.transform([4.895168, 52.370216], 'EPSG:4326', 'EPSG:3857');
   const view = new ol.View({
@@ -165,5 +169,49 @@ $(document).ready(() => {
         }
       }
     });
+  });
+
+  let measurements = 7 * 24;
+  let steps = 2;
+
+  const handle = $('#custom-handle');
+  $('#slider').slider({
+    min: 0,
+    max: measurements,
+    value: measurements,
+    step: steps,
+    slide(event, ui) {
+      let {
+        value,
+      } = ui;
+
+      const dateNow = new Date().getTime() / 1000 / 60 / 60;
+      const offset = ((measurements) - value);
+      const currentdate = new Date(Math.floor((dateNow - offset)) * 1000 * 60 * 60);
+      value = `${currentdate.getDate()}/${currentdate.getMonth() + 1}/${currentdate.getFullYear()} @ ${currentdate.getHours()}`;
+
+      planetXYZ.setUrl(`/api/${currentdate.getTime()}/planet/{z}/{x}/{y}`);
+
+      handle.text(value);
+    },
+  });
+
+  $('.dropdown-item').click((e) => {
+    const $this = $(e.currentTarget);
+
+    $('a', $('#time-menu')).each((i, el) => {
+      $(el).show();
+    });
+
+    $this.hide();
+    $('#time-button').text($this.text());
+
+    const newSteps = parseInt($this.attr('id').split('-')[1], 10);
+    steps = newSteps;
+    $('#slider').slider('option', 'step', newSteps);
+
+    const newMax = 7 * 24 * newSteps;
+    measurements = newMax;
+    $('#slider').slider('option', 'max', newMax);
   });
 });
