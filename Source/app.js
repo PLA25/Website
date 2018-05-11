@@ -45,7 +45,8 @@ app.set('view engine', 'hbs');
 app.use(favicon(path.join(__dirname, 'public', 'logo.png')));
 
 if (process.env.NODE_ENV !== 'testing') {
-  app.use(logger('dev'));
+  logger.token('worker', () => process.pid);
+  app.use(logger(':worker :method :url :status :response-time ms - :res[content-length]'));
 }
 
 app.use(bodyParser.json());
@@ -66,9 +67,9 @@ app.use(session({
   rolling: true,
   resave: true,
   saveUninitialized: true,
-  /* Stores the session as a cookie for 5 minutes. */
+  /* Stores the session as a cookie for 120 minutes. */
   cookie: {
-    maxAge: (5 * 60 * 1000),
+    maxAge: (120 * 60 * 1000),
   },
 }));
 app.use(passport.initialize());
