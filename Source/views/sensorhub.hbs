@@ -1,3 +1,4 @@
+
 <div class="row">
 
   <div class="col-12 col-xl-6">
@@ -24,6 +25,40 @@
       </tbody>
 
     </table>
+    <canvas id="myChart" width="700" height="300"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script>
+  <!-- Start Js -->
+    let ctx = document.querySelector('#myChart').getContext('2d');
+
+    let myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      {{#each sensorHubData}}
+      labels: ["{{this.localDate}}"],
+      {{/each}}
+      datasets: [
+        {
+          label: "Temparature in celsius",
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          data: [
+          {{#each sensorHubData}}
+            {{this.Value}},
+          {{/each}}
+        ]
+        }
+      ]
+    },
+    options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: 'The average temperature'
+      }
+    }
+});
+    </script>
   </div>
 
 </div>
