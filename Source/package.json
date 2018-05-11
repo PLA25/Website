@@ -8,7 +8,7 @@
     "lint": "eslint ./**/*.js",
     "lint-fix": "eslint ./**/*.js --fix",
     "start": "node ./bin/www",
-    "test": "nyc --reporter=html --reporter=text mocha --exit",
+    "test": "nyc --reporter=html --reporter=text mocha --timeout 5000 --exit",
     "coverage-coveralls": "nyc report --reporter=text-lcov | coveralls",
     "coverage-codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "precommit": "npm run lint-fix"

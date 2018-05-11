@@ -95,6 +95,7 @@ router.get('/mapbox/:z/:x/:y', isLoggedIn, (req, res, next) => {
 
   const filePath = path.resolve(hostFolder, `${z}_${x}_${y}.png`);
   if (fs.existsSync(filePath)) {
+    res.status(304);
     res.sendFile(filePath);
     return;
   }
@@ -104,6 +105,7 @@ router.get('/mapbox/:z/:x/:y', isLoggedIn, (req, res, next) => {
     name: `${z}_${x}_${y}.png`,
   })
     .then((img) => {
+      res.status(200);
       res.sendFile(img);
     })
     .catch((err) => {
@@ -129,6 +131,7 @@ router.get('/:datetime/planet/:z/:x/:y', isLoggedIn, (req, res, next) => {
 
   const filePath = path.resolve(hostFolder, `${unix}_${z}_${x}_${y}.png`);
   if (fs.existsSync(filePath)) {
+    res.status(304);
     res.sendFile(filePath);
     return;
   }
@@ -164,6 +167,7 @@ router.get('/:datetime/planet/:z/:x/:y', isLoggedIn, (req, res, next) => {
     name: `${unix}_${z}_${x}_${y}.png`,
   })
     .then((img) => {
+      res.status(200);
       res.sendFile(img);
     })
     .catch((err) => {
@@ -185,7 +189,18 @@ router.get('/heatmap/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const z = parseInt(req.params.z, 10);
   const x = parseInt(req.params.x, 10);
   const y = parseInt(req.params.y, 10);
-  const filePath = path.resolve(cacheFolder, 'heatmap', `${z}_${x}_${y}.png`);
+
+  const hostFolder = path.resolve(cacheFolder, 'heatmap');
+  if (!fs.existsSync(hostFolder)) {
+    fs.mkdirSync(hostFolder);
+  }
+
+  const filePath = path.resolve(hostFolder, `${z}_${x}_${y}.png`);
+  if (fs.existsSync(filePath)) {
+    res.status(304);
+    res.sendFile(filePath);
+    return;
+  }
 
   getCachedData(SensorHub, {})
     .then(allSensorHubs => getCachedData(Data, {}).then(data => [allSensorHubs, data]))
