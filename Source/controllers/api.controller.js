@@ -137,13 +137,25 @@ router.get('/:datetime/planet/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const month = today.getMonth(); // Jan = 0, Dec = 11
   const year = today.getFullYear();
 
-  if (date.getFullYear() > year || date.getMonth() > month) {
+  if (date.getFullYear() > year || (date.getMonth() > month && date.getFullYear === year)) {
     res.sendFile(errorImage);
     return;
   }
 
-  const planetYear = date.getFullYear();
-  const planetMonth = (`0${date.getMonth()}`).slice(-2);
+  let requestedYear = date.getFullYear();
+  let requestedMonth = (date.getMonth() + 2) % 12;
+  requestedMonth = requestedMonth === 0 ? 12 : requestedMonth;
+
+  if (requestedMonth >= month && requestedYear === year) {
+    requestedMonth = month - 1;
+  }
+
+  if (requestedMonth === 1) {
+    requestedYear += 1;
+  }
+
+  const planetYear = requestedYear;
+  const planetMonth = `0${requestedMonth}`.slice(-2);
   const url = `https://tiles.planet.com/basemaps/v1/planet-tiles/global_monthly_${planetYear}_${planetMonth}_mosaic/gmap/${z}/${x}/${y}.png?api_key=${config.Planet.Key}`;
 
   downloadImage(url, {

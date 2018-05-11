@@ -7,6 +7,11 @@
     Options
   </div>
   <div class="card-body">
+    <label>
+      <b>
+        Go To:
+      </b>
+    </label>
     <div class="md-form" style="margin-top: 0px;">
       <i class="fa fa-globe prefix"></i>
       <input id="address" type="text" placeholder="Search location" class="form-control">
@@ -14,7 +19,11 @@
     </div>
     <hr>
 
-    <label>Map Type:</label>
+    <label>
+      <b>
+        Map Type:
+      </b>
+    </label>
     <div class="btn-group" data-toggle="buttons" style="width: 100%;">
       <label class="btn btn-default active form-check-label" style="width: 50%;">
         <input class="form-check-input" type="radio" id="typeSat" checked autocomplete="off"> Satellite
@@ -26,7 +35,11 @@
     </div>
     <hr>
 
-    <label>Layers:</label>
+    <label>
+      <b>
+        Layers:
+      </b>
+    </label>
     <div class="custom-control custom-checkbox">
       <input type="checkbox" class="custom-control-input" id="mapboxLayer">
       <label class="custom-control-label" for="mapboxLayer">Navigation</label>
@@ -43,9 +56,29 @@
     </div>
     <hr>
 
-    <label>Date:</label>
-    <div id="custom-handle">Latest data</div>
-    <div id="slider">
+    <label>
+      <b>
+        Timeline:
+      </b>
+    </label>
+    <div class="btn-group" style="width: 100%;">
+      <div id="custom-handle" style="width: 50%;">
+        Latest data
+      </div>
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="time-button" style="width: 50%;">
+        2 uur
+      </button>
+
+      <div class="dropdown-menu" id="time-menu">
+        <a class="dropdown-item" href="#" id="time-1">1 uur</a>
+        <a class="dropdown-item" href="#" id="time-2" style="display: none;">2 uur</a>
+        <a class="dropdown-item" href="#" id="time-6">6 uur</a>
+        <a class="dropdown-item" href="#" id="time-12">12 uur</a>
+        <a class="dropdown-item" href="#" id="time-24">24 uur</a>
+      </div>
+    </div>
+
+    <div id="slider" style="margin-top: 15px;">
       <div class="ui-slider-handle"></div>
     </div>
     <hr>
@@ -57,6 +90,7 @@
     Map
   </div>
   <div class="card-body">
+
     <div id="map">
     </div>
     <div class="scale">

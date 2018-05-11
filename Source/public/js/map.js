@@ -171,19 +171,22 @@ $(document).ready(() => {
     });
   });
 
+  let measurements = 7 * 24;
+  let steps = 2;
+
   const handle = $('#custom-handle');
   $('#slider').slider({
     min: 0,
-    max: 7 * 24,
-    value: 7 * 24,
-    step: 1,
+    max: measurements,
+    value: measurements,
+    step: steps,
     slide(event, ui) {
       let {
         value,
       } = ui;
 
       const dateNow = new Date().getTime() / 1000 / 60 / 60;
-      const offset = ((7 * 24) - value);
+      const offset = ((measurements) - value);
       const currentdate = new Date(Math.floor((dateNow - offset)) * 1000 * 60 * 60);
       value = `${currentdate.getDate()}/${currentdate.getMonth() + 1}/${currentdate.getFullYear()} @ ${currentdate.getHours()}`;
 
@@ -191,5 +194,24 @@ $(document).ready(() => {
 
       handle.text(value);
     },
+  });
+
+  $('.dropdown-item').click((e) => {
+    const $this = $(e.currentTarget);
+
+    $('a', $('#time-menu')).each((i, el) => {
+      $(el).show();
+    });
+
+    $this.hide();
+    $('#time-button').text($this.text());
+
+    const newSteps = parseInt($this.attr('id').split('-')[1], 10);
+    steps = newSteps;
+    $('#slider').slider('option', 'step', newSteps);
+
+    const newMax = 7 * 24 * newSteps;
+    measurements = newMax;
+    $('#slider').slider('option', 'max', newMax);
   });
 });
