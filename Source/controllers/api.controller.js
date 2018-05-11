@@ -137,7 +137,8 @@ router.get('/:datetime/planet/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const month = today.getMonth(); // Jan = 0, Dec = 11
   const year = today.getFullYear();
 
-  if (date.getFullYear() > year || (date.getMonth() > month && date.getFullYear === year)) {
+  if (date.getFullYear() > year || (date.getMonth() > month && date.getFullYear() === year)) {
+    res.status(500);
     res.sendFile(errorImage);
     return;
   }
@@ -180,7 +181,7 @@ router.get('/:datetime/planet/:z/:x/:y', isLoggedIn, (req, res, next) => {
  * @params {String} :x is the x-coordinate.
  * @params {String} :y is the y-coordinate.
  */
-router.get('/heatmap/:z/:x/:y', (req, res, next) => {
+router.get('/heatmap/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const z = parseInt(req.params.z, 10);
   const x = parseInt(req.params.x, 10);
   const y = parseInt(req.params.y, 10);
@@ -222,6 +223,11 @@ router.get('/sensorhubs', isLoggedIn, (req, res, next) => {
     .catch((err) => {
       next(err);
     });
+});
+
+router.get('/:host/:z/:x/:y', isLoggedIn, (req, res) => {
+  res.status(404);
+  res.sendFile(errorImage);
 });
 
 /* Exports */

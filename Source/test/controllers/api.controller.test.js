@@ -79,17 +79,51 @@ module.exports = () => {
           fs.unlinkSync(imagePath);
         }
 
-        authenticatedAdmin.get('/api/planet/8/132/86')
+        authenticatedAdmin.get('/api/1514764800000/planet/8/132/86')
           .end((err, res) => {
             res.statusCode.should.equal(200);
             done();
           });
       }).timeout(5000);
 
+      it('should return a 500 response for /1533686400000/planet/8/132/86', (done) => {
+        const imagePath = path.resolve(cacheFolder, 'planet', '8_132_86.png');
+        if (fs.existsSync(imagePath)) {
+          fs.unlinkSync(imagePath);
+        }
+
+        authenticatedAdmin.get('/api/1533686400000/planet/8/132/86')
+          .end((err, res) => {
+            res.statusCode.should.equal(500);
+            done();
+          });
+      }).timeout(5000);
+
+      it('should change the month for /1527724800000/planet/8/132/86', (done) => {
+        const imagePath = path.resolve(cacheFolder, 'planet', '8_132_86.png');
+        if (fs.existsSync(imagePath)) {
+          fs.unlinkSync(imagePath);
+        }
+
+        authenticatedAdmin.get('/api/1527724800000/planet/8/132/86')
+          .end((err, res) => {
+            res.statusCode.should.equal(200);
+            done();
+          });
+      }).timeout(5000);
+
+      it('should return a 404 response for any unknown host', (done) => {
+        authenticatedAdmin.get('/api/asdf/1/1/1')
+          .end((err, res) => {
+            res.statusCode.should.equal(404);
+            done();
+          });
+      });
+
       it('should return the errorImage for any unknown host', (done) => {
         authenticatedAdmin.get('/api/asdf/1/1/1')
           .end((err, res) => {
-            res.statusCode.should.equal(200);
+            res.statusCode.should.equal(404);
             done();
           });
       });
@@ -123,17 +157,25 @@ module.exports = () => {
           fs.unlinkSync(imagePath);
         }
 
-        authenticatedUser.get('/api/planet/8/132/86')
+        authenticatedUser.get('/api/1514764800000/planet/8/132/86')
           .end((err, res) => {
             res.statusCode.should.equal(200);
             done();
           });
       }).timeout(5000);
 
+      it('should return a 404 response for any unknown host', (done) => {
+        authenticatedUser.get('/api/asdf/1/1/1')
+          .end((err, res) => {
+            res.statusCode.should.equal(404);
+            done();
+          });
+      });
+
       it('should return the errorImage for any unknown host', (done) => {
         authenticatedUser.get('/api/asdf/1/1/1')
           .end((err, res) => {
-            res.statusCode.should.equal(200);
+            res.statusCode.should.equal(404);
             done();
           });
       });
