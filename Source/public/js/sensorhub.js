@@ -3,7 +3,7 @@ $(document).ready(() => {
     columnDefs: [{
       orderable: false,
       searchable: false,
-      targets: [3, 4, 5],
+      targets: [1, 2],
     }],
   });
 });
