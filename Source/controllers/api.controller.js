@@ -105,7 +105,6 @@ router.get('/mapbox/:z/:x/:y', isLoggedIn, (req, res, next) => {
 
   const filePath = path.resolve(hostFolder, `${z}_${x}_${y}.png`);
   if (fs.existsSync(filePath)) {
-    res.status(304);
     res.sendFile(filePath);
     return;
   }
@@ -115,7 +114,6 @@ router.get('/mapbox/:z/:x/:y', isLoggedIn, (req, res, next) => {
     name: `${z}_${x}_${y}.png`,
   })
     .then((img) => {
-      res.status(200);
       res.sendFile(img);
     })
     .catch((err) => {
@@ -152,7 +150,6 @@ router.get('/:datetime/planet/:z/:x/:y', isLoggedIn, (req, res, next) => {
 
   const filePath = path.resolve(hostFolder, `${unix}_${z}_${x}_${y}.png`);
   if (fs.existsSync(filePath)) {
-    res.status(304);
     res.sendFile(filePath);
     return;
   }
@@ -188,7 +185,6 @@ router.get('/:datetime/planet/:z/:x/:y', isLoggedIn, (req, res, next) => {
     name: `${unix}_${z}_${x}_${y}.png`,
   })
     .then((img) => {
-      res.status(200);
       res.sendFile(img);
     })
     .catch((err) => {
@@ -218,7 +214,6 @@ router.get('/heatmap/:z/:x/:y', isLoggedIn, (req, res, next) => {
 
   const filePath = path.resolve(hostFolder, `${z}_${x}_${y}.png`);
   if (fs.existsSync(filePath)) {
-    res.status(304);
     res.sendFile(filePath);
     return;
   }
