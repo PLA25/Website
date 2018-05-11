@@ -84,31 +84,21 @@ router.use((req, res, next) => {
 });
 
 /**
- * Handles Planet and Mapbox tile services,
- * also used for all cached images.
+ * Handles the Mapbox tile services;
+ * also used for caching the tiles.
  *
- * @name ZXY
- * @path {GET} /api/:host/:z/:x/:y
- * @params {String} :host is the provider of the tile service.
+ * @name Mapbox
+ * @path {GET} /api/mapbox/:z/:x/:y
  * @params {String} :z is the z-coordinate.
  * @params {String} :x is the x-coordinate.
  * @params {String} :y is the y-coordinate.
  */
-router.get('/:host/:z/:x/:y', isLoggedIn, (req, res, next) => {
-  const hosts = ['heatmap', 'mapbox', 'planet'];
-  const {
-    host,
-  } = req.params;
+router.get('/mapbox/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const z = parseInt(req.params.z, 10);
   const x = parseInt(req.params.x, 10);
   const y = parseInt(req.params.y, 10);
 
-  if (!hosts.includes(host)) {
-    res.sendFile(errorImage);
-    return;
-  }
-
-  const hostFolder = path.resolve(cacheFolder, host);
+  const hostFolder = path.resolve(cacheFolder, 'mapbox');
   if (!fs.existsSync(hostFolder)) {
     fs.mkdirSync(hostFolder);
   }
@@ -119,26 +109,80 @@ router.get('/:host/:z/:x/:y', isLoggedIn, (req, res, next) => {
     return;
   }
 
-  let url = '';
-  switch (host) {
-    case 'heatmap':
-      next();
-      return;
-    case 'mapbox':
-      url = `https://a.tiles.mapbox.com/v3/planet.jh0b3oee/${z}/${x}/${y}.png`;
-      break;
-    case 'planet':
-      url = `https://tiles.planet.com/basemaps/v1/planet-tiles/global_monthly_2018_02_mosaic/gmap/${z}/${x}/${y}.png?api_key=${config.Planet.Key}`;
-      break;
+  downloadImage(`https://a.tiles.mapbox.com/v3/planet.jh0b3oee/${z}/${x}/${y}.png`, {
+    host: 'mapbox',
+    name: `${z}_${x}_${y}.png`,
+  })
+    .then((img) => {
+      res.sendFile(img);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
 
-    default:
-      res.sendFile(errorImage);
-      return;
+/**
+ * Handles the Planet tile services;
+ * also used for caching the tiles.
+ *
+ * @name Planet
+ * @path {GET} /api/:datetime/planet/:z/:x/:y
+ * @params {String} :datetime unix-timestamp.
+ * @params {String} :z is the z-coordinate.
+ * @params {String} :x is the x-coordinate.
+ * @params {String} :y is the y-coordinate.
+ */
+router.get('/:datetime/planet/:z/:x/:y', isLoggedIn, (req, res, next) => {
+  const z = parseInt(req.params.z, 10);
+  const x = parseInt(req.params.x, 10);
+  const y = parseInt(req.params.y, 10);
+
+  const hostFolder = path.resolve(cacheFolder, 'planet');
+  if (!fs.existsSync(hostFolder)) {
+    fs.mkdirSync(hostFolder);
   }
 
+  const unixTimestamp = parseInt(req.params.datetime, 10);
+  let currentdate = new Date(Math.floor(unixTimestamp / 1000 / 60 / 60 / 24) * 1000 * 60 * 60 * 24);
+  currentdate = currentdate.getTime() - (currentdate.getDate() * 24 * 60 * 60 * 1000);
+  const date = new Date(currentdate);
+  const unix = date.getTime();
+
+  const filePath = path.resolve(hostFolder, `${unix}_${z}_${x}_${y}.png`);
+  if (fs.existsSync(filePath)) {
+    res.sendFile(filePath);
+    return;
+  }
+
+  const today = new Date();
+  const month = today.getMonth(); // Jan = 0, Dec = 11
+  const year = today.getFullYear();
+
+  if (date.getFullYear() > year || (date.getMonth() > month && date.getFullYear() === year)) {
+    res.status(500);
+    res.sendFile(errorImage);
+    return;
+  }
+
+  let requestedYear = date.getFullYear();
+  let requestedMonth = (date.getMonth() + 2) % 12;
+  requestedMonth = requestedMonth === 0 ? 12 : requestedMonth;
+
+  if (requestedMonth >= month && requestedYear === year) {
+    requestedMonth = month - 1;
+  }
+
+  if (requestedMonth === 1) {
+    requestedYear += 1;
+  }
+
+  const planetYear = requestedYear;
+  const planetMonth = `0${requestedMonth}`.slice(-2);
+  const url = `https://tiles.planet.com/basemaps/v1/planet-tiles/global_monthly_${planetYear}_${planetMonth}_mosaic/gmap/${z}/${x}/${y}.png?api_key=${config.Planet.Key}`;
+
   downloadImage(url, {
-    host,
-    name: `${z}_${x}_${y}.png`,
+    host: 'planet',
+    name: `${unix}_${z}_${x}_${y}.png`,
   })
     .then((img) => {
       res.sendFile(img);
@@ -158,11 +202,21 @@ router.get('/:host/:z/:x/:y', isLoggedIn, (req, res, next) => {
  * @params {String} :x is the x-coordinate.
  * @params {String} :y is the y-coordinate.
  */
-router.get('/heatmap/:z/:x/:y', (req, res, next) => {
+router.get('/heatmap/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const z = parseInt(req.params.z, 10);
   const x = parseInt(req.params.x, 10);
   const y = parseInt(req.params.y, 10);
-  const filePath = path.resolve(cacheFolder, 'heatmap', `${z}_${x}_${y}.png`);
+
+  const hostFolder = path.resolve(cacheFolder, 'heatmap');
+  if (!fs.existsSync(hostFolder)) {
+    fs.mkdirSync(hostFolder);
+  }
+
+  const filePath = path.resolve(hostFolder, `${z}_${x}_${y}.png`);
+  if (fs.existsSync(filePath)) {
+    res.sendFile(filePath);
+    return;
+  }
 
   getCachedData(SensorHub, {})
     .then(allSensorHubs => getCachedData(Data, {}).then(data => [allSensorHubs, data]))
@@ -200,6 +254,17 @@ router.get('/sensorhubs', isLoggedIn, (req, res, next) => {
     .catch((err) => {
       next(err);
     });
+});
+
+/**
+ * Sends the errorImage to the user for any unhandled request.
+ *
+ * @name 404
+ * @path {GET} /api/*
+ */
+router.all('*', isLoggedIn, (req, res) => {
+  res.status(404);
+  res.sendFile(errorImage);
 });
 
 /* Exports */

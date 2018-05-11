@@ -8,7 +8,7 @@
     "lint": "eslint ./**/*.js",
     "lint-fix": "eslint ./**/*.js --fix",
     "start": "node ./bin/www",
-    "test": "nyc --reporter=html --reporter=text mocha --exit",
+    "test": "nyc --reporter=html --reporter=text mocha --timeout 5000 --exit",
     "coverage-coveralls": "nyc report --reporter=text-lcov | coveralls",
     "coverage-codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "precommit": "npm run lint-fix"
@@ -31,7 +31,8 @@
     "passport": "0.4.0",
     "passport-local": "1.0.0",
     "request": "2.85.0",
-    "serve-favicon": "2.5.0"
+    "serve-favicon": "2.5.0",
+    "superagent": "3.8.3"
   },
   "devDependencies": {
     "chai": "4.1.2",
