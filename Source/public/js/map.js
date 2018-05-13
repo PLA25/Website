@@ -10,10 +10,12 @@ $(document).ready(() => {
   });
   googleLayer.setVisible(false);
 
+  const heatmapXYZ = new ol.source.XYZ({
+    url: `/api/heatmap/${new Date().getTime()}/{z}/{x}/{y}`,
+  });
+
   const heatmapLayer = new ol.layer.Tile({
-    source: new ol.source.XYZ({
-      url: '/api/heatmap/{z}/{x}/{y}',
-    }),
+    source: heatmapXYZ,
   });
 
   const mapboxLayer = new ol.layer.Tile({
@@ -191,6 +193,7 @@ $(document).ready(() => {
       value = `${currentdate.getDate()}/${currentdate.getMonth() + 1}/${currentdate.getFullYear()} @ ${currentdate.getHours()}`;
 
       planetXYZ.setUrl(`/api/${currentdate.getTime()}/planet/{z}/{x}/{y}`);
+      heatmapXYZ.setUrl(`/api/heatmap/${currentdate.getTime()}/{z}/{x}/{y}`);
 
       handle.text(value);
     },
