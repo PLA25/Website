@@ -11,7 +11,7 @@ $(document).ready(() => {
   googleLayer.setVisible(false);
 
   const heatmapXYZ = new ol.source.XYZ({
-    url: '/api/heatmap/{z}/{x}/{y}',
+    url: `/api/heatmap/${new Date().getTime()}/{z}/{x}/{y}`,
   });
 
   const heatmapLayer = new ol.layer.Tile({
@@ -40,8 +40,6 @@ $(document).ready(() => {
   });
 
   planetXYZ.setUrl(`/api/${new Date().getTime()}/planet/{z}/{x}/{y}`);
-
-  heatmapXYZ.setUrl(`/api/${new Date().getTime()}/heatmap/{z}/{x}/{y}`);
 
   const center = ol.proj.transform([4.895168, 52.370216], 'EPSG:4326', 'EPSG:3857');
   const view = new ol.View({
@@ -195,6 +193,7 @@ $(document).ready(() => {
       value = `${currentdate.getDate()}/${currentdate.getMonth() + 1}/${currentdate.getFullYear()} @ ${currentdate.getHours()}`;
 
       planetXYZ.setUrl(`/api/${currentdate.getTime()}/planet/{z}/{x}/{y}`);
+      heatmapXYZ.setUrl(`/api/heatmap/${currentdate.getTime()}/{z}/{x}/{y}`);
 
       handle.text(value);
     },
