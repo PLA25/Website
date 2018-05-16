@@ -35,6 +35,7 @@ const cacheFolder = path.resolve(`${__dirname}./../../cache`);
  * 1512086400000 = 12/01/2017 @ 12:00am (UTC)
  * 1514764800000 = 01/01/2018 @ 12:00am (UTC)
  * 1525132800000 = 05/01/2018 @ 12:00am (UTC)
+ * 1526256000000 = 05/14/2018 @ 12:00am (UTC)
  * 1546300800000 = 01/01/2019 @ 12:00am (UTC)
  */
 
@@ -72,10 +73,10 @@ module.exports = () => {
     });
   });
 
-  describe('GET /heatmap/:z/:x/:y', () => {
+  describe('GET /heatmap/:dateTime/:z/:x/:y', () => {
     describe('Not logged in', () => {
       it('should redirect to /login', (done) => {
-        request(app).get('/api/heatmap/8/132/86')
+        request(app).get('/api/heatmap/1526256000000/8/132/86')
           .end((err, res) => {
             res.headers.location.should.equal('/login');
             done();
@@ -83,7 +84,7 @@ module.exports = () => {
       });
 
       it('should return a 302 response', (done) => {
-        request(app).get('/api/heatmap/8/132/86')
+        request(app).get('/api/heatmap/1526256000000/8/132/86')
           .end((err, res) => {
             res.statusCode.should.equal(302);
             done();
@@ -95,25 +96,25 @@ module.exports = () => {
       it('should create any missing folder(s)', (done) => {
         deleteFolderRecursive(path.resolve(cacheFolder, 'heatmap'));
 
-        authenticatedAdmin.get('/api/heatmap/8/132/86')
+        authenticatedAdmin.get('/api/heatmap/1526256000000/8/132/86')
           .end((err, res) => {
             res.statusCode.should.equal(200);
             done();
           });
       });
 
-      it('should return a 200 response for /api/heatmap/8/132/86', (done) => {
+      it('should return a 200 response for /api/heatmap/1526256000000/8/132/86', (done) => {
         deleteFolderRecursive(path.resolve(cacheFolder, 'heatmap'));
 
-        authenticatedAdmin.get('/api/heatmap/8/132/86')
+        authenticatedAdmin.get('/api/heatmap/1526256000000/8/132/86')
           .end((err, res) => {
             res.statusCode.should.equal(200);
             done();
           });
       });
 
-      it('should return cached copy of /api/heatmap/8/132/86', (done) => {
-        authenticatedAdmin.get('/api/heatmap/8/132/86')
+      it('should return cached copy of /api/heatmap/1526256000000/8/132/86', (done) => {
+        authenticatedAdmin.get('/api/heatmap/1526256000000/8/132/86')
           .end((err, res) => {
             // TODO: res.statusCode.should.equal(304);
             res.statusCode.should.equal(200);
@@ -126,25 +127,25 @@ module.exports = () => {
       it('should create any missing folder(s)', (done) => {
         deleteFolderRecursive(path.resolve(cacheFolder, 'heatmap'));
 
-        authenticatedUser.get('/api/heatmap/8/132/86')
+        authenticatedUser.get('/api/heatmap/1526256000000/8/132/86')
           .end((err, res) => {
             res.statusCode.should.equal(200);
             done();
           });
       });
 
-      it('should return a 200 response for /api/heatmap/8/132/86', (done) => {
+      it('should return a 200 response for /api/heatmap/1526256000000/8/132/86', (done) => {
         deleteFolderRecursive(path.resolve(cacheFolder, 'heatmap'));
 
-        authenticatedUser.get('/api/heatmap/8/132/86')
+        authenticatedUser.get('/api/heatmap/1526256000000/8/132/86')
           .end((err, res) => {
             res.statusCode.should.equal(200);
             done();
           });
       });
 
-      it('should return a cached copy of /api/heatmap/8/132/86', (done) => {
-        authenticatedUser.get('/api/heatmap/8/132/86')
+      it('should return a cached copy of /api/heatmap/1526256000000/8/132/86', (done) => {
+        authenticatedUser.get('/api/heatmap/1526256000000/8/132/86')
           .end((err, res) => {
             // TODO: res.statusCode.should.equal(304);
             res.statusCode.should.equal(200);
