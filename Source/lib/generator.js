@@ -77,21 +77,21 @@ function generateImage(params, allSensorHubs, data) {
   const lat = (lat2 - lat1) / 2;
   const lon = (lon1 - lon2) / 2;
 
-  const links = lon1 - lon;
-  const boven = lat1 - lat;
-  const rechts = lon1 + lon;
-  const onder = lat1 + lat;
+  const left = lon1 - lon;
+  const up = lat1 - lat;
+  const right = lon1 + lon;
+  const down = lat1 + lat;
 
-  const xMulti = (rechts - links) / 256;
-  const yMulti = (boven - onder) / 256;
+  const xMulti = (right - left) / 256;
+  const yMulti = (up - down) / 256;
 
   const image = new Jimp(256, 256, 0x0);
 
   const incr = Math.min(getIncrement(params.z), 8);
   for (let x = 0; x < image.bitmap.width; x += incr) {
     for (let y = 0; y < image.bitmap.height; y += incr) {
-      const latitude = onder + (yMulti * y);
-      const longitude = links + (xMulti * x);
+      const latitude = down + (yMulti * y);
+      const longitude = left + (xMulti * x);
 
       const color = getColorFromLatLong(latitude, longitude, allSensorHubs, data);
 

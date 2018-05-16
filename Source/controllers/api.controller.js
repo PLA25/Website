@@ -126,13 +126,13 @@ router.get('/mapbox/:z/:x/:y', isLoggedIn, (req, res, next) => {
  * also used for caching the tiles.
  *
  * @name Planet
- * @path {GET} /api/:datetime/planet/:z/:x/:y
+ * @path {GET} /api/planet/:datetime/:z/:x/:y
  * @params {String} :datetime unix-timestamp.
  * @params {String} :z is the z-coordinate.
  * @params {String} :x is the x-coordinate.
  * @params {String} :y is the y-coordinate.
  */
-router.get('/:datetime/planet/:z/:x/:y', isLoggedIn, (req, res, next) => {
+router.get('/planet/:datetime/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const z = parseInt(req.params.z, 10);
   const x = parseInt(req.params.x, 10);
   const y = parseInt(req.params.y, 10);
@@ -196,19 +196,19 @@ router.get('/:datetime/planet/:z/:x/:y', isLoggedIn, (req, res, next) => {
  * Renders a 256x256 pixels PNG-image based on the temperature
  * of the five nearest SensorHubs.
  *
- * @name Heatmap
- * @path {GET} /api/heatmap/:z/:x/:y
+ * @name Temperature map
+ * @path {GET} /api/temperature/:z/:x/:y
  * @params {String} :dateTime is unix-timestamp.
  * @params {String} :z is the z-coordinate.
  * @params {String} :x is the x-coordinate.
  * @params {String} :y is the y-coordinate.
  */
-router.get('/heatmap/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
+router.get('/temperature/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const z = parseInt(req.params.z, 10);
   const x = parseInt(req.params.x, 10);
   const y = parseInt(req.params.y, 10);
 
-  const hostFolder = path.resolve(cacheFolder, 'heatmap');
+  const hostFolder = path.resolve(cacheFolder, 'temperature');
   if (!fs.existsSync(hostFolder)) {
     fs.mkdirSync(hostFolder);
   }
