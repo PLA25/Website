@@ -43,7 +43,7 @@ $(document).ready(() => {
   const view = new ol.View({
     center,
     zoom: 8,
-    minZoom: 8,
+    minZoom: 7,
     maxZoom: 15,
     extent: [
       375000, // Left
