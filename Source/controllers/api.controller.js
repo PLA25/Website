@@ -198,11 +198,12 @@ router.get('/:datetime/planet/:z/:x/:y', isLoggedIn, (req, res, next) => {
  *
  * @name Heatmap
  * @path {GET} /api/heatmap/:z/:x/:y
+ * @params {String} :dateTime is unix-timestamp.
  * @params {String} :z is the z-coordinate.
  * @params {String} :x is the x-coordinate.
  * @params {String} :y is the y-coordinate.
  */
-router.get('/heatmap/:z/:x/:y', isLoggedIn, (req, res, next) => {
+router.get('/heatmap/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const z = parseInt(req.params.z, 10);
   const x = parseInt(req.params.x, 10);
   const y = parseInt(req.params.y, 10);
@@ -212,16 +213,23 @@ router.get('/heatmap/:z/:x/:y', isLoggedIn, (req, res, next) => {
     fs.mkdirSync(hostFolder);
   }
 
-  const filePath = path.resolve(hostFolder, `${z}_${x}_${y}.png`);
+  const unixTimestamp = parseInt(req.params.dateTime, 10);
+  const requestedDate = new Date((Math.round(unixTimestamp / 1000 / 60 / 60)) * 1000 * 60 * 60);
+  const filePath = path.resolve(hostFolder, `${requestedDate.getTime()}_${z}_${x}_${y}.png`);
   if (fs.existsSync(filePath)) {
     res.sendFile(filePath);
     return;
   }
 
-  getCachedData(SensorHub, {})
-    .then(allSensorHubs => getCachedData(Data, {}).then(data => [allSensorHubs, data]))
-    .then(([allSensorHubs, data]) => {
-      const image = generateImage(req.params, allSensorHubs, data);
+  SensorHub.find({}).exec()
+    .then(sensorHubs => Data.find({
+      Timestamp: {
+        $gt: new Date(requestedDate.getTime() - (30 * 60 * 1000)),
+        $lte: new Date(requestedDate.getTime() + (30 * 60 * 1000)),
+      },
+    }).exec().then(data => [sensorHubs, data]))
+    .then(([sensorHubs, data]) => {
+      const image = generateImage(req.params, sensorHubs, data);
       image.write(filePath);
       image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
         if (err) {

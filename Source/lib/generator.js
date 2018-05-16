@@ -87,7 +87,7 @@ function generateImage(params, allSensorHubs, data) {
 
   const image = new Jimp(256, 256, 0x0);
 
-  const incr = getIncrement(params.z);
+  const incr = Math.min(getIncrement(params.z), 8);
   for (let x = 0; x < image.bitmap.width; x += incr) {
     for (let y = 0; y < image.bitmap.height; y += incr) {
       const latitude = onder + (yMulti * y);
