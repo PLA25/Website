@@ -197,12 +197,13 @@ router.get('/:datetime/planet/:z/:x/:y', isLoggedIn, (req, res, next) => {
  * of the five nearest SensorHubs.
  *
  * @name Heatmap
- * @path {GET} /api/heatmap/:z/:x/:y
+ * @path {GET} /api/heatmap/:dateTime/:z/:x/:y
+ * @params {String} :dateTime is unix-timestamp.
  * @params {String} :z is the z-coordinate.
  * @params {String} :x is the x-coordinate.
  * @params {String} :y is the y-coordinate.
  */
-router.get('/heatmap/:z/:x/:y', isLoggedIn, (req, res, next) => {
+router.get('/heatmap/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const z = parseInt(req.params.z, 10);
   const x = parseInt(req.params.x, 10);
   const y = parseInt(req.params.y, 10);
@@ -212,16 +213,134 @@ router.get('/heatmap/:z/:x/:y', isLoggedIn, (req, res, next) => {
     fs.mkdirSync(hostFolder);
   }
 
-  const filePath = path.resolve(hostFolder, `${z}_${x}_${y}.png`);
+  const unixTimestamp = parseInt(req.params.dateTime, 10);
+  const requestedDate = new Date((Math.round(unixTimestamp / 1000 / 60 / 60)) * 1000 * 60 * 60);
+
+  const filePath = path.resolve(hostFolder, `${requestedDate.getTime()}_${z}_${x}_${y}.png`);
   if (fs.existsSync(filePath)) {
     res.sendFile(filePath);
     return;
   }
 
-  getCachedData(SensorHub, {})
-    .then(allSensorHubs => getCachedData(Data, {}).then(data => [allSensorHubs, data]))
-    .then(([allSensorHubs, data]) => {
-      const image = generateImage(req.params, allSensorHubs, data);
+  SensorHub.find({}).exec()
+    .then(sensorHubs => Data.find({
+      Type: 'temperature',
+      Timestamp: {
+        $gt: new Date(requestedDate.getTime() - (30 * 60 * 1000)),
+        $lte: new Date(requestedDate.getTime() + (30 * 60 * 1000)),
+      },
+    }).exec().then(data => [sensorHubs, data]))
+    .then(([sensorHubs, data]) => generateImage(req.params, sensorHubs, data))
+    .then((image) => {
+      image.write(filePath);
+      image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
+        if (err) {
+          next(err);
+          return;
+        }
+
+        res.send(buffer);
+      });
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+/**
+ * Renders a CO image based on the gasses
+ * of the five nearest SensorHubs.
+ *
+ * @name Gasses
+ * @path {GET} /api/gasses/:dateTime/:z/:x/:y
+ * @params {String} :dateTime is unix-timestamp.
+ * @params {String} :z is the z-coordinate.
+ * @params {String} :x is the x-coordinate.
+ * @params {String} :y is the y-coordinate.
+ */
+router.get('/gasses/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
+  const z = parseInt(req.params.z, 10);
+  const x = parseInt(req.params.x, 10);
+  const y = parseInt(req.params.y, 10);
+
+  const hostFolder = path.resolve(cacheFolder, 'gasses');
+  if (!fs.existsSync(hostFolder)) {
+    fs.mkdirSync(hostFolder);
+  }
+
+  const unixTimestamp = parseInt(req.params.dateTime, 10);
+  const requestedDate = new Date((Math.round(unixTimestamp / 1000 / 60 / 60)) * 1000 * 60 * 60);
+
+  const filePath = path.resolve(hostFolder, `${requestedDate.getTime()}_${z}_${x}_${y}.png`);
+  if (fs.existsSync(filePath)) {
+    res.sendFile(filePath);
+    return;
+  }
+
+  SensorHub.find({}).exec()
+    .then(sensorHubs => Data.find({
+      Type: 'gasses',
+      Timestamp: {
+        $gt: new Date(requestedDate.getTime() - (30 * 60 * 1000)),
+        $lte: new Date(requestedDate.getTime() + (30 * 60 * 1000)),
+      },
+    }).exec().then(data => [sensorHubs, data]))
+    .then(([sensorHubs, data]) => generateImage(req.params, sensorHubs, data))
+    .then((image) => {
+      image.write(filePath);
+      image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
+        if (err) {
+          next(err);
+          return;
+        }
+
+        res.send(buffer);
+      });
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+/**
+ * Renders a light bulb image based on the lights
+ * of the five nearest SensorHubs.
+ *
+ * @name Light
+ * @path {GET} /api/light/:dateTime/:z/:x/:y
+ * @params {String} :dateTime is unix-timestamp.
+ * @params {String} :z is the z-coordinate.
+ * @params {String} :x is the x-coordinate.
+ * @params {String} :y is the y-coordinate.
+ */
+router.get('/light/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
+  const z = parseInt(req.params.z, 10);
+  const x = parseInt(req.params.x, 10);
+  const y = parseInt(req.params.y, 10);
+
+  const hostFolder = path.resolve(cacheFolder, 'light');
+  if (!fs.existsSync(hostFolder)) {
+    fs.mkdirSync(hostFolder);
+  }
+
+  const unixTimestamp = parseInt(req.params.dateTime, 10);
+  const requestedDate = new Date((Math.round(unixTimestamp / 1000 / 60 / 60)) * 1000 * 60 * 60);
+
+  const filePath = path.resolve(hostFolder, `${requestedDate.getTime()}_${z}_${x}_${y}.png`);
+  if (fs.existsSync(filePath)) {
+    res.sendFile(filePath);
+    return;
+  }
+  SensorHub.find({}).exec()
+    .then(sensorHubs => Data.find({
+      Type: 'light',
+      Timestamp: {
+        $gt: new Date(requestedDate.getTime() - (30 * 60 * 1000)),
+        $lte: new Date(requestedDate.getTime() + (30 * 60 * 1000)),
+      },
+    }).exec().then(data => [sensorHubs, data]))
+    .then(([sensorHubs, data]) => generateImage(req.params, sensorHubs, data))
+    .then((image) => {
       image.write(filePath);
       image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
         if (err) {
