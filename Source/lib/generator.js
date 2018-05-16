@@ -6,7 +6,6 @@
  * @todo Documentation
  * @todo Unit Tests
  */
-
 const Jimp = require('jimp');
 const distance = require('fast-haversine');
 
@@ -16,6 +15,15 @@ const {
   temperatureToColor,
 } = require('./../helpers/converters');
 
+/**
+ * Gets the latitude and longitude.
+ *
+ * @function
+ * @param {Number} z - The z-coordinate.
+ * @param {Number} x - The x-coordinate.
+ * @param {Number} y - The y-coordinate.
+ * @returns {[Number, Number]} - the longitude and latitude.
+ */
 function getLatLong({
   z,
   x,
@@ -27,6 +35,16 @@ function getLatLong({
   return [latitude, longitude];
 }
 
+/**
+ * Gets the calculated value from latitude, longitude, the SensorHubs and the database.
+ *
+ * @function
+ * @param {Number} latitude - The latitude.
+ * @param {Number} longitude - The longitude.
+ * @param {Object} allSensorHubs - All SensorHubs.
+ * @param {Object} data - The database.
+ * @returns {Number} - the calculated value.
+ */
 function getCalculatedValue(latitude, longitude, allSensorHubs, data) {
   const to = {
     lat: parseFloat(latitude, 10),
@@ -65,16 +83,41 @@ function getCalculatedValue(latitude, longitude, allSensorHubs, data) {
   return calculatedValue;
 }
 
+/**
+ * Gets the color from latitude and longitude.
+ *
+ * @function
+ * @param {Number} latitude - The latitude.
+ * @param {Number} longitude - The longitude.
+ * @param {Object} allSensorHubs - All SensorHubs.
+ * @param {Object} data - The database.
+ * @returns {Number} - the color code.
+ */
 function getColorFromLatLong(latitude, longitude, allSensorHubs, data) {
   const calculatedValue = getCalculatedValue(latitude, longitude, allSensorHubs, data);
   const rgb = temperatureToColor(calculatedValue);
   return Jimp.rgbaToInt(rgb[0], rgb[1], rgb[2], parseFloat(0.25 * 255));
 }
 
+/**
+ * Gets the increment of a z-coordinate.
+ *
+ * @function
+ * @param {Number} z - The z-coordinate.
+ * @returns {Number} - the incremented z-coordinate.
+ */
 function getIncrement(z) {
   return Math.min(2 ** Math.max((15 - parseInt(z, 10)), 3), 128);
 }
 
+/**
+ * Generates an image.
+ *
+ * @function
+ * @param {Object} params - The parameters.
+ * @param {Object} allSensorHubs - All SensorHubs.
+ * @param {Object} data - The database.
+ */
 function generateImage(params, allSensorHubs, data) {
   return new Promise(((resolve, reject) => {
     const [lat1, lon1] = getLatLong(params);
@@ -96,6 +139,7 @@ function generateImage(params, allSensorHubs, data) {
     const yMulti = (boven - onder) / 256;
 
     const image = new Jimp(256, 256, 0x0);
+
     if (data[0].Type == 'gasses') {
       const calculatedValue = Math.round(getCalculatedValue((onder + (yMulti * 128)), (links + (xMulti * 128)), allSensorHubs, data));
 
@@ -111,6 +155,19 @@ function generateImage(params, allSensorHubs, data) {
           }
 
           image.print(font, 0, 0, text);
+
+          resolve(image);
+        });
+    } else if (data[0].Type == 'light') {
+      const calculatedValue = (Math.floor(400 / 1024 * 8)) - 1;
+
+      Jimp.read('./public/bulb_' + calculatedValue.toString() + '.png')
+        .then((bulb) => {
+          for (let i = (256 - 64); i < 256; i += 1) {
+            for (let j = 64; j > 0; j -= 1) {
+              image.setPixelColor(bulb.getPixelColor(i - (256 - 64), 64 - j), i, 64 - j);
+            }
+          }
 
           resolve(image);
         });
@@ -138,6 +195,14 @@ function generateImage(params, allSensorHubs, data) {
   }));
 }
 
+/**
+ * Measures a text.
+ *
+ * @function
+ * @param {Object} font - The font.
+ * @param {String} text - The text.
+ * @returns {Number} x - the x-coordinate.
+ */
 function measureText(font, text) {
   let x = 0;
   for (let i = 0; i < text.length; i++) {

@@ -197,7 +197,7 @@ router.get('/:datetime/planet/:z/:x/:y', isLoggedIn, (req, res, next) => {
  * of the five nearest SensorHubs.
  *
  * @name Heatmap
- * @path {GET} /api/heatmap/:z/:x/:y
+ * @path {GET} /api/heatmap/:dateTime/:z/:x/:y
  * @params {String} :dateTime is unix-timestamp.
  * @params {String} :z is the z-coordinate.
  * @params {String} :x is the x-coordinate.
@@ -247,6 +247,17 @@ router.get('/heatmap/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
     });
 });
 
+/**
+ * Renders a CO image based on the gasses
+ * of the five nearest SensorHubs.
+ *
+ * @name Gasses
+ * @path {GET} /api/gasses/:dateTime/:z/:x/:y
+ * @params {String} :dateTime is unix-timestamp.
+ * @params {String} :z is the z-coordinate.
+ * @params {String} :x is the x-coordinate.
+ * @params {String} :y is the y-coordinate.
+ */
 router.get('/gasses/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const z = parseInt(req.params.z, 10);
   const x = parseInt(req.params.x, 10);
@@ -291,6 +302,17 @@ router.get('/gasses/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
     });
 });
 
+/**
+ * Renders a light bulb image based on the lights
+ * of the five nearest SensorHubs.
+ *
+ * @name Light
+ * @path {GET} /api/light/:dateTime/:z/:x/:y
+ * @params {String} :dateTime is unix-timestamp.
+ * @params {String} :z is the z-coordinate.
+ * @params {String} :x is the x-coordinate.
+ * @params {String} :y is the y-coordinate.
+ */
 router.get('/light/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const z = parseInt(req.params.z, 10);
   const x = parseInt(req.params.x, 10);
@@ -309,7 +331,6 @@ router.get('/light/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
     res.sendFile(filePath);
     return;
   }
-
   SensorHub.find({}).exec()
     .then(sensorHubs => Data.find({
       Type: 'light',
@@ -318,30 +339,16 @@ router.get('/light/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
         $lte: new Date(requestedDate.getTime() + (30 * 60 * 1000)),
       },
     }).exec().then(data => [sensorHubs, data]))
-    /*
-     *.then(([sensorHubs, data]) => generateImage(req.params, sensorHubs, data))
-     *.then((image) => {
-     */
-    .then(() => {
-      const image = new Jimp(256, 256, 0x0);
-      Jimp.read('./public/bulb_6.png').then((bulb) => {
-        for (let i = (256 - 64); i < 256; i += 1) {
-          for (let j = 64; j > 0; j -= 1) {
-            image.setPixelColor(bulb.getPixelColor(i - (256 - 64), 64 - j), i, 64 - j);
-          }
+    .then(([sensorHubs, data]) => generateImage(req.params, sensorHubs, data))
+    .then((image) => {
+      image.write(filePath);
+      image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
+        if (err) {
+          next(err);
+          return;
         }
 
-        // image.write(filePath);
-        image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
-          if (err) {
-            next(err);
-            return;
-          }
-
-          res.send(buffer);
-        });
-      }).catch((err) => {
-        console.error(err);
+        res.send(buffer);
       });
     })
     .catch((err) => {
