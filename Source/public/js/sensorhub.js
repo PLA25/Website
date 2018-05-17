@@ -1,3 +1,5 @@
 $(document).ready(() => {
-  $('#table-sensorhubs').DataTable();
+  $('#table-temp').DataTable();
+  $('#table-light').DataTable();
+  $('#table-gass').DataTable();
 });
