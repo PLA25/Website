@@ -222,7 +222,6 @@ router.get('/heatmap/:z/:x/:y', isLoggedIn, (req, res, next) => {
     .then(allSensorHubs => getCachedData(Data, {}).then(data => [allSensorHubs, data]))
     .then(([allSensorHubs, data]) => {
       const image = generateImage(req.params, allSensorHubs, data);
-      image.write(filePath);
       image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
         if (err) {
           next(err);
