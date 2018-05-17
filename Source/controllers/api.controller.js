@@ -217,6 +217,7 @@ router.get('/temperature/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const requestedDate = new Date((Math.round(unixTimestamp / 1000 / 60 / 60)) * 1000 * 60 * 60);
   const filePath = path.resolve(hostFolder, `${requestedDate.getTime()}_${z}_${x}_${y}.png`);
   if (fs.existsSync(filePath)) {
+    res.type('png');
     res.sendFile(filePath);
     return;
   }
@@ -237,6 +238,7 @@ router.get('/temperature/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
           return;
         }
 
+        res.type('png');
         res.send(buffer);
       });
     })

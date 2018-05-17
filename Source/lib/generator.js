@@ -74,8 +74,8 @@ function generateImage(params, allSensorHubs, data) {
     y: parseInt(params.y, 10) - 1,
   });
 
-  const lat = (lat2 - lat1) / 2;
-  const lon = (lon1 - lon2) / 2;
+  const lat = (Math.max(lat1, lat2) - Math.min(lat1, lat2)) / 2;
+  const lon = (Math.max(lon1, lon2) - Math.min(lon1, lon2)) / 2;
 
   const left = lon1 - lon;
   const up = lat1 - lat;
