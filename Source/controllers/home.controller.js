@@ -19,10 +19,9 @@ const {
   isNotLoggedIn,
 } = require('./../middlewares');
 
-/* Helpers */
-const {
-  getAllData,
-} = require('./../helpers/database');
+/* Models */
+const Data = require('./../models/data');
+const SensorHub = require('./../models/sensorhub');
 
 /**
  * Renders the index page.
@@ -42,11 +41,40 @@ router.get('/', isLoggedIn, (req, res) => {
  * @params {String} :SerialID is the SerialID of the SensorHub.
  */
 router.get('/sensorhub/:SerialID', isLoggedIn, (req, res, next) => {
-  getAllData(req.params.SerialID, 365)
-    .then(([sensorHub, sensorHubData]) => {
+  SensorHub.findOne({
+    SerialID: req.params.SerialID,
+  }).exec()
+    .then((sensorHub) => {
+      if (sensorHub === null) {
+        next(new Error(`Could not find SensorHub with ID: '${req.params.SerialID}'!`));
+        return;
+      }
+
+      // eslint-disable-next-line consistent-return
+      return Data.find({
+        Type: 'temperature',
+        SensorHub: sensorHub.SerialID,
+      })
+        .sort({ Timestamp: -1 })
+        .exec()
+        .then(temperatureData => [sensorHub, temperatureData]);
+    })
+    .then(([sensorHub, temperatureData]) => Data.find({
+      Type: 'light',
+      SensorHub: sensorHub.SerialID,
+    }).exec()
+      .then(lightData => [sensorHub, temperatureData, lightData]))
+    .then(([sensorHub, temperatureData, lightData]) => Data.find({
+      Type: 'gasses',
+      SensorHub: sensorHub.SerialID,
+    }).exec()
+      .then(gassesData => [sensorHub, temperatureData, lightData, gassesData]))
+    .then(([sensorHub, temperatureData, lightData, gassesData]) => {
       res.render('sensorhub', {
         sensorHub,
-        sensorHubData,
+        temperatureData,
+        lightData,
+        gassesData,
       });
     })
     .catch((err) => {
