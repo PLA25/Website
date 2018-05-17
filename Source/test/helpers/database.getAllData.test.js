@@ -65,21 +65,19 @@ module.exports = () => {
     it('should return the correct data for Paris', (done) => {
       // Act
       getAllData('Paris', 365)
+        .then(([sensorHub]) => {
         /*
          * .then(([sensorHub, data]) => {
          */
-        .then(([sensorHub]) => {
           // Assert
           sensorHub.Latitude.should.equal('48.856614');
           sensorHub.Longitude.should.equal('2.352222');
-
           /*
            * // Assert
            * data.should.have.length(1);
            * data[0].Type.should.equal('temperature');
            * data[0].Value.should.equal('20');
            */
-
           done();
         });
     });
