@@ -276,10 +276,10 @@ module.exports = () => {
     });
   });
 
-  describe('GET /:datetime/planet/:z/:x/:y', () => {
+  describe('GET /planet/:datetime/:z/:x/:y', () => {
     describe('Not logged in', () => {
       it('should redirect to /login', (done) => {
-        request(app).get('/api/1514764800000/planet/8/132/86')
+        request(app).get('/api/planet/1514764800000/8/132/86')
           .end((err, res) => {
             res.headers.location.should.equal('/login');
             done();
@@ -287,7 +287,7 @@ module.exports = () => {
       });
 
       it('should return a 302 response', (done) => {
-        request(app).get('/api/1514764800000/planet/8/132/86')
+        request(app).get('/api/planet/1514764800000/8/132/86')
           .end((err, res) => {
             res.statusCode.should.equal(302);
             done();
@@ -299,25 +299,25 @@ module.exports = () => {
       it('should create any missing folder(s)', (done) => {
         deleteFolderRecursive(path.resolve(cacheFolder, 'planet'));
 
-        authenticatedAdmin.get('/api/1514764800000/planet/8/132/86')
+        authenticatedAdmin.get('/api/planet/1514764800000/8/132/86')
           .end((err, res) => {
             res.statusCode.should.equal(200);
             done();
           });
       }).timeout(5000);
 
-      it('should return a 200 response for /api/1514764800000/planet/8/132/86', (done) => {
+      it('should return a 200 response for /api/planet/1514764800000/8/132/86', (done) => {
         deleteFolderRecursive(path.resolve(cacheFolder, 'planet'));
 
-        authenticatedAdmin.get('/api/1514764800000/planet/8/132/86')
+        authenticatedAdmin.get('/api/planet/1514764800000/8/132/86')
           .end((err, res) => {
             res.statusCode.should.equal(200);
             done();
           });
       }).timeout(5000);
 
-      it('should return a cached copy of /api/1514764800000/planet/8/132/86', (done) => {
-        authenticatedAdmin.get('/api/1514764800000/planet/8/132/86')
+      it('should return a cached copy of /api/planet/1514764800000/8/132/86', (done) => {
+        authenticatedAdmin.get('/api/planet/1514764800000/8/132/86')
           .end((err, res) => {
             // TODO: res.statusCode.should.equal(304);
             res.statusCode.should.equal(200);
@@ -326,7 +326,7 @@ module.exports = () => {
       });
 
       it('should return a 500 response for future dates', (done) => {
-        authenticatedAdmin.get('/api/1546300800000/planet/8/132/86')
+        authenticatedAdmin.get('/api/planet/1546300800000/8/132/86')
           .end((err, res) => {
             res.statusCode.should.equal(500);
             done();
@@ -334,7 +334,7 @@ module.exports = () => {
       });
 
       it('should correct the month', (done) => {
-        authenticatedAdmin.get('/api/1512086400000/planet/8/132/86')
+        authenticatedAdmin.get('/api/planet/1512086400000/8/132/86')
           .end((err, res) => {
             res.statusCode.should.equal(200);
             done();
@@ -342,7 +342,7 @@ module.exports = () => {
       });
 
       it('should correct the month', (done) => {
-        authenticatedAdmin.get('/api/1525132800000/planet/8/132/86')
+        authenticatedAdmin.get('/api/planet/1525132800000/8/132/86')
           .end((err, res) => {
             res.statusCode.should.equal(200);
             done();
@@ -354,25 +354,25 @@ module.exports = () => {
       it('should create any missing folder(s)', (done) => {
         deleteFolderRecursive(path.resolve(cacheFolder, 'planet'));
 
-        authenticatedUser.get('/api/1514764800000/planet/8/132/86')
+        authenticatedUser.get('/api/planet/1514764800000/8/132/86')
           .end((err, res) => {
             res.statusCode.should.equal(200);
             done();
           });
       }).timeout(5000);
 
-      it('should return a 200 response for /api/1514764800000/planet/8/132/86', (done) => {
+      it('should return a 200 response for /api/planet/1514764800000/8/132/86', (done) => {
         deleteFolderRecursive(path.resolve(cacheFolder, 'planet'));
 
-        authenticatedUser.get('/api/1514764800000/planet/8/132/86')
+        authenticatedUser.get('/api/planet/1514764800000/8/132/86')
           .end((err, res) => {
             res.statusCode.should.equal(200);
             done();
           });
       }).timeout(5000);
 
-      it('should return a cached copy of /api/1514764800000/planet/8/132/86', (done) => {
-        authenticatedUser.get('/api/1514764800000/planet/8/132/86')
+      it('should return a cached copy of /api/planet/1514764800000/8/132/86', (done) => {
+        authenticatedUser.get('/api/planet/1514764800000/8/132/86')
           .end((err, res) => {
             // TODO: res.statusCode.should.equal(304);
             res.statusCode.should.equal(200);
@@ -381,7 +381,7 @@ module.exports = () => {
       });
 
       it('should return a 500 response for future dates', (done) => {
-        authenticatedUser.get('/api/1546300800000/planet/8/132/86')
+        authenticatedUser.get('/api/planet/1546300800000/8/132/86')
           .end((err, res) => {
             res.statusCode.should.equal(500);
             done();
@@ -389,7 +389,7 @@ module.exports = () => {
       });
 
       it('should correct the month', (done) => {
-        authenticatedUser.get('/api/1512086400000/planet/8/132/86')
+        authenticatedUser.get('/api/planet/1512086400000/8/132/86')
           .end((err, res) => {
             res.statusCode.should.equal(200);
             done();
@@ -397,7 +397,7 @@ module.exports = () => {
       });
 
       it('should correct the month', (done) => {
-        authenticatedUser.get('/api/1525132800000/planet/8/132/86')
+        authenticatedUser.get('/api/planet/1525132800000/8/132/86')
           .end((err, res) => {
             res.statusCode.should.equal(200);
             done();
