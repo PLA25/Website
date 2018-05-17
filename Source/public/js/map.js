@@ -10,10 +10,12 @@ $(document).ready(() => {
   });
   googleLayer.setVisible(false);
 
-  const heatmapLayer = new ol.layer.Tile({
-    source: new ol.source.XYZ({
-      url: '/api/heatmap/{z}/{x}/{y}',
-    }),
+  const temperatureXYZ = new ol.source.XYZ({
+    url: `/api/temperature/${new Date().getTime()}/{z}/{x}/{y}`,
+  });
+
+  const temperatureLayer = new ol.layer.Tile({
+    source: temperatureXYZ,
   });
 
   const mapboxLayer = new ol.layer.Tile({
@@ -23,7 +25,7 @@ $(document).ready(() => {
   });
 
   const planetXYZ = new ol.source.XYZ({
-    url: '/api/planet/{z}/{x}/{y}',
+    url: `/api/planet/${new Date().getTime()}/{z}/{x}/{y}`,
   });
 
   const planetLayer = new ol.layer.Tile({
@@ -37,13 +39,11 @@ $(document).ready(() => {
     }),
   });
 
-  planetXYZ.setUrl(`/api/${new Date().getTime()}/planet/{z}/{x}/{y}`);
-
   const center = ol.proj.transform([4.895168, 52.370216], 'EPSG:4326', 'EPSG:3857');
   const view = new ol.View({
     center,
     zoom: 8,
-    minZoom: 8,
+    minZoom: 7,
     maxZoom: 15,
     extent: [
       375000, // Left
@@ -60,7 +60,7 @@ $(document).ready(() => {
       planetLayer,
       mapboxLayer,
       sensorhubLayer,
-      heatmapLayer,
+      temperatureLayer,
     ],
     target: 'map',
     view,
@@ -68,13 +68,13 @@ $(document).ready(() => {
 
   /* Initial state of the checkboxes */
   $('#mapboxLayer').prop('checked', true);
-  $('#heatmapLayer').prop('checked', true);
+  $('#temperatureLayer').prop('checked', true);
   $('#sensorhubLayer').prop('checked', true);
 
   /* Events */
-  $('#heatmapLayer').change(() => {
-    const isChecked = $('#heatmapLayer').prop('checked');
-    heatmapLayer.setVisible(isChecked);
+  $('#temperatureLayer').change(() => {
+    const isChecked = $('#temperatureLayer').prop('checked');
+    temperatureLayer.setVisible(isChecked);
   });
 
   $('#mapboxLayer').change(() => {
@@ -190,7 +190,8 @@ $(document).ready(() => {
       const currentdate = new Date(Math.floor((dateNow - offset)) * 1000 * 60 * 60);
       value = `${currentdate.getDate()}/${currentdate.getMonth() + 1}/${currentdate.getFullYear()} @ ${currentdate.getHours()}`;
 
-      planetXYZ.setUrl(`/api/${currentdate.getTime()}/planet/{z}/{x}/{y}`);
+      planetXYZ.setUrl(`/api/planet/${currentdate.getTime()}/{z}/{x}/{y}`);
+      temperatureXYZ.setUrl(`/api/temperature/${currentdate.getTime()}/{z}/{x}/{y}`);
 
       handle.text(value);
     },

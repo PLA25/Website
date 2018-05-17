@@ -68,59 +68,7 @@
 					<dd class="tag-source">
 						<ul class="dummy">
 							<li>
-								<a href="controllers_api.controller.js.html">controllers/api.controller.js</a>, <a href="controllers_api.controller.js.html#line259">line 259</a>
-							</li>
-						</ul>
-					</dd>
-				</dl>
-				<h4 class="name" id="Heatmap"><span class="type-signature">(route) </span>Heatmap<span class="type-signature"></span></h4>
-				<div class="description">
-					<h5>Route:</h5>
-					<table class="params">
-						<thead>
-							<tr>
-								<th>Method</th>
-								<th class="last">Path</th>
-							</tr>
-						</thead>
-						<tr>
-							<td class="type">GET</td>
-							<td class="name last">/api/heatmap/:z/:x/:y</td>
-						</tr>
-					</table>
-					Renders a 256x256 pixels PNG-image based on the temperature of the five nearest SensorHubs.
-					<h5>Route Parameters:</h5>
-					<table class="params">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Type</th>
-								<th class="last">Description</th>
-							</tr>
-						</thead>
-						<tr>
-							<td class="name">:z</td>
-							<td class="type">String</td>
-							<td class="description last">is the z-coordinate.</td>
-						</tr>
-						<tr>
-							<td class="name">:x</td>
-							<td class="type">String</td>
-							<td class="description last">is the x-coordinate.</td>
-						</tr>
-						<tr>
-							<td class="name">:y</td>
-							<td class="type">String</td>
-							<td class="description last">is the y-coordinate.</td>
-						</tr>
-					</table>
-				</div>
-				<dl class="details">
-					<dt class="tag-source">Source:</dt>
-					<dd class="tag-source">
-						<ul class="dummy">
-							<li>
-								<a href="controllers_api.controller.js.html">controllers/api.controller.js</a>, <a href="controllers_api.controller.js.html#line195">line 195</a>
+								<a href="controllers_api.controller.js.html">controllers/api.controller.js</a>, <a href="controllers_api.controller.js.html#line241">line 241</a>
 							</li>
 						</ul>
 					</dd>
@@ -172,7 +120,7 @@
 					<dd class="tag-source">
 						<ul class="dummy">
 							<li>
-								<a href="controllers_api.controller.js.html">controllers/api.controller.js</a>, <a href="controllers_api.controller.js.html#line86">line 86</a>
+								<a href="controllers_api.controller.js.html">controllers/api.controller.js</a>, <a href="controllers_api.controller.js.html#line56">line 56</a>
 							</li>
 						</ul>
 					</dd>
@@ -189,7 +137,7 @@
 						</thead>
 						<tr>
 							<td class="type">GET</td>
-							<td class="name last">/api/:datetime/planet/:z/:x/:y</td>
+							<td class="name last">/api/planet/:datetime/:z/:x/:y</td>
 						</tr>
 					</table>
 					Handles the Planet tile services; also used for caching the tiles.
@@ -229,7 +177,7 @@
 					<dd class="tag-source">
 						<ul class="dummy">
 							<li>
-								<a href="controllers_api.controller.js.html">controllers/api.controller.js</a>, <a href="controllers_api.controller.js.html#line124">line 124</a>
+								<a href="controllers_api.controller.js.html">controllers/api.controller.js</a>, <a href="controllers_api.controller.js.html#line94">line 94</a>
 							</li>
 						</ul>
 					</dd>
@@ -256,62 +204,66 @@
 					<dd class="tag-source">
 						<ul class="dummy">
 							<li>
-								<a href="controllers_api.controller.js.html">controllers/api.controller.js</a>, <a href="controllers_api.controller.js.html#line240">line 240</a>
+								<a href="controllers_api.controller.js.html">controllers/api.controller.js</a>, <a href="controllers_api.controller.js.html#line220">line 220</a>
 							</li>
 						</ul>
 					</dd>
 				</dl>
-				<h3 class="subsection-title">Methods</h3>
-				<h4 class="name" id="~getCachedData"><span class="type-signature">(inner) </span>getCachedData<span class="signature">(model, options)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+				<h4 class="name" id="Temperaturemap"><span class="type-signature">(route) </span>Temperature map<span class="type-signature"></span></h4>
 				<div class="description">
-					Checks if the requested data already exists in the cache; if it doesn't exist fetch and save in the cache.
+					<h5>Route:</h5>
+					<table class="params">
+						<thead>
+							<tr>
+								<th>Method</th>
+								<th class="last">Path</th>
+							</tr>
+						</thead>
+						<tr>
+							<td class="type">GET</td>
+							<td class="name last">/api/temperature/:z/:x/:y</td>
+						</tr>
+					</table>
+					Renders a 256x256 pixels PNG-image based on the temperature of the five nearest SensorHubs.
+					<h5>Route Parameters:</h5>
+					<table class="params">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Type</th>
+								<th class="last">Description</th>
+							</tr>
+						</thead>
+						<tr>
+							<td class="name">:dateTime</td>
+							<td class="type">String</td>
+							<td class="description last">is unix-timestamp.</td>
+						</tr>
+						<tr>
+							<td class="name">:z</td>
+							<td class="type">String</td>
+							<td class="description last">is the z-coordinate.</td>
+						</tr>
+						<tr>
+							<td class="name">:x</td>
+							<td class="type">String</td>
+							<td class="description last">is the x-coordinate.</td>
+						</tr>
+						<tr>
+							<td class="name">:y</td>
+							<td class="type">String</td>
+							<td class="description last">is the y-coordinate.</td>
+						</tr>
+					</table>
 				</div>
-				<h5>Parameters:</h5>
-				<table class="params">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Type</th>
-							<th class="last">Description</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="name"><code>model</code></td>
-							<td class="type">
-								<span class="param-type">Object</span>
-							</td>
-							<td class="description last">Model object from MongoDB.</td>
-						</tr>
-						<tr>
-							<td class="name"><code>options</code></td>
-							<td class="type">
-								<span class="param-type">Object</span>
-							</td>
-							<td class="description last">Any options for the request.</td>
-						</tr>
-					</tbody>
-				</table>
 				<dl class="details">
 					<dt class="tag-source">Source:</dt>
 					<dd class="tag-source">
 						<ul class="dummy">
 							<li>
-								<a href="controllers_api.controller.js.html">controllers/api.controller.js</a>, <a href="controllers_api.controller.js.html#line48">line 48</a>
+								<a href="controllers_api.controller.js.html">controllers/api.controller.js</a>, <a href="controllers_api.controller.js.html#line165">line 165</a>
 							</li>
 						</ul>
-					</dd>
-				</dl>
-				<h5>Returns:</h5>
-				<div class="param-desc">
-					- returns the saved object.
-				</div>
-				<dl>
-					<dt>
-        Type
-    </dt>
-					<dd>
-						<span class="param-type">Object</span>
 					</dd>
 				</dl>
 			</article>
@@ -344,7 +296,7 @@
 	</nav>
 	<br class="clear">
 	<footer>
-		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri May 11 2018 17:12:21 GMT+0200 (W. Europe Daylight Time)
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu May 17 2018 22:52:13 GMT+0200 (W. Europe Daylight Time)
 	</footer>
 	<script>
 		prettyPrint();

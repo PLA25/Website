@@ -1,7 +1,7 @@
 /* eslint-disable */
 const request = require('superagent').agent();
 
-const hosts = ['planet', 'mapbox', 'heatmap'];
+const hosts = ['planet', 'mapbox', 'temperature'];
 
 function call(j, z, x, y) {
   const maxZ = 15;
