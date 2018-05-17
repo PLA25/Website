@@ -34,36 +34,6 @@ const {
   generateImage,
 } = require('./../lib/generator');
 
-const cacheData = [];
-
-/**
- * Checks if the requested data already exists in the cache;
- * if it doesn't exist fetch and save in the cache.
- *
- * @function
- * @param {Object} model - Model object from MongoDB.
- * @param {Object} options - Any options for the request.
- * @returns {Object} - returns the saved object.
- */
-function getCachedData(model, options) {
-  return new Promise(((resolve, reject) => {
-    const modelName = model.collection.name;
-    if (cacheData[modelName] !== undefined) {
-      resolve(cacheData[modelName]);
-      return;
-    }
-
-    model.find(options).exec()
-      .then((data) => {
-        cacheData[modelName] = data;
-        resolve(data);
-      })
-      .catch((err) => {
-        reject(err);
-      });
-  }));
-}
-
 const cacheFolder = path.resolve(`${__dirname}./../cache/`);
 router.use((req, res, next) => {
   if (!fs.existsSync(cacheFolder)) {
@@ -254,7 +224,9 @@ router.get('/temperature/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
  * @path {GET} /api/sensorhubs
  */
 router.get('/sensorhubs', isLoggedIn, (req, res, next) => {
-  getCachedData(SensorHub, {})
+  SensorHub
+    .find({})
+    .exec()
     .then((sensorHubs) => {
       res.render('sensorhubs', {
         layout: false,
