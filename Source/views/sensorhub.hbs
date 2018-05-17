@@ -26,11 +26,16 @@
       </tbody>
 
     </table>
-    <canvas id="myChart" width="700" height="300"></canvas>
+  </div>
+    <div class="col-12 col-xl-6">
+    <canvas id="myChart" width="700" height="300" style="margin-top: 80px;"></canvas>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script>
   <!-- Start Js -->
+  var chartColors = {
+  red: 'rgb(255, 99, 132)'
+};
     let ctx = document.querySelector('#myChart').getContext('2d');
 
     let myChart = new Chart(ctx, {
@@ -44,7 +49,7 @@
       datasets: [
         {
           label: "Temparature in celsius",
-          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+          backgroundColor: chartColors.red,
           data: [
           {{#each sensorHubData}}
             {{this.Value}},
