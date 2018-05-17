@@ -55,7 +55,7 @@ $(document).ready(() => {
 
   // Temperature Tile(s)
   const heatmapXYZ = new ol.source.XYZ({
-    url: `/api/heatmap/{z}/{x}/{y}`,
+    url: '/api/heatmap/{z}/{x}/{y}',
   });
 
   const heatmapLayer = new ol.layer.Tile({
