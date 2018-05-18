@@ -2,7 +2,9 @@
 const chai = require('chai');
 
 /* Lib */
-const { calculateDegrees } = require('./../../helpers/converters');
+const {
+  calculateDegrees,
+} = require('./../../helpers/converters');
 
 chai.should();
 

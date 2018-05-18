@@ -2,28 +2,28 @@
 $(document).ready(() => {
   $('#goToError').hide();
 
-  /* Layers */
+  // Map Type
+  const satEnabled = true;
+
+  // Features
+  const navEnabled = true;
+  const hubsEnabled = true;
+
+  // Layers
+  let tempEnabled = true;
+  let gasEnabled = true;
+  let lightEnabled = true;
+
+  // Map Tile(s)
   const googleLayer = new ol.layer.Tile({
     source: new ol.source.XYZ({
       url: 'http://mt{0-3}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
     }),
   });
-  googleLayer.setVisible(false);
 
-  const temperatureXYZ = new ol.source.XYZ({
-    url: `/api/temperature/${new Date().getTime()}/{z}/{x}/{y}`,
-  });
+  googleLayer.setVisible(!satEnabled);
 
-  const temperatureLayer = new ol.layer.Tile({
-    source: temperatureXYZ,
-  });
-
-  const mapboxLayer = new ol.layer.Tile({
-    source: new ol.source.XYZ({
-      url: '/api/mapbox/{z}/{x}/{y}',
-    }),
-  });
-
+  // Satellite Tile(s)
   const planetXYZ = new ol.source.XYZ({
     url: `/api/planet/${new Date().getTime()}/{z}/{x}/{y}`,
   });
@@ -32,6 +32,18 @@ $(document).ready(() => {
     source: planetXYZ,
   });
 
+  planetLayer.setVisible(satEnabled);
+
+  // Navigation
+  const mapboxLayer = new ol.layer.Tile({
+    source: new ol.source.XYZ({
+      url: '/api/mapbox/{z}/{x}/{y}',
+    }),
+  });
+
+  mapboxLayer.setVisible(navEnabled);
+
+  // SensorHubs
   const sensorhubLayer = new ol.layer.Vector({
     source: new ol.source.Vector({
       url: '/api/sensorhubs',
@@ -39,11 +51,45 @@ $(document).ready(() => {
     }),
   });
 
-  const center = ol.proj.transform([4.895168, 52.370216], 'EPSG:4326', 'EPSG:3857');
+  sensorhubLayer.setVisible(hubsEnabled);
+
+  // Temperature Tile(s)
+  const temperatureXYZ = new ol.source.XYZ({
+    url: `/api/temperature/${new Date().getTime()}/{z}/{x}/{y}`,
+  });
+
+  const temperatureLayer = new ol.layer.Tile({
+    source: temperatureXYZ,
+  });
+
+  temperatureLayer.setVisible(tempEnabled);
+
+  // Gass Tile(s)
+  const gassesXYZ = new ol.source.XYZ({
+    url: `/api/gasses/${new Date().getTime()}/{z}/{x}/{y}`,
+  });
+
+  const gassesLayer = new ol.layer.Tile({
+    source: gassesXYZ,
+  });
+
+  gassesLayer.setVisible(gasEnabled);
+
+  // Light Tile(s)
+  const lightXYZ = new ol.source.XYZ({
+    url: `/api/light/${new Date().getTime()}/{z}/{x}/{y}`,
+  });
+
+  const lightLayer = new ol.layer.Tile({
+    source: lightXYZ,
+  });
+
+  lightLayer.setVisible(lightEnabled);
+
   const view = new ol.View({
-    center,
+    center: ol.proj.transform([4.895168, 52.370216], 'EPSG:4326', 'EPSG:3857'),
     zoom: 8,
-    minZoom: 7,
+    minZoom: 8,
     maxZoom: 15,
     extent: [
       375000, // Left
@@ -61,32 +107,27 @@ $(document).ready(() => {
       mapboxLayer,
       sensorhubLayer,
       temperatureLayer,
+      gassesLayer,
+      lightLayer,
     ],
     target: 'map',
     view,
   });
 
-  /* Initial state of the checkboxes */
-  $('#mapboxLayer').prop('checked', true);
-  $('#temperatureLayer').prop('checked', true);
-  $('#sensorhubLayer').prop('checked', true);
+  // Map Type
+  $('#typeSat').prop('checked', satEnabled);
+  $('#typeMap').prop('checked', !satEnabled);
 
-  /* Events */
-  $('#temperatureLayer').change(() => {
-    const isChecked = $('#temperatureLayer').prop('checked');
-    temperatureLayer.setVisible(isChecked);
-  });
+  // Features
+  $('#mapboxLayer').prop('checked', navEnabled);
+  $('#sensorhubLayer').prop('checked', hubsEnabled);
 
-  $('#mapboxLayer').change(() => {
-    const isChecked = $('#mapboxLayer').prop('checked');
-    mapboxLayer.setVisible(isChecked);
-  });
+  // Layers
+  $('#tempEnabled').prop('checked', tempEnabled);
+  $('#gasEnabled').prop('checked', gasEnabled);
+  $('#lightEnabled').prop('checked', lightEnabled);
 
-  $('#sensorhubLayer').change(() => {
-    const isChecked = $('#sensorhubLayer').prop('checked');
-    sensorhubLayer.setVisible(isChecked);
-  });
-
+  // Map Type
   $('#typeSat').change(() => {
     const isChecked = $('#typeSat').prop('checked');
     googleLayer.setVisible(!isChecked);
@@ -105,6 +146,33 @@ $(document).ready(() => {
     $('#mapboxLayer').prop('checked', false);
     $('#mapboxLayer').prop('disabled', true);
     mapboxLayer.setVisible(false);
+  });
+
+  // Features
+  $('#mapboxLayer').change(() => {
+    const isChecked = $('#mapboxLayer').prop('checked');
+    mapboxLayer.setVisible(isChecked);
+  });
+
+  $('#sensorhubLayer').change(() => {
+    const isChecked = $('#sensorhubLayer').prop('checked');
+    sensorhubLayer.setVisible(isChecked);
+  });
+
+  // Layers
+  $('#tempEnabled').change(() => {
+    tempEnabled = $('#tempEnabled').prop('checked');
+    temperatureLayer.setVisible(tempEnabled);
+  });
+
+  $('#gasEnabled').change(() => {
+    gasEnabled = $('#gasEnabled').prop('checked');
+    gassesLayer.setVisible(gasEnabled);
+  });
+
+  $('#lightEnabled').change(() => {
+    lightEnabled = $('#lightEnabled').prop('checked');
+    lightLayer.setVisible(lightEnabled);
   });
 
   function addressAutocomplete() {
@@ -192,6 +260,8 @@ $(document).ready(() => {
 
       planetXYZ.setUrl(`/api/planet/${currentdate.getTime()}/{z}/{x}/{y}`);
       temperatureXYZ.setUrl(`/api/temperature/${currentdate.getTime()}/{z}/{x}/{y}`);
+      gassesXYZ.setUrl(`/api/gasses/${currentdate.getTime()}/{z}/{x}/{y}`);
+      lightXYZ.setUrl(`/api/light/${currentdate.getTime()}/{z}/{x}/{y}`);
 
       handle.text(value);
     },
