@@ -108,9 +108,6 @@ function generateImage(params, allSensorHubs, data) {
 
           image.print(font, 0, 0, text);
           resolve(image);
-        })
-        .catch((err) => {
-          reject(err);
         });
     }
     else if (data[0].Type == 'light') {
@@ -125,9 +122,6 @@ function generateImage(params, allSensorHubs, data) {
           }
 
           resolve(image);
-        })
-        .catch((err) => {
-          reject(err);
         });
     }
     else if (data[0].Type == 'temperature') {
@@ -150,8 +144,6 @@ function generateImage(params, allSensorHubs, data) {
       }
 
       resolve(image);
-    } else {
-      reject(new Error());
     }
   });
 }
