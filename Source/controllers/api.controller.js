@@ -97,12 +97,12 @@ router.get('/mapbox/:z/:x/:y', isLoggedIn, (req, res, next) => {
  *
  * @name Planet
  * @path {GET} /api/planet/:datetime/:z/:x/:y
- * @params {String} :datetime unix-timestamp.
+ * @params {String} :dateTime unix-timestamp.
  * @params {String} :z is the z-coordinate.
  * @params {String} :x is the x-coordinate.
  * @params {String} :y is the y-coordinate.
  */
-router.get('/planet/:datetime/:z/:x/:y', isLoggedIn, (req, res, next) => {
+router.get('/planet/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const z = parseInt(req.params.z, 10);
   const x = parseInt(req.params.x, 10);
   const y = parseInt(req.params.y, 10);
@@ -112,7 +112,7 @@ router.get('/planet/:datetime/:z/:x/:y', isLoggedIn, (req, res, next) => {
     fs.mkdirSync(hostFolder);
   }
 
-  const unixTimestamp = parseInt(req.params.datetime, 10);
+  const unixTimestamp = parseInt(req.params.dateTime, 10);
   let currentdate = new Date(Math.floor(unixTimestamp / 1000 / 60 / 60 / 24) * 1000 * 60 * 60 * 24);
   currentdate = currentdate.getTime() - (currentdate.getDate() * 24 * 60 * 60 * 1000);
   const date = new Date(currentdate);
@@ -163,22 +163,33 @@ router.get('/planet/:datetime/:z/:x/:y', isLoggedIn, (req, res, next) => {
 });
 
 /**
- * Renders a 256x256 pixels PNG-image based on the temperature
- * of the five nearest SensorHubs.
+ * Handles the PDS tile services;
+ * also used for caching the tiles.
  *
- * @name Temperature map
- * @path {GET} /api/temperature/:z/:x/:y
- * @params {String} :dateTime is unix-timestamp.
+ * @name Type
+ * @path {GET} /:type/:dateTime/:z/:x/:y
+ * @params {String} :type type of data.
+ * @params {String} :dateTime unix-timestamp.
  * @params {String} :z is the z-coordinate.
  * @params {String} :x is the x-coordinate.
  * @params {String} :y is the y-coordinate.
  */
-router.get('/temperature/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
+router.get('/:type/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const z = parseInt(req.params.z, 10);
   const x = parseInt(req.params.x, 10);
   const y = parseInt(req.params.y, 10);
+  const {
+    type,
+  } = req.params;
 
-  const hostFolder = path.resolve(cacheFolder, 'temperature');
+  const types = ['gasses', 'light', 'temperature'];
+  if (!types.includes(type)) {
+    res.status(501);
+    res.sendFile(errorImage);
+    return;
+  }
+
+  const hostFolder = path.resolve(cacheFolder, type);
   if (!fs.existsSync(hostFolder)) {
     fs.mkdirSync(hostFolder);
   }
@@ -194,13 +205,14 @@ router.get('/temperature/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
 
   SensorHub.find({}).exec()
     .then(sensorHubs => Data.find({
+      Type: type,
       Timestamp: {
         $gt: new Date(requestedDate.getTime() - (30 * 60 * 1000)),
         $lte: new Date(requestedDate.getTime() + (30 * 60 * 1000)),
       },
     }).exec().then(data => [sensorHubs, data]))
-    .then(([sensorHubs, data]) => {
-      const image = generateImage(req.params, sensorHubs, data);
+    .then(([sensorHubs, data]) => generateImage(req.params, sensorHubs, data))
+    .then((image) => {
       image.write(filePath);
       image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
         if (err) {
@@ -224,9 +236,7 @@ router.get('/temperature/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
  * @path {GET} /api/sensorhubs
  */
 router.get('/sensorhubs', isLoggedIn, (req, res, next) => {
-  SensorHub
-    .find({})
-    .exec()
+  SensorHub.find({}).exec()
     .then((sensorHubs) => {
       res.render('sensorhubs', {
         layout: false,
@@ -242,7 +252,7 @@ router.get('/sensorhubs', isLoggedIn, (req, res, next) => {
  * Sends the errorImage to the user for any unhandled request.
  *
  * @name 404
- * @path {GET} /api/*
+ * @path {ALL} /api/*
  */
 router.all('*', isLoggedIn, (req, res) => {
   res.status(404);

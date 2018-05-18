@@ -25,7 +25,7 @@
       </b>
     </label>
     <div class="btn-group" data-toggle="buttons" style="width: 100%;">
-      <label class="btn btn-default active form-check-label" style="width: 50%;">
+      <label class="btn btn-default form-check-label active" style="width: 50%;">
         <input class="form-check-input" type="radio" id="typeSat" checked autocomplete="off"> Satellite
       </label>
 
@@ -37,7 +37,7 @@
 
     <label>
       <b>
-        Layers:
+        Features:
       </b>
     </label>
     <div class="custom-control custom-checkbox">
@@ -46,13 +46,29 @@
     </div>
 
     <div class="custom-control custom-checkbox">
-      <input type="checkbox" class="custom-control-input" id="temperatureLayer">
-      <label class="custom-control-label" for="temperatureLayer">Temperature</label>
+      <input type="checkbox" class="custom-control-input" id="sensorhubLayer">
+      <label class="custom-control-label" for="sensorhubLayer">SensorHubs</label>
+    </div>
+    <hr>
+
+    <label>
+      <b>
+        Layers:
+      </b>
+    </label>
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="tempEnabled">
+      <label class="custom-control-label" for="tempEnabled">Temperature</label>
     </div>
 
     <div class="custom-control custom-checkbox">
-      <input type="checkbox" class="custom-control-input" id="sensorhubLayer">
-      <label class="custom-control-label" for="sensorhubLayer">SensorHubs</label>
+      <input type="checkbox" class="custom-control-input" id="gasEnabled">
+      <label class="custom-control-label" for="gasEnabled">Gasses</label>
+    </div>
+
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="lightEnabled">
+      <label class="custom-control-label" for="lightEnabled">Light</label>
     </div>
     <hr>
 

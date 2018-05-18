@@ -5,7 +5,9 @@ const isCI = require('is-ci');
 const path = require('path');
 
 /* Lib */
-const { downloadImage } = require('./../../helpers/image');
+const {
+  downloadImage,
+} = require('./../../helpers/image');
 
 chai.should();
 
