@@ -97,7 +97,7 @@ function generateImage(params, allSensorHubs, data) {
 
       Jimp.loadFont(Jimp.FONT_SANS_16_WHITE)
         .then((font) => {
-          const text = `CO: ${calculatedValue} PPM`;
+          const text = ` CO: ${calculatedValue} PPM`;
           const textWidth = measureText(font, text);
 
           for (let x = 0; x < (0 + (textWidth - 1)); x += 1) {
