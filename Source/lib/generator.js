@@ -63,16 +63,21 @@ function getColorFromLatLong(latitude, longitude, allSensorHubs, data) {
 }
 
 function generateImage(params, allSensorHubs, data) {
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
     const z = parseInt(params.z, 10);
     const x = parseInt(params.x, 10);
     const y = parseInt(params.y, 10);
 
-    const [lat1, lon1] = getLatLong({z, x, y});
+    const [lat1, lon1] = getLatLong({
+      z,
+      x,
+      y
+    });
+
     const [lat2, lon2] = getLatLong({
       z,
-      x: x - 1,
-      y: x - 1,
+      x: (x - 1),
+      y: (y - 1),
     });
 
     const lat = (Math.max(lat1, lat2) - Math.min(lat1, lat2)) / 2;
@@ -104,8 +109,7 @@ function generateImage(params, allSensorHubs, data) {
           image.print(font, 0, 0, text);
           resolve(image);
         });
-    }
-    else if (data[0].Type == 'light') {
+    } else if (data[0].Type == 'light') {
       let calculatedValue = (Math.floor(getCalculatedValue((down + (yMulti * 128)), (left + (xMulti * 128)), allSensorHubs, data) / 1024 * 8)) - 1;
       calculatedValue = Math.min(calculatedValue, 7);
       calculatedValue = Math.max(calculatedValue, 0);
@@ -120,8 +124,7 @@ function generateImage(params, allSensorHubs, data) {
 
           resolve(image);
         });
-    }
-    else if (data[0].Type == 'temperature') {
+    } else if (data[0].Type == 'temperature') {
       const incr = Math.min(getIncrement(z), 8);
       for (let x = 0; x < image.bitmap.width; x += incr) {
         for (let y = 0; y < image.bitmap.height; y += incr) {
