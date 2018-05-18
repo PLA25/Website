@@ -97,12 +97,12 @@ router.get('/mapbox/:z/:x/:y', isLoggedIn, (req, res, next) => {
  *
  * @name Planet
  * @path {GET} /api/planet/:datetime/:z/:x/:y
- * @params {String} :datetime unix-timestamp.
+ * @params {String} :dateTime unix-timestamp.
  * @params {String} :z is the z-coordinate.
  * @params {String} :x is the x-coordinate.
  * @params {String} :y is the y-coordinate.
  */
-router.get('/planet/:datetime/:z/:x/:y', isLoggedIn, (req, res, next) => {
+router.get('/planet/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const z = parseInt(req.params.z, 10);
   const x = parseInt(req.params.x, 10);
   const y = parseInt(req.params.y, 10);
@@ -112,7 +112,7 @@ router.get('/planet/:datetime/:z/:x/:y', isLoggedIn, (req, res, next) => {
     fs.mkdirSync(hostFolder);
   }
 
-  const unixTimestamp = parseInt(req.params.datetime, 10);
+  const unixTimestamp = parseInt(req.params.dateTime, 10);
   let currentdate = new Date(Math.floor(unixTimestamp / 1000 / 60 / 60 / 24) * 1000 * 60 * 60 * 24);
   currentdate = currentdate.getTime() - (currentdate.getDate() * 24 * 60 * 60 * 1000);
   const date = new Date(currentdate);
@@ -169,7 +169,7 @@ router.get('/planet/:datetime/:z/:x/:y', isLoggedIn, (req, res, next) => {
  * @name Type
  * @path {GET} /:type/:dateTime/:z/:x/:y
  * @params {String} :type type of data.
- * @params {String} :datetime unix-timestamp.
+ * @params {String} :dateTime unix-timestamp.
  * @params {String} :z is the z-coordinate.
  * @params {String} :x is the x-coordinate.
  * @params {String} :y is the y-coordinate.
