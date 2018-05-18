@@ -111,7 +111,9 @@ function generateImage(params, allSensorHubs, data) {
         });
     }
     else if (data[0].Type == 'light') {
-      const calculatedValue = (Math.floor(getCalculatedValue((down + (yMulti * 128)), (left + (xMulti * 128)), allSensorHubs, data) / 1024 * 8)) - 1;
+      let calculatedValue = (Math.floor(getCalculatedValue((down + (yMulti * 128)), (left + (xMulti * 128)), allSensorHubs, data) / 1024 * 8)) - 1;
+      calculatedValue = Math.min(calculatedValue, 7);
+      calculatedValue = Math.max(calculatedValue, 0);
 
       Jimp.read(`./public/bulb_${calculatedValue}.png`)
         .then((bulb) => {
