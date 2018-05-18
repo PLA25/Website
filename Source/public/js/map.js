@@ -259,7 +259,7 @@ $(document).ready(() => {
       value = `${currentdate.getDate()}/${currentdate.getMonth() + 1}/${currentdate.getFullYear()} @ ${currentdate.getHours()}`;
 
       planetXYZ.setUrl(`/api/planet/${currentdate.getTime()}/{z}/{x}/{y}`);
-      temperatureLayer.setUrl(`/api/heatmap/${currentdate.getTime()}/{z}/{x}/{y}`);
+      temperatureXYZ.setUrl(`/api/temperature/${currentdate.getTime()}/{z}/{x}/{y}`);
       gassesXYZ.setUrl(`/api/gasses/${currentdate.getTime()}/{z}/{x}/{y}`);
       lightXYZ.setUrl(`/api/light/${currentdate.getTime()}/{z}/{x}/{y}`);
 

@@ -162,12 +162,15 @@ router.get('/planet/:datetime/:z/:x/:y', isLoggedIn, (req, res, next) => {
     });
 });
 
-router.get('/gasses/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
+router.get('/:type/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const z = parseInt(req.params.z, 10);
   const x = parseInt(req.params.x, 10);
   const y = parseInt(req.params.y, 10);
+  const {
+    type,
+  } = req.params;
 
-  const hostFolder = path.resolve(cacheFolder, 'gasses');
+  const hostFolder = path.resolve(cacheFolder, type);
   if (!fs.existsSync(hostFolder)) {
     fs.mkdirSync(hostFolder);
   }
@@ -183,108 +186,7 @@ router.get('/gasses/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
 
   SensorHub.find({}).exec()
     .then(sensorHubs => Data.find({
-      Type: 'gasses',
-      Timestamp: {
-        $gt: new Date(requestedDate.getTime() - (30 * 60 * 1000)),
-        $lte: new Date(requestedDate.getTime() + (30 * 60 * 1000)),
-      },
-    }).exec().then(data => [sensorHubs, data]))
-    .then(([sensorHubs, data]) => generateImage(req.params, sensorHubs, data))
-    .then((image) => {
-      image.write(filePath);
-      image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
-        if (err) {
-          next(err);
-          return;
-        }
-
-        res.type('png');
-        res.send(buffer);
-      });
-    })
-    .catch((err) => {
-      next(err);
-    });
-});
-
-router.get('/light/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
-  const z = parseInt(req.params.z, 10);
-  const x = parseInt(req.params.x, 10);
-  const y = parseInt(req.params.y, 10);
-
-  const hostFolder = path.resolve(cacheFolder, 'light');
-  if (!fs.existsSync(hostFolder)) {
-    fs.mkdirSync(hostFolder);
-  }
-
-  const unixTimestamp = parseInt(req.params.dateTime, 10);
-  const requestedDate = new Date((Math.round(unixTimestamp / 1000 / 60 / 60)) * 1000 * 60 * 60);
-  const filePath = path.resolve(hostFolder, `${requestedDate.getTime()}_${z}_${x}_${y}.png`);
-  if (fs.existsSync(filePath)) {
-    res.type('png');
-    res.sendFile(filePath);
-    return;
-  }
-
-  SensorHub.find({}).exec()
-    .then(sensorHubs => Data.find({
-      Type: 'light',
-      Timestamp: {
-        $gt: new Date(requestedDate.getTime() - (30 * 60 * 1000)),
-        $lte: new Date(requestedDate.getTime() + (30 * 60 * 1000)),
-      },
-    }).exec().then(data => [sensorHubs, data]))
-    .then(([sensorHubs, data]) => generateImage(req.params, sensorHubs, data))
-    .then((image) => {
-      image.write(filePath);
-      image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
-        if (err) {
-          next(err);
-          return;
-        }
-
-        res.type('png');
-        res.send(buffer);
-      });
-    })
-    .catch((err) => {
-      next(err);
-    });
-});
-
-/**
- * Renders a 256x256 pixels PNG-image based on the temperature
- * of the five nearest SensorHubs.
- *
- * @name Temperature map
- * @path {GET} /api/temperature/:z/:x/:y
- * @params {String} :dateTime is unix-timestamp.
- * @params {String} :z is the z-coordinate.
- * @params {String} :x is the x-coordinate.
- * @params {String} :y is the y-coordinate.
- */
-router.get('/temperature/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
-  const z = parseInt(req.params.z, 10);
-  const x = parseInt(req.params.x, 10);
-  const y = parseInt(req.params.y, 10);
-
-  const hostFolder = path.resolve(cacheFolder, 'temperature');
-  if (!fs.existsSync(hostFolder)) {
-    fs.mkdirSync(hostFolder);
-  }
-
-  const unixTimestamp = parseInt(req.params.dateTime, 10);
-  const requestedDate = new Date((Math.round(unixTimestamp / 1000 / 60 / 60)) * 1000 * 60 * 60);
-  const filePath = path.resolve(hostFolder, `${requestedDate.getTime()}_${z}_${x}_${y}.png`);
-  if (fs.existsSync(filePath)) {
-    res.type('png');
-    res.sendFile(filePath);
-    return;
-  }
-
-  SensorHub.find({}).exec()
-    .then(sensorHubs => Data.find({
-      Type: 'temperature',
+      Type: type,
       Timestamp: {
         $gt: new Date(requestedDate.getTime() - (30 * 60 * 1000)),
         $lte: new Date(requestedDate.getTime() + (30 * 60 * 1000)),
