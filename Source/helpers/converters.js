@@ -106,6 +106,34 @@ function getIncrement(z) {
 }
 
 /**
+ * Converts a tile-coordinate to latitude and longitude.
+ *
+ * @function
+ * @param {Number} z - The z-coordinate.
+ * @param {Number} x - The x-coordinate.
+ * @param {Number} y - The y-coordinate.
+ * @returns {Number[]} - Latitude and Longitude
+ */
+function getLatLong({ z, x, y }) {
+  if (typeof z !== 'number') {
+    throw new Error('Expected \'z\' to be a number!');
+  }
+
+  if (typeof x !== 'number') {
+    throw new Error('Expected \'x\' to be a number!');
+  }
+
+  if (typeof y !== 'number') {
+    throw new Error('Expected \'y\' to be a number!');
+  }
+
+  const latitude = tileToLat(y, z);
+  const longitude = tileToLong(x, z);
+
+  return [latitude, longitude];
+}
+
+/**
  * Subtracts a given number of days from a Date.
  *
  * @function
@@ -211,6 +239,7 @@ module.exports = {
   calculateDegrees,
   degreesToColor,
   getIncrement,
+  getLatLong,
   subtractDays,
   temperatureToColor,
   temperatureToDegrees,

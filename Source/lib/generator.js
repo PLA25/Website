@@ -12,17 +12,11 @@ const distance = require('fast-haversine');
 
 const {
   getIncrement,
+  getLatLong,
   tileToLat,
   tileToLong,
   temperatureToColor,
 } = require('./../helpers/converters');
-
-function getLatLong({ z, x, y }) {
-  const latitude = tileToLat(parseInt(y, 10), parseInt(z, 10));
-  const longitude = tileToLong(parseInt(x, 10), parseInt(z, 10));
-
-  return [latitude, longitude];
-}
 
 function getCalculatedValue(latitude, longitude, allSensorHubs, data) {
   const to = {
@@ -70,11 +64,15 @@ function getColorFromLatLong(latitude, longitude, allSensorHubs, data) {
 
 function generateImage(params, allSensorHubs, data) {
   return new Promise(function(resolve, reject) {
-    const [lat1, lon1] = getLatLong(params);
+    const z = parseInt(params.z, 10);
+    const x = parseInt(params.x, 10);
+    const y = parseInt(params.y, 10);
+
+    const [lat1, lon1] = getLatLong({z, x, y});
     const [lat2, lon2] = getLatLong({
-      z: parseInt(params.z, 10),
-      x: parseInt(params.x, 10) - 1,
-      y: parseInt(params.y, 10) - 1,
+      z,
+      x: x - 1,
+      y: x - 1,
     });
 
     const lat = (Math.max(lat1, lat2) - Math.min(lat1, lat2)) / 2;
@@ -124,7 +122,7 @@ function generateImage(params, allSensorHubs, data) {
         });
     }
     else if (data[0].Type == 'temperature') {
-      const incr = Math.min(getIncrement(params.z), 8);
+      const incr = Math.min(getIncrement(z), 8);
       for (let x = 0; x < image.bitmap.width; x += incr) {
         for (let y = 0; y < image.bitmap.height; y += incr) {
           const latitude = down + (yMulti * y);
@@ -161,5 +159,4 @@ function measureText(font, text) {
 module.exports = {
   generateImage,
   getColorFromLatLong,
-  getIncrement,
 };
