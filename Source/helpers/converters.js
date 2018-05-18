@@ -102,7 +102,7 @@ function getIncrement(z) {
     throw new Error('Expected \'z\' to be a number!');
   }
 
-  return Math.min(2 ** Math.max((15 - parseInt(z, 10)), 3), 128);
+  return Math.min(2 ** Math.max((15 - z), 3), 128);
 }
 
 /**
