@@ -162,6 +162,18 @@ router.get('/planet/:datetime/:z/:x/:y', isLoggedIn, (req, res, next) => {
     });
 });
 
+/**
+ * Handles the PDS tile services;
+ * also used for caching the tiles.
+ *
+ * @name Type
+ * @path {GET} /:type/:dateTime/:z/:x/:y
+ * @params {String} :type type of data.
+ * @params {String} :datetime unix-timestamp.
+ * @params {String} :z is the z-coordinate.
+ * @params {String} :x is the x-coordinate.
+ * @params {String} :y is the y-coordinate.
+ */
 router.get('/:type/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const z = parseInt(req.params.z, 10);
   const x = parseInt(req.params.x, 10);
@@ -169,6 +181,13 @@ router.get('/:type/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const {
     type,
   } = req.params;
+
+  const types = ['gasses', 'light', 'temperature'];
+  if (!types.includes(type)) {
+    res.status(501);
+    res.sendFile(errorImage);
+    return;
+  }
 
   const hostFolder = path.resolve(cacheFolder, type);
   if (!fs.existsSync(hostFolder)) {
@@ -217,9 +236,7 @@ router.get('/:type/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
  * @path {GET} /api/sensorhubs
  */
 router.get('/sensorhubs', isLoggedIn, (req, res, next) => {
-  SensorHub
-    .find({})
-    .exec()
+  SensorHub.find({}).exec()
     .then((sensorHubs) => {
       res.render('sensorhubs', {
         layout: false,
@@ -235,7 +252,7 @@ router.get('/sensorhubs', isLoggedIn, (req, res, next) => {
  * Sends the errorImage to the user for any unhandled request.
  *
  * @name 404
- * @path {GET} /api/*
+ * @path {ALL} /api/*
  */
 router.all('*', isLoggedIn, (req, res) => {
   res.status(404);
