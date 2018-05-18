@@ -112,7 +112,25 @@ function generateImage(params, allSensorHubs, data) {
         .catch((err) => {
           reject(err);
         });
-    } else if (data[0].Type == 'temperature') {
+    }
+    else if (data[0].Type == 'light') {
+      const calculatedValue = (Math.floor(getCalculatedValue((down + (yMulti * 128)), (left + (xMulti * 128)), allSensorHubs, data) / 1024 * 8)) - 1;
+
+      Jimp.read(`./public/bulb_${calculatedValue}.png`)
+        .then((bulb) => {
+          for (let x = (256 - 64); x < 256; x += 1) {
+            for (let y = 64; y > 0; y -= 1) {
+              image.setPixelColor(bulb.getPixelColor(x - (256 - 64), 64 - y), x, 64 - y);
+            }
+          }
+
+          resolve(image);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    }
+    else if (data[0].Type == 'temperature') {
       const incr = Math.min(getIncrement(params.z), 8);
       for (let x = 0; x < image.bitmap.width; x += incr) {
         for (let y = 0; y < image.bitmap.height; y += incr) {
