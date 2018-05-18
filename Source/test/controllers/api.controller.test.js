@@ -73,6 +73,88 @@ module.exports = () => {
     });
   });
 
+  describe('GET /gasses/:dateTime/:z/:x/:y', () => {
+    describe('Not logged in', () => {
+      it('should redirect to /login', (done) => {
+        request(app).get('/api/gasses/1526256000000/8/132/86')
+          .end((err, res) => {
+            res.headers.location.should.equal('/login');
+            done();
+          });
+      });
+
+      it('should return a 302 response', (done) => {
+        request(app).get('/api/gasses/1526256000000/8/132/86')
+          .end((err, res) => {
+            res.statusCode.should.equal(302);
+            done();
+          });
+      });
+    });
+
+    describe('Logged in admin', () => {
+      it('should create any missing folder(s)', (done) => {
+        deleteFolderRecursive(path.resolve(cacheFolder, 'gasses'));
+
+        authenticatedAdmin.get('/api/gasses/1526256000000/8/132/86')
+          .end((err, res) => {
+            res.statusCode.should.equal(200);
+            done();
+          });
+      });
+
+      it('should return a 200 response for /api/gasses/1526256000000/8/132/86', (done) => {
+        deleteFolderRecursive(path.resolve(cacheFolder, 'gasses'));
+
+        authenticatedAdmin.get('/api/gasses/1526256000000/8/132/86')
+          .end((err, res) => {
+            res.statusCode.should.equal(200);
+            done();
+          });
+      });
+
+      it('should return cached copy of /api/gasses/1526256000000/8/132/86', (done) => {
+        authenticatedAdmin.get('/api/gasses/1526256000000/8/132/86')
+          .end((err, res) => {
+            // TODO: res.statusCode.should.equal(304);
+            res.statusCode.should.equal(200);
+            done();
+          });
+      });
+    });
+
+    describe('Logged in admin', () => {
+      it('should create any missing folder(s)', (done) => {
+        deleteFolderRecursive(path.resolve(cacheFolder, 'gasses'));
+
+        authenticatedUser.get('/api/gasses/1526256000000/8/132/86')
+          .end((err, res) => {
+            res.statusCode.should.equal(200);
+            done();
+          });
+      });
+
+      it('should return a 200 response for /api/gasses/1526256000000/8/132/86', (done) => {
+        deleteFolderRecursive(path.resolve(cacheFolder, 'gasses'));
+
+        authenticatedUser.get('/api/gasses/1526256000000/8/132/86')
+          .end((err, res) => {
+            res.statusCode.should.equal(200);
+            done();
+          });
+      });
+
+      it('should return a cached copy of /api/gasses/1526256000000/8/132/86', (done) => {
+        authenticatedUser.get('/api/gasses/1526256000000/8/132/86')
+          .end((err, res) => {
+            // TODO: res.statusCode.should.equal(304);
+            res.statusCode.should.equal(200);
+            done();
+          });
+      });
+    });
+  });
+
   describe('GET /temperature/:dateTime/:z/:x/:y', () => {
     describe('Not logged in', () => {
       it('should redirect to /login', (done) => {
