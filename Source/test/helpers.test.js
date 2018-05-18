@@ -9,9 +9,6 @@ const temperatureToDegrees = require('./helpers/converters.temperatureToDegrees.
 const tileToLat = require('./helpers/converters.tileToLat.test');
 const tileToLong = require('./helpers/converters.tileToLong.test');
 
-/* Database */
-const getAllData = require('./helpers/database.getAllData.test');
-
 /* Image */
 const downloadImage = require('./helpers/image.downloadImage.test');
 
@@ -26,10 +23,6 @@ describe('Helpers', () => {
     describe('Function: temperatureToDegrees', temperatureToDegrees);
     describe('Function: tileToLat', tileToLat);
     describe('Function: tileToLong', tileToLong);
-  });
-
-  describe('Database', () => {
-    describe('Function: getAllData', getAllData);
   });
 
   describe('Image', () => {
