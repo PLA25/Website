@@ -23,7 +23,7 @@ function getLatLong({ z, x, y }) {
   return [latitude, longitude];
 }
 
-function getColorFromLatLong(latitude, longitude, allSensorHubs, data) {
+function getCalculatedValue(latitude, longitude, allSensorHubs, data) {
   const to = {
     lat: parseFloat(latitude, 10),
     lon: parseFloat(longitude, 10),
@@ -58,6 +58,11 @@ function getColorFromLatLong(latitude, longitude, allSensorHubs, data) {
     calculatedValue += (parseFloat(dataNode.Value, 10) * weight);
   });
 
+  return calculatedValue;
+}
+
+function getColorFromLatLong(latitude, longitude, allSensorHubs, data) {
+  const calculatedValue = getCalculatedValue(latitude, longitude, allSensorHubs, data);
   const rgb = temperatureToColor(calculatedValue);
   return Jimp.rgbaToInt(rgb[0], rgb[1], rgb[2], parseFloat(0.25 * 255));
 }
@@ -67,45 +72,82 @@ function getIncrement(z) {
 }
 
 function generateImage(params, allSensorHubs, data) {
-  const [lat1, lon1] = getLatLong(params);
-  const [lat2, lon2] = getLatLong({
-    z: parseInt(params.z, 10),
-    x: parseInt(params.x, 10) - 1,
-    y: parseInt(params.y, 10) - 1,
-  });
+  return new Promise(function(resolve, reject) {
+    const [lat1, lon1] = getLatLong(params);
+    const [lat2, lon2] = getLatLong({
+      z: parseInt(params.z, 10),
+      x: parseInt(params.x, 10) - 1,
+      y: parseInt(params.y, 10) - 1,
+    });
 
-  const lat = (Math.max(lat1, lat2) - Math.min(lat1, lat2)) / 2;
-  const lon = (Math.max(lon1, lon2) - Math.min(lon1, lon2)) / 2;
+    const lat = (Math.max(lat1, lat2) - Math.min(lat1, lat2)) / 2;
+    const lon = (Math.max(lon1, lon2) - Math.min(lon1, lon2)) / 2;
 
-  const left = lon1 - lon;
-  const up = lat1 - lat;
-  const right = lon1 + lon;
-  const down = lat1 + lat;
+    const left = lon1 - lon;
+    const up = lat1 - lat;
+    const right = lon1 + lon;
+    const down = lat1 + lat;
 
-  const xMulti = (right - left) / 256;
-  const yMulti = (up - down) / 256;
+    const xMulti = (right - left) / 256;
+    const yMulti = (up - down) / 256;
 
-  const image = new Jimp(256, 256, 0x0);
+    const image = new Jimp(256, 256, 0x0);
+    if (data[0].Type == 'gasses') {
+      const calculatedValue = Math.round(getCalculatedValue((down + (yMulti * 128)), (left + (xMulti * 128)), allSensorHubs, data));
 
-  const incr = Math.min(getIncrement(params.z), 8);
-  for (let x = 0; x < image.bitmap.width; x += incr) {
-    for (let y = 0; y < image.bitmap.height; y += incr) {
-      const latitude = down + (yMulti * y);
-      const longitude = left + (xMulti * x);
+      Jimp.loadFont(Jimp.FONT_SANS_16_WHITE)
+        .then((font) => {
+          const text = `CO: ${calculatedValue} PPM`;
+          const textWidth = measureText(font, text);
 
-      const color = getColorFromLatLong(latitude, longitude, allSensorHubs, data);
+          for (let x = 0; x < (0 + (textWidth - 1)); x += 1) {
+            for (let y = 0; y < 18; y += 1) {
+              image.setPixelColor(Jimp.rgbaToInt(0, 0, 0, parseFloat(1 * 255)), x, y);
+            }
+          }
 
-      image.setPixelColor(color, x, y);
+          image.print(font, 0, 0, text);
+          resolve(image);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    } else if (data[0].Type == 'temperature') {
+      const incr = Math.min(getIncrement(params.z), 8);
+      for (let x = 0; x < image.bitmap.width; x += incr) {
+        for (let y = 0; y < image.bitmap.height; y += incr) {
+          const latitude = down + (yMulti * y);
+          const longitude = left + (xMulti * x);
 
-      for (let i = 0; i < incr; i += 1) {
-        for (let l = 0; l < incr; l += 1) {
-          image.setPixelColor(color, (x + i), (y + l));
+          const color = getColorFromLatLong(latitude, longitude, allSensorHubs, data);
+
+          image.setPixelColor(color, x, y);
+
+          for (let i = 0; i < incr; i += 1) {
+            for (let l = 0; l < incr; l += 1) {
+              image.setPixelColor(color, (x + i), (y + l));
+            }
+          }
         }
       }
+
+      resolve(image);
+    } else {
+      reject(new Error());
+    }
+  });
+}
+
+function measureText(font, text) {
+  let x = 0;
+  for (let i = 0; i < text.length; i++) {
+    if (font.chars[text[i]]) {
+      x += font.chars[text[i]].xoffset
+                + (font.kernings[text[i]] && font.kernings[text[i]][text[i + 1]] ? font.kernings[text[i]][text[i + 1]] : 0)
+                + (font.chars[text[i]].xadvance || 0);
     }
   }
-
-  return image;
+  return x;
 }
 
 module.exports = {
