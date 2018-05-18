@@ -2,7 +2,9 @@
 const chai = require('chai');
 
 /* Lib */
-const { tileToLat } = require('./../../helpers/converters');
+const {
+  tileToLat,
+} = require('./../../helpers/converters');
 
 chai.should();
 
@@ -44,6 +46,5 @@ module.exports = () => {
     });
   });
 
-  describe('Test cases', () => {
-  });
+  describe('Test cases', () => {});
 };

@@ -40,7 +40,7 @@ module.exports = () => {
       // Act
       getAllData('Amsterdam', 'Groningen')
         .catch((err) => {
-        // Assert
+          // Assert
           err.should.be.an.instanceOf(Error);
           err.should.have.property('message', 'Expected \'numberOfDays\' to be a number!');
 
@@ -66,9 +66,9 @@ module.exports = () => {
       // Act
       getAllData('Paris', 365)
         .then(([sensorHub]) => {
-        /*
-         * .then(([sensorHub, data]) => {
-         */
+          /*
+           * .then(([sensorHub, data]) => {
+           */
           // Assert
           sensorHub.Latitude.should.equal('48.856614');
           sensorHub.Longitude.should.equal('2.352222');

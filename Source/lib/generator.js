@@ -11,6 +11,7 @@ const Jimp = require('jimp');
 const distance = require('fast-haversine');
 
 const {
+  getIncrement,
   tileToLat,
   tileToLong,
   temperatureToColor,
@@ -65,10 +66,6 @@ function getColorFromLatLong(latitude, longitude, allSensorHubs, data) {
   const calculatedValue = getCalculatedValue(latitude, longitude, allSensorHubs, data);
   const rgb = temperatureToColor(calculatedValue);
   return Jimp.rgbaToInt(rgb[0], rgb[1], rgb[2], parseFloat(0.25 * 255));
-}
-
-function getIncrement(z) {
-  return Math.min(2 ** Math.max((15 - parseInt(z, 10)), 3), 128);
 }
 
 function generateImage(params, allSensorHubs, data) {

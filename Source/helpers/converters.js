@@ -91,6 +91,21 @@ function degreesToColor(degrees) {
 }
 
 /**
+ * Converts the Z-level of an OpenLayers map to an increment.
+ *
+ * @function
+ * @param {Number} z - Z-level of the OpenLayers map.
+ * @returns {Number} - Increment.
+ */
+function getIncrement(z) {
+  if (typeof z !== 'number') {
+    throw new Error('Expected \'z\' to be a number!');
+  }
+
+  return Math.min(2 ** Math.max((15 - parseInt(z, 10)), 3), 128);
+}
+
+/**
  * Subtracts a given number of days from a Date.
  *
  * @function
@@ -195,6 +210,7 @@ function tileToLong(x, z) {
 module.exports = {
   calculateDegrees,
   degreesToColor,
+  getIncrement,
   subtractDays,
   temperatureToColor,
   temperatureToDegrees,
