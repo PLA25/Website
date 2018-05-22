@@ -20,7 +20,7 @@
   "index": {
     "heading": "Home",
     "hometext1": "Welcome to the homepage of the opensource Pollution Detection System. This system uses the Planet API for map images and your own sensorhubs for the Pollution details. Visit our github for details about the sensorhubs. https://github.com/PLA25/Sensors",
-    "hometext2": "The full documentation for the website can be found here: https://github.com/PLA25/Website/tree/master/docs",
+    "hometext2": "The full documentation for the website can be found here: https://pla25.github.io/Website/",
     "hometext3": "The homepage text can be edited in the language files (Location: locals/en for English and locales/nl for Dutch) and the index.hbs file. (Location: views/indes.hbs)"
   },
   "layout": {
