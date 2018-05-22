@@ -20,7 +20,7 @@
   "index": {
     "heading": "Home",
     "hometext1": "Welkom bij de homepagina van het opensource Pollution Detection System. Dit systeem gebruikt de Planet API voor de kaart en u eigen sensorhubs voor de Pollution details. Bezoek onze github voor de details over de sensorhubs. https://github.com/PLA25/Sensors",
-    "hometext2": "De volledige documentatie voor de website kan hier gevonden worden: https://github.com/PLA25/Website/tree/master/docs",
+    "hometext2": "De volledige documentatie voor de website kan hier gevonden worden: https://pla25.github.io/Website/",
     "hometext3": "De homepagina tekst kan worden aangepast in het taalbestand. (Locatie: locals/en voor Engels en locals/nl voor Nederlands) en het index.hbs bestand. (Locatie: views/indes.hbs)" 
   },
   "layout": {
