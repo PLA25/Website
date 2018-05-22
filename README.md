@@ -33,6 +33,7 @@ In the Website/Source folder execute the following command:
 $ npm start
 ```
 Navigate to http://localhost:3000 and login using the credentials.
+
 | Username | Password | about |
 | ------ | ------ | ------ |
 | admin | admin | This is the admin account! |
