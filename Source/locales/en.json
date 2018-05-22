@@ -19,8 +19,8 @@
   },
   "index": {
     "heading": "Home",
-    "hometext1": "Welcome to the homepage of the Open Source Pollution Detection System. This system uses the Planet API for map images and your own sensorhubs for the pollution details. Visit our Github for details about the sensorhubs. https://github.com/PLA25/Sensors",
-    "hometext2": "The full documentation for the website can be found here: https://pla25.github.io/Website/",
+    "hometext1": "Welcome to the homepage of the Open Source Pollution Detection System. This system uses the Planet API for map images and your own sensorhubs for the pollution details. Visit our Github for details about the sensorhubs. ",
+    "hometext2": "The full documentation for the website can be found here: ",
     "hometext3": "The homepage text can be edited in the language files (Location: locals/en for English and locales/nl for Dutch) and the index.hbs file. (Location: views/index.hbs)",
     "hometext4": "In the index.hbs file you can set the amount of paragraphs by adding extra <br><br> and index.hometextNUMBER, you then need to add the index.hometextNUMBER in the 'locals/nl' and 'locals/en' files."
   },
