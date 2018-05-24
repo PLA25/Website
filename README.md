@@ -1,7 +1,7 @@
 # Pollution Detection System
 PDS is a Open Source, mobile-ready Pollution Detection System which uses the Planet.com API.
 
-# How to install
+## How to install
 
 ### Step 1: Clone the repository and install the dependencies
 Step 1 can be done in two different ways.
@@ -44,7 +44,7 @@ Navigate to http://localhost:3000 and login using the credentials.
 ### Step 5: Security
 Change the admin and user Password in the admin panel!
 
-# Development
+## Development
 This project in maintained by the following awesome people:
 - [mvegter](https://github.com/mvegter)
 - [Snidjers](https://github.com/Snidjers)
