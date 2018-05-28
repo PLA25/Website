@@ -26,3 +26,54 @@ body {
 .navbar, .page-footer {
 	background-color: royalblue;
 }
+
+.sidebar, .map {
+	margin: 1rem;
+	height: Calc(100vh - 56px - 53px - 2rem);
+	float: left;
+}
+.sidebar {
+	width: Calc(42.5% - 1.5rem);
+	margin-right: 0.5rem;
+}
+
+.map {
+	width: Calc(57.5% - 1.5rem);
+	margin-left: 0.5rem;
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+	.sidebar {
+		width: Calc(32.5% - 1.5rem);
+	}
+	
+	.map {
+		width: Calc(67.5% - 1.5rem);
+	}
+ }
+
+
+@media (min-width: 1200px) {
+	.sidebar {
+		width: Calc(25% - 1.5rem);
+	}
+	
+	.map {
+		width: Calc(75% - 1.5rem);
+	}
+}
+
+.card-body {
+	height: 100%;
+	width: 100%;
+}
+
+#map {
+	height: 90%;
+	width: 100%;
+}
+
+.scale {
+	margin: 0.5%;
+	float: right;
+}
