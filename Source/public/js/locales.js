@@ -1,4 +1,4 @@
-$(() => {
+$(document).ready(() => {
   $('#locale-en').click(() => {
     window.location = '/locale-en';
   });
