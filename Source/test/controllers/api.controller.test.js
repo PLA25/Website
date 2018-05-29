@@ -35,7 +35,7 @@ const cacheFolder = path.resolve(`${__dirname}./../../cache`);
  * 1512086400000 = 12/01/2017 @ 12:00am (UTC)
  * 1514764800000 = 01/01/2018 @ 12:00am (UTC)
  * 1525132800000 = 05/01/2018 @ 12:00am (UTC)
- * 1526256000000 = 05/14/2018 @ 12:00am (UTC)
+ * 1526428800000 = 05/14/2018 @ 12:00am (UTC)
  * 1546300800000 = 01/01/2019 @ 12:00am (UTC)
  */
 
@@ -77,7 +77,7 @@ module.exports = () => {
     describe('*', () => {
       describe('Not logged in', () => {
         it('should redirect to /login', (done) => {
-          request(app).get('/api/gasses/1526256000000/8/132/86')
+          request(app).get('/api/gasses/1526428800000/8/132/86')
             .end((err, res) => {
               res.headers.location.should.equal('/login');
               done();
@@ -87,7 +87,7 @@ module.exports = () => {
 
       describe('Logged in admin', () => {
         it('should return a 501 response for an unknown data type', (done) => {
-          authenticatedAdmin.get('/api/fire/1526256000000/8/132/86')
+          authenticatedAdmin.get('/api/fire/1526428800000/8/132/86')
             .end((err, res) => {
               res.statusCode.should.equal(501);
               done();
@@ -97,7 +97,7 @@ module.exports = () => {
 
       describe('Logged in user', () => {
         it('should return a 501 response for an unknown data type', (done) => {
-          authenticatedUser.get('/api/fire/1526256000000/8/132/86')
+          authenticatedUser.get('/api/fire/1526428800000/8/132/86')
             .end((err, res) => {
               res.statusCode.should.equal(501);
               done();
@@ -109,7 +109,7 @@ module.exports = () => {
     describe('GET /gasses/:dateTime/:z/:x/:y', () => {
       describe('Not logged in', () => {
         it('should redirect to /login', (done) => {
-          request(app).get('/api/gasses/1526256000000/8/132/86')
+          request(app).get('/api/gasses/1526428800000/8/132/86')
             .end((err, res) => {
               res.headers.location.should.equal('/login');
               done();
@@ -117,7 +117,7 @@ module.exports = () => {
         });
 
         it('should return a 302 response', (done) => {
-          request(app).get('/api/gasses/1526256000000/8/132/86')
+          request(app).get('/api/gasses/1526428800000/8/132/86')
             .end((err, res) => {
               res.statusCode.should.equal(302);
               done();
@@ -129,25 +129,25 @@ module.exports = () => {
         it('should create any missing folder(s)', (done) => {
           deleteFolderRecursive(path.resolve(cacheFolder, 'gasses'));
 
-          authenticatedAdmin.get('/api/gasses/1526256000000/8/132/86')
+          authenticatedAdmin.get('/api/gasses/1526428800000/8/132/86')
             .end((err, res) => {
               res.statusCode.should.equal(200);
               done();
             });
         });
 
-        it('should return a 200 response for /api/gasses/1526256000000/8/132/86', (done) => {
+        it('should return a 200 response for /api/gasses/1526428800000/8/132/86', (done) => {
           deleteFolderRecursive(path.resolve(cacheFolder, 'gasses'));
 
-          authenticatedAdmin.get('/api/gasses/1526256000000/8/132/86')
+          authenticatedAdmin.get('/api/gasses/1526428800000/8/132/86')
             .end((err, res) => {
               res.statusCode.should.equal(200);
               done();
             });
         });
 
-        it('should return cached copy of /api/gasses/1526256000000/8/132/86', (done) => {
-          authenticatedAdmin.get('/api/gasses/1526256000000/8/132/86')
+        it('should return cached copy of /api/gasses/1526428800000/8/132/86', (done) => {
+          authenticatedAdmin.get('/api/gasses/1526428800000/8/132/86')
             .end((err, res) => {
             // TODO: res.statusCode.should.equal(304);
               res.statusCode.should.equal(200);
@@ -160,25 +160,25 @@ module.exports = () => {
         it('should create any missing folder(s)', (done) => {
           deleteFolderRecursive(path.resolve(cacheFolder, 'gasses'));
 
-          authenticatedUser.get('/api/gasses/1526256000000/8/132/86')
+          authenticatedUser.get('/api/gasses/1526428800000/8/132/86')
             .end((err, res) => {
               res.statusCode.should.equal(200);
               done();
             });
         });
 
-        it('should return a 200 response for /api/gasses/1526256000000/8/132/86', (done) => {
+        it('should return a 200 response for /api/gasses/1526428800000/8/132/86', (done) => {
           deleteFolderRecursive(path.resolve(cacheFolder, 'gasses'));
 
-          authenticatedUser.get('/api/gasses/1526256000000/8/132/86')
+          authenticatedUser.get('/api/gasses/1526428800000/8/132/86')
             .end((err, res) => {
               res.statusCode.should.equal(200);
               done();
             });
         });
 
-        it('should return a cached copy of /api/gasses/1526256000000/8/132/86', (done) => {
-          authenticatedUser.get('/api/gasses/1526256000000/8/132/86')
+        it('should return a cached copy of /api/gasses/1526428800000/8/132/86', (done) => {
+          authenticatedUser.get('/api/gasses/1526428800000/8/132/86')
             .end((err, res) => {
             // TODO: res.statusCode.should.equal(304);
               res.statusCode.should.equal(200);
@@ -191,7 +191,7 @@ module.exports = () => {
     describe('GET /light/:dateTime/:z/:x/:y', () => {
       describe('Not logged in', () => {
         it('should redirect to /login', (done) => {
-          request(app).get('/api/light/1526256000000/8/132/86')
+          request(app).get('/api/light/1526428800000/8/132/86')
             .end((err, res) => {
               res.headers.location.should.equal('/login');
               done();
@@ -199,7 +199,7 @@ module.exports = () => {
         });
 
         it('should return a 302 response', (done) => {
-          request(app).get('/api/light/1526256000000/8/132/86')
+          request(app).get('/api/light/1526428800000/8/132/86')
             .end((err, res) => {
               res.statusCode.should.equal(302);
               done();
@@ -211,25 +211,25 @@ module.exports = () => {
         it('should create any missing folder(s)', (done) => {
           deleteFolderRecursive(path.resolve(cacheFolder, 'light'));
 
-          authenticatedAdmin.get('/api/light/1526256000000/8/132/86')
+          authenticatedAdmin.get('/api/light/1526428800000/8/132/86')
             .end((err, res) => {
               res.statusCode.should.equal(200);
               done();
             });
         });
 
-        it('should return a 200 response for /api/light/1526256000000/8/132/86', (done) => {
+        it('should return a 200 response for /api/light/1526428800000/8/132/86', (done) => {
           deleteFolderRecursive(path.resolve(cacheFolder, 'light'));
 
-          authenticatedAdmin.get('/api/light/1526256000000/8/132/86')
+          authenticatedAdmin.get('/api/light/1526428800000/8/132/86')
             .end((err, res) => {
               res.statusCode.should.equal(200);
               done();
             });
         });
 
-        it('should return cached copy of /api/light/1526256000000/8/132/86', (done) => {
-          authenticatedAdmin.get('/api/light/1526256000000/8/132/86')
+        it('should return cached copy of /api/light/1526428800000/8/132/86', (done) => {
+          authenticatedAdmin.get('/api/light/1526428800000/8/132/86')
             .end((err, res) => {
             // TODO: res.statusCode.should.equal(304);
               res.statusCode.should.equal(200);
@@ -242,25 +242,25 @@ module.exports = () => {
         it('should create any missing folder(s)', (done) => {
           deleteFolderRecursive(path.resolve(cacheFolder, 'gasses'));
 
-          authenticatedUser.get('/api/light/1526256000000/8/132/86')
+          authenticatedUser.get('/api/light/1526428800000/8/132/86')
             .end((err, res) => {
               res.statusCode.should.equal(200);
               done();
             });
         });
 
-        it('should return a 200 response for /api/light/1526256000000/8/132/86', (done) => {
+        it('should return a 200 response for /api/light/1526428800000/8/132/86', (done) => {
           deleteFolderRecursive(path.resolve(cacheFolder, 'light'));
 
-          authenticatedUser.get('/api/light/1526256000000/8/132/86')
+          authenticatedUser.get('/api/light/1526428800000/8/132/86')
             .end((err, res) => {
               res.statusCode.should.equal(200);
               done();
             });
         });
 
-        it('should return a cached copy of /api/light/1526256000000/8/132/86', (done) => {
-          authenticatedUser.get('/api/light/1526256000000/8/132/86')
+        it('should return a cached copy of /api/light/1526428800000/8/132/86', (done) => {
+          authenticatedUser.get('/api/light/1526428800000/8/132/86')
             .end((err, res) => {
             // TODO: res.statusCode.should.equal(304);
               res.statusCode.should.equal(200);
@@ -273,7 +273,7 @@ module.exports = () => {
     describe('GET /temperature/:dateTime/:z/:x/:y', () => {
       describe('Not logged in', () => {
         it('should redirect to /login', (done) => {
-          request(app).get('/api/temperature/1526256000000/8/132/86')
+          request(app).get('/api/temperature/1526428800000/8/132/86')
             .end((err, res) => {
               res.headers.location.should.equal('/login');
               done();
@@ -281,7 +281,7 @@ module.exports = () => {
         });
 
         it('should return a 302 response', (done) => {
-          request(app).get('/api/temperature/1526256000000/8/132/86')
+          request(app).get('/api/temperature/1526428800000/8/132/86')
             .end((err, res) => {
               res.statusCode.should.equal(302);
               done();
@@ -293,25 +293,35 @@ module.exports = () => {
         it('should create any missing folder(s)', (done) => {
           deleteFolderRecursive(path.resolve(cacheFolder, 'temperature'));
 
-          authenticatedAdmin.get('/api/temperature/1526256000000/8/132/86')
+          authenticatedAdmin.get('/api/temperature/1526428800000/8/131/84')
             .end((err, res) => {
               res.statusCode.should.equal(200);
               done();
             });
         });
 
-        it('should return a 200 response for /api/temperature/1526256000000/8/132/86', (done) => {
+        it('should return a 200 response for /api/gasses/1526428800000/8/131/84', (done) => {
+          deleteFolderRecursive(path.resolve(cacheFolder, 'gasses'));
+
+          authenticatedAdmin.get('/api/gasses/1526428800000/8/131/84')
+            .end((err, res) => {
+              res.statusCode.should.equal(200);
+              done();
+            });
+        });
+
+        it('should return a 200 response for /api/temperature/1526428800000/8/132/86', (done) => {
           deleteFolderRecursive(path.resolve(cacheFolder, 'temperature'));
 
-          authenticatedAdmin.get('/api/temperature/1526256000000/8/132/86')
+          authenticatedAdmin.get('/api/temperature/1526428800000/8/132/86')
             .end((err, res) => {
               res.statusCode.should.equal(200);
               done();
             });
         });
 
-        it('should return cached copy of /api/temperature/1526256000000/8/132/86', (done) => {
-          authenticatedAdmin.get('/api/temperature/1526256000000/8/132/86')
+        it('should return cached copy of /api/temperature/1526428800000/8/132/86', (done) => {
+          authenticatedAdmin.get('/api/temperature/1526428800000/8/132/86')
             .end((err, res) => {
             // TODO: res.statusCode.should.equal(304);
               res.statusCode.should.equal(200);
@@ -324,25 +334,25 @@ module.exports = () => {
         it('should create any missing folder(s)', (done) => {
           deleteFolderRecursive(path.resolve(cacheFolder, 'temperature'));
 
-          authenticatedUser.get('/api/temperature/1526256000000/8/132/86')
+          authenticatedUser.get('/api/temperature/1526428800000/8/132/86')
             .end((err, res) => {
               res.statusCode.should.equal(200);
               done();
             });
         });
 
-        it('should return a 200 response for /api/temperature/1526256000000/8/132/86', (done) => {
+        it('should return a 200 response for /api/temperature/1526428800000/8/132/86', (done) => {
           deleteFolderRecursive(path.resolve(cacheFolder, 'temperature'));
 
-          authenticatedUser.get('/api/temperature/1526256000000/8/132/86')
+          authenticatedUser.get('/api/temperature/1526428800000/8/132/86')
             .end((err, res) => {
               res.statusCode.should.equal(200);
               done();
             });
         });
 
-        it('should return a cached copy of /api/temperature/1526256000000/8/132/86', (done) => {
-          authenticatedUser.get('/api/temperature/1526256000000/8/132/86')
+        it('should return a cached copy of /api/temperature/1526428800000/8/132/86', (done) => {
+          authenticatedUser.get('/api/temperature/1526428800000/8/132/86')
             .end((err, res) => {
             // TODO: res.statusCode.should.equal(304);
               res.statusCode.should.equal(200);

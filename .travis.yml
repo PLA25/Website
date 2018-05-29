@@ -15,6 +15,6 @@ script:
   - npm run lint
   - npm test
 
-after_success:
+after_script:
   - npm run coverage-coveralls
   - npm run coverage-codecov

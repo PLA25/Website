@@ -33,6 +33,21 @@ router.get('/', isLoggedIn, (req, res) => {
   res.render('index');
 });
 
+// eslint-disable-next-line no-extend-native, func-names
+Date.prototype.format = function () {
+  const mm = this.getMonth() + 1;
+  const dd = this.getDate();
+  const hour = this.getHours();
+  const min = this.getMinutes();
+
+  return [this.getFullYear(),
+    (mm > 9 ? '' : '0') + mm,
+    (dd > 9 ? '' : '0') + dd,
+    `${(hour > 9 ? '' : '0') + hour}:${
+      min > 9 ? '' : '0'}${min}`,
+  ].join(' - ');
+};
+
 /**
  * Renders a specific sensorhub page.
  *
@@ -70,6 +85,21 @@ router.get('/sensorhub/:SerialID', isLoggedIn, (req, res, next) => {
     }).exec()
       .then(gassesData => [sensorHub, temperatureData, lightData, gassesData]))
     .then(([sensorHub, temperatureData, lightData, gassesData]) => {
+      temperatureData.forEach((tempData) => {
+        // eslint-disable-next-line no-param-reassign
+        tempData.locale = new Date(tempData.Timestamp).format();
+      });
+
+      lightData.forEach((tempData) => {
+        // eslint-disable-next-line no-param-reassign
+        tempData.locale = new Date(tempData.Timestamp).format();
+      });
+
+      gassesData.forEach((tempData) => {
+        // eslint-disable-next-line no-param-reassign
+        tempData.locale = new Date(tempData.Timestamp).format();
+      });
+
       res.render('sensorhub', {
         sensorHub,
         temperatureData,
