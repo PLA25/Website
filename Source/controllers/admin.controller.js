@@ -7,6 +7,9 @@
 
 /* Packages */
 const express = require('express');
+const {
+  spawn,
+} = require('child_process');
 
 /* Models */
 const SensorHub = require('./../models/sensorhub');
@@ -39,6 +42,38 @@ router.get('/', isAdmin, (req, res, next) => {
     .catch((err) => {
       next(err);
     });
+});
+
+router.get('/test/:day,:week,:time,:type,:value', (req, res) => {
+  const {
+    day,
+    week,
+    time,
+    type,
+    value,
+  } = req.params;
+
+  const py = spawn('python', ['ml.py']);
+  const pyData = [
+    parseInt(day, 10),
+    parseInt(week, 10),
+    parseInt(time, 10),
+    parseInt(type, 10),
+    parseInt(value, 10),
+  ];
+
+  let dataString = '';
+  py.stdout.on('data', (data) => {
+    dataString += data.toString();
+  });
+
+  py.stdout.on('end', () => {
+    const output = JSON.parse(dataString)[0];
+    res.send(output.toString());
+  });
+
+  py.stdin.write(JSON.stringify(pyData));
+  py.stdin.end();
 });
 
 /**
