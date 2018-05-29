@@ -1,7 +1,12 @@
-language: node_js
+language:
+  - node_js
+  - python
 
 node_js:
   - '8'
+
+python:
+  - "3.6.5"
 
 cache:
   directories:
@@ -10,7 +15,8 @@ cache:
 before_script:
   - cd Source
   - npm install
-  - pip install --user -r requirements.txt
+  - pip install .
+  - pip install -r requirements.txt
 
 script:
   - npm run lint
