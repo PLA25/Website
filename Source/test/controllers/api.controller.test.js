@@ -293,7 +293,7 @@ module.exports = () => {
         it('should create any missing folder(s)', (done) => {
           deleteFolderRecursive(path.resolve(cacheFolder, 'temperature'));
 
-          authenticatedAdmin.get('/api/temperature/1526428800000/8/132/86')
+          authenticatedAdmin.get('/api/temperature/1526428800000/8/131/84')
             .end((err, res) => {
               res.statusCode.should.equal(200);
               done();
