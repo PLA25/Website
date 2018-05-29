@@ -10,6 +10,7 @@ cache:
 before_script:
   - cd Source
   - npm install
+  - pip install --user -r requirements.txt
 
 script:
   - npm run lint
