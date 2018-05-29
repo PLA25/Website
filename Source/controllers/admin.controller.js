@@ -46,6 +46,15 @@ router.get('/', isAdmin, (req, res, next) => {
     });
 });
 
+/**
+ * Flips the inMargin field of a data-object.
+ *
+ * @name Flip
+ * @path {GET} /admin
+ * @params {String} :id mongodb _id of the object to flip.
+ * @code {302} if the request is successful
+ * @code {500} if the request is failed
+ */
 router.get('/flip/:id', isAdmin, (req, res, next) => {
   Data.findOne({
     _id: req.params.id,
