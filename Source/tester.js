@@ -27,7 +27,7 @@ for (let i = 0; i < sensorhubs.length; i++) {
       const data = new Data();
       data.SensorHub = sensorHub;
       data.Timestamp = date;
-      data.IsValid = 1;
+      data.inMargin = 1;
 
       const hour = date.getHours() - 2;
       if (type == 'temperature') {
