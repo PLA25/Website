@@ -197,11 +197,6 @@ router.get('/:type/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
   const unixTimestamp = parseInt(req.params.dateTime, 10);
   const requestedDate = new Date((Math.round(unixTimestamp / 1000 / 60 / 60)) * 1000 * 60 * 60);
   const filePath = path.resolve(hostFolder, `${requestedDate.getTime()}_${z}_${x}_${y}.png`);
-  if (fs.existsSync(filePath)) {
-    res.type('png');
-    res.sendFile(filePath);
-    return;
-  }
 
   SensorHub.find({}).exec()
     .then(sensorHubs => Data.find({
