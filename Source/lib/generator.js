@@ -128,7 +128,9 @@ function generateImage(params, allSensorHubs, data) {
       calculatedValue = Math.min(calculatedValue, 7);
       calculatedValue = Math.max(calculatedValue, 0);
 
-      Jimp.read(`./public/bulb_${calculatedValue}.png`)
+      const inMargin = (inMarginValue < 0.8 ? 0 : 1);
+
+      Jimp.read(`./public/bulb_${calculatedValue}_${inMargin}.png`)
         .then((bulb) => {
           for (let x = (256 - 64); x < 256; x += 1) {
             for (let y = 64; y > 0; y -= 1) {
