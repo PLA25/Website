@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const request = require('supertest');
 const app = require('./../../bin/www');
+const isCI = require('is-ci');
 
 /* Constants */
 const {
@@ -46,6 +47,97 @@ module.exports = () => {
       it('should return a 200 response', (done) => {
         authenticatedUser
           .get('/admin')
+          .end((err, res) => {
+            res.headers.location.should.equal('/404');
+            done();
+          });
+      });
+    });
+  });
+
+  describe('GET /flip/:id', () => {
+    describe('Not logged in', () => {
+      it('should redirect to /login', (done) => {
+        request(app)
+          .get('/admin/flip/asdf')
+          .end((err, res) => {
+            res.headers.location.should.equal('/login');
+            done();
+          });
+      });
+    });
+
+    describe('Logged in admin', () => {
+      if (!isCI) {
+        it('should return a 302 response', (done) => {
+          authenticatedAdmin
+            .get('/admin/flip/5b0d2986fe7dc44b5457fd63')
+            .end((err, res) => {
+              res.statusCode.should.equal(302);
+              done();
+            });
+        });
+
+        it('should return a 302 response', (done) => {
+          authenticatedAdmin
+            .get('/admin/flip/5b0d2986fe7dc44b5457fd63')
+            .end((err, res) => {
+              res.statusCode.should.equal(302);
+              done();
+            });
+        });
+
+        it('should return a 302 response', (done) => {
+          authenticatedAdmin
+            .get('/admin/flip/5b0d2986fe7dc44b5457fd7c')
+            .end((err, res) => {
+              res.statusCode.should.equal(302);
+              done();
+            });
+        });
+
+        it('should return a 302 response', (done) => {
+          authenticatedAdmin
+            .get('/admin/flip/5b0d2986fe7dc44b5457fd7c')
+            .end((err, res) => {
+              res.statusCode.should.equal(302);
+              done();
+            });
+        });
+
+        it('should return a 302 response', (done) => {
+          authenticatedAdmin
+            .get('/admin/flip/5b0d2986fe7dc44b5457fdef')
+            .end((err, res) => {
+              res.statusCode.should.equal(302);
+              done();
+            });
+        });
+
+        it('should return a 302 response', (done) => {
+          authenticatedAdmin
+            .get('/admin/flip/5b0d2986fe7dc44b5457fdef')
+            .end((err, res) => {
+              res.statusCode.should.equal(302);
+              done();
+            });
+        });
+      }
+
+      it('should return a 500 response', (done) => {
+        authenticatedAdmin
+          .get('/admin/flip/asdf')
+          .end((err, res) => {
+            res.statusCode.should.equal(500);
+            done();
+          });
+      });
+    });
+
+    describe('Logged in user', () => {
+      it('should redirect to /404', (done) => {
+        authenticatedUser
+          .get('/admin/flip/asdf')
           .end((err, res) => {
             res.headers.location.should.equal('/404');
             done();
