@@ -11,8 +11,8 @@ $(document).ready(() => {
 
   // Layers
   let tempEnabled = true;
-  let gasEnabled = false;
-  let lightEnabled = false;
+  let gasEnabled = true;
+  let lightEnabled = true;
 
   // Map Tile(s)
   const googleLayer = new ol.layer.Tile({
