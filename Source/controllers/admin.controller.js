@@ -46,7 +46,7 @@ router.get('/', isAdmin, (req, res, next) => {
     });
 });
 
-router.get('/flip/:id', (req, res, next) => {
+router.get('/flip/:id', isAdmin, (req, res, next) => {
   Data.findOne({
     _id: req.params.id,
   }).exec()
