@@ -300,6 +300,16 @@ module.exports = () => {
             });
         });
 
+        it('should return a 200 response for /api/gasses/1526428800000/8/131/84', (done) => {
+          deleteFolderRecursive(path.resolve(cacheFolder, 'gasses'));
+
+          authenticatedAdmin.get('/api/gasses/1526428800000/8/131/84')
+            .end((err, res) => {
+              res.statusCode.should.equal(200);
+              done();
+            });
+        });
+
         it('should return a 200 response for /api/temperature/1526428800000/8/132/86', (done) => {
           deleteFolderRecursive(path.resolve(cacheFolder, 'temperature'));
 
