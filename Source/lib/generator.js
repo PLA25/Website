@@ -46,20 +46,34 @@ function getCalculatedValue(latitude, longitude, allSensorHubs, data) {
   });
 
   let calculatedValue = 0;
+  let inMarginValue = 0;
   selectedNodes.forEach((selectedNode) => {
-    const dataNode = data[selectedNode.Index];
-
-    const weight = (1 / selectedNode.Distance) / divider;
-    calculatedValue += (parseFloat(dataNode.Value, 10) * weight);
+    data.forEach((dataNode) => {
+      if(dataNode.SensorHub == selectedNode.SerialID) {
+        const weight = (1 / selectedNode.Distance) / divider;
+        calculatedValue += (parseFloat(dataNode.Value, 10) * weight);
+        inMarginValue += (parseInt(dataNode.inMargin, 10) * weight);
+      }
+    });
   });
 
-  return calculatedValue;
+  if(inMarginValue < 0.75) {
+    inMarginValue = 0;
+  } else {
+    inMarginValue = 1;
+  }
+    
+  return { calculatedValue, inMarginValue };
 }
 
 function getColorFromLatLong(latitude, longitude, allSensorHubs, data) {
-  const calculatedValue = getCalculatedValue(latitude, longitude, allSensorHubs, data);
-  const rgb = temperatureToColor(calculatedValue);
-  return Jimp.rgbaToInt(rgb[0], rgb[1], rgb[2], parseFloat(0.25 * 255));
+  const { calculatedValue, inMarginValue } = getCalculatedValue(latitude, longitude, allSensorHubs, data);
+  const rgb = temperatureToColor(Math.min(Math.max(-50, calculatedValue), 50));
+
+  return {
+    color: Jimp.rgbaToInt(rgb[0], rgb[1], rgb[2], parseFloat(0.25 * 255)),
+    inMargin: inMarginValue
+  };
 }
 
 function generateImage(params, allSensorHubs, data) {
@@ -126,12 +140,22 @@ function generateImage(params, allSensorHubs, data) {
         });
     } else if (data[0].Type == 'temperature') {
       const incr = 16;//Math.min(getIncrement(z), 8);
+
+
+      let showWarn = [];
       for (let x = 0; x < image.bitmap.width; x += incr) {
         for (let y = 0; y < image.bitmap.height; y += incr) {
           const latitude = down + (yMulti * y);
           const longitude = left + (xMulti * x);
 
-          const color = getColorFromLatLong(latitude, longitude, allSensorHubs, data);
+          const {
+            color,
+            inMargin,
+          } = getColorFromLatLong(latitude, longitude, allSensorHubs, data);
+
+          if (inMargin == 0) {
+            showWarn.push([x, y]);
+          }
 
           image.setPixelColor(color, x, y);
 
@@ -140,10 +164,25 @@ function generateImage(params, allSensorHubs, data) {
               image.setPixelColor(color, (x + i), (y + l));
             }
           }
+
         }
       }
 
-      resolve(image);
+      if (showWarn.length > 0) {
+        Jimp.read(`./public/warning.png`, function (err, warning) {
+          warning.resize(incr, incr);
+          for (let i = 0; i < showWarn.length; i++) {
+            const pos = showWarn[i];
+            image.composite(warning, pos[0], pos[1]);
+          }
+
+          resolve(image);
+        });
+      } else {
+        resolve(image)
+      }
+
+
     }
   });
 }
