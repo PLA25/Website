@@ -125,7 +125,7 @@ function generateImage(params, allSensorHubs, data) {
           resolve(image);
         });
     } else if (data[0].Type == 'temperature') {
-      const incr = Math.min(getIncrement(z), 8);
+      const incr = 16;//Math.min(getIncrement(z), 8);
       for (let x = 0; x < image.bitmap.width; x += incr) {
         for (let y = 0; y < image.bitmap.height; y += incr) {
           const latitude = down + (yMulti * y);
