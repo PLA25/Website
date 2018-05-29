@@ -49,7 +49,7 @@ function getCalculatedValue(latitude, longitude, allSensorHubs, data) {
   let inMarginValue = 0;
   selectedNodes.forEach((selectedNode) => {
     data.forEach((dataNode) => {
-      if(dataNode.SensorHub == selectedNode.SerialID) {
+      if (dataNode.SensorHub == selectedNode.SerialID) {
         const weight = (1 / selectedNode.Distance) / divider;
         calculatedValue += (parseFloat(dataNode.Value, 10) * weight);
         inMarginValue += (parseInt(dataNode.inMargin, 10) * weight);
@@ -57,12 +57,6 @@ function getCalculatedValue(latitude, longitude, allSensorHubs, data) {
     });
   });
 
-  if(inMarginValue < 0.75) {
-    inMarginValue = 0;
-  } else {
-    inMarginValue = 1;
-  }
-    
   return { calculatedValue, inMarginValue };
 }
 
@@ -107,7 +101,8 @@ function generateImage(params, allSensorHubs, data) {
 
     const image = new Jimp(256, 256, 0x0);
     if (data[0].Type == 'gasses') {
-      const calculatedValue = Math.round(getCalculatedValue((down + (yMulti * 128)), (left + (xMulti * 128)), allSensorHubs, data));
+      let { calculatedValue, inMarginValue } = getCalculatedValue((down + (yMulti * 128)), (left + (xMulti * 128)), allSensorHubs, data);
+      calculatedValue = Math.round(calculatedValue);
 
       Jimp.loadFont(Jimp.FONT_SANS_16_WHITE)
         .then((font) => {
@@ -116,7 +111,11 @@ function generateImage(params, allSensorHubs, data) {
 
           for (let x = 0; x < (0 + (textWidth - 1)); x += 1) {
             for (let y = 0; y < 18; y += 1) {
-              image.setPixelColor(Jimp.rgbaToInt(0, 0, 0, parseFloat(1 * 255)), x, y);
+              if(inMarginValue < 0.9) {
+                image.setPixelColor(Jimp.rgbaToInt(255, 0, 0, parseFloat(1 * 255)), x, y);
+              } else {
+                image.setPixelColor(Jimp.rgbaToInt(0, 0, 0, parseFloat(1 * 255)), x, y);
+              }
             }
           }
 
@@ -124,7 +123,8 @@ function generateImage(params, allSensorHubs, data) {
           resolve(image);
         });
     } else if (data[0].Type == 'light') {
-      let calculatedValue = (Math.floor(getCalculatedValue((down + (yMulti * 128)), (left + (xMulti * 128)), allSensorHubs, data) / 1024 * 8)) - 1;
+      let { calculatedValue, inMarginValue } = getCalculatedValue((down + (yMulti * 128)), (left + (xMulti * 128)), allSensorHubs, data);
+      calculatedValue = (Math.floor(calculatedValue / 1024 * 8)) - 1;
       calculatedValue = Math.min(calculatedValue, 7);
       calculatedValue = Math.max(calculatedValue, 0);
 
@@ -140,8 +140,6 @@ function generateImage(params, allSensorHubs, data) {
         });
     } else if (data[0].Type == 'temperature') {
       const incr = 16;//Math.min(getIncrement(z), 8);
-
-
       let showWarn = [];
       for (let x = 0; x < image.bitmap.width; x += incr) {
         for (let y = 0; y < image.bitmap.height; y += incr) {
@@ -153,7 +151,7 @@ function generateImage(params, allSensorHubs, data) {
             inMargin,
           } = getColorFromLatLong(latitude, longitude, allSensorHubs, data);
 
-          if (inMargin == 0) {
+          if (inMargin < 0.75) {
             showWarn.push([x, y]);
           }
 
