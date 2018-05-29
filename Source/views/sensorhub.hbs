@@ -97,6 +97,7 @@
         <tr class="text-white">
           <th>Light intensity</th>
           <th>{{i18n "sensor.timestamp"}}</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -107,6 +108,15 @@
           </td>
           <td>
             {{this.locale}}
+          </td>
+          <td>
+            <a href="/admin/flip/{{this._id}}">
+              {{#if this.inMargin}}
+                <i class="fa fa-check-square"></i> Not Marked
+              {{else}}            
+                <i class="fa fa-exclamation-triangle"></i> Marked
+              {{/if}}
+            </a>
           </td>
         </tr>
         {{/each}}
@@ -170,6 +180,7 @@
         <tr class="text-white">
           <th>Gass concentration</th>
           <th>{{i18n "sensor.timestamp"}}</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -180,6 +191,15 @@
           </td>
           <td>
             {{this.locale}}
+          </td>
+          <td>
+            <a href="/admin/flip/{{this._id}}">
+              {{#if this.inMargin}}
+                <i class="fa fa-check-square"></i> Not Marked
+              {{else}}            
+                <i class="fa fa-exclamation-triangle"></i> Marked
+              {{/if}}
+            </a>
           </td>
         </tr>
         {{/each}}
