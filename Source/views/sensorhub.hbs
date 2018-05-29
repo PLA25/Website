@@ -14,6 +14,7 @@
         <tr class="text-white">
           <th>{{i18n "sensor.temperature"}}</th>
           <th>{{i18n "sensor.timestamp"}}</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -23,7 +24,16 @@
             {{this.Value}}°C
           </td>
           <td>
-            {{this.Timestamp}}
+            {{this.locale}}
+          </td>
+          <td>
+            <a href="/admin/flip/{{this._id}}">
+              {{#if this.inMargin}}
+                <i class="fa fa-check-square"></i> Not Marked
+              {{else}}            
+                <i class="fa fa-exclamation-triangle"></i> Marked
+              {{/if}}
+            </a>
           </td>
         </tr>
         {{/each}}
@@ -96,7 +106,7 @@
             {{this.Value}} Lux
           </td>
           <td>
-            {{this.Timestamp}}
+            {{this.locale}}
           </td>
         </tr>
         {{/each}}
@@ -169,7 +179,7 @@
             {{this.Value}} PPM
           </td>
           <td>
-            {{this.Timestamp}}
+            {{this.locale}}
           </td>
         </tr>
         {{/each}}

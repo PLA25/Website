@@ -7,11 +7,13 @@
 
 /* Packages */
 const express = require('express');
+const weekNumber = require('current-week-number');
 const {
   spawn,
 } = require('child_process');
 
 /* Models */
+const Data = require('./../models/data');
 const SensorHub = require('./../models/sensorhub');
 const User = require('./../models/user');
 
@@ -44,36 +46,68 @@ router.get('/', isAdmin, (req, res, next) => {
     });
 });
 
-router.get('/test/:day,:week,:time,:type,:value', (req, res) => {
-  const {
-    day,
-    week,
-    time,
-    type,
-    value,
-  } = req.params;
+router.get('/flip/:id', (req, res, next) => {
+  Data.findOne({
+    _id: req.params.id,
+  }).exec()
+    .then((data) => {
+      if (data == null) {
+        next(new Error('Not found'));
+        return;
+      }
 
-  const py = spawn('python', ['ml.py']);
-  const pyData = [
-    parseInt(day, 10),
-    parseInt(week, 10),
-    parseInt(time, 10),
-    parseInt(type, 10),
-    parseInt(value, 10),
-  ];
+      const date = new Date(data.Timestamp);
 
-  let dataString = '';
-  py.stdout.on('data', (data) => {
-    dataString += data.toString();
-  });
+      let type = 0;
+      if (data.Type === 'temperature') {
+        type = 0;
+      } else if (data.Type === 'gasses') {
+        type = 1;
+      } else {
+        type = 2;
+      }
 
-  py.stdout.on('end', () => {
-    const output = JSON.parse(dataString)[0];
-    res.send(output.toString());
-  });
+      let { inMargin } = data;
+      if (inMargin === 0) {
+        inMargin = 1;
+      } else {
+        inMargin = 0;
+      }
 
-  py.stdin.write(JSON.stringify(pyData));
-  py.stdin.end();
+      const py = spawn('python', ['ml.py']);
+      const pyData = [
+        date.getDay() - 1,
+        weekNumber(date),
+        date.getUTCHours(),
+        type,
+        parseInt(data.Value, 10),
+        inMargin,
+      ];
+
+      let dataString = '';
+      py.stdout.on('data', (output) => {
+        dataString += output.toString();
+      });
+
+      py.stdout.on('end', () => {
+        const output = JSON.parse(dataString)[0];
+        // eslint-disable-next-line no-param-reassign
+        data.inMargin = output;
+        data.save()
+          .then(() => {
+            res.redirect('back');
+          })
+          .catch((err) => {
+            next(err);
+          });
+      });
+
+      py.stdin.write(JSON.stringify(pyData));
+      py.stdin.end();
+    })
+    .catch((err) => {
+      next(err);
+    });
 });
 
 /**
