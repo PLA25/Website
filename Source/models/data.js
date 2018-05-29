@@ -18,6 +18,10 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  inMargin: {
+    type: Number,
+    required: true,
+  },
 });
 
 /**
