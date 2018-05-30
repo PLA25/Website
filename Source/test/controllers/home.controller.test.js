@@ -117,7 +117,7 @@ module.exports = () => {
         });
     });
   });
-  
+
   describe('GET /sensorhub/:SerialID', () => {
     describe('Not logged in', () => {
       it('should redirect to /login', (done) => {
