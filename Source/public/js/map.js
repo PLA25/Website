@@ -113,18 +113,14 @@ $(document).ready(() => {
     target: 'map',
     view,
   });
-  map.on('click', (evt) => {
-    const feature = map.forEachFeatureAtPixel(
-      evt.pixel,
-      feature => feature,
-    );
-    if (feature) {
-      console.log('Test');
 
+  map.on('click', (e) => {
+    map.forEachFeatureAtPixel(e.pixel, (feature) => {
       $('#exampleModal').modal('show');
-    } else {
-      $(element).popover('destroy');
-    }
+      $('#exampleModalLabel').text(feature.get('name'));
+
+      return false;
+    });
   });
 
   // Map Type
