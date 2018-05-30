@@ -109,10 +109,10 @@ module.exports = () => {
   });
 
   describe('GET /locale-en', () => {
-    it('should return a 302 response', (done) => {
+    it('should return a 200 response', (done) => {
       authenticatedAdmin.get('/map')
         .end((err, res) => {
-          res.statusCode.should.equal(302);
+          res.statusCode.should.equal(200);
           done();
         });
     });
