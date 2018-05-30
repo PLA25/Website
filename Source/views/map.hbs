@@ -1,5 +1,5 @@
 <!-- Style -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol.css" integrity="sha256-rQq4Fxpq3LlPQ8yP11i6Z2lAo82b6ACDgd35CKyNEBw=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.5/ol.css" integrity="sha256-rQq4Fxpq3LlPQ8yP11i6Z2lAo82b6ACDgd35CKyNEBw=" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha256-rByPlHULObEjJ6XQxW/flG2r+22R5dKiAoef+aXWfik=" crossorigin="anonymous" />
 
 <div class="card z-depth-2 sidebar">
@@ -16,22 +16,6 @@
       <i class="fa fa-globe prefix"></i>
       <input id="address" type="text" placeholder="Search location" class="form-control">
       <div class="alert alert-danger" id="goToError"></div>
-    </div>
-    <hr>
-
-    <label>
-      <b>
-        Map Type:
-      </b>
-    </label>
-    <div class="btn-group" data-toggle="buttons" style="width: 100%;">
-      <label class="btn btn-default form-check-label active" style="width: 50%;">
-        <input class="form-check-input" type="radio" id="typeSat" checked autocomplete="off"> Satellite
-      </label>
-
-      <label class="btn btn-default form-check-label" style="width: 50%;">
-          <input class="form-check-input" type="radio" id="typeMap" autocomplete="off"> Map
-      </label>
     </div>
     <hr>
 
@@ -106,11 +90,10 @@
     Map
   </div>
   <div class="card-body">
-
-    <div id="map">
-    </div>
+    <div id="map"></div>
     <div class="scale">
-      -50°C <img src="/spectrum.png" style="border-radius: 5500px;" height="10%" width="100px"> 50°C
+      -50°C
+      <img src="/spectrum.png" style="border-radius: 5500px;" height="40px" width="250px"> 50°C
     </div>
   </div>
 </div>

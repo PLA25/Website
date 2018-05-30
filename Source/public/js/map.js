@@ -2,9 +2,6 @@
 $(document).ready(() => {
   $('#goToError').hide();
 
-  // Map Type
-  const satEnabled = true;
-
   // Features
   const navEnabled = true;
   const hubsEnabled = true;
@@ -14,15 +11,6 @@ $(document).ready(() => {
   let gasEnabled = true;
   let lightEnabled = true;
 
-  // Map Tile(s)
-  const googleLayer = new ol.layer.Tile({
-    source: new ol.source.XYZ({
-      url: 'http://mt{0-3}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
-    }),
-  });
-
-  googleLayer.setVisible(!satEnabled);
-
   // Satellite Tile(s)
   const planetXYZ = new ol.source.XYZ({
     url: `/api/planet/${new Date().getTime()}/{z}/{x}/{y}`,
@@ -31,8 +19,6 @@ $(document).ready(() => {
   const planetLayer = new ol.layer.Tile({
     source: planetXYZ,
   });
-
-  planetLayer.setVisible(satEnabled);
 
   // Navigation
   const mapboxLayer = new ol.layer.Tile({
@@ -102,7 +88,6 @@ $(document).ready(() => {
   // eslint-disable-next-line no-unused-vars
   const map = new ol.Map({
     layers: [
-      googleLayer,
       planetLayer,
       mapboxLayer,
       sensorhubLayer,
@@ -114,10 +99,6 @@ $(document).ready(() => {
     view,
   });
 
-  // Map Type
-  $('#typeSat').prop('checked', satEnabled);
-  $('#typeMap').prop('checked', !satEnabled);
-
   // Features
   $('#mapboxLayer').prop('checked', navEnabled);
   $('#sensorhubLayer').prop('checked', hubsEnabled);
@@ -126,27 +107,6 @@ $(document).ready(() => {
   $('#tempEnabled').prop('checked', tempEnabled);
   $('#gasEnabled').prop('checked', gasEnabled);
   $('#lightEnabled').prop('checked', lightEnabled);
-
-  // Map Type
-  $('#typeSat').change(() => {
-    const isChecked = $('#typeSat').prop('checked');
-    googleLayer.setVisible(!isChecked);
-    planetLayer.setVisible(isChecked);
-
-    $('#mapboxLayer').prop('checked', true);
-    $('#mapboxLayer').prop('disabled', false);
-    mapboxLayer.setVisible(true);
-  });
-
-  $('#typeMap').change(() => {
-    const isChecked = $('#typeMap').prop('checked');
-    googleLayer.setVisible(isChecked);
-    planetLayer.setVisible(!isChecked);
-
-    $('#mapboxLayer').prop('checked', false);
-    $('#mapboxLayer').prop('disabled', true);
-    mapboxLayer.setVisible(false);
-  });
 
   // Features
   $('#mapboxLayer').change(() => {
