@@ -108,6 +108,16 @@ module.exports = () => {
     });
   });
 
+  describe('GET /locale-en', () => {
+    it('should return a 302 response', (done) => {
+      authenticatedAdmin.get('/map')
+        .end((err, res) => {
+          res.statusCode.should.equal(302);
+          done();
+        });
+    });
+  });
+  
   describe('GET /sensorhub/:SerialID', () => {
     describe('Not logged in', () => {
       it('should redirect to /login', (done) => {
