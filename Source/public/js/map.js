@@ -113,6 +113,19 @@ $(document).ready(() => {
     target: 'map',
     view,
   });
+  map.on('click', (evt) => {
+    const feature = map.forEachFeatureAtPixel(
+      evt.pixel,
+      feature => feature,
+    );
+    if (feature) {
+      console.log('Test');
+
+      $('#exampleModal').modal('show');
+    } else {
+      $(element).popover('destroy');
+    }
+  });
 
   // Map Type
   $('#typeSat').prop('checked', satEnabled);
