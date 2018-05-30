@@ -108,13 +108,146 @@ module.exports = () => {
     });
   });
 
-  describe('GET /locale-en', () => {
-    it('should return a 200 response', (done) => {
-      authenticatedAdmin.get('/map')
-        .end((err, res) => {
-          res.statusCode.should.equal(200);
-          done();
-        });
+  describe('GET /locale-:locale', () => {
+    describe('Not logged in', () => {
+      it('should return a 302 response', (done) => {
+        request(app).get('/locale-nl')
+          .end((err, res) => {
+            res.statusCode.should.equal(302);
+            res.headers.location.should.equal('/');
+            done();
+          });
+      });
+
+      it('should return the dutch version of the login page', (done) => {
+        request(app).get('/locale-nl')
+          .end((err, res1) => {
+            res1.statusCode.should.equal(302);
+            res1.headers.location.should.equal('/');
+
+            request(app).get('/login')
+              .end((err2, res2) => {
+                res2.statusCode.should.equal(200);
+                res2.text.should.include('Uw e-mail');
+                done();
+              });
+          });
+      });
+
+      it('should return the english version of the login page', (done) => {
+        request(app).get('/locale-nl')
+          .end((err1, res1) => {
+            res1.statusCode.should.equal(302);
+            res1.headers.location.should.equal('/');
+
+            request(app).get('/locale-en')
+              .end((err2, res2) => {
+                res2.statusCode.should.equal(302);
+                res2.headers.location.should.equal('/');
+
+                request(app).get('/login')
+                  .end((err3, res3) => {
+                    res3.statusCode.should.equal(200);
+                    res3.text.should.include('Your email');
+                    done();
+                  });
+              });
+          });
+      });
+    });
+
+    describe('Logged in admin', () => {
+      it('should return a 302 response', (done) => {
+        authenticatedAdmin.get('/locale-nl')
+          .end((err, res) => {
+            res.statusCode.should.equal(302);
+            res.headers.location.should.equal('/');
+            done();
+          });
+      });
+
+      it('should return the dutch version of the index page', (done) => {
+        authenticatedAdmin.get('/locale-nl')
+          .end((err, res) => {
+            res.statusCode.should.equal(302);
+            res.headers.location.should.equal('/');
+
+            authenticatedAdmin.get('/')
+              .end((err2, res2) => {
+                res2.statusCode.should.equal(200);
+                res2.text.should.include('Welkom bij de homepagina');
+                done();
+              });
+          });
+      });
+
+      it('should return the english version of the index page', (done) => {
+        authenticatedAdmin.get('/locale-nl')
+          .end((err, res) => {
+            res.statusCode.should.equal(302);
+            res.headers.location.should.equal('/');
+
+            authenticatedAdmin.get('/locale-en')
+              .end((err2, res2) => {
+                res2.statusCode.should.equal(302);
+                res2.headers.location.should.equal('/');
+
+                authenticatedAdmin.get('/')
+                  .end((err3, res3) => {
+                    res3.statusCode.should.equal(200);
+                    res3.text.should.include('Welcome to the homepage');
+                    done();
+                  });
+              });
+          });
+      });
+    });
+
+    describe('Logged in user', () => {
+      it('should return a 302 response', (done) => {
+        authenticatedUser.get('/locale-nl')
+          .end((err, res) => {
+            res.statusCode.should.equal(302);
+            res.headers.location.should.equal('/');
+            done();
+          });
+      });
+
+      it('should return the dutch version of the index page', (done) => {
+        authenticatedUser.get('/locale-nl')
+          .end((err, res) => {
+            res.statusCode.should.equal(302);
+            res.headers.location.should.equal('/');
+
+            authenticatedUser.get('/')
+              .end((err2, res2) => {
+                res2.statusCode.should.equal(200);
+                res2.text.should.include('Welkom bij de homepagina');
+                done();
+              });
+          });
+      });
+
+      it('should return the english version of the index page', (done) => {
+        authenticatedUser.get('/locale-nl')
+          .end((err, res) => {
+            res.statusCode.should.equal(302);
+            res.headers.location.should.equal('/');
+
+            authenticatedUser.get('/locale-en')
+              .end((err2, res2) => {
+                res2.statusCode.should.equal(302);
+                res2.headers.location.should.equal('/');
+
+                authenticatedUser.get('/')
+                  .end((err3, res3) => {
+                    res3.statusCode.should.equal(200);
+                    res3.text.should.include('Welcome to the homepage');
+                    done();
+                  });
+              });
+          });
+      });
     });
   });
 
