@@ -16,6 +16,10 @@ body {
 	min-height: 100%;
 }
 
+.rgba-blue-dark {
+	background-color: rgba(3, 169, 244, 1) !important;
+}
+
 .page-footer {
 	position: absolute;
 	right: 0;
@@ -78,32 +82,18 @@ body {
 	float: right;
 }
 
-.home-left {
-  float: left;
-  margin-left: 20px;
-  margin-right: 10px;
-  margin-top: 20px;
-  width: calc(50% - 30px);
-}
-
-.home-right {
-  float: left;
-  margin-left: 10px;
-  margin-right: 20px;
-  margin-top: 20px;
-  width: calc(50% - 30px);
-}
-
 .first-col {
   margin-bottom: 20px;
 }
 
-.minor-container {
-  margin: 0 auto;
-  width: 1920px;
-  max-width: 96%;
-}
-
 .col-xl-6 {
   margin-top: 20px;
+}
+
+#tempChart, #lightChart, #gassChart {
+  margin-top: 5px;
+}
+
+.heading-margin {
+  margin-top: 15px;
 }
