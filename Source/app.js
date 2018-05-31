@@ -21,7 +21,7 @@ const controllers = require('./controllers');
 mongoose.connect(`mongodb://${config.MongoDB.User}:${config.MongoDB.Pass}@${config.MongoDB.Host}:${config.MongoDB.Port}/${config.MongoDB.Name}`);
 mongoose.Promise = Promise;
 
-/* Configures i18n, the localization library. */
+/* Configures i18n. */
 i18n.configure({
   locales: ['en', 'nl'],
   defaultLocale: 'en',
