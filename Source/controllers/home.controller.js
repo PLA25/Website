@@ -177,7 +177,9 @@ router.get('/map', isLoggedIn, (req, res) => {
  * @path {GET} /profile
  */
 router.get('/account', isLoggedIn, (req, res) => {
-	res.render('profile');
+  res.render('profile', {
+    title: 'Profile Page',
+  });
 });
 
 /* Exports */

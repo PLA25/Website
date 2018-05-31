@@ -1,16 +1,36 @@
+#pimage {
+	float: left;
+	height: 100%;
+	width: 30%;
+}
+#pimage::after {
+	content: '';
+	background-color: black;
+	position: absolute;
+	width: 2px;
+	top: 56px;
+	left: 30%;
+	bottom: 54px;
+	z-index: -10;
+}
+#pinfo {
+	float: right;
+	height: 100%;
+	width: 70%;
+	height: 100%;
+	text-align: center;
+	padding-top: 10%;
+}
 #properties {
 	font-weight: bold;
 	width: 50%;
 }
-#pinfo {
-	margin: 20px;
-	float: right;
-	width: 45%;
+#Image {
+	width: 100%;
 }
-#pimage {
-	margin: 20px;
-	float: left;
-	/*width: 440px;*/
-	width: 45%;
-	height: 100%;
+td {
+	border-top: initial !important;
+}
+main {
+	overflow: hidden;
 }
