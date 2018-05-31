@@ -30,10 +30,6 @@ const SensorHub = require('./../models/sensorhub');
  * @path {GET} /
  */
 router.get('/', isLoggedIn, (req, res) => {
-  /*
-   * Fix dit morgen
-   *console.log(`language = ${i18n.getLocale()}`);
-   */
   res.render('index');
 });
 
@@ -138,11 +134,6 @@ router.get('/login', isNotLoggedIn, (req, res) => {
  */
 router.get('/locale-:locale', (req, res) => {
   i18n.setLocale(req.params.locale);
-  /*
-   * Fix dit morgen
-   *console.log(`langparams = ${req.params.locale}`);
-   *console.log(`langgetLocale = ${i18n.getLocale()}`);
-   */
   res.redirect('back');
 });
 
