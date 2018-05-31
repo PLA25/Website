@@ -41,21 +41,21 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
           <a class="nav-link" href="/">
-            Home
+            {{i18n "layout.home"}}
           </a>
         </li>
 
         {{#if @user}}
           <li class="nav-item">
             <a class="nav-link" href="/map">
-              Map
+              {{i18n "layout.map"}}
             </a>
           </li>
 
           {{#if @user.isAdmin}}
             <li class="nav-item">
               <a class="nav-link" href="/admin">
-                Admin
+                {{i18n "layout.admin"}}
               </a>
             </li>
           {{/if}} 
@@ -68,16 +68,16 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbar-account" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-user"></i>
-          <span class="clearfix d-none d-sm-inline-block">Profile</span>
+          <span class="clearfix d-none d-sm-inline-block">{{i18n "layout.profile"}}</span>
         </a>
 
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
           <a class="dropdown-item" href="/account">
-            My account
+            {{i18n "layout.my-account"}}
           </a>
 
           <a class="dropdown-item" href="/logout">
-            Log Out
+            {{i18n "layout.logout"}}
           </a>
         </div>
       </li>

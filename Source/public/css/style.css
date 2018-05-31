@@ -97,3 +97,17 @@ body {
 .heading-margin {
   margin-top: 15px;
 }
+
+.logo {
+  margin: 0 50px;
+}
+
+.flag {
+  float: left;
+  margin-right: 10px;
+}
+
+.flag img {
+  height: 100%;
+  width: 64px;
+}

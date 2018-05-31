@@ -18,7 +18,8 @@
     "latitude": "Breedtegraad"
   },
   "index": {
-    "heading": "Home",
+    "help": "Hulp",
+    "home": "Home",
     "hometext1": "Welkom bij de homepagina van het Open Source Pollution Detection System. Dit systeem gebruikt de Planet API voor de kaart en u eigen sensorhubs voor de pollution details. Bezoek onze Github voor de details over de sensorhubs. ",
     "hometext2": "De volledige documentatie voor de website kan hier gevonden worden: ",
     "hometext3": "De homepagina tekst kan worden aangepast in de taalbestanden. (Locatie: locals/en voor Engels en locals/nl voor Nederlands) en het index.hbs bestand. (Locatie: views/index.hbs)",
@@ -29,7 +30,9 @@
     "map": "Kaart",
     "admin": "Admin",
     "logout": "Uitloggen",
-    "login": "Inloggen"
+    "login": "Inloggen",
+    "profile": "Profiel",
+    "my-account": "Mijn account"
   },
   "login": {
     "your-email": "Uw e-mail",
@@ -37,7 +40,27 @@
     "login": "Inloggen"
   },
   "sensor": {
+    "gas": "Gasconcentratie",
+    "light": "Lichtsintensiteit",
+    "marked": "Gemarkeerd",
+    "not-marked": "Niet gemarkeerd",
     "temperature": "Temperatuur",
     "timestamp": "Tijd"
+  }
+  "map": {
+    "options": "Opties",
+    "go-to": "Ga naar:",
+    "search": "Zoek locatie",
+    "features": "Features:",
+    "navigation": "Navigatie",
+    "sensorhubs": "SensorHubs",
+    "layers": "Lagen:",
+    "temperature": "Temperatuur",
+    "gas": "Gas",
+    "light": "Licht",
+    "timeline": "Tijdlijn:",
+    "latest-data": "Nieuwste data",
+    "hour": "uur",
+    "map": "Kaart"
   }
 }

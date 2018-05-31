@@ -6,7 +6,7 @@
   <hr />
   <div class="row">
     <div class="col-12">
-      <h2>Temperature</h2>
+      <h2>{{i18n "sensor.temperature"}}</h2>
     </div>
 
     <div class="col-12 col-xl-6">
@@ -30,9 +30,9 @@
             <td>
               <a href="/admin/flip/{{this._id}}">
                 {{#if this.inMargin}}
-                  <i class="fa fa-check-square"></i> Not Marked
+                  <i class="fa fa-check-square"></i> {{i18n "sensor.not-marked"}}
                 {{else}}            
-                  <i class="fa fa-exclamation-triangle"></i> Marked
+                  <i class="fa fa-exclamation-triangle"></i> {{i18n "sensor.marked"}}
                 {{/if}}
               </a>
             </td>
@@ -63,7 +63,7 @@
             ],
             datasets: [
               {
-                label: "Temparature in celsius",
+                label: 'Temperature in Celsius',
                 backgroundColor: chartColors.red,
                 data: [
                   {{#each temperatureData}}
@@ -89,14 +89,14 @@
 
   <div class="row">
     <div class="col-12">
-      <h2>Light intensity</h2>
+      <h2>{{i18n "sensor.light"}}</h2>
     </div>
 
     <div class="col-12 col-xl-6">
       <table class="table table-responsive-md table-striped" id="table-light">
         <thead class="rgba-blue-dark darken-3">
           <tr class="text-white">
-            <th>Light intensity</th>
+            <th>{{i18n "sensor.light"}}</th>
             <th>{{i18n "sensor.timestamp"}}</th>
             <th></th>
           </tr>
@@ -113,9 +113,9 @@
             <td>
               <a href="/admin/flip/{{this._id}}">
                 {{#if this.inMargin}}
-                  <i class="fa fa-check-square"></i> Not Marked
+                  <i class="fa fa-check-square"></i> {{i18n "sensor.not-marked"}}
                 {{else}}            
-                  <i class="fa fa-exclamation-triangle"></i> Marked
+                  <i class="fa fa-exclamation-triangle"></i> {{i18n "sensor.marked"}}
                 {{/if}}
               </a>
             </td>
@@ -146,7 +146,7 @@
             ],
             datasets: [
               {
-                label: "Light in lux",
+                label: 'Light in lux',
                 backgroundColor: chartColors.red,
                 data: [
                   {{#each lightData}}
@@ -172,14 +172,14 @@
 
   <div class="row">
     <div class="col-12">
-      <h2>Gass concentration</h2>
+      <h2>{{i18n "sensor.gas"}}</h2>
     </div>
 
     <div class="col-12 col-xl-6">
       <table class="table table-responsive-md table-striped" id="table-gass">
         <thead class="rgba-blue-dark darken-3">
           <tr class="text-white">
-            <th>Gass concentration</th>
+            <th>{{i18n "sensor.gas"}}</th>
             <th>{{i18n "sensor.timestamp"}}</th>
             <th></th>
           </tr>
@@ -196,9 +196,9 @@
             <td>
               <a href="/admin/flip/{{this._id}}">
                 {{#if this.inMargin}}
-                  <i class="fa fa-check-square"></i> Not Marked
+                  <i class="fa fa-check-square"></i> {{i18n "sensor.not-marked"}}
                 {{else}}            
-                  <i class="fa fa-exclamation-triangle"></i> Marked
+                  <i class="fa fa-exclamation-triangle"></i> {{i18n "sensor.marked"}}
                 {{/if}}
               </a>
             </td>
@@ -229,7 +229,7 @@
             ],
             datasets: [
               {
-                label: "Gass in PPM",
+                label: 'Gas in PPM',
                 backgroundColor: chartColors.red,
                 data: [
                   {{#each lightData}}
@@ -243,7 +243,7 @@
             legend: { display: false },
             title: {
               display: true,
-              text: 'The average gass concentration'
+              text: 'The average gas concentration'
             }
           }
         });
