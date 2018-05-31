@@ -1,0 +1,16 @@
+#properties {
+	font-weight: bold;
+	width: 50%;
+}
+#pinfo {
+	margin: 20px;
+	float: right;
+	width: 45%;
+}
+#pimage {
+	margin: 20px;
+	float: left;
+	/*width: 440px;*/
+	width: 45%;
+	height: 100%;
+}

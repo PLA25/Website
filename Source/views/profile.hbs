@@ -1,0 +1,60 @@
+<!-- Profiel Pagina -->
+
+<link rel="stylesheet" href="/css/profile.css" rel="stylesheet" crossorigin="anonymous">
+<title>Profile Page</title>
+
+<div class="card text-center z-depth-2" id="pimage">
+
+	<div class="card-header info-color lighten-1 white-text">
+		Profile Image
+	</div>
+	<div class="card-body">
+		{{#if user.profileImage}}
+			<img id="Image" src="{{user.profileImage}}" alt="Profile Image" />
+		{{else}}
+			<img id="Image" src="/noimage.png" alt="Profile Image" />
+		{{/if}}
+		<script>
+			var img = document.getElementById('Image');
+			if (img.width > img.height) {
+				img.width = 400;
+			} else {
+				img.height = 400;
+			}
+		</script>
+	</div>
+
+</div>
+
+<div class="card text-center z-depth-2" id="pinfo">
+
+	<div class="card-header info-color lighten-1 white-text">
+		Profile Information
+	</div>
+	<table class="card-body table">
+		<tbody>
+			<tr>
+				<td class="text-right" id="properties">
+					Name
+					<br />
+					Date of Birth
+					<br />
+					Admin
+					<br />
+					Gender
+				</td>
+				<td class="text-left">
+					{{user.name}}
+					<br />
+					{{user.birthdate}}
+					<br />
+					{{user.isAdmin}}
+					<br />
+					{{user.gender}}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<button class="btn btn-default">Edit Profile</button>
+
+</div>
