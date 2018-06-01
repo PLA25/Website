@@ -16,6 +16,10 @@ body {
 	min-height: 100%;
 }
 
+main {
+	padding: 10px;
+}
+
 .rgba-blue-dark {
 	background-color: rgba(3, 169, 244, 1) !important;
 }
