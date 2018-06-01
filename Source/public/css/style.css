@@ -108,10 +108,14 @@ main {
 
 .flag {
   float: left;
-  margin-right: 10px;
+  margin-left: 10px;
 }
 
 .flag img {
   height: 100%;
   width: 64px;
+}
+
+.no-margin-left {
+  margin-left: 0;
 }
