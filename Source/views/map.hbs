@@ -101,6 +101,7 @@
   </div>
 </div>
 
+
 <div class="card text-center z-depth-2 map">
   <div class="card-header info-color lighten-1 white-text">
     Map
@@ -116,17 +117,131 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Sensorhub information</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            ...
+            <div class="col-12 col-xl-6">
+              <canvas id="tempChart" style="margin-top: 80px;"></canvas>
+            </div>
+
+            <script>
+              $(document).ready(() => {
+                var chartColors = {
+                  red: 'rgb(255, 99, 132)'
+                };
+
+                let ctx = document.querySelector('#tempChart').getContext('2d');
+                let myChart = new Chart(ctx, {
+                  type: 'bar',
+                  data: {
+                    labels: [
+                      {{#each temperatureData}}
+                      "",
+                      {{/each}}
+                    ],
+                    datasets: [
+                      {
+                        label: "Temparature in celsius",
+                        backgroundColor: chartColors.red,
+                        data: [12, 19, 3, 5, 2, 3],
+                      }
+                    ]
+                  },
+                  options: {
+                    legend: { display: false },
+                    title: {
+                      display: true,
+                      text: 'The average temperature'
+                    }
+                  }
+                });
+              });
+            </script>
+            <br>
+            <div class="col-12 col-xl-6">
+              <canvas id="lightChart" style="margin-top: 80px;"></canvas>
+            </div>
+
+            <script>
+              $(document).ready(() => {
+                var chartColors = {
+                  yellow: 'rgb(239, 233, 40)'
+                };
+
+                let ctx = document.querySelector('#lightChart').getContext('2d');
+                let myChart = new Chart(ctx, {
+                  type: 'bar',
+                  data: {
+                    labels: [
+                      {{#each lightData}}
+                      "",
+                      {{/each}}
+                    ],
+                    datasets: [
+                      {
+                        label: "Light in lux",
+                        backgroundColor: chartColors.yellow,
+                        data: [12, 19, 3, 5, 2, 3],
+                      }
+                    ]
+                  },
+                  options: {
+                    legend: { display: false },
+                    title: {
+                      display: true,
+                      text: 'The average light intensity'
+                    }
+                  }
+                });
+              });
+            </script>
+          </div>
+
+            <div class="col-12 col-xl-6">
+              <canvas id="gassChart" style="margin-top: 80px;"></canvas>
+            </div>
+
+            <script>
+              $(document).ready(() => {
+                var chartColors = {
+                  blue: 'rgb(66, 134, 244)'
+                };
+
+                let ctx = document.querySelector('#gassChart').getContext('2d');
+                let myChart = new Chart(ctx, {
+                  type: 'bar',
+                  data: {
+                    labels: [
+                      {{#each gassData}}
+                      "",
+                      {{/each}}
+                    ],
+                    datasets: [
+                      {
+                        label: "Gass in PPM",
+                        backgroundColor: chartColors.blue,
+                        data: [25, 19, 3, 5, 2, 3],
+                      }
+                    ]
+                  },
+                  options: {
+                    legend: { display: false },
+                    title: {
+                      display: true,
+                      text: 'The average gass concentration'
+                    }
+                  }
+                });
+              });
+            </script>
+            <br>
           </div>
           <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">More details</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
           </div>
         </div>
       </div>
