@@ -18,52 +18,55 @@
 		"latitude": "Breedtegraad",
 		"limitvalue": "Grenswaardes",
 		"limitvaluevalue": "Waarde",
-        "limitvaluename": "Naame"
+		"limitvaluename": "Naame"
 	},
 	"index": {
-        "help": "Hulp",
+		"help": "Hulp",
 		"heading": "Home",
 		"hometext1": "Welkom bij de homepagina van het Open Source Pollution Detection System. Dit systeem gebruikt de Planet API voor de kaart en u eigen sensorhubs voor de pollution details. Bezoek onze Github voor de details over de sensorhubs. ",
 		"hometext2": "De volledige documentatie voor de website kan hier gevonden worden: ",
 		"hometext3": "De homepagina tekst kan worden aangepast in de taalbestanden. (Locatie: locals/en voor Engels en locals/nl voor Nederlands) en het index.hbs bestand. (Locatie: views/index.hbs)",
-		"hometext4": "In het index.hbs bestand kunt u het aantal alinea's instellen door exta <br><br> en index.hometextNUMBER toe te voegen, vervolgens moet u de index.hometextNUMBER ook toeveogen in de 'locals/nl' en 'locals/en' bestanden."
+		"hometext4": "In het index.hbs bestand kunt u het aantal alinea's instellen door exta <br><br> en index.hometextNUMBER toe te voegen, vervolgens moet u de index.hometextNUMBER ook toeveogen in de 'locals/nl' en 'locals/en' bestanden.",
+		"home": "index.home"
 	},
 	"layout": {
 		"home": "Home",
 		"map": "Kaart",
 		"admin": "Admin",
 		"logout": "Uitloggen",
-		"login": "Inloggen"
+		"login": "Inloggen",
+		"profile": "layout.profile",
+		"my-account": "layout.my-account"
 	},
 	"login": {
 		"your-email": "Uw e-mail",
 		"your-password": "Uw wachtwoord",
 		"login": "Inloggen",
-        "profile": "Profiel",
-        "my-account": "Mijn account"
+		"profile": "Profiel",
+		"my-account": "Mijn account"
 	},
 	"sensor": {
-        "gas": "Gasconcentratie",
-        "light": "Lichtsintensiteit",
-        "marked": "Gemarkeerd",
-        "not-marked": "Niet gemarkeerd",
-        "temperature": "Temperatuur",
-        "timestamp": "Tijd"
-    },
-    "map": {
-        "options": "Opties",
-        "go-to": "Ga naar:",
-        "search": "Zoek locatie",
-        "features": "Features:",
-        "navigation": "Navigatie",
-        "sensorhubs": "SensorHubs",
-        "layers": "Lagen:",
-        "temperature": "Temperatuur",
-        "gas": "Gas",
-        "light": "Licht",
-        "timeline": "Tijdlijn:",
-        "latest-data": "Nieuwste data",
-        "hour": "uur",
-        "map": "Kaart"
-    }
+		"gas": "Gasconcentratie",
+		"light": "Lichtsintensiteit",
+		"marked": "Gemarkeerd",
+		"not-marked": "Niet gemarkeerd",
+		"temperature": "Temperatuur",
+		"timestamp": "Tijd"
+	},
+	"map": {
+		"options": "Opties",
+		"go-to": "Ga naar:",
+		"search": "Zoek locatie",
+		"features": "Features:",
+		"navigation": "Navigatie",
+		"sensorhubs": "SensorHubs",
+		"layers": "Lagen:",
+		"temperature": "Temperatuur",
+		"gas": "Gas",
+		"light": "Licht",
+		"timeline": "Tijdlijn:",
+		"latest-data": "Nieuwste data",
+		"hour": "uur",
+		"map": "Kaart"
+	}
 }
