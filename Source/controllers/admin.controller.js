@@ -38,7 +38,7 @@ router.get('/', isAdmin, (req, res, next) => {
   User.find({}).exec()
     .then(users => SensorHub.find({}).exec()
       .then(sensorHubs => [users, sensorHubs]))
-    .then((users, sensorHubs) => Limitvalue.find({}).exec()
+    .then(([users, sensorHubs]) => Limitvalue.find({}).exec()
       .then(limitvalues => [users, sensorHubs, limitvalues]))
     .then(([users, sensorHubs, limitvalues]) => {
       res.render('admin', {
