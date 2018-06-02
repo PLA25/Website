@@ -21,6 +21,7 @@
         "limitvaluename": "Naame"
 	},
 	"index": {
+        "help": "Hulp",
 		"heading": "Home",
 		"hometext1": "Welkom bij de homepagina van het Open Source Pollution Detection System. Dit systeem gebruikt de Planet API voor de kaart en u eigen sensorhubs voor de pollution details. Bezoek onze Github voor de details over de sensorhubs. ",
 		"hometext2": "De volledige documentatie voor de website kan hier gevonden worden: ",
@@ -37,10 +38,32 @@
 	"login": {
 		"your-email": "Uw e-mail",
 		"your-password": "Uw wachtwoord",
-		"login": "Inloggen"
+		"login": "Inloggen",
+        "profile": "Profiel",
+        "my-account": "Mijn account"
 	},
 	"sensor": {
-		"temperature": "Temperatuur",
-		"timestamp": "Tijd"
-	}
+        "gas": "Gasconcentratie",
+        "light": "Lichtsintensiteit",
+        "marked": "Gemarkeerd",
+        "not-marked": "Niet gemarkeerd",
+        "temperature": "Temperatuur",
+        "timestamp": "Tijd"
+    },
+    "map": {
+        "options": "Opties",
+        "go-to": "Ga naar:",
+        "search": "Zoek locatie",
+        "features": "Features:",
+        "navigation": "Navigatie",
+        "sensorhubs": "SensorHubs",
+        "layers": "Lagen:",
+        "temperature": "Temperatuur",
+        "gas": "Gas",
+        "light": "Licht",
+        "timeline": "Tijdlijn:",
+        "latest-data": "Nieuwste data",
+        "hour": "uur",
+        "map": "Kaart"
+    }
 }
