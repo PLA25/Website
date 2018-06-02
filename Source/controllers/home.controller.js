@@ -120,7 +120,6 @@ router.get('/sensorhub/:SerialID', isLoggedIn, (req, res, next) => {
  * @path {GET} /limitvalue/:valueID
  * @params {String} :valueID is the SerialID of the limit.
  */
-
 router.get('/limitvalue/:valueID', isLoggedIn, (req, res, next) => {
   Limitvalue.findOne({
     valueID: req.params.valueID,
@@ -130,7 +129,6 @@ router.get('/limitvalue/:valueID', isLoggedIn, (req, res, next) => {
         next(new Error(`Could not find limitvalue with ID: '${req.params.valueID}'!`));
         return;
       }
-
       // eslint-disable-next-line consistent-return
       return Data.find({
         Type: 'value',
