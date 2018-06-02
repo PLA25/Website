@@ -162,6 +162,54 @@ router.get('/planet/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
     });
 });
 
+router.get('/data/:sensorHub', (req, res, next) => {
+  const serialID = req.params.sensorHub;
+
+  SensorHub.findOne({
+    SerialID: serialID,
+  }).exec().then((sensorHub) => {
+    if (sensorHub == null) {
+      next(new Error());
+      return;
+    }
+
+    Data.find({
+      SensorHub: sensorHub.SerialID,
+      Timestamp: {
+        $gt: new Date(new Date().getTime() - (24 * 60 * 60 * 1000)),
+        $lte: new Date(),
+      },
+    }).sort({ Timestamp: -1 }).exec().then((data) => {
+      const result = [[[], []], [[], []], [[], []]];
+
+      data.forEach((dataNode) => {
+        const type = dataNode.Type;
+
+        let index;
+        if (type === 'temperature') {
+          index = 0;
+        } else if (type === 'gasses') {
+          index = 1;
+        } else {
+          index = 2;
+        }
+
+        result[index][0].push(new Date(dataNode.Timestamp).toISOString());
+        result[index][1].push(parseInt(dataNode.Value, 10));
+      });
+
+      res.type('json');
+      res.send(JSON.stringify(result));
+    })
+      .catch((err) => {
+        next(err);
+      });
+  })
+    .catch((err) => {
+      next(err);
+    });
+});
+
 /**
  * Handles the PDS tile services;
  * also used for caching the tiles.

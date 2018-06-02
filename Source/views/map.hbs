@@ -1,6 +1,8 @@
 <!-- Style -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol.css" integrity="sha256-rQq4Fxpq3LlPQ8yP11i6Z2lAo82b6ACDgd35CKyNEBw=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha256-rByPlHULObEjJ6XQxW/flG2r+22R5dKiAoef+aXWfik=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol.css" integrity="sha256-rQq4Fxpq3LlPQ8yP11i6Z2lAo82b6ACDgd35CKyNEBw="
+  crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha256-rByPlHULObEjJ6XQxW/flG2r+22R5dKiAoef+aXWfik="
+  crossorigin="anonymous" />
 
 <div class="card z-depth-2 sidebar">
   <div class="card-header info-color lighten-1 white-text">
@@ -30,7 +32,7 @@
       </label>
 
       <label class="btn btn-default form-check-label" style="width: 50%;">
-          <input class="form-check-input" type="radio" id="typeMap" autocomplete="off"> Map
+        <input class="form-check-input" type="radio" id="typeMap" autocomplete="off"> Map
       </label>
     </div>
     <hr>
@@ -81,7 +83,8 @@
       <div id="custom-handle" style="width: 50%;">
         Latest data
       </div>
-      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="time-button" style="width: 50%;">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+        id="time-button" style="width: 50%;">
         2 uur
       </button>
 
@@ -113,8 +116,8 @@
     <!-- Button trigger modal -->
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
+    <div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Sensorhub information</h5>
@@ -123,139 +126,39 @@
             </button>
           </div>
           <div class="modal-body">
-            <div class="col-12 col-xl-6">
-              <canvas id="tempChart" style="margin-top: 80px;"></canvas>
+            <div class="row">
+              <div class="col-12">
+                <canvas id="tempChart"></canvas>
+              </div>
+
+              <div class="col-12">
+                <canvas id="lightChart"></canvas>
+              </div>
+
+              <div class="col-12">
+                <canvas id="gassChart"></canvas>
+              </div>
+              <br>
             </div>
-
-            <script>
-              $(document).ready(() => {
-                var chartColors = {
-                  red: 'rgb(255, 99, 132)'
-                };
-
-                let ctx = document.querySelector('#tempChart').getContext('2d');
-                let myChart = new Chart(ctx, {
-                  type: 'bar',
-                  data: {
-                    labels: [
-                      {{#each temperatureData}}
-                      "",
-                      {{/each}}
-                    ],
-                    datasets: [
-                      {
-                        label: "Temparature in celsius",
-                        backgroundColor: chartColors.red,
-                        data: [12, 19, 3, 5, 2, 3],
-                      }
-                    ]
-                  },
-                  options: {
-                    legend: { display: false },
-                    title: {
-                      display: true,
-                      text: 'The average temperature'
-                    }
-                  }
-                });
-              });
-            </script>
-            <br>
-            <div class="col-12 col-xl-6">
-              <canvas id="lightChart" style="margin-top: 80px;"></canvas>
-            </div>
-
-            <script>
-              $(document).ready(() => {
-                var chartColors = {
-                  yellow: 'rgb(239, 233, 40)'
-                };
-
-                let ctx = document.querySelector('#lightChart').getContext('2d');
-                let myChart = new Chart(ctx, {
-                  type: 'bar',
-                  data: {
-                    labels: [
-                      {{#each lightData}}
-                      "",
-                      {{/each}}
-                    ],
-                    datasets: [
-                      {
-                        label: "Light in lux",
-                        backgroundColor: chartColors.yellow,
-                        data: [12, 19, 3, 5, 2, 3],
-                      }
-                    ]
-                  },
-                  options: {
-                    legend: { display: false },
-                    title: {
-                      display: true,
-                      text: 'The average light intensity'
-                    }
-                  }
-                });
-              });
-            </script>
           </div>
-
-            <div class="col-12 col-xl-6">
-              <canvas id="gassChart" style="margin-top: 80px;"></canvas>
-            </div>
-
-            <script>
-              $(document).ready(() => {
-                var chartColors = {
-                  blue: 'rgb(66, 134, 244)'
-                };
-
-                let ctx = document.querySelector('#gassChart').getContext('2d');
-                let myChart = new Chart(ctx, {
-                  type: 'bar',
-                  data: {
-                    labels: [
-                      {{#each gassData}}
-                      "",
-                      {{/each}}
-                    ],
-                    datasets: [
-                      {
-                        label: "Gass in PPM",
-                        backgroundColor: chartColors.blue,
-                        data: [25, 19, 3, 5, 2, 3],
-                      }
-                    ]
-                  },
-                  options: {
-                    legend: { display: false },
-                    title: {
-                      display: true,
-                      text: 'The average gass concentration'
-                    }
-                  }
-                });
-              });
-            </script>
-            <br>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">More details</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">More details</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
-    <div class="scale">
-      -50°C <img src="/spectrum.png" style="border-radius: 5500px;" height="10%" width="100px"> 50°C
-    </div>
+  </div>
+  <div class="scale">
+    -50°C
+    <img src="/spectrum.png" style="border-radius: 5500px;" height="10%" width="100px"> 50°C
   </div>
 </div>
-
-
+</div>
 
 <!-- Scripts -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxgkazSz27Oj0EwF4ihxIefC6_eaF79wk&libraries=places" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.5/ol.js" integrity="sha256-77IKwU93jwIX7zmgEBfYGHcmeO0Fx2MoWB/ooh9QkBA=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.5/ol.js" integrity="sha256-77IKwU93jwIX7zmgEBfYGHcmeO0Fx2MoWB/ooh9QkBA="
+  crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="/js/map.js" crossorigin="anonymous"></script>

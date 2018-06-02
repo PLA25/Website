@@ -1,4 +1,4 @@
-/* global google, ol */
+/* global google, ol, Chart */
 $(document).ready(() => {
   $('#goToError').hide();
 
@@ -116,8 +116,89 @@ $(document).ready(() => {
 
   map.on('click', (e) => {
     map.forEachFeatureAtPixel(e.pixel, (feature) => {
-      $('#exampleModal').modal('show');
-      $('#exampleModalLabel').text(feature.get('name'));
+      const sensorHub = feature.get('name');
+      $('#exampleModalLabel').text(sensorHub);
+
+      $.getJSON(`/api/data/${sensorHub}`, (rawResult) => {
+        const result = Array.from(rawResult);
+
+        const chartColors = {
+          blue: 'rgb(66, 134, 244)',
+          red: 'rgb(255, 99, 132)',
+          yellow: 'rgb(239, 233, 40)',
+        };
+
+        // Temperature
+        let ctx = document.querySelector('#tempChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: result[0][0],
+            datasets: [
+              {
+                label: 'Temparature in celsius',
+                backgroundColor: chartColors.red,
+                data: result[0][1],
+              },
+            ],
+          },
+          options: {
+            legend: { display: false },
+            title: {
+              display: true,
+              text: 'The average temperature',
+            },
+          },
+        });
+
+        // Gas
+        ctx = document.querySelector('#gassChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: result[1][0],
+            datasets: [
+              {
+                label: 'Gass in PPM',
+                backgroundColor: chartColors.blue,
+                data: result[1][1],
+              },
+            ],
+          },
+          options: {
+            legend: { display: false },
+            title: {
+              display: true,
+              text: 'The average gass concentration',
+            },
+          },
+        });
+
+        // Light
+        ctx = document.querySelector('#lightChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: result[2][0],
+            datasets: [
+              {
+                label: 'Light in lux',
+                backgroundColor: chartColors.yellow,
+                data: result[2][1],
+              },
+            ],
+          },
+          options: {
+            legend: { display: false },
+            title: {
+              display: true,
+              text: 'The average light intensity',
+            },
+          },
+        });
+
+        $('#exampleModal').modal('show');
+      });
 
       return false;
     });
