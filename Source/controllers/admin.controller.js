@@ -16,7 +16,7 @@ const {
 const Data = require('./../models/data');
 const SensorHub = require('./../models/sensorhub');
 const User = require('./../models/user');
-// for push, const Limitvalue = require('./../models/limitvalue');
+const Limitvalue = require('./../models/limitvalue');
 
 /* Constants */
 const router = express.Router();
@@ -33,9 +33,13 @@ const {
  * @path {GET} /admin
  * @code {200} if the request is successful
  */
+
 router.get('/', isAdmin, (req, res, next) => {
   User.find({}).exec()
-    .then(users => SensorHub.find({}).exec().then(sensorHubs => [users, sensorHubs]))
+    .then(users => SensorHub.find({}).exec()
+      .then(sensorHubs => [users, sensorHubs]))
+    .then((users, sensorHubs) => Limitvalue.find({}).exec()
+      .then(limitvalues => [users, sensorHubs, limitvalues]))
     .then(([users, sensorHubs, limitvalues]) => {
       res.render('admin', {
         users,
