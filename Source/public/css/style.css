@@ -16,6 +16,14 @@ body {
 	min-height: 100%;
 }
 
+main {
+	padding: 10px;
+}
+
+.rgba-blue-dark {
+	background-color: rgba(3, 169, 244, 1) !important;
+}
+
 .page-footer {
 	position: absolute;
 	right: 0;
@@ -76,4 +84,38 @@ body {
 .scale {
 	margin: 0.5%;
 	float: right;
+}
+
+.first-col {
+  margin-bottom: 20px;
+}
+
+.col-xl-6 {
+  margin-top: 20px;
+}
+
+#tempChart, #lightChart, #gassChart {
+  margin-top: 5px;
+}
+
+.heading-margin {
+  margin-top: 15px;
+}
+
+.logo {
+  margin: 0 50px;
+}
+
+.flag {
+  float: left;
+  margin-left: 10px;
+}
+
+.flag img {
+  height: 100%;
+  width: 64px;
+}
+
+.no-margin-left {
+  margin-left: 0;
 }

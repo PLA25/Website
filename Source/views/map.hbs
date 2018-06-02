@@ -4,12 +4,12 @@
 
 <div class="card z-depth-2 sidebar">
   <div class="card-header info-color lighten-1 white-text">
-    Options
+    {{i18n "map.options"}}
   </div>
   <div class="card-body">
     <label>
       <b>
-        Go To:
+        {{i18n "map.go-to"}}
       </b>
     </label>
     <div class="md-form" style="margin-top: 0px;">
@@ -21,60 +21,60 @@
 
     <label>
       <b>
-        Features:
+        {{i18n "map.features"}}
       </b>
     </label>
     <div class="custom-control custom-checkbox">
       <input type="checkbox" class="custom-control-input" id="mapboxLayer">
-      <label class="custom-control-label" for="mapboxLayer">Navigation</label>
+      <label class="custom-control-label" for="mapboxLayer">{{i18n "map.navigation"}}</label>
     </div>
 
     <div class="custom-control custom-checkbox">
       <input type="checkbox" class="custom-control-input" id="sensorhubLayer">
-      <label class="custom-control-label" for="sensorhubLayer">SensorHubs</label>
+      <label class="custom-control-label" for="sensorhubLayer">{{i18n "map.sensorhubs"}}</label>
     </div>
     <hr>
 
     <label>
       <b>
-        Layers:
+        {{i18n "map.layers"}}
       </b>
     </label>
     <div class="custom-control custom-checkbox">
       <input type="checkbox" class="custom-control-input" id="tempEnabled">
-      <label class="custom-control-label" for="tempEnabled">Temperature</label>
+      <label class="custom-control-label" for="tempEnabled">{{i18n "map.temperature"}}</label>
     </div>
 
     <div class="custom-control custom-checkbox">
       <input type="checkbox" class="custom-control-input" id="gasEnabled">
-      <label class="custom-control-label" for="gasEnabled">Gasses</label>
+      <label class="custom-control-label" for="gasEnabled">{{i18n "map.gas"}}</label>
     </div>
 
     <div class="custom-control custom-checkbox">
       <input type="checkbox" class="custom-control-input" id="lightEnabled">
-      <label class="custom-control-label" for="lightEnabled">Light</label>
+      <label class="custom-control-label" for="lightEnabled">{{i18n "map.light"}}</label>
     </div>
     <hr>
 
     <label>
       <b>
-        Timeline:
+        {{i18n "map.timeline"}}
       </b>
     </label>
     <div class="btn-group" style="width: 100%;">
       <div id="custom-handle" style="width: 50%;">
-        Latest data
+        {{i18n "map.latest-data"}}
       </div>
       <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="time-button" style="width: 50%;">
-        2 uur
+        2 {{i18n "map.hour"}}
       </button>
 
       <div class="dropdown-menu" id="time-menu">
-        <a class="dropdown-item" href="#" id="time-1">1 uur</a>
-        <a class="dropdown-item" href="#" id="time-2" style="display: none;">2 uur</a>
-        <a class="dropdown-item" href="#" id="time-6">6 uur</a>
-        <a class="dropdown-item" href="#" id="time-12">12 uur</a>
-        <a class="dropdown-item" href="#" id="time-24">24 uur</a>
+        <a class="dropdown-item" href="#" id="time-1">1 {{i18n "map.hour"}}</a>
+        <a class="dropdown-item" href="#" id="time-2" style="display: none;">2 {{i18n "map.hour"}}</a>
+        <a class="dropdown-item" href="#" id="time-6">6 {{i18n "map.hour"}}</a>
+        <a class="dropdown-item" href="#" id="time-12">12 {{i18n "map.hour"}}</a>
+        <a class="dropdown-item" href="#" id="time-24">24 {{i18n "map.hour"}}</a>
       </div>
     </div>
 
@@ -87,7 +87,7 @@
 
 <div class="card text-center z-depth-2 map">
   <div class="card-header info-color lighten-1 white-text">
-    Map
+    {{i18n "map.map"}}
   </div>
   <div class="card-body">
     <div id="map"></div>
