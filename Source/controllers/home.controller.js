@@ -22,6 +22,7 @@ const {
 /* Models */
 const Data = require('./../models/data');
 const SensorHub = require('./../models/sensorhub');
+const Limitvalue = require('./../models/limitvalue');
 
 /**
  * Renders the index page.
@@ -105,6 +106,41 @@ router.get('/sensorhub/:SerialID', isLoggedIn, (req, res, next) => {
         temperatureData,
         lightData,
         gassesData,
+      });
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+/**
+ * Renders a specific limitvalue page.
+ *
+ * @name limitvalue
+ * @path {GET} /limitvalue/:valueID
+ * @params {String} :valueID is the SerialID of the limit.
+ */
+
+router.get('/limitvalue/:valueID', isLoggedIn, (req, res, next) => {
+  Limitvalue.findOne({
+    valueID: req.params.valueID,
+  }).exec()
+    .then((valueID) => {
+      if (valueID === null) {
+        next(new Error(`Could not find limitvalue with ID: '${req.params.valueID}'!`));
+        return;
+      }
+
+      // eslint-disable-next-line consistent-return
+      return Data.find({
+        Type: 'value',
+        Limitvalue: valueID.valueID,
+      }).then(valueData => [valueID, valueData]);
+    })
+    .then(([valueID, valueData]) => {
+      res.render('limitvalue', {
+        valueID,
+        valueData,
       });
     })
     .catch((err) => {
