@@ -147,6 +147,19 @@ router.get('/limitvalue/:valueID', isLoggedIn, (req, res, next) => {
 });
 
 /**
+ * Handles all post-data for limitvalue.
+ *
+ * @name limitvalue
+ * @path {POST} /login/:valueID
+ */
+router.post('/limitvalue/:valueID', isLoggedIn, (req) => {
+  Limitvalue.updateOne({
+    valueID: req.params.valueID,
+    value: req.query.NewValue,
+  });
+});
+
+/**
  * Renders the login page.
  *
  * @name Login

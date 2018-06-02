@@ -66,5 +66,9 @@
 		"latest-data": "Latest data",
 		"hour": "hour(s)",
 		"map": "Map"
+	},
+	"limitvalue": {
+		"newvalue": "New Value",
+        "updatevalue": "Update value"
 	}
 }

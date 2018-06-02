@@ -6,7 +6,7 @@
   <hr />
   <div class="row">
 
-    <div class="col-12 col-xl-6">
+    <div class="col-12 col-xl-12">
       <table class="table table-responsive-md table-striped" id="table-limitvalue">
         <thead class="rgba-blue-dark darken-3">
           <tr class="text-white">
@@ -32,6 +32,17 @@
 
   </div>
 
+    <form action="/limitvalue/{{valueID.valueID}}" method="post">
+                <div class="md-form">
+                  <i class="fa fa-user prefix grey-text"></i>
+                  <input type="text" id="form3" name="NewValue" class="form-control">
+                  <label for="form3">{{i18n "limitvalue.newvalue"}}</label>
+                </div>
+                <div class="text-center mt-3">
+                  <button class="btn btn-indigo">{{i18n "limitvalue.updatevalue"}}</button>
+                </div>
+              </form>
+    
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>

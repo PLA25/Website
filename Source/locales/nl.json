@@ -68,5 +68,9 @@
 		"latest-data": "Nieuwste data",
 		"hour": "uur",
 		"map": "Kaart"
+	},
+	"limitvalue": {
+		"newvalue": "Nieuwe Waarde",
+        "updatevalue": "Waarde bijwerken"
 	}
 }
