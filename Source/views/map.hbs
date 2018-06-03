@@ -124,6 +124,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+          
           <div class="modal-body">
             <div class="row">
               <div class="col-12">
@@ -136,15 +137,18 @@
 
               <div class="col-12">
                 <canvas id="gassChart"></canvas>
-                <a id="idOfA">
-                <button type="button" class="btn btn-primary">more details</button>
-              </a>
               </div>
               <br>
             </div>
           </div>
-        </div>
-        <div class="modal-footer">
+
+          <div class="modal-footer">
+            <a id="idOfA">
+              <button type="button" class="btn btn-primary">more details</button>
+            </a>
+
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
         </div>
       </div>
     </div>
@@ -158,7 +162,6 @@
 
 <!-- Scripts -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxgkazSz27Oj0EwF4ihxIefC6_eaF79wk&libraries=places" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.5/ol.js" integrity="sha256-77IKwU93jwIX7zmgEBfYGHcmeO0Fx2MoWB/ooh9QkBA="
-  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.5/ol.js" integrity="sha256-77IKwU93jwIX7zmgEBfYGHcmeO0Fx2MoWB/ooh9QkBA=" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="/js/map.js" crossorigin="anonymous"></script>

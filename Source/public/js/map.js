@@ -117,7 +117,7 @@ $(document).ready(() => {
   map.on('click', (e) => {
     map.forEachFeatureAtPixel(e.pixel, (feature) => {
       const sensorHub = feature.get('name');
-      $("#idOfA").attr("href", `/sensorhub/${sensorHub}`)
+      $('#idOfA').attr('href', `/sensorhub/${sensorHub}`);
       $('#exampleModalLabel').text(sensorHub);
 
       $.getJSON(`/api/data/${sensorHub}`, (rawResult) => {
