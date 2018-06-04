@@ -7,6 +7,7 @@
 
 /* Packages */
 const express = require('express');
+const bcrypt = require('bcrypt-nodejs');
 const User = require('./../models/user');
 
 /* Constants */
@@ -39,23 +40,31 @@ router.get('/', (req, res) => {
  */
 router.post('/edit', (req, res) => {
   const b = req.body;
-  if ((b.old_pass && b.new_pass && b.repeat_pass) && b.new_pass === b.repeat_pass) {
-    User.findOne({ email: req.user.email }).exec().then((user) => {
-      // user.password = bcrypt.hashSync(new_pass, 16);
-      if (user.validatePassword(b.old_pass)) {
-        /*
-         * bewerkingen
-         * user.save();
-         */
-        res.redirect('/logout');
-      } else {
-        res.redirect('/account/edit?fail=true');
-      }
-    });
-  } else if (b.new_name) {
-    // later
-  } else {
-    res.redirect('/account/edit');
+  if (b.passChange) {
+    if ((!!b.old_pass && !!b.new_pass && !!b.repeat_pass) && b.new_pass === b.repeat_pass) {
+      User.findOne({ email: req.user.email }).exec().then((user) => {
+        if (user.validatePassword(b.old_pass)) {
+          const salt = bcrypt.genSaltSync(8);
+          user.password = bcrypt.hashSync(b.new_pass, salt);
+          user.save();
+          res.redirect('/logout');
+        } else {
+          res.redirect('/account/edit?fail=true');
+        }
+      });
+    } else {
+      res.redirect('/account/edit?fail=true');
+    }
+  } else if (b.nameChange) {
+    if (b.name) {
+      User.findOne({ email: req.user.email }).exec().then((user) => {
+        user.name = b.name;
+        user.save();
+        res.redirect('/account');
+      });
+    } else {
+      res.redirect('/account/edit?fail=true');
+    }
   }
 });
 

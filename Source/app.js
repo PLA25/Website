@@ -2,7 +2,7 @@
 const express = require('express');
 const session = require('express-session');
 const fileUpload = require('express-fileupload');
-//const Redis = require('connect-redis')(session);
+// const Redis = require('connect-redis')(session);
 const path = require('path');
 const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');

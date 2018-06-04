@@ -1,55 +1,59 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<style>
-			form {
-				margin-top: 100px;
-				text-align: center;
-			}
-		</style>
 		<script>
-			if ({{fail}}) {
-				alert('Could not change password');
-			}
+			$(window).ready(() => {
+				if ({{fail}}) {
+					alert('Incorrect input');
+				}
+			});
 		</script>
 	</head>
 	<body>
-		<h3>User Data</h3>
-		<br />
-		<table class="table">
-			<tbody>
-				<tr>
-					<th>Name</th>
-					<td><input type="text" value="{{user.name}}" /></td>
-				</tr>
-				<tr>
-					<th>Email</th>
-					<td>{{user.email}}</td>
-				</tr>
-				<tr>
-					<th>Admin</th>
-					<td>
-						{{#if user.isAdmin}}
-						yes
-						{{else}}
-						no
-						{{/if}}
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<button class="btn btn-primary">Save Changes</button>
+		<button class="btn btn-secondary" onclick="location.href = '/account';">Back</button>
 		<hr />
-		<form action="/account/edit" method="POST">
-			<h3>Password</h3>
+		<h3>Change Name</h3>
+		<form method="POST" action="/account/edit">
+			<table class="table">
+				<tbody>
+					<tr>
+						<th>Name</th>
+						<td>
+							<input type="text" name="name" value="{{user.name}}" />
+						</td>
+					</tr>
+					<tr>
+						<th>Email</th>
+						<td>{{user.email}}</td>
+					</tr>
+					<tr>
+						<th>Admin</th>
+						<td>
+							{{#if user.isAdmin}}
+							yes
+							{{else}}
+							no
+							{{/if}}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<input type="submit" class="btn btn-primary" value="Save Changes" />
+			<input type="text" name="nameChange" style="display: none;" value="true" />
+		</form>
+		<hr />
+		<form action="/account/edit" method="POST" style="margin-top: 100px; text-align: center;">
+			<h3>Change Password</h3>
 			<br />
-			<input type="password" name="old_pass" placeholder="Old password" />
+			<input required="" type="password" name="old_pass" placeholder="Old password" />
 			<br />
-			<input type="password" name="new_pass" placeholder="New password" />
+			<input required="" type="password" name="new_pass" placeholder="New password" />
 			<br />
-			<input type="password" name="repeat_pass" placeholder="Repeat new password" />
+			<input required="" type="password" name="repeat_pass" placeholder="Repeat new password" />
 			<br />
 			<input type="submit" class="btn btn-primary" value="Change Password" />
+			<br />
+			<input type="text" name="passChange" style="display: none;" value="true" />
 		</form>
 	</body>
 </html>
