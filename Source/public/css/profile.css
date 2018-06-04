@@ -10,7 +10,7 @@
 	width: 2px;
 	top: 56px;
 	left: 30%;
-	bottom: 54px;
+	bottom: 50px;
 	z-index: -10;
 }
 #pinfo {
@@ -19,7 +19,7 @@
 	width: 70%;
 	height: 100%;
 	text-align: center;
-	padding-top: 10%;
+	padding-top: 12%;
 }
 #properties {
 	font-weight: bold;
@@ -33,4 +33,30 @@ td {
 }
 main {
 	overflow: hidden;
+	text-align: center;
+	padding-top: 10%;
+}
+#background {
+	position: absolute;
+	width: 30%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	z-index: -20;
+	background-color: rgb(200, 200, 200);
+}
+#pimage div {
+	top: 50%;
+	position: absolute;
+	width: 30%;
+	transform: translateY(-50%);
+	z-index: -19;
+}
+table td {
+	font-size: 20px !important;
+}
+@media all and (max-width: 500px) {
+	table td {
+		font-size: 15px !important;
+	}
 }

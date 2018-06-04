@@ -14,6 +14,7 @@ const express = require('express');
 const adminController = require('./admin.controller.js');
 const apiController = require('./api.controller.js');
 const homeController = require('./home.controller.js');
+const accountController = require('./account.controller.js');
 
 /* Constants */
 const has = Object.prototype.hasOwnProperty;
@@ -38,6 +39,7 @@ router.use((req, res, next) => {
 router.use('/', homeController);
 router.use('/admin', adminController);
 router.use('/api', apiController);
+router.use('/account', accountController);
 
 /* Error Handling */
 router.use(pageNotFound);

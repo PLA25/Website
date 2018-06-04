@@ -2,6 +2,8 @@
 
 <link rel="stylesheet" href="/css/profile.css" rel="stylesheet" crossorigin="anonymous">
 
+<!-- <div id="background"></div>
+
 <div id="pimage">
 
 	<div>
@@ -14,7 +16,7 @@
 
 </div>
 
-<div id="pinfo">
+<div id="pinfo"> -->
 
 	<table class="table">
 		<tbody>
@@ -25,17 +27,25 @@
 					Email
 					<br />
 					Admin
+					<br />
+					Password
 				</td>
 				<td class="text-left">
-					{{user.name}}
+					<span>{{user.name}}</span>
 					<br />
-					{{user.email}}
+					<span>{{user.email}}</span>
 					<br />
+					<span>
 					{{#if user.isAdmin}}
 						yes
 					{{else}}
 						no
 					{{/if}}
+					</span>
+					<br />
+					<i>
+						<span>hidden</span>
+					</i>
 				</td>
 			</tr>
 		</tbody>
@@ -43,3 +53,5 @@
 	<button class="btn btn-warning">Edit Profile</button>
 
 </div>
+
+<script src="/js/profile.js"></script>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			form {
+				margin-top: 100px;
+				text-align: center;
+			}
+		</style>
+		<script>
+			if ({{fail}}) {
+				alert('Could not change password');
+			}
+		</script>
+	</head>
+	<body>
+		<h3>User Data</h3>
+		<br />
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>Name</th>
+					<td><input type="text" value="{{user.name}}" /></td>
+				</tr>
+				<tr>
+					<th>Email</th>
+					<td>{{user.email}}</td>
+				</tr>
+				<tr>
+					<th>Admin</th>
+					<td>
+						{{#if user.isAdmin}}
+						yes
+						{{else}}
+						no
+						{{/if}}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<button class="btn btn-primary">Save Changes</button>
+		<hr />
+		<form action="/account/edit" method="POST">
+			<h3>Password</h3>
+			<br />
+			<input type="password" name="old_pass" placeholder="Old password" />
+			<br />
+			<input type="password" name="new_pass" placeholder="New password" />
+			<br />
+			<input type="password" name="repeat_pass" placeholder="Repeat new password" />
+			<br />
+			<input type="submit" class="btn btn-primary" value="Change Password" />
+		</form>
+	</body>
+</html>
