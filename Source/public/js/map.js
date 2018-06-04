@@ -14,6 +14,10 @@ $(document).ready(() => {
   let gasEnabled = true;
   let lightEnabled = true;
 
+  // Timeline
+  let measurements = 7 * 24;
+  let steps = 2;
+
   // Map Tile(s)
   const googleLayer = new ol.layer.Tile({
     source: new ol.source.XYZ({
@@ -120,7 +124,12 @@ $(document).ready(() => {
       $('#detailButton').attr('href', `/sensorhub/${sensorHub}`);
       $('#exampleModalLabel').text(sensorHub);
 
-      $.getJSON(`/api/data/${sensorHub}`, (rawResult) => {
+      const val = $('#slider').slider('option', 'value');
+      const dateNow = new Date().getTime() / 1000 / 60 / 60;
+      const offset = ((measurements) - val);
+      const currentdate = new Date(Math.floor((dateNow - offset)) * 1000 * 60 * 60);
+
+      $.getJSON(`/api/data/${sensorHub}/${currentdate.getTime()}`, (rawResult) => {
         const result = Array.from(rawResult);
 
         const chartColors = {
@@ -329,9 +338,6 @@ $(document).ready(() => {
       }
     });
   });
-
-  let measurements = 7 * 24;
-  let steps = 2;
 
   const handle = $('#custom-handle');
   $('#slider').slider({

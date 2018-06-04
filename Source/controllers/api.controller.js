@@ -162,8 +162,10 @@ router.get('/planet/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
     });
 });
 
-router.get('/data/:sensorHub', (req, res, next) => {
+router.get('/data/:sensorHub/:dateTime', (req, res, next) => {
   const serialID = req.params.sensorHub;
+  const unixTimestamp = parseInt(req.params.dateTime, 10);
+  const requestedDate = new Date((Math.round(unixTimestamp / 1000 / 60 / 60)) * 1000 * 60 * 60);
 
   SensorHub.findOne({
     SerialID: serialID,
@@ -176,8 +178,8 @@ router.get('/data/:sensorHub', (req, res, next) => {
     Data.find({
       SensorHub: sensorHub.SerialID,
       Timestamp: {
-        $gt: new Date(new Date().getTime() - (24 * 60 * 60 * 1000)),
-        $lte: new Date(),
+        $gt: new Date(requestedDate.getTime() - (24 * 60 * 60 * 1000)),
+        $lte: new Date(requestedDate.getTime()),
       },
     }).sort({ Timestamp: -1 }).exec().then((data) => {
       const result = [[[], []], [[], []], [[], []]];
