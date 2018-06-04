@@ -18,7 +18,8 @@
     "latitude": "Latitude"
   },
   "index": {
-    "heading": "Home",
+    "help": "Help",
+    "home": "Home",
     "hometext1": "Welcome to the homepage of the Open Source Pollution Detection System. This system uses the Planet API for map images and your own sensorhubs for the pollution details. Visit our Github for details about the sensorhubs. ",
     "hometext2": "The full documentation for the website can be found here: ",
     "hometext3": "The homepage text can be edited in the language files (Location: locals/en for English and locales/nl for Dutch) and the index.hbs file. (Location: views/index.hbs)",
@@ -29,7 +30,9 @@
     "map": "Map",
     "admin": "Admin",
     "logout": "Logout",
-    "login": "Login"
+    "login": "Login",
+    "profile": "Profile",
+    "my-account": "My account"
   },
   "login": {
     "your-email": "Your email",
@@ -37,7 +40,27 @@
     "login": "Login"
   },
   "sensor": {
+    "gas": "Gas concentration",
+    "light": "Light intensity",
+    "marked": "Marked",
+    "not-marked": "Not marked",
     "temperature": "Temperature",
     "timestamp": "Timestamp"
+  },
+  "map": {
+    "options": "Options",
+    "go-to": "Go to:",
+    "search": "Search location",
+    "features": "Features:",
+    "navigation": "Navigation",
+    "sensorhubs": "SensorHubs",
+    "layers": "Layers:",
+    "temperature": "Temperature",
+    "gas": "Gas",
+    "light": "Light",
+    "timeline": "Timeline:",
+    "latest-data": "Latest data",
+    "hour": "hour(s)",
+    "map": "Map"
   }
 }
