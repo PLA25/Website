@@ -51,6 +51,7 @@ router.post('/edit', (req, res) => {
           return;
         }
         if (user.validatePassword(oldPass)) {
+          // eslint-disable-next-line no-param-reassign
           user.password = bcrypt.hashSync(newPass, salt);
           user.save();
           res.redirect('/logout');
@@ -68,6 +69,7 @@ router.post('/edit', (req, res) => {
           res.redirect('/logout');
           return;
         }
+        // eslint-disable-next-line no-param-reassign
         user.name = name;
         user.save();
         res.redirect('/account');

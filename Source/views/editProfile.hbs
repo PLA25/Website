@@ -17,32 +17,17 @@
 			<div class="col">
 				<div id="name-card" class="card mb-3">
 					<div class="card-header info-color white-text">Change Name</div>
-					<div class="card-body">
-						<form method="POST" action="/account/edit">
-							<table class="table">
-								<tbody>
-									<tr>
-										<th>Name</th>
-										<td>
-											<input type="text" name="name" value="{{user.name}}" />
-										</td>
-									</tr>
-									<tr>
-										<th>Email</th>
-										<td>{{user.email}}</td>
-									</tr>
-									<tr>
-										<th>Admin</th>
-										<td>
-											{{#if user.isAdmin}}
-											yes
-											{{else}}
-											no
-											{{/if}}
-										</td>
-									</tr>
-								</tbody>
-							</table>
+					<div class="card-body text-center">
+						<form method="POST" action="/account/edit" id="nameForm">
+							<label for="nameInput">Name</label>
+							<input type="text" name="name" value="{{user.name}}" id="nameInput" />
+							<br />
+							<label for="emailInput">Email</label>
+							<input type="text" value="{{user.email}}" id="emailInput" disabled="" />
+							<br />
+							<label for="adminInput">Admin</label>
+							<input type="text" value="{{#if user.IsAdmin}}yes{{else}}no{{/if}}" id="adminInput" disabled="" />
+							<br />
 							<input type="submit" class="btn btn-primary" value="Save Changes" />
 							<input type="text" name="nameChange" style="display: none;" value="true" />
 						</form>
