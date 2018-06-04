@@ -9,10 +9,14 @@
 			});
 		</script>
 	</head>
-	<body>
+	<body class="container-fluid">
 		<button class="btn btn-secondary" onclick="location.href = '/account';">Back</button>
 		<hr />
-		<h3>Change Name</h3>
+		<div class="row">
+		<div class="col">
+		<div id="name-card" class="card mb-3">
+		<div class="card-header info-color white-text">Change Name</div>
+		<div class="card-body">
 		<form method="POST" action="/account/edit">
 			<table class="table">
 				<tbody>
@@ -41,19 +45,27 @@
 			<input type="submit" class="btn btn-primary" value="Save Changes" />
 			<input type="text" name="nameChange" style="display: none;" value="true" />
 		</form>
-		<hr />
-		<form action="/account/edit" method="POST" style="margin-top: 100px; text-align: center;">
-			<h3>Change Password</h3>
+		</div>
+		</div>
+		</div>
+		<div class="col">
+		<div id="password-card" class="card">
+		<div class="card-header info-color white-text">Change Password</div>
+		<div class="card-body text-center">
+		<form action="/account/edit" method="POST">
+			<input class="mb-2" required="" type="password" name="old_pass" placeholder="Old password" />
 			<br />
-			<input required="" type="password" name="old_pass" placeholder="Old password" />
+			<input class="mb-2" required="" type="password" name="new_pass" placeholder="New password" />
 			<br />
-			<input required="" type="password" name="new_pass" placeholder="New password" />
-			<br />
-			<input required="" type="password" name="repeat_pass" placeholder="Repeat new password" />
+			<input class="mb-2" required="" type="password" name="repeat_pass" placeholder="Repeat new password" />
 			<br />
 			<input type="submit" class="btn btn-primary" value="Change Password" />
 			<br />
 			<input type="text" name="passChange" style="display: none;" value="true" />
 		</form>
+		</div>
+		</div>
+		</div>
+		</div>
 	</body>
 </html>
