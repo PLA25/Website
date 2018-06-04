@@ -17,7 +17,7 @@ const schema = new mongoose.Schema({
  * Class representing a SensorHub.
  * @class
  */
-class Setting {}
+class Config {}
 
-schema.loadClass(Setting);
-module.exports = mongoose.model('Setting', schema);
+schema.loadClass(Config);
+module.exports = mongoose.model('Config', schema);

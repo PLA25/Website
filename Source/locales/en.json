@@ -68,7 +68,7 @@
 		"hour": "hour(s)",
 		"map": "Map"
 	},
-	"setting": {
+	"config": {
 		"newvalue": "New Value",
 		"updatevalue": "Update value"
 	}

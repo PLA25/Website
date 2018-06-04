@@ -1,5 +1,5 @@
 $(document).ready(() => {
-  $('#table-setting').DataTable({
+  $('#table-config').DataTable({
     columnDefs: [{
       orderable: false,
       searchable: false,

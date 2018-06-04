@@ -22,7 +22,7 @@ const {
 /* Models */
 const Data = require('./../models/data');
 const SensorHub = require('./../models/sensorhub');
-const Setting = require('./../models/setting');
+const Config = require('./../models/config');
 
 /**
  * Renders the index page.
@@ -114,22 +114,22 @@ router.get('/sensorhub/:SerialID', isLoggedIn, (req, res, next) => {
 });
 
 /**
- * Renders a specific setting page.
+ * Renders a specific config page.
  *
- * @name setting
- * @path {GET} /setting/:valueID
+ * @name config
+ * @path {GET} /config/:valueID
  * @params {String} :valueID is the SerialID of the limit.
  */
-router.get('/setting/:valueID', isLoggedIn, (req, res, next) => {
-  Setting.findOne({
+router.get('/config/:valueID', isLoggedIn, (req, res, next) => {
+  Config.findOne({
     valueID: req.params.valueID,
   }).exec()
     .then((valueID) => {
       if (valueID === null) {
-        next(new Error(`Could not find setting with ID: '${req.params.valueID}'!`));
+        next(new Error(`Could not find config with ID: '${req.params.valueID}'!`));
         return;
       }
-      res.render('setting', {
+      res.render('config', {
         valueID,
       });
     })
@@ -139,13 +139,13 @@ router.get('/setting/:valueID', isLoggedIn, (req, res, next) => {
 });
 
 /**
- * Handles all post-data for setting.
+ * Handles all post-data for config.
  *
- * @name setting
- * @path {POST} /login/:valueID
+ * @name config
+ * @path {POST} /config/:valueID
  */
-router.post('/setting/:valueID', isLoggedIn, (req) => {
-  Setting.updateOne({
+router.post('/config/:valueID', isLoggedIn, (req) => {
+  Config.updateOne({
     valueID: req.params.valueID,
     value: req.query.NewValue,
   });

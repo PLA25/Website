@@ -16,7 +16,7 @@ const {
 const Data = require('./../models/data');
 const SensorHub = require('./../models/sensorhub');
 const User = require('./../models/user');
-const Setting = require('./../models/setting');
+const Config = require('./../models/config');
 
 /* Constants */
 const router = express.Router();
@@ -38,13 +38,13 @@ router.get('/', isAdmin, (req, res, next) => {
   User.find({}).exec()
     .then(users => SensorHub.find({}).exec()
       .then(sensorHubs => [users, sensorHubs]))
-    .then(([users, sensorHubs]) => Setting.find({}).exec()
-      .then(settings => [users, sensorHubs, settings]))
-    .then(([users, sensorHubs, settings]) => {
+    .then(([users, sensorHubs]) => Config.find({}).exec()
+      .then(configs => [users, sensorHubs, configs]))
+    .then(([users, sensorHubs, configs]) => {
       res.render('admin', {
         users,
         sensorHubs,
-        settings,
+        configs,
       });
     })
     .catch((err) => {

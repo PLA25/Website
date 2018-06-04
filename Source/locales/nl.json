@@ -70,7 +70,7 @@
 		"hour": "uur",
 		"map": "Kaart"
 	},
-	"setting": {
+	"config": {
 		"newvalue": "Nieuwe Waarde",
 		"updatevalue": "Waarde bijwerken"
 	}
