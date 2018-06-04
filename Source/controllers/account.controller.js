@@ -12,6 +12,7 @@ const User = require('./../models/user');
 
 /* Constants */
 const router = express.Router();
+const salt = bcrypt.genSaltSync(8);
 
 /* Middlewares */
 const {
@@ -44,7 +45,6 @@ router.post('/edit', (req, res) => {
     if ((!!b.old_pass && !!b.new_pass && !!b.repeat_pass) && b.new_pass === b.repeat_pass) {
       User.findOne({ email: req.user.email }).exec().then((user) => {
         if (user.validatePassword(b.old_pass)) {
-          const salt = bcrypt.genSaltSync(8);
           user.password = bcrypt.hashSync(b.new_pass, salt);
           user.save();
           res.redirect('/logout');
