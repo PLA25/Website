@@ -1,253 +1,255 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/css/jquery.dataTables.min.css" integrity="sha256-YY1izqyhIj4W3iyJOaGWOpXDSwrHWFL4Nfk+W0LyCHE=" crossorigin="anonymous" />
 
-<h1>{{ sensorHub.SerialID }}</h1>
-<hr>
+<div class="container-fluid">
+  <h1 class="heading-margin">{{ sensorHub.SerialID }}</h1>
 
-<div class="row">
-  <div class="col-12">
-    <h2>Temperature</h2>
-  </div>
+  <hr />
+  <div class="row">
+    <div class="col-12">
+      <h2>{{i18n "sensor.temperature"}}</h2>
+    </div>
 
-  <div class="col-12 col-xl-6">
-    <table class="table table-responsive-md table-striped" id="table-temp">
-      <thead class="rgba-blue-dark darken-3">
-        <tr class="text-white">
-          <th>{{i18n "sensor.temperature"}}</th>
-          <th>{{i18n "sensor.timestamp"}}</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each temperatureData}}
-        <tr>
-          <td>
-            {{this.Value}}°C
-          </td>
-          <td>
-            {{this.locale}}
-          </td>
-          <td>
-            <a href="/admin/flip/{{this._id}}">
-              {{#if this.inMargin}}
-                <i class="fa fa-check-square"></i> Not Marked
-              {{else}}            
-                <i class="fa fa-exclamation-triangle"></i> Marked
-              {{/if}}
-            </a>
-          </td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
-  </div>
+    <div class="col-12 col-xl-6">
+      <table class="table table-responsive-md table-striped" id="table-temp">
+        <thead class="rgba-blue-dark darken-3">
+          <tr class="text-white">
+            <th>{{i18n "sensor.temperature"}}</th>
+            <th>{{i18n "sensor.timestamp"}}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each temperatureData}}
+          <tr>
+            <td>
+              {{this.Value}}°C
+            </td>
+            <td>
+              {{this.locale}}
+            </td>
+            <td>
+              <a href="/admin/flip/{{this._id}}">
+                {{#if this.inMargin}}
+                  <i class="fa fa-check-square"></i> {{i18n "sensor.not-marked"}}
+                {{else}}            
+                  <i class="fa fa-exclamation-triangle"></i> {{i18n "sensor.marked"}}
+                {{/if}}
+              </a>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
 
-  <div class="col-12 col-xl-6">
-    <canvas id="tempChart" style="margin-top: 80px;"></canvas>
-  </div>
+    <div class="col-12 col-xl-6">
+      <canvas id="tempChart"></canvas>
+    </div>
 
-  <script>
-    $(document).ready(() => {
-      var chartColors = {
-        red: 'rgb(255, 99, 132)'
-      };
+    <script>
+      $(document).ready(() => {
+        var chartColors = {
+          red: 'rgb(255, 99, 132)'
+        };
 
-      let ctx = document.querySelector('#tempChart').getContext('2d');
-      let myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: [
-            {{#each temperatureData}}
-            "",
-            {{/each}}
-          ],
-          datasets: [
-            {
-              label: "Temparature in celsius",
-              backgroundColor: chartColors.red,
-              data: [
-                {{#each temperatureData}}
-                {{this.Value}},
-                {{/each}}
-              ]
+        let ctx = document.querySelector('#tempChart').getContext('2d');
+        let myChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: [
+              {{#each temperatureData}}
+              "",
+              {{/each}}
+            ],
+            datasets: [
+              {
+                label: 'Temperature in Celsius',
+                backgroundColor: chartColors.red,
+                data: [
+                  {{#each temperatureData}}
+                  {{this.Value}},
+                  {{/each}}
+                ]
+              }
+            ]
+          },
+          options: {
+            legend: { display: false },
+            title: {
+              display: true,
+              text: 'The average temperature'
             }
-          ]
-        },
-        options: {
-          legend: { display: false },
-          title: {
-            display: true,
-            text: 'The average temperature'
           }
-        }
+        });
       });
-    });
-  </script>
-</div>
-
-<br>
-
-<div class="row">
-  <div class="col-12">
-    <h2>Light intensity</h2>
+    </script>
   </div>
 
-  <div class="col-12 col-xl-6">
-    <table class="table table-responsive-md table-striped" id="table-light">
-      <thead class="rgba-blue-dark darken-3">
-        <tr class="text-white">
-          <th>Light intensity</th>
-          <th>{{i18n "sensor.timestamp"}}</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each lightData}}
-        <tr>
-          <td>
-            {{this.Value}} Lux
-          </td>
-          <td>
-            {{this.locale}}
-          </td>
-          <td>
-            <a href="/admin/flip/{{this._id}}">
-              {{#if this.inMargin}}
-                <i class="fa fa-check-square"></i> Not Marked
-              {{else}}            
-                <i class="fa fa-exclamation-triangle"></i> Marked
-              {{/if}}
-            </a>
-          </td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
-  </div>
+  <br>
 
-  <div class="col-12 col-xl-6">
-    <canvas id="lightChart" style="margin-top: 80px;"></canvas>
-  </div>
+  <div class="row">
+    <div class="col-12">
+      <h2>{{i18n "sensor.light"}}</h2>
+    </div>
 
-  <script>
-    $(document).ready(() => {
-      var chartColors = {
-        red: 'rgb(255, 99, 132)'
-      };
+    <div class="col-12 col-xl-6">
+      <table class="table table-responsive-md table-striped" id="table-light">
+        <thead class="rgba-blue-dark darken-3">
+          <tr class="text-white">
+            <th>{{i18n "sensor.light"}}</th>
+            <th>{{i18n "sensor.timestamp"}}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each lightData}}
+          <tr>
+            <td>
+              {{this.Value}} Lux
+            </td>
+            <td>
+              {{this.locale}}
+            </td>
+            <td>
+              <a href="/admin/flip/{{this._id}}">
+                {{#if this.inMargin}}
+                  <i class="fa fa-check-square"></i> {{i18n "sensor.not-marked"}}
+                {{else}}            
+                  <i class="fa fa-exclamation-triangle"></i> {{i18n "sensor.marked"}}
+                {{/if}}
+              </a>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
 
-      let ctx = document.querySelector('#lightChart').getContext('2d');
-      let myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: [
-            {{#each lightData}}
-            "",
-            {{/each}}
-          ],
-          datasets: [
-            {
-              label: "Light in lux",
-              backgroundColor: chartColors.red,
-              data: [
-                {{#each lightData}}
-                {{this.Value}},
-                {{/each}}
-              ]
+    <div class="col-12 col-xl-6">
+      <canvas id="lightChart"></canvas>
+    </div>
+
+    <script>
+      $(document).ready(() => {
+        var chartColors = {
+          red: 'rgb(255, 99, 132)'
+        };
+
+        let ctx = document.querySelector('#lightChart').getContext('2d');
+        let myChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: [
+              {{#each lightData}}
+              "",
+              {{/each}}
+            ],
+            datasets: [
+              {
+                label: 'Light in lux',
+                backgroundColor: chartColors.red,
+                data: [
+                  {{#each lightData}}
+                  {{this.Value}},
+                  {{/each}}
+                ]
+              }
+            ]
+          },
+          options: {
+            legend: { display: false },
+            title: {
+              display: true,
+              text: 'The average light intensity'
             }
-          ]
-        },
-        options: {
-          legend: { display: false },
-          title: {
-            display: true,
-            text: 'The average light intensity'
           }
-        }
+        });
       });
-    });
-  </script>
-</div>
-
-<br>
-
-<div class="row">
-  <div class="col-12">
-    <h2>Gass concentration</h2>
+    </script>
   </div>
 
-  <div class="col-12 col-xl-6">
-    <table class="table table-responsive-md table-striped" id="table-gass">
-      <thead class="rgba-blue-dark darken-3">
-        <tr class="text-white">
-          <th>Gass concentration</th>
-          <th>{{i18n "sensor.timestamp"}}</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each gassesData}}
-        <tr>
-          <td>
-            {{this.Value}} PPM
-          </td>
-          <td>
-            {{this.locale}}
-          </td>
-          <td>
-            <a href="/admin/flip/{{this._id}}">
-              {{#if this.inMargin}}
-                <i class="fa fa-check-square"></i> Not Marked
-              {{else}}            
-                <i class="fa fa-exclamation-triangle"></i> Marked
-              {{/if}}
-            </a>
-          </td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
-  </div>
+  <br>
 
-  <div class="col-12 col-xl-6">
-    <canvas id="gassChart" style="margin-top: 80px;"></canvas>
-  </div>
+  <div class="row">
+    <div class="col-12">
+      <h2>{{i18n "sensor.gas"}}</h2>
+    </div>
 
-  <script>
-    $(document).ready(() => {
-      var chartColors = {
-        red: 'rgb(255, 99, 132)'
-      };
+    <div class="col-12 col-xl-6">
+      <table class="table table-responsive-md table-striped" id="table-gass">
+        <thead class="rgba-blue-dark darken-3">
+          <tr class="text-white">
+            <th>{{i18n "sensor.gas"}}</th>
+            <th>{{i18n "sensor.timestamp"}}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each gassesData}}
+          <tr>
+            <td>
+              {{this.Value}} PPM
+            </td>
+            <td>
+              {{this.locale}}
+            </td>
+            <td>
+              <a href="/admin/flip/{{this._id}}">
+                {{#if this.inMargin}}
+                  <i class="fa fa-check-square"></i> {{i18n "sensor.not-marked"}}
+                {{else}}            
+                  <i class="fa fa-exclamation-triangle"></i> {{i18n "sensor.marked"}}
+                {{/if}}
+              </a>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
 
-      let ctx = document.querySelector('#gassChart').getContext('2d');
-      let myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: [
-            {{#each lightData}}
-            "",
-            {{/each}}
-          ],
-          datasets: [
-            {
-              label: "Gass in PPM",
-              backgroundColor: chartColors.red,
-              data: [
-                {{#each lightData}}
-                {{this.Value}},
-                {{/each}}
-              ]
+    <div class="col-12 col-xl-6">
+      <canvas id="gassChart"></canvas>
+    </div>
+
+    <script>
+      $(document).ready(() => {
+        var chartColors = {
+          red: 'rgb(255, 99, 132)'
+        };
+
+        let ctx = document.querySelector('#gassChart').getContext('2d');
+        let myChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: [
+              {{#each lightData}}
+              "",
+              {{/each}}
+            ],
+            datasets: [
+              {
+                label: 'Gas in PPM',
+                backgroundColor: chartColors.red,
+                data: [
+                  {{#each lightData}}
+                  {{this.Value}},
+                  {{/each}}
+                ]
+              }
+            ]
+          },
+          options: {
+            legend: { display: false },
+            title: {
+              display: true,
+              text: 'The average gas concentration'
             }
-          ]
-        },
-        options: {
-          legend: { display: false },
-          title: {
-            display: true,
-            text: 'The average gass concentration'
           }
-        }
+        });
       });
-    });
-  </script>
+    </script>
+  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>

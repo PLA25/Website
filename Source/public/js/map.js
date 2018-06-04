@@ -227,7 +227,7 @@ $(document).ready(() => {
     },
   });
 
-  $('.dropdown-item').click((e) => {
+  $('#time-menu .dropdown-item').click((e) => {
     const $this = $(e.currentTarget);
 
     $('a', $('#time-menu')).each((i, el) => {
