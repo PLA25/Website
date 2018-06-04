@@ -1,101 +1,74 @@
 html {
+	height: 100%;
+	box-sizing: border-box;
+}
+  
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+}
+  
+body {
 	position: relative;
+	margin: 0;
+	padding-bottom: 6rem;
 	min-height: 100%;
 }
 
-body {
-	font-size: 1.1rem;
-}
-
 main {
-	min-height: 87vh;
-	margin-left: 1vw;
-	margin-right: 1vw;
-	margin: 10px;
-}
-
-header {
-	height: 8vh;
-}
-
-.navbar {
-	z-index: 10;
-	background-color: #0080ff;
-}
-
-[type='radio'] {
-	display: none;
-}
-
-footer {
-	background-color: #0080ff;
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	width: 100%;
-	overflow: hidden;
+	padding: 10px;
 }
 
 .rgba-blue-dark {
 	background-color: rgba(3, 169, 244, 1) !important;
 }
 
-.login-error {
-	font-size: 1.0rem;
-	margin-bottom: 5px;
+.page-footer {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
 }
 
-.navbar .navbar-nav {
-	margin-right: 30px;
+.navbar, .page-footer {
+	background-color: royalblue;
 }
 
-.navbar .flag {
-	cursor: pointer;
-	margin-left: 5px;
-}
-
-.navbar .flag img {
-	height: 27px;
-	width: 48px;
-}
-
-.nav-right {
-	margin-right: 0;
-}
-
-.card .logo {
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 15px;
-	width: 200px;
-}
-
-.card .flag {
-	cursor: pointer;
+.sidebar, .map {
+	margin: 1rem;
+	height: Calc(100vh - 56px - 53px - 2rem);
 	float: left;
-	margin-right: 10px;
 }
-
-.card .flag img {
-	border-radius: 0;
-	height: 27px;
-	width: 48px;
-}
-
-#uploadLogoForm {
-	margin-bottom: 30px;
-}
-
 .sidebar {
-	height: 84vh;
-	width: 25vw;
-	float: left;
+	width: Calc(42.5% - 1.5rem);
+	margin-right: 0.5rem;
 }
 
 .map {
-	float: right;
-	width: 70vw;
-	height: 84vh;
+	width: Calc(57.5% - 1.5rem);
+	margin-left: 0.5rem;
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+	.sidebar {
+		width: Calc(32.5% - 1.5rem);
+	}
+	
+	.map {
+		width: Calc(67.5% - 1.5rem);
+	}
+ }
+
+
+@media (min-width: 1200px) {
+	.sidebar {
+		width: Calc(25% - 1.5rem);
+	}
+	
+	.map {
+		width: Calc(75% - 1.5rem);
+	}
 }
 
 .card-body {
@@ -108,16 +81,41 @@ footer {
 	width: 100%;
 }
 
-#goToError {
-	font-size: 1.0rem;
-	margin: 5px 5px 0 5px;
-}
-
 .scale {
 	margin: 0.5%;
 	float: right;
 }
 
-.form-check-label {
-	padding: 1vw !important;
+.first-col {
+  margin-bottom: 20px;
+}
+
+.col-xl-6 {
+  margin-top: 20px;
+}
+
+#tempChart, #lightChart, #gassChart {
+  margin-top: 5px;
+}
+
+.heading-margin {
+  margin-top: 15px;
+}
+
+.logo {
+  margin: 0 50px;
+}
+
+.flag {
+  float: left;
+  margin-left: 10px;
+}
+
+.flag img {
+  height: 100%;
+  width: 64px;
+}
+
+.no-margin-left {
+  margin-left: 0;
 }
