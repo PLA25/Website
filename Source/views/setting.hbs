@@ -10,36 +10,36 @@
       <table class="table table-responsive-md table-striped" id="table-limitvalue">
         <thead class="rgba-blue-dark darken-3">
           <tr class="text-white">
-            <th>{{i18n "admin.limitvaluevalue"}}</th>
-            <th>{{i18n "admin.limitvaluename"}}</th>
+            <th>{{i18n "admin.setting"}}</th>
+            <th>{{i18n "admin.setting"}}</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          {{#each valueID}}
+          
           <tr>
             <td>
-              {{this.value}}
+              {{valueID.value}}
             </td>
             <td>
-              {{this.valueID}}
+              {{valueID.valueID}}
             </td>
           </tr>
-          {{/each}}
+        
         </tbody>
       </table>
     </div>
 
   </div>
 
-    <form action="/limitvalue/{{valueID.valueID}}" method="post">
+    <form action="/setting/{{valueID.valueID}}" method="post">
                 <div class="md-form">
                   <i class="fa fa-user prefix grey-text"></i>
                   <input type="text" id="form3" name="NewValue" class="form-control">
-                  <label for="form3">{{i18n "limitvalue.newvalue"}}</label>
+                  <label for="form3">{{i18n "setting.newvalue"}}</label>
                 </div>
                 <div class="text-center mt-3">
-                  <button class="btn btn-indigo">{{i18n "limitvalue.updatevalue"}}</button>
+                  <button class="btn btn-indigo">{{i18n "setting.updatevalue"}}</button>
                 </div>
               </form>
     
@@ -47,4 +47,4 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/jquery.dataTables.min.js" integrity="sha256-qcV1wr+bn4NoBtxYqghmy1WIBvxeoe8vQlCowLG+cng=" crossorigin="anonymous"></script>
-<script src="/js/limitvalue.js" crossorigin="anonymous"></script>
+<script src="/js/setting.js" crossorigin="anonymous"></script>

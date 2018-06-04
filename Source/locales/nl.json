@@ -18,7 +18,8 @@
 		"latitude": "Breedtegraad",
 		"limitvalue": "Grenswaardes",
 		"limitvaluevalue": "Waarde",
-		"limitvaluename": "Naame"
+		"limitvaluename": "Naame",
+		"setting": "admin.setting"
 	},
 	"index": {
 		"help": "Hulp",
@@ -69,8 +70,8 @@
 		"hour": "uur",
 		"map": "Kaart"
 	},
-	"limitvalue": {
+	"setting": {
 		"newvalue": "Nieuwe Waarde",
-        "updatevalue": "Waarde bijwerken"
+		"updatevalue": "Waarde bijwerken"
 	}
 }

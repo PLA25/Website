@@ -22,7 +22,7 @@ const {
 /* Models */
 const Data = require('./../models/data');
 const SensorHub = require('./../models/sensorhub');
-const Limitvalue = require('./../models/limitvalue');
+const Setting = require('./../models/setting');
 
 /**
  * Renders the index page.
@@ -114,31 +114,23 @@ router.get('/sensorhub/:SerialID', isLoggedIn, (req, res, next) => {
 });
 
 /**
- * Renders a specific limitvalue page.
+ * Renders a specific setting page.
  *
- * @name limitvalue
- * @path {GET} /limitvalue/:valueID
+ * @name setting
+ * @path {GET} /setting/:valueID
  * @params {String} :valueID is the SerialID of the limit.
  */
-router.get('/limitvalue/:valueID', isLoggedIn, (req, res, next) => {
-  Limitvalue.findOne({
+router.get('/setting/:valueID', isLoggedIn, (req, res, next) => {
+  Setting.findOne({
     valueID: req.params.valueID,
   }).exec()
     .then((valueID) => {
       if (valueID === null) {
-        next(new Error(`Could not find limitvalue with ID: '${req.params.valueID}'!`));
+        next(new Error(`Could not find setting with ID: '${req.params.valueID}'!`));
         return;
       }
-      // eslint-disable-next-line consistent-return
-      return Data.find({
-        Type: 'value',
-        Limitvalue: valueID.valueID,
-      }).then(valueData => [valueID, valueData]);
-    })
-    .then(([valueID, valueData]) => {
-      res.render('limitvalue', {
+      res.render('setting', {
         valueID,
-        valueData,
       });
     })
     .catch((err) => {
@@ -147,13 +139,13 @@ router.get('/limitvalue/:valueID', isLoggedIn, (req, res, next) => {
 });
 
 /**
- * Handles all post-data for limitvalue.
+ * Handles all post-data for setting.
  *
- * @name limitvalue
+ * @name setting
  * @path {POST} /login/:valueID
  */
-router.post('/limitvalue/:valueID', isLoggedIn, (req) => {
-  Limitvalue.updateOne({
+router.post('/setting/:valueID', isLoggedIn, (req) => {
+  Setting.updateOne({
     valueID: req.params.valueID,
     value: req.query.NewValue,
   });

@@ -17,7 +17,7 @@ const schema = new mongoose.Schema({
  * Class representing a SensorHub.
  * @class
  */
-class Limitvalue {}
+class Setting {}
 
-schema.loadClass(Limitvalue);
-module.exports = mongoose.model('Limitvalue', schema);
+schema.loadClass(Setting);
+module.exports = mongoose.model('Setting', schema);

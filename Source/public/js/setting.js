@@ -1,5 +1,5 @@
 $(document).ready(() => {
-  $('#table-limitvalue').DataTable({
+  $('#table-setting').DataTable({
     columnDefs: [{
       orderable: false,
       searchable: false,

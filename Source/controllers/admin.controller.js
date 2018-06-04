@@ -16,7 +16,7 @@ const {
 const Data = require('./../models/data');
 const SensorHub = require('./../models/sensorhub');
 const User = require('./../models/user');
-const Limitvalue = require('./../models/limitvalue');
+const Setting = require('./../models/setting');
 
 /* Constants */
 const router = express.Router();
@@ -38,13 +38,13 @@ router.get('/', isAdmin, (req, res, next) => {
   User.find({}).exec()
     .then(users => SensorHub.find({}).exec()
       .then(sensorHubs => [users, sensorHubs]))
-    .then(([users, sensorHubs]) => Limitvalue.find({}).exec()
-      .then(limitvalues => [users, sensorHubs, limitvalues]))
-    .then(([users, sensorHubs, limitvalues]) => {
+    .then(([users, sensorHubs]) => Setting.find({}).exec()
+      .then(settings => [users, sensorHubs, settings]))
+    .then(([users, sensorHubs, settings]) => {
       res.render('admin', {
         users,
         sensorHubs,
-        limitvalues,
+        settings,
       });
     })
     .catch((err) => {

@@ -18,7 +18,8 @@
 		"latitude": "Latitude",
 		"limitvalue": "Limit values",
 		"limitvaluevalue": "Value",
-		"limitvaluename": "Name"
+		"limitvaluename": "Name",
+		"setting": "admin.setting"
 	},
 	"index": {
 		"help": "Help",
@@ -67,8 +68,8 @@
 		"hour": "hour(s)",
 		"map": "Map"
 	},
-	"limitvalue": {
+	"setting": {
 		"newvalue": "New Value",
-        "updatevalue": "Update value"
+		"updatevalue": "Update value"
 	}
 }
