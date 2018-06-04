@@ -40,12 +40,18 @@ router.get('/', (req, res) => {
  * @path {POST} /account/edit
  */
 router.post('/edit', (req, res) => {
-  const b = req.body;
-  if (b.passChange) {
-    if ((!!b.old_pass && !!b.new_pass && !!b.repeat_pass) && b.new_pass === b.repeat_pass) {
+  const {
+    passChange, oldPass, newPass, repeatPass, nameChange, name,
+  } = req.body;
+  if (passChange) {
+    if ((!!oldPass && !!newPass && !!repeatPass) && newPass === repeatPass) {
       User.findOne({ email: req.user.email }).exec().then((user) => {
-        if (user.validatePassword(b.old_pass)) {
-          user.password = bcrypt.hashSync(b.new_pass, salt);
+        if (!user) {
+          res.redirect('/logout');
+          return;
+        }
+        if (user.validatePassword(oldPass)) {
+          user.password = bcrypt.hashSync(newPass, salt);
           user.save();
           res.redirect('/logout');
         } else {
@@ -55,10 +61,14 @@ router.post('/edit', (req, res) => {
     } else {
       res.redirect('/account/edit?fail=true');
     }
-  } else if (b.nameChange) {
-    if (b.name) {
+  } else if (nameChange) {
+    if (name) {
       User.findOne({ email: req.user.email }).exec().then((user) => {
-        user.name = b.name;
+        if (!user) {
+          res.redirect('/logout');
+          return;
+        }
+        user.name = name;
         user.save();
         res.redirect('/account');
       });
@@ -77,7 +87,6 @@ router.post('/edit', (req, res) => {
 router.get('/edit', (req, res) => {
   res.render('editProfile', {
     title: 'Edit Account',
-    layout: 'layout-nonav',
     fail: (req.query.fail === 'true'),
   });
 });

@@ -9,7 +9,8 @@
 			});
 		</script>
 	</head>
-	<body class="container-fluid">
+	<body>
+	<div class="container-fluid">
 		<button class="btn btn-secondary" onclick="location.href = '/account';">Back</button>
 		<hr />
 		<div class="row">
@@ -53,11 +54,11 @@
 					<div class="card-header info-color white-text">Change Password</div>
 					<div class="card-body text-center">
 						<form action="/account/edit" method="POST">
-							<input class="mb-2" required="" type="password" name="old_pass" placeholder="Old password" />
+							<input class="mb-2" required="" type="password" name="oldPass" placeholder="Old password" />
 							<br />
-							<input class="mb-2" required="" type="password" name="new_pass" placeholder="New password" />
+							<input class="mb-2" required="" type="password" name="newPass" placeholder="New password" />
 							<br />
-							<input class="mb-2" required="" type="password" name="repeat_pass" placeholder="Repeat new password" />
+							<input class="mb-2" required="" type="password" name="repeatPass" placeholder="Repeat new password" />
 							<br />
 							<input type="submit" class="btn btn-primary" value="Change Password" />
 							<br />
@@ -66,6 +67,7 @@
 					</div>
 				</div>
 			</div>
+		</div>
 		</div>
 	</body>
 </html>

@@ -1,4 +1,4 @@
-$(window).on('load', () => {
+$(document).ready(() => {
   const knop = $('button.btn.btn-warning');
 
   knop.on('click', () => {

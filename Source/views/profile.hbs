@@ -2,56 +2,38 @@
 
 <link rel="stylesheet" href="/css/profile.css" rel="stylesheet" crossorigin="anonymous">
 
-<!-- <div id="background"></div>
-
-<div id="pimage">
-
-	<div>
-		{{#if user.profileImage}}
-			<img id="Image" src="{{user.profileImage}}" alt="Profile Image" />
-		{{else}}
-			<img id="Image" src="/noimage.png" alt="Profile Image" />
-		{{/if}}
-	</div>
-
-</div>
-
-<div id="pinfo"> -->
-
-	<table class="table">
-		<tbody>
-			<tr>
-				<td class="text-right" id="properties">
-					Name
-					<br />
-					Email
-					<br />
-					Admin
-					<br />
-					Password
-				</td>
-				<td class="text-left">
-					<span>{{user.name}}</span>
-					<br />
-					<span>{{user.email}}</span>
-					<br />
-					<span>
-					{{#if user.isAdmin}}
-						yes
-					{{else}}
-						no
-					{{/if}}
-					</span>
-					<br />
-					<i>
-						<span>hidden</span>
-					</i>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<button class="btn btn-warning">Edit Profile</button>
-
-</div>
+<table class="table">
+	<tbody>
+		<tr>
+			<td class="text-right" id="properties">
+				Name
+				<br />
+				Email
+				<br />
+				Admin
+				<br />
+				Password
+			</td>
+			<td class="text-left">
+				<span>{{user.name}}</span>
+				<br />
+				<span>{{user.email}}</span>
+				<br />
+				<span>
+				{{#if user.isAdmin}}
+					yes
+				{{else}}
+					no
+				{{/if}}
+				</span>
+				<br />
+				<i>
+					<span>hidden</span>
+				</i>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<button class="btn btn-warning">Edit Profile</button>
 
 <script src="/js/profile.js"></script>
