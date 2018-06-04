@@ -2,7 +2,7 @@
 const express = require('express');
 const session = require('express-session');
 const fileUpload = require('express-fileupload');
-// const Redis = require('connect-redis')(session);
+const Redis = require('connect-redis')(session);
 const path = require('path');
 const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
@@ -60,7 +60,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload());
 
 app.use(session({
-  // store: new Redis(config.Redis),
+  store: new Redis(config.Redis),
   secret: 'PollutionDetectionSystem',
   secure: false,
   HttpOnly: true,
