@@ -163,13 +163,13 @@ router.post('/config/:valueID', isAdmin, (req, res) => {
   if (value) {
     Config.findOne({ valueID: req.params.valueID }).exec().then((config) => {
       if (!config) {
-        res.redirect('/admin/config');
+        res.redirect('/admin');
         return;
       }
       // eslint-disable-next-line no-param-reassign
       config.value = value;
       config.save();
-      res.redirect('/admin/config');
+      res.redirect('/admin');
     });
   } else {
     res.redirect('/admin');
