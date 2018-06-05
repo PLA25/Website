@@ -61,6 +61,16 @@
     "timeline": "Timeline:",
     "latest-data": "Latest data",
     "hour": "hour(s)",
-    "map": "Map"
+    "map": "Map",
+    "map-information": "Map information",
+    "temperature-colon": "Temperature:",
+    "invalid": "Invalid",
+    "light": "Light",
+    "valid-measurement": "Valid measurement or measurement expected",
+    "wrong-measurement": "Wrong measurement or measurement too high or too low",
+    "close": "Close",
+    "sensorhub-information": "Sensorhub information",
+    "more-details": "More details"
+
   }
 }
