@@ -56,7 +56,10 @@ router.post('/edit', isLoggedIn, (req, res, next) => {
 		if (passChange && (!!oldPass && !!newPass && !!repeatPass) && newPass === repeatPass) {
 			if (user.validatePassword(oldPass)) {
 				// eslint-disable-next-line no-param-reassign
-				user.password = bcrypt.hashSync(newPass, salt);
+				user.password = bcrypt.hashSync(
+          newPass,
+          salt
+        );
 				user.save();
 				res.redirect('/logout');
 			} else {
