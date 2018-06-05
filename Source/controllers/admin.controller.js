@@ -33,7 +33,6 @@ const {
  * @path {GET} /admin
  * @code {200} if the request is successful
  */
-
 router.get('/', isAdmin, (req, res, next) => {
   User.find({}).exec()
     .then(users => SensorHub.find({}).exec()
@@ -126,11 +125,73 @@ router.get('/flip/:id', isAdmin, (req, res, next) => {
 });
 
 /**
+ * Renders a specific sensorhub edit page.
+ *
+ * @name editsensor
+ * @path {GET} /editsensor/:SerialID
+ * @params {String} :SerialID is the SerialID of the limit.
+ */
+router.get('/editsensor/:SerialID', isAdmin, (req, res, next) => {
+  SensorHub.findOne({
+    SerialID: req.params.SerialID,
+  }).exec()
+    .then((SerialID) => {
+      if (SerialID === null) {
+        next(new Error(`Could not find sensorhub with ID: '${req.params.SerialID}'!`));
+        return;
+      }
+      res.render('editsensor', {
+        SerialID,
+      });
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+/**
+ * Saves the changes to an sensorhub
+ *
+ * @name Profile
+ * @path {POST} /editsensor/:SerialID
+ */
+router.post('/editsensor/:SerialID', isAdmin, (req, res) => {
+  const {
+    Latitude, Longitude,
+  } = req.body;
+  if (Latitude) {
+    SensorHub.findOne({ SerialID: req.params.SerialID }).exec().then((sensorHub) => {
+      if (!sensorHub) {
+        res.redirect('/admin');
+        return;
+      }
+      // eslint-disable-next-line no-param-reassign
+      sensorHub.Latitude = Latitude;
+      sensorHub.save();
+      res.redirect('/admin');
+    });
+  } if (Longitude) {
+    SensorHub.findOne({ SerialID: req.params.SerialID }).exec().then((sensorHub) => {
+      if (!sensorHub) {
+        res.redirect('/admin');
+        return;
+      }
+      // eslint-disable-next-line no-param-reassign
+      sensorHub.Longitude = Longitude;
+      sensorHub.save();
+      res.redirect('/admin');
+    });
+  } else {
+    res.redirect('/admin');
+  }
+});
+
+/**
  * Renders a specific config page.
  *
  * @name config
  * @path {GET} /config/:valueID
- * @params {String} :valueID is the SerialID of the limit.
+ * @params {String} :valueID is the SerialID of the config.
  */
 router.get('/config/:valueID', isAdmin, (req, res, next) => {
   Config.findOne({

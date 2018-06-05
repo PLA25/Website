@@ -17,6 +17,7 @@ const path = require('path');
 /* Models */
 const Data = require('./../models/data');
 const SensorHub = require('./../models/sensorhub');
+// wip const Config = require('./../models/config');
 
 /* Constants */
 const router = express.Router();
@@ -215,7 +216,7 @@ router.get('/:type/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
         $lte: new Date(requestedDate.getTime() + (30 * 60 * 1000)),
       },
     }).exec().then(data => [sensorHubs, data]))
-    .then(([sensorHubs, data]) => generateImage(req.params, sensorHubs, data))
+    .then(([sensorHubs, data]) => generateImage(req.params, sensorHubs, data, 0.5))
     .then((image) => {
       /*
        * image.write(filePath);

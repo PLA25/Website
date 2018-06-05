@@ -73,5 +73,9 @@
 	"config": {
 		"newvalue": "Nieuwe Waarde",
 		"updatevalue": "Waarde bijwerken"
+	},
+	"editsensor": {
+		"Latitude": "Breedtegraad",
+		"Longitude": "Lengtegraad"
 	}
 }

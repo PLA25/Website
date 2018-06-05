@@ -70,7 +70,7 @@ function getColorFromLatLong(latitude, longitude, allSensorHubs, data) {
   };
 }
 
-function generateImage(params, allSensorHubs, data) {
+function generateImage(params, allSensorHubs, data, treshold) {
   return new Promise((resolve, reject) => {
     const z = parseInt(params.z, 10);
     const x = parseInt(params.x, 10);
