@@ -299,5 +299,33 @@ module.exports = () => {
           });
       });
     });
+
+    describe('Update sensorhub succeeded', () => {
+      it('should redirect to /admin', (done) => {
+        request(app)
+          .post('/account/editsensor/Arnhem')
+          .send({
+            Longitude: '5.898730',
+            Latitude: '51.985103',
+          })
+          .end((err, res) => {
+            res.headers.location.should.equal('/admin');
+            done();
+          });
+      });
+    });
+    describe('Update config succeeded', () => {
+      it('should redirect to /admin', (done) => {
+        request(app)
+          .post('/account/config/temperature')
+          .send({
+            value: '0.75',
+          })
+          .end((err, res) => {
+            res.headers.location.should.equal('/admin');
+            done();
+          });
+      });
+    });
   });
 };
