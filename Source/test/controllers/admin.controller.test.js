@@ -213,22 +213,18 @@ module.exports = () => {
           });
       });
     });
-      
-      
-      
-      
-      describe('GET /editsensor/:SerialID', () => {
-    describe('Not logged in', () => {
-      it('should redirect to /login', (done) => {
-        request(app)
-          .get('/admin/editsensor/asdf')
-          .end((err, res) => {
-            res.headers.location.should.equal('/login');
-            done();
-          });
-      });
-    });
 
+    describe('GET /editsensor/:SerialID', () => {
+      describe('Not logged in', () => {
+        it('should redirect to /login', (done) => {
+          request(app)
+            .get('/admin/editsensor/asdf')
+            .end((err, res) => {
+              res.headers.location.should.equal('/login');
+              done();
+            });
+        });
+      });
 
       it('should return a 500 response', (done) => {
         authenticatedAdmin
@@ -250,7 +246,7 @@ module.exports = () => {
           });
       });
     });
-      describe('Logged in admin', () => {
+    describe('Logged in admin', () => {
       it('should return a 200 response', (done) => {
         authenticatedAdmin
           .get('/admin/editsensor/Arnhem')
@@ -260,23 +256,18 @@ module.exports = () => {
           });
       });
     });
-      
-      
-     
-      
-      
-            describe('GET /config/:valueID', () => {
-    describe('Not logged in', () => {
-      it('should redirect to /login', (done) => {
-        request(app)
-          .get('/admin/config/asdf')
-          .end((err, res) => {
-            res.headers.location.should.equal('/login');
-            done();
-          });
-      });
-    });
 
+    describe('GET /config/:valueID', () => {
+      describe('Not logged in', () => {
+        it('should redirect to /login', (done) => {
+          request(app)
+            .get('/admin/config/asdf')
+            .end((err, res) => {
+              res.headers.location.should.equal('/login');
+              done();
+            });
+        });
+      });
 
       it('should return a 500 response', (done) => {
         authenticatedAdmin
@@ -298,7 +289,7 @@ module.exports = () => {
           });
       });
     });
-      describe('Logged in admin', () => {
+    describe('Logged in admin', () => {
       it('should return a 200 response', (done) => {
         authenticatedAdmin
           .get('/admin/config/treshold-temperature')
@@ -308,10 +299,5 @@ module.exports = () => {
           });
       });
     });
-      
-      
-      
-      
-      
   });
 };
