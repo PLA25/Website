@@ -16,9 +16,14 @@ $(document).ready(() => {
   });
 });
 
-function Edit(email) {}
+// eslint-disable-next-line no-unused-vars
+function Edit(email) {
+  window.location.href = `/admin/editUser/${email}`;
+}
 
+// eslint-disable-next-line no-unused-vars
 function Delete(email, message) {
+  // eslint-disable-next-line no-restricted-globals
   if (confirm(message)) {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', '/admin/deleteUser');

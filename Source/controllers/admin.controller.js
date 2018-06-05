@@ -7,6 +7,7 @@
 
 /* Packages */
 const express = require('express');
+const bcrypt = require('bcrypt-nodejs');
 const weekNumber = require('current-week-number');
 const {
   spawn,
@@ -174,6 +175,68 @@ router.post('/deleteUser', isAdmin, (req, res, next) => {
     });
   }
   res.end();
+});
+
+/**
+ * Edits a user
+ *
+ * @name Edit User
+ * @path {GET} /admin/editUser/:email
+ */
+router.get('/editUser/:email', isAdmin, (req, res, next) => {
+  User.findOne({
+    email: req.params.email,
+  }).exec().then((user) => {
+    if (!user) {
+      res.status(404);
+      next();
+      return;
+    }
+    res.render('editUser', {
+      editUser: user,
+    });
+  }).catch(() => {
+    next(new Error(`Could not find user "${req.params.email}"`));
+  });
+});
+
+/**
+ * Saves a user
+ *
+ * @name Save User
+ * @path {GET} /admin/saveUser/:email
+ */
+router.post('/saveUser/:email', isAdmin, (req, res, next) => {
+  const {
+    resetPass,
+    oldEmail,
+    newEmail,
+    role,
+  } = req.body;
+  User.findOne({
+    email: req.params.email,
+  }).exec().then((user) => {
+    if (user === null) {
+      next(new Error(`Could not find user "${req.params.email}"`));
+      return;
+    }
+    if (resetPass) {
+      // eslint-disable-next-line no-param-reassign
+      user.password = bcrypt.hashSync('Amsterdam', bcrypt.genSaltSync(8));
+    }
+    if (!!newEmail && oldEmail !== newEmail) {
+      // eslint-disable-next-line no-param-reassign
+      user.email = newEmail;
+    }
+    if (role) {
+      // eslint-disable-next-line no-param-reassign
+      user.isAdmin = JSON.parse(role);
+    }
+    user.save();
+    res.redirect('/admin');
+  }).catch((e) => {
+    next(new Error(`Could not find user "${req.params.email}"\nMessage: ${e.message}`));
+  });
 });
 
 /* Exports */

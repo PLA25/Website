@@ -16,7 +16,8 @@
     "serial-id": "SerieID",
     "longitude": "Lengtegraad",
     "latitude": "Breedtegraad",
-    "confirm": "Weet U zeker dat U deze gebruiker wilt verwijderen?"
+    "confirm": "Weet U zeker dat U deze gebruiker wilt verwijderen?",
+    "reset_password": "Wachtwoord terugzetten naar Amsterdam"
   },
   "index": {
     "help": "Hulp",
@@ -63,5 +64,21 @@
     "latest-data": "Nieuwste data",
     "hour": "uur",
     "map": "Kaart"
+  },
+  "account": {
+    "name": "Naam",
+    "email": "Email",
+    "admin": "Admin",
+    "password": "Wachtwoord",
+    "yes": "Ja",
+    "edit_profile": "Bewerk Profiel",
+    "back": "Terug",
+    "change_name": "Wijzig Naam",
+    "no": "Nee",
+    "change_pass": "Wijzig Wachtwoord",
+    "old_pass": "Oud Wachtwoord",
+    "new_pass": "Nieuw Wachtwoord",
+    "repeat_pass": "Herhaal Wachtwoord",
+    "save_changes": "Wijzigingen Opslaan"
   }
 }
