@@ -11,24 +11,24 @@
 	</head>
 	<body>
 	<div class="container-fluid">
-		<button class="btn btn-secondary" onclick="location.href = '/account';">Back</button>
+		<button class="btn btn-secondary" onclick="location.href = '/account';">{{i18n "account.back"}}</button>
 		<hr />
 		<div class="row">
 			<div class="col">
 				<div id="name-card" class="card mb-3">
-					<div class="card-header info-color white-text">Change Name</div>
+					<div class="card-header info-color white-text">{{i18n "account.change_name"}}</div>
 					<div class="card-body text-center">
 						<form method="POST" action="/account/edit" id="nameForm">
-							<label for="nameInput">Name</label>
+							<label for="nameInput">{{i18n "account.name"}}</label>
 							<input required="" type="text" name="name" value="{{user.name}}" id="nameInput" />
 							<br />
-							<label for="emailInput">Email</label>
+							<label for="emailInput">{{i18n "account.email"}}</label>
 							<input type="text" value="{{user.email}}" id="emailInput" disabled="" />
 							<br />
-							<label for="adminInput">Admin</label>
-							<input type="text" value="{{#if user.IsAdmin}}yes{{else}}no{{/if}}" id="adminInput" disabled="" />
+							<label for="adminInput">{{i18n "account.admin"}}</label>
+							<input type="text" value="{{#if user.IsAdmin}}{{i18n "account.yes"}}{{else}}{{i18n "account.no"}}{{/if}}" id="adminInput" disabled="" />
 							<br />
-							<input type="submit" class="btn btn-primary" value="Save Changes" />
+							<input type="submit" class="btn btn-primary" value="{{i18n "account.save_changes"}}" />
 							<input type="text" name="nameChange" style="display: none;" value="true" />
 						</form>
 					</div>
@@ -36,16 +36,16 @@
 			</div>
 			<div class="col">
 				<div id="password-card" class="card">
-					<div class="card-header info-color white-text">Change Password</div>
+					<div class="card-header info-color white-text">{{i18n "account.change_pass"}}</div>
 					<div class="card-body text-center">
 						<form action="/account/edit" method="POST">
-							<input class="mb-2" required="" type="password" name="oldPass" placeholder="Old password" />
+							<input class="mb-2" required="" type="password" name="oldPass" placeholder="{{i18n "account.old_pass"}}" />
 							<br />
-							<input class="mb-2" required="" type="password" name="newPass" placeholder="New password" />
+							<input class="mb-2" required="" type="password" name="newPass" placeholder="{{i18n "account.new_pass"}}" />
 							<br />
-							<input class="mb-2" required="" type="password" name="repeatPass" placeholder="Repeat new password" />
+							<input class="mb-2" required="" type="password" name="repeatPass" placeholder="{{i18n "account.repeat_pass"}}" />
 							<br />
-							<input type="submit" class="btn btn-primary" value="Change Password" />
+							<input type="submit" class="btn btn-primary" value="{{i18n "account.change_pass"}}" />
 							<br />
 							<input type="text" name="passChange" style="display: none;" value="true" />
 						</form>

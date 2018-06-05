@@ -168,7 +168,7 @@ module.exports = () => {
         authenticatedTestUser
           .post('/account/edit')
           .send({
-            name: 'Иосиф Сталин',
+            name: 'PDS Test User',
             nameChange: true,
           })
           .end((err, res) => {

@@ -37,7 +37,7 @@ router.get('/', isLoggedIn, (req, res) => {
  * @name Profile
  * @path {POST} /account/edit
  */
-router.post('/edit', isLoggedIn, (req, res) => {
+router.post('/edit', isLoggedIn, (req, res, next) => {
   const {
     passChange, oldPass, newPass, repeatPass, nameChange, name,
   } = req.body;
@@ -56,8 +56,8 @@ router.post('/edit', isLoggedIn, (req, res) => {
         } else {
           res.redirect('/account/edit?fail=true');
         }
-      }).catch(() => {
-        res.redirect('/logout');
+      }).catch((err) => {
+        next(err);
       });
     } else {
       res.redirect('/account/edit?fail=true');
@@ -73,8 +73,8 @@ router.post('/edit', isLoggedIn, (req, res) => {
         user.name = name;
         user.save();
         res.redirect('/account');
-      }).catch(() => {
-        res.redirect('/logout');
+      }).catch((err) => {
+        next(err);
       });
     } else {
       res.redirect('/account/edit?fail=true');

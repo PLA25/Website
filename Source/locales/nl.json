@@ -76,6 +76,7 @@
 		"change_pass": "Wijzig Wachtwoord",
 		"old_pass": "Oud Wachtwoord",
 		"new_pass": "Nieuw Wachtwoord",
-		"repeat_pass": "Herhaal Wachtwoord"
+		"repeat_pass": "Herhaal Wachtwoord",
+		"save_changes": "Wijzigingen Opslaan"
 	}
 }

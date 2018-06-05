@@ -6,13 +6,13 @@
 	<tbody>
 		<tr>
 			<td class="text-right" id="properties">
-				Name
+				{{i18n "account.name"}}
 				<br />
-				Email
+				{{i18n "account.email"}}
 				<br />
-				Admin
+				{{i18n "account.admin"}}
 				<br />
-				Password
+				{{i18n "account.password"}}
 			</td>
 			<td class="text-left">
 				<span>{{user.name}}</span>
@@ -21,9 +21,9 @@
 				<br />
 				<span>
 				{{#if user.isAdmin}}
-					yes
+					{{i18n "account.yes"}}
 				{{else}}
-					no
+					{{i18n "account.no"}}
 				{{/if}}
 				</span>
 				<br />
@@ -34,6 +34,6 @@
 		</tr>
 	</tbody>
 </table>
-<button class="btn btn-warning">Edit Profile</button>
+<button class="btn btn-warning">{{i18n "account.edit_profile"}}</button>
 
 <script src="/js/profile.js"></script>

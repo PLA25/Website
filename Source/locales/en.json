@@ -76,6 +76,7 @@
 		"change_pass": "Change Password",
 		"old_pass": "Old Password",
 		"new_pass": "New Password",
-		"repeat_pass": "Repeat Password"
+		"repeat_pass": "Repeat Password",
+		"save_changes": "Save Changes"
 	}
 }
