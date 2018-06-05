@@ -126,17 +126,17 @@ router.get('/flip/:id', isAdmin, (req, res, next) => {
 });
 
 /**
- * Saves the changes to an account
+ * Saves the changes to an config
  *
  * @name Profile
- * @path {POST} /account/edit
+ * @path {POST} /config/:valueID
  */
 router.post('/config/:valueID', isAdmin, (req, res) => {
   const {
     value,
   } = req.body;
   if (value) {
-    Config.findOne({ _valueID: req.params.valueID }).exec().then((config) => {
+    Config.findOne({ valueID: req.params.valueID }).exec().then((config) => {
       if (!config) {
         res.redirect('/config');
         return;
