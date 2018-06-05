@@ -155,5 +155,19 @@ router.post('/upload-logo', isAdmin, (req, res) => {
   });
 });
 
+/**
+ * Deletes a user
+ *
+ * @name Delete User
+ * @path {POST} /admin/deleteUser
+ */
+router.post('/deleteUser', isAdmin, (req, res) => {
+  if (req.body.email) {
+    User.deleteOne({}, (err) => {
+
+    });
+  }
+});
+
 /* Exports */
 module.exports = router;

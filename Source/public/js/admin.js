@@ -15,3 +15,10 @@ $(document).ready(() => {
     }],
   });
 });
+
+function Edit(email) {
+}
+
+function Delete(email) {
+  console.log(email);
+}
