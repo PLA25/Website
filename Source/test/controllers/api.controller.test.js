@@ -149,7 +149,7 @@ module.exports = () => {
         it('should return cached copy of /api/gasses/1526428800000/8/132/86', (done) => {
           authenticatedAdmin.get('/api/gasses/1526428800000/8/132/86')
             .end((err, res) => {
-            // TODO: res.statusCode.should.equal(304);
+              // TODO: res.statusCode.should.equal(304);
               res.statusCode.should.equal(200);
               done();
             });
@@ -180,7 +180,7 @@ module.exports = () => {
         it('should return a cached copy of /api/gasses/1526428800000/8/132/86', (done) => {
           authenticatedUser.get('/api/gasses/1526428800000/8/132/86')
             .end((err, res) => {
-            // TODO: res.statusCode.should.equal(304);
+              // TODO: res.statusCode.should.equal(304);
               res.statusCode.should.equal(200);
               done();
             });
@@ -231,7 +231,7 @@ module.exports = () => {
         it('should return cached copy of /api/light/1526428800000/8/132/86', (done) => {
           authenticatedAdmin.get('/api/light/1526428800000/8/132/86')
             .end((err, res) => {
-            // TODO: res.statusCode.should.equal(304);
+              // TODO: res.statusCode.should.equal(304);
               res.statusCode.should.equal(200);
               done();
             });
@@ -262,7 +262,7 @@ module.exports = () => {
         it('should return a cached copy of /api/light/1526428800000/8/132/86', (done) => {
           authenticatedUser.get('/api/light/1526428800000/8/132/86')
             .end((err, res) => {
-            // TODO: res.statusCode.should.equal(304);
+              // TODO: res.statusCode.should.equal(304);
               res.statusCode.should.equal(200);
               done();
             });
@@ -323,7 +323,7 @@ module.exports = () => {
         it('should return cached copy of /api/temperature/1526428800000/8/132/86', (done) => {
           authenticatedAdmin.get('/api/temperature/1526428800000/8/132/86')
             .end((err, res) => {
-            // TODO: res.statusCode.should.equal(304);
+              // TODO: res.statusCode.should.equal(304);
               res.statusCode.should.equal(200);
               done();
             });
@@ -354,11 +354,67 @@ module.exports = () => {
         it('should return a cached copy of /api/temperature/1526428800000/8/132/86', (done) => {
           authenticatedUser.get('/api/temperature/1526428800000/8/132/86')
             .end((err, res) => {
-            // TODO: res.statusCode.should.equal(304);
+              // TODO: res.statusCode.should.equal(304);
               res.statusCode.should.equal(200);
               done();
             });
         });
+      });
+    });
+  });
+
+  describe('GET /data/:sensorHub/:dateTime', () => {
+    describe('Not logged in', () => {
+      it('should redirect to /login', (done) => {
+        request(app).get('/api/data/asdf/123')
+          .end((err, res) => {
+            res.headers.location.should.equal('/login');
+            done();
+          });
+      });
+
+      it('should return a 302 response', (done) => {
+        request(app).get('/api/data/asdf/123')
+          .end((err, res) => {
+            res.statusCode.should.equal(302);
+            done();
+          });
+      });
+    });
+
+    describe('Logged in admin', () => {
+      it('should return a 200 response', (done) => {
+        authenticatedAdmin.get('/api/data/Groningen/1526428800000')
+          .end((err, res) => {
+            res.statusCode.should.equal(200);
+            done();
+          });
+      });
+
+      it('should return a 500 response', (done) => {
+        authenticatedAdmin.get('/api/data/asdf/1526428800000')
+          .end((err, res) => {
+            res.statusCode.should.equal(500);
+            done();
+          });
+      });
+    });
+
+    describe('Logged in user', () => {
+      it('should return a 200 response', (done) => {
+        authenticatedUser.get('/api/data/Groningen/1526428800000')
+          .end((err, res) => {
+            res.statusCode.should.equal(200);
+            done();
+          });
+      });
+
+      it('should return a 500 response', (done) => {
+        authenticatedUser.get('/api/data/asdf/1526428800000')
+          .end((err, res) => {
+            res.statusCode.should.equal(500);
+            done();
+          });
       });
     });
   });
@@ -463,6 +519,7 @@ module.exports = () => {
           });
       });
     });
+
     describe('Logged in admin', () => {
       it('should return a 200 response', (done) => {
         authenticatedAdmin.get('/api/sensorhubs')
