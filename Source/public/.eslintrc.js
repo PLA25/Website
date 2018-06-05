@@ -1,5 +1,6 @@
 module.exports = {
   "rules": {
-    "require-jsdoc": "off"
+    "no-new": "off",
+    "require-jsdoc": "off",
   }
 };

@@ -30,23 +30,31 @@ module.exports = () => {
 
   before((done) => {
     authenticatedAdmin
-      .post('/login')
-      .send(adminCredentials)
-      .end((err, res) => {
-        res.statusCode.should.equal(302);
-        res.headers.location.should.equal('/');
-        done();
+      .get('logout')
+      .end(() => {
+        authenticatedAdmin
+          .post('/login')
+          .send(adminCredentials)
+          .end((err, res) => {
+            res.statusCode.should.equal(302);
+            res.headers.location.should.equal('/');
+            done();
+          });
       });
   });
 
   before((done) => {
     authenticatedUser
-      .post('/login')
-      .send(userCredentials)
-      .end((err, res) => {
-        res.statusCode.should.equal(302);
-        res.headers.location.should.equal('/');
-        done();
+      .get('logout')
+      .end(() => {
+        authenticatedUser
+          .post('/login')
+          .send(userCredentials)
+          .end((err, res) => {
+            res.statusCode.should.equal(302);
+            res.headers.location.should.equal('/');
+            done();
+          });
       });
   });
 
