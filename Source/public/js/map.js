@@ -1,6 +1,9 @@
-/* global google, ol */
+/* global google, ol, Chart */
 $(document).ready(() => {
   $('#goToError').hide();
+
+  // Map Type
+  const satEnabled = true;
 
   // Features
   const navEnabled = true;
@@ -11,6 +14,19 @@ $(document).ready(() => {
   let gasEnabled = true;
   let lightEnabled = true;
 
+  // Timeline
+  let measurements = 7 * 24;
+  let steps = 2;
+
+  // Map Tile(s)
+  const googleLayer = new ol.layer.Tile({
+    source: new ol.source.XYZ({
+      url: 'http://mt{0-3}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
+    }),
+  });
+
+  googleLayer.setVisible(!satEnabled);
+
   // Satellite Tile(s)
   const planetXYZ = new ol.source.XYZ({
     url: `/api/planet/${new Date().getTime()}/{z}/{x}/{y}`,
@@ -19,6 +35,8 @@ $(document).ready(() => {
   const planetLayer = new ol.layer.Tile({
     source: planetXYZ,
   });
+
+  planetLayer.setVisible(satEnabled);
 
   // Navigation
   const mapboxLayer = new ol.layer.Tile({
@@ -88,6 +106,7 @@ $(document).ready(() => {
   // eslint-disable-next-line no-unused-vars
   const map = new ol.Map({
     layers: [
+      googleLayer,
       planetLayer,
       mapboxLayer,
       sensorhubLayer,
@@ -99,6 +118,106 @@ $(document).ready(() => {
     view,
   });
 
+  map.on('click', (e) => {
+    map.forEachFeatureAtPixel(e.pixel, (feature) => {
+      const sensorHub = feature.get('name');
+      $('#detailButton').attr('href', `/sensorhub/${sensorHub}`);
+      $('#exampleModalLabel').text(sensorHub);
+
+      const val = $('#slider').slider('option', 'value');
+      const dateNow = new Date().getTime() / 1000 / 60 / 60;
+      const offset = ((measurements) - val);
+      const currentdate = new Date(Math.floor((dateNow - offset)) * 1000 * 60 * 60);
+
+      $.getJSON(`/api/data/${sensorHub}/${currentdate.getTime()}`, (rawResult) => {
+        const result = Array.from(rawResult);
+
+        const chartColors = {
+          blue: 'rgb(66, 134, 244)',
+          red: 'rgb(255, 99, 132)',
+          yellow: 'rgb(239, 233, 40)',
+        };
+
+        // Temperature
+        let ctx = document.querySelector('#tempChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: result[0][0],
+            datasets: [
+              {
+                label: 'Temparature in celsius',
+                backgroundColor: chartColors.red,
+                data: result[0][1],
+              },
+            ],
+          },
+          options: {
+            legend: { display: false },
+            title: {
+              display: true,
+              text: 'The average temperature',
+            },
+          },
+        });
+
+        // Gas
+        ctx = document.querySelector('#gassChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: result[1][0],
+            datasets: [
+              {
+                label: 'Gass in PPM',
+                backgroundColor: chartColors.blue,
+                data: result[1][1],
+              },
+            ],
+          },
+          options: {
+            legend: { display: false },
+            title: {
+              display: true,
+              text: 'The average gass concentration',
+            },
+          },
+        });
+
+        // Light
+        ctx = document.querySelector('#lightChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: result[2][0],
+            datasets: [
+              {
+                label: 'Light in lux',
+                backgroundColor: chartColors.yellow,
+                data: result[2][1],
+              },
+            ],
+          },
+          options: {
+            legend: { display: false },
+            title: {
+              display: true,
+              text: 'The average light intensity',
+            },
+          },
+        });
+
+        $('#exampleModal').modal('show');
+      });
+
+      return false;
+    });
+  });
+
+  // Map Type
+  $('#typeSat').prop('checked', satEnabled);
+  $('#typeMap').prop('checked', !satEnabled);
+
   // Features
   $('#mapboxLayer').prop('checked', navEnabled);
   $('#sensorhubLayer').prop('checked', hubsEnabled);
@@ -107,6 +226,27 @@ $(document).ready(() => {
   $('#tempEnabled').prop('checked', tempEnabled);
   $('#gasEnabled').prop('checked', gasEnabled);
   $('#lightEnabled').prop('checked', lightEnabled);
+
+  // Map Type
+  $('#typeSat').change(() => {
+    const isChecked = $('#typeSat').prop('checked');
+    googleLayer.setVisible(!isChecked);
+    planetLayer.setVisible(isChecked);
+
+    $('#mapboxLayer').prop('checked', true);
+    $('#mapboxLayer').prop('disabled', false);
+    mapboxLayer.setVisible(true);
+  });
+
+  $('#typeMap').change(() => {
+    const isChecked = $('#typeMap').prop('checked');
+    googleLayer.setVisible(isChecked);
+    planetLayer.setVisible(!isChecked);
+
+    $('#mapboxLayer').prop('checked', false);
+    $('#mapboxLayer').prop('disabled', true);
+    mapboxLayer.setVisible(false);
+  });
 
   // Features
   $('#mapboxLayer').change(() => {
@@ -199,9 +339,6 @@ $(document).ready(() => {
     });
   });
 
-  let measurements = 7 * 24;
-  let steps = 2;
-
   const handle = $('#custom-handle');
   $('#slider').slider({
     min: 0,
@@ -227,7 +364,7 @@ $(document).ready(() => {
     },
   });
 
-  $('#time-menu .dropdown-item').click((e) => {
+  $('.dropdown-item').click((e) => {
     const $this = $(e.currentTarget);
 
     $('a', $('#time-menu')).each((i, el) => {
