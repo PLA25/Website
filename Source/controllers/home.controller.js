@@ -139,6 +139,19 @@ router.get('/config/:valueID', isLoggedIn, (req, res, next) => {
 });
 
 /**
+ * Handles all post-data for config.
+ *
+ * @name config
+ * @path {POST} /config/:valueID
+ */
+router.post('/config/:valueID', isLoggedIn, (req) => {
+  Config.updateOne({
+    valueID: req.params.valueID,
+    value: req.query.NewValue,
+  });
+});
+
+/**
  * Renders the login page.
  *
  * @name Login
