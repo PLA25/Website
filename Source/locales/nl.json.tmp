@@ -1,0 +1,76 @@
+{
+	"error404": {
+		"heading": "Error 404",
+		"before-link": "De pagina waar u naar zocht kon niet gevonden worden. Klik ",
+		"link": "hier",
+		"after-link": " om terug te gaan naar de homepagina."
+	},
+	"admin": {
+		"change-logo": "Logo veranderen",
+		"upload": "Uploaden",
+		"users": "Gebruikers",
+		"email": "E-mail",
+		"admin": "Admin",
+		"edit": "Aanpassen",
+		"delete": "Verwijderen",
+		"serial-id": "SerieID",
+		"longitude": "Lengtegraad",
+		"latitude": "Breedtegraad"
+	},
+	"index": {
+		"help": "Hulp",
+		"home": "Home",
+		"hometext1": "Welkom bij de homepagina van het Open Source Pollution Detection System. Dit systeem gebruikt de Planet API voor de kaart en u eigen sensorhubs voor de pollution details. Bezoek onze Github voor de details over de sensorhubs. ",
+		"hometext2": "De volledige documentatie voor de website kan hier gevonden worden: ",
+		"hometext3": "De homepagina tekst kan worden aangepast in de taalbestanden. (Locatie: locals/en voor Engels en locals/nl voor Nederlands) en het index.hbs bestand. (Locatie: views/index.hbs)",
+		"hometext4": "In het index.hbs bestand kunt u het aantal alinea's instellen door exta <br><br> en index.hometextNUMBER toe te voegen, vervolgens moet u de index.hometextNUMBER ook toeveogen in de 'locals/nl' en 'locals/en' bestanden."
+	},
+	"layout": {
+		"home": "Home",
+		"map": "Kaart",
+		"admin": "Admin",
+		"logout": "Uitloggen",
+		"login": "Inloggen",
+		"profile": "Profiel",
+		"my-account": "Mijn account"
+	},
+	"login": {
+		"your-email": "Uw e-mail",
+		"your-password": "Uw wachtwoord",
+		"login": "Inloggen"
+	},
+	"sensor": {
+		"gas": "Gasconcentratie",
+		"light": "Lichtsintensiteit",
+		"marked": "Gemarkeerd",
+		"not-marked": "Niet gemarkeerd",
+		"temperature": "Temperatuur",
+		"timestamp": "Tijd"
+	},
+	"map": {
+		"options": "Opties",
+		"go-to": "Ga naar:",
+		"search": "Zoek locatie",
+		"features": "Features:",
+		"navigation": "Navigatie",
+		"sensorhubs": "SensorHubs",
+		"layers": "Lagen:",
+		"temperature": "Temperatuur",
+		"gas": "Gas",
+		"light": "Licht",
+		"timeline": "Tijdlijn:",
+		"latest-data": "Nieuwste data",
+		"hour": "uur",
+		"map": "Kaart",
+		"map-information": "map informatie",
+		"temperature-colon": "Temperatuur:",
+		"invalid": "Ongeldig",
+		"Light": "Licht",
+		"valid-measurement": "Geldige meting of meting verwacht",
+		"wrong-measurement": "Verkeerde meting of meting te hoog of te laag",
+		"close": "Sluiten",
+		"sensorhub-information": "Sensorhub informatie",
+		"more-details": "meer details",
+		"map information": "map.map information"
+	}
+}
