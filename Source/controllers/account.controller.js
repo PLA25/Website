@@ -16,7 +16,7 @@ const salt = bcrypt.genSaltSync(8);
 
 /* Middlewares */
 const {
-	isLoggedIn,
+  isLoggedIn,
 } = require('./../middlewares');
 
 /**
@@ -26,9 +26,9 @@ const {
  * @path {GET} /account
  */
 router.get('/', isLoggedIn, (req, res) => {
-	res.render('profile', {
-		title: 'Profile Page',
-	});
+  res.render('profile', {
+    title: 'Profile Page',
+  });
 });
 
 /**
@@ -38,44 +38,44 @@ router.get('/', isLoggedIn, (req, res) => {
  * @path {POST} /account/edit
  */
 router.post('/edit', isLoggedIn, (req, res, next) => {
-	const {
-		passChange,
-		oldPass,
-		newPass,
-		repeatPass,
-		nameChange,
-		name,
-	} = req.body;
-	User.findOne({
-		email: req.user.email
-	}).exec().then((user) => {
-		if (!user) {
-			next(new Error(`Could not find user with email: '${req.user.email}'!`));
-			return;
-		}
-		if (passChange && (!!oldPass && !!newPass && !!repeatPass) && newPass === repeatPass) {
-			if (user.validatePassword(oldPass)) {
-				// eslint-disable-next-line no-param-reassign
-				user.password = bcrypt.hashSync(
+  const {
+    passChange,
+    oldPass,
+    newPass,
+    repeatPass,
+    nameChange,
+    name,
+  } = req.body;
+  User.findOne({
+    email: req.user.email
+  }).exec().then((user) => {
+    if (!user) {
+      next(new Error(`Could not find user with email: '${req.user.email}'!`));
+      return;
+    }
+    if (passChange && (!!oldPass && !!newPass && !!repeatPass) && newPass === repeatPass) {
+      if (user.validatePassword(oldPass)) {
+        // eslint-disable-next-line no-param-reassign
+        user.password = bcrypt.hashSync(
           newPass,
           salt
         );
-				user.save();
-				res.redirect('/logout');
-			} else {
-				res.redirect('/account/edit?fail=true');
-			}
-		} else if (nameChange) {
-			// eslint-disable-next-line no-param-reassign
-			user.name = name;
-			user.save();
-			res.redirect('/account');
-		} else {
-			res.redirect('/account/edit?fail=true');
-		}
-	}).catch((err) => {
-		next(err);
-	});
+        user.save();
+        res.redirect('/logout');
+      } else {
+        res.redirect('/account/edit?fail=true');
+      }
+    } else if (nameChange) {
+      // eslint-disable-next-line no-param-reassign
+      user.name = name;
+      user.save();
+      res.redirect('/account');
+    } else {
+      res.redirect('/account/edit?fail=true');
+    }
+  }).catch((err) => {
+    next(err);
+  });
 });
 
 /**
@@ -85,10 +85,10 @@ router.post('/edit', isLoggedIn, (req, res, next) => {
  * @path {GET} /account/edit
  */
 router.get('/edit', isLoggedIn, (req, res) => {
-	res.render('editProfile', {
-		title: 'Edit Account',
-		fail: (req.query.fail === 'true'),
-	});
+  res.render('editProfile', {
+    title: 'Edit Account',
+    fail: (req.query.fail === 'true'),
+  });
 });
 
 /* Exports */
