@@ -126,6 +126,32 @@ router.get('/flip/:id', isAdmin, (req, res, next) => {
 });
 
 /**
+ * Saves the changes to an account
+ *
+ * @name Profile
+ * @path {POST} /account/edit
+ */
+router.post('/config/:valueID', isAdmin, (req, res) => {
+  const {
+    value,
+  } = req.body;
+  if (value) {
+    Config.findOne({ _valueID: req.params.valueID }).exec().then((config) => {
+      if (!config) {
+        res.redirect('/config');
+        return;
+      }
+      // eslint-disable-next-line no-param-reassign
+      config.value = value;
+      config.save();
+      res.redirect('/config');
+    });
+  } else {
+    res.redirect('/admin');
+  }
+});
+
+/**
  * Uploads a logo.
  *
  * @name Upload logo
