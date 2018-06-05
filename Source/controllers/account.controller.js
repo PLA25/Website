@@ -1,6 +1,6 @@
 /**
  * Account controller
- * 
+ *
  * @module controllers/account
  * @see module:controllers
  */
@@ -47,7 +47,7 @@ router.post('/edit', isLoggedIn, (req, res, next) => {
     name,
   } = req.body;
   User.findOne({
-    email: req.user.email
+    email: req.user.email,
   }).exec().then((user) => {
     if (!user) {
       next(new Error(`Could not find user with email: '${req.user.email}'!`));
@@ -58,7 +58,7 @@ router.post('/edit', isLoggedIn, (req, res, next) => {
         // eslint-disable-next-line no-param-reassign
         user.password = bcrypt.hashSync(
           newPass,
-          salt
+          salt,
         );
         user.save();
         res.redirect('/logout');
