@@ -56,6 +56,8 @@ router.post('/edit', isLoggedIn, (req, res) => {
         } else {
           res.redirect('/account/edit?fail=true');
         }
+      }).catch(() => {
+        res.redirect('/logout');
       });
     } else {
       res.redirect('/account/edit?fail=true');
@@ -71,6 +73,8 @@ router.post('/edit', isLoggedIn, (req, res) => {
         user.name = name;
         user.save();
         res.redirect('/account');
+      }).catch(() => {
+        res.redirect('/logout');
       });
     } else {
       res.redirect('/account/edit?fail=true');

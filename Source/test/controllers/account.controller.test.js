@@ -101,8 +101,7 @@ module.exports = () => {
               email: 'test',
             }).exec().then((user) => {
               if (user) {
-                const succeeded = (bcrypt.compareSync('Test', user.password)) ? 'OK' : 'ERROR';
-                succeeded.should.equal('OK');
+                chai.expect(bcrypt.compareSync('Test', user.password)).to.equal(true);
                 // eslint-disable-next-line no-param-reassign
                 user.password = bcrypt.hashSync('test', bcrypt.genSaltSync(8));
                 user.save();
@@ -169,7 +168,7 @@ module.exports = () => {
         authenticatedTestUser
           .post('/account/edit')
           .send({
-            name: "Иосиф Сталин",
+            name: 'Иосиф Сталин',
             nameChange: true,
           })
           .end((err, res) => {
