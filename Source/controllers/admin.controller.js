@@ -76,7 +76,9 @@ router.get('/flip/:id', isAdmin, (req, res, next) => {
         type = 2;
       }
 
-      let { inMargin } = data;
+      let {
+        inMargin,
+      } = data;
       if (inMargin === 0) {
         inMargin = 1;
       } else {
@@ -161,12 +163,17 @@ router.post('/upload-logo', isAdmin, (req, res) => {
  * @name Delete User
  * @path {POST} /admin/deleteUser
  */
-router.post('/deleteUser', isAdmin, (req, res) => {
+router.post('/deleteUser', isAdmin, (req, res, next) => {
   if (req.body.email) {
-    User.deleteOne({}, (err) => {
-
+    User.deleteOne({
+      email: req.body.email,
+    }, (err) => {
+      if (err) {
+        next(new Error(`User with email "${req.body.email}" not found`));
+      }
     });
   }
+  res.end();
 });
 
 /* Exports */

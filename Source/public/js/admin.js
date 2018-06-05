@@ -16,9 +16,15 @@ $(document).ready(() => {
   });
 });
 
-function Edit(email) {
-}
+function Edit(email) {}
 
-function Delete(email) {
-  console.log(email);
+function Delete(email, message) {
+  if (confirm(message)) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/admin/deleteUser');
+    xhr.addEventListener('loadend', () => {
+      window.location.reload();
+    });
+    xhr.send(`email=${email}`);
+  }
 }

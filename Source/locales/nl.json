@@ -15,7 +15,8 @@
     "delete": "Verwijderen",
     "serial-id": "SerieID",
     "longitude": "Lengtegraad",
-    "latitude": "Breedtegraad"
+    "latitude": "Breedtegraad",
+    "confirm": "Weet U zeker dat U deze gebruiker wilt verwijderen?"
   },
   "index": {
     "help": "Hulp",
