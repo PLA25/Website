@@ -2,38 +2,38 @@
 
 <link rel="stylesheet" href="/css/profile.css" rel="stylesheet" crossorigin="anonymous">
 
-<table class="table">
-	<tbody>
-		<tr>
-			<td class="text-right" id="properties">
-				Name
+<div class="card">
+<div class="card-header white-text info-color">Account Info</div>
+<div class="card-body">
+<div class="row align-middle text-center">
+			<div class="text-right col" id="properties">
+				{{i18n "account.name"}}
 				<br />
-				Email
+				{{i18n "account.email"}}
 				<br />
-				Admin
+				{{i18n "account.admin"}}
 				<br />
-				Password
-			</td>
-			<td class="text-left">
+				{{i18n "account.password"}}
+			</div>
+			<div class="text-left col">
 				<span>{{user.name}}</span>
 				<br />
 				<span>{{user.email}}</span>
 				<br />
 				<span>
 				{{#if user.isAdmin}}
-					yes
+					{{i18n "account.yes"}}
 				{{else}}
-					no
+					{{i18n "account.no"}}
 				{{/if}}
 				</span>
 				<br />
 				<i>
 					<span>hidden</span>
 				</i>
-			</td>
-		</tr>
-	</tbody>
-</table>
-<button class="btn btn-warning">Edit Profile</button>
+			</div>
+</div>
+<button class="btn btn-primary">{{i18n "account.edit_profile"}}</button>
+</div>
 
 <script src="/js/profile.js"></script>

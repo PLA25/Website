@@ -1,62 +1,13 @@
-#pimage {
-	float: left;
-	height: 100%;
-	width: 30%;
-}
-#pimage::after {
-	content: '';
-	background-color: black;
-	position: absolute;
-	width: 2px;
-	top: 56px;
-	left: 30%;
-	bottom: 50px;
-	z-index: -10;
-}
-#pinfo {
-	float: right;
-	height: 100%;
-	width: 70%;
-	height: 100%;
-	text-align: center;
-	padding-top: 12%;
-}
 #properties {
 	font-weight: bold;
-	width: 50%;
-}
-#Image {
-	width: 100%;
-}
-td {
-	border-top: initial !important;
 }
 main {
 	overflow: hidden;
 	text-align: center;
-	padding-top: 10%;
-}
-#background {
-	position: absolute;
 	width: 30%;
-	height: 100%;
-	top: 0px;
-	left: 0px;
-	z-index: -20;
-	background-color: rgb(200, 200, 200);
-}
-#pimage div {
+	min-width: 350px;
+	position: absolute;
 	top: 50%;
-	position: absolute;
-	width: 30%;
-	transform: translateY(-50%);
-	z-index: -19;
-}
-table td {
-	font-size: 20px !important;
-}
-@media all and (max-width: 500px) {
-	table td {
-		font-size: 15px !important;
-	}
+	transform: translateY(-50%) translateX(-50%);
+	left: 50%;
 }

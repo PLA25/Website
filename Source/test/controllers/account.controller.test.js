@@ -15,8 +15,8 @@ const {
 chai.should();
 
 module.exports = () => {
-  describe('GET /account', () => {
-    describe('Not logged in (edit)', () => {
+  describe('GET /account/edit', () => {
+    describe('Not logged in', () => {
       it('should redirect to /login', (done) => {
         request(app)
           .get('/account/edit')
@@ -27,7 +27,7 @@ module.exports = () => {
       });
     });
 
-    describe('Logged in admin (edit)', () => {
+    describe('Logged in admin', () => {
       it('should return a 200 response', (done) => {
         authenticatedAdmin
           .get('/account/edit')
@@ -38,7 +38,7 @@ module.exports = () => {
       });
     });
 
-    describe('Logged in user (edit)', () => {
+    describe('Logged in user', () => {
       it('should return a 200 response', (done) => {
         authenticatedUser
           .get('/account/edit')
@@ -48,7 +48,9 @@ module.exports = () => {
           });
       });
     });
+  });
 
+  describe('GET /account', () => {
     describe('Not logged in', () => {
       it('should redirect to /login', (done) => {
         request(app)
@@ -83,7 +85,7 @@ module.exports = () => {
     });
   });
 
-  describe('POST /account', () => {
+  describe('POST /account/edit', () => {
     describe('Password change', () => {
       it('should change the password', (done) => {
         authenticatedTestUser
@@ -99,8 +101,7 @@ module.exports = () => {
               email: 'test',
             }).exec().then((user) => {
               if (user) {
-                const succeeded = (bcrypt.compareSync('Test', user.password)) ? 'OK' : 'ERROR';
-                succeeded.should.equal('OK');
+                chai.expect(bcrypt.compareSync('Test', user.password)).to.equal(true);
                 // eslint-disable-next-line no-param-reassign
                 user.password = bcrypt.hashSync('test', bcrypt.genSaltSync(8));
                 user.save();
@@ -150,13 +151,28 @@ module.exports = () => {
 
     describe('No name specified', () => {
       it('should redirect to /account/edit?fail=true', (done) => {
-        authenticatedUser
+        authenticatedTestUser
           .post('/account/edit')
           .send({
             nameChange: true,
           })
           .end((err, res) => {
             res.headers.location.should.equal('/account/edit?fail=true');
+            done();
+          });
+      });
+    });
+
+    describe('Name change succeeded', () => {
+      it('should redirect to /account/edit?fail=true', (done) => {
+        authenticatedTestUser
+          .post('/account/edit')
+          .send({
+            name: 'PDS Test User',
+            nameChange: true,
+          })
+          .end((err, res) => {
+            res.headers.location.should.equal('/account');
             done();
           });
       });

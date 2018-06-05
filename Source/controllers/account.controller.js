@@ -37,45 +37,45 @@ router.get('/', isLoggedIn, (req, res) => {
  * @name Profile
  * @path {POST} /account/edit
  */
-router.post('/edit', isLoggedIn, (req, res) => {
+router.post('/edit', isLoggedIn, (req, res, next) => {
   const {
-    passChange, oldPass, newPass, repeatPass, nameChange, name,
+    passChange,
+    oldPass,
+    newPass,
+    repeatPass,
+    nameChange,
+    name,
   } = req.body;
-  if (passChange) {
-    if ((!!oldPass && !!newPass && !!repeatPass) && newPass === repeatPass) {
-      User.findOne({ email: req.user.email }).exec().then((user) => {
-        if (!user) {
-          res.redirect('/logout');
-          return;
-        }
-        if (user.validatePassword(oldPass)) {
-          // eslint-disable-next-line no-param-reassign
-          user.password = bcrypt.hashSync(newPass, salt);
-          user.save();
-          res.redirect('/logout');
-        } else {
-          res.redirect('/account/edit?fail=true');
-        }
-      });
-    } else {
-      res.redirect('/account/edit?fail=true');
+  User.findOne({
+    email: req.user.email,
+  }).exec().then((user) => {
+    if (!user) {
+      next(new Error(`Could not find user with email: '${req.user.email}'!`));
+      return;
     }
-  } else if (nameChange) {
-    if (name) {
-      User.findOne({ email: req.user.email }).exec().then((user) => {
-        if (!user) {
-          res.redirect('/logout');
-          return;
-        }
+    if (passChange && (!!oldPass && !!newPass && !!repeatPass) && newPass === repeatPass) {
+      if (user.validatePassword(oldPass)) {
         // eslint-disable-next-line no-param-reassign
-        user.name = name;
+        user.password = bcrypt.hashSync(
+          newPass,
+          salt,
+        );
         user.save();
-        res.redirect('/account');
-      });
+        res.redirect('/logout');
+      } else {
+        res.redirect('/account/edit?fail=true');
+      }
+    } else if (nameChange && name) {
+      // eslint-disable-next-line no-param-reassign
+      user.name = name;
+      user.save();
+      res.redirect('/account');
     } else {
       res.redirect('/account/edit?fail=true');
     }
-  }
+  }).catch((err) => {
+    next(err);
+  });
 });
 
 /**
