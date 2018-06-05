@@ -65,7 +65,7 @@ router.post('/edit', isLoggedIn, (req, res, next) => {
       } else {
         res.redirect('/account/edit?fail=true');
       }
-    } else if (nameChange) {
+    } else if (nameChange && name) {
       // eslint-disable-next-line no-param-reassign
       user.name = name;
       user.save();
