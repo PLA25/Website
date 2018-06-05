@@ -45,7 +45,7 @@ router.post('/edit', isLoggedIn, (req, res, next) => {
     if ((!!oldPass && !!newPass && !!repeatPass) && newPass === repeatPass) {
       User.findOne({ email: req.user.email }).exec().then((user) => {
         if (!user) {
-          res.redirect('/logout');
+          next(new Error(`Could not find user with email: '${req.user.email}'!`));
           return;
         }
         if (user.validatePassword(oldPass)) {
@@ -66,7 +66,7 @@ router.post('/edit', isLoggedIn, (req, res, next) => {
     if (name) {
       User.findOne({ email: req.user.email }).exec().then((user) => {
         if (!user) {
-          res.redirect('/logout');
+          next(new Error(`Could not find user with email: '${req.user.email}'!`));
           return;
         }
         // eslint-disable-next-line no-param-reassign
