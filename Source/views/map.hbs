@@ -86,7 +86,7 @@
     <hr>
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#legendaModal">
-      Map information
+      {{i18n "map.map-information"}}
     </button>
 
     <!-- Modal for map information -->
@@ -94,14 +94,14 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="legendaModalLabel">Map information</h5>
+            <h5 class="modal-title" id="legendaModalLabel">{{i18n "map.map-information"}}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
             <div class="modal-body">
-              <h4>Temperature:</h4>
+              <h4>{{i18n "map.temperature"}}:</h4>
               <table>
                 <tr style="height: 20px;">
                   <td style="background-color: dimgray"></td>
@@ -118,7 +118,7 @@
                   <td style="background-color: rgb(255, 0, 0);"></td>
                 </tr>
                 <tr style="height: 20px;">
-                  <td style="padding-left: 2px; padding-right: 2px;">invalid</td>
+                  <td style="padding-left: 2px; padding-right: 2px;">{{i18n "map.invalid"}}</td>
                   <td style="padding-left: 2px; padding-right: 2px;">-50°C</td>
                   <td style="padding-left: 2px; padding-right: 2px;">-40°C</td>
                   <td style="padding-left: 2px; padding-right: 2px;">-30°C</td>
@@ -134,7 +134,7 @@
               </table>
 
               <hr>
-              <h4>Light:</h4>
+              <h4>{{i18n "map.light"}}:</h4>
               <table>
                 <tr>
                   <td>
@@ -166,7 +166,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>Invalid</td>
+                  <td>{{i18n "map.invalid"}}</td>
                   <td></td>
                   <td></td>
                   <td></td>
@@ -180,15 +180,15 @@
 
               <hr>
               <h4>Gas:</h4>
-              Valid measurement or measurement expected:
+              {{i18n "map.valid-measurement"}}:
               <br>
               <font color="white" style="background-color: black;">CO: 15 PPM</font>
-              <br> Wrong measurement or measurement too high or too low:
+              <br> {{i18n "map.wrong-measurement"}}:
               <br>
               <font color="white" style="background-color: red;">CO: 100 PPM</font>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal">{{i18n "map.close"}}</button>
             </div>
           </div>
         </div>
@@ -199,7 +199,7 @@
 
 <div class="card text-center z-depth-2 map">
   <div class="card-header info-color lighten-1 white-text">
-    Map
+    {{i18n "map.map-information"}}
   </div>
   <div class="card-body">
 
@@ -211,7 +211,7 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Sensorhub information</h5>
+            <h5 class="modal-title" id="exampleModalLabel">{{i18n "map.sensorhub-information"}}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -236,10 +236,10 @@
 
           <div class="modal-footer">
             <a id="detailButton">
-              <button type="button" class="btn btn-primary">more details</button>
+              <button type="button" class="btn btn-primary">{{i18n "map.more-details"}}</button>
             </a>
 
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{i18n "map.close"}}</button>
           </div>
         </div>
       </div>
