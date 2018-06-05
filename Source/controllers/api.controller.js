@@ -162,6 +162,14 @@ router.get('/planet/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
     });
 });
 
+/**
+ * Handles the pop-menu data.
+ *
+ * @name Data
+ * @path {GET} /api/data/:sensorHub/:dateTime
+ * @params {String} :sensorHub SensorHub to get data from.
+ * @params {String} :dateTime unix-timestamp.
+ */
 router.get('/data/:sensorHub/:dateTime', isLoggedIn, (req, res, next) => {
   const serialID = req.params.sensorHub;
   const unixTimestamp = parseInt(req.params.dateTime, 10);
