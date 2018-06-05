@@ -84,6 +84,80 @@
       <div class="ui-slider-handle"></div>
     </div>
     <hr>
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#legendaModal">
+Map information
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="legendaModal" tabindex="-1" role="dialog" aria-labelledby="legendaModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="legendaModalLabel">Map information</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-body">
+              Tempature chart:
+              <div class="scale">
+                <table>
+                  <tr style="height: 20px;">
+                    <td style="background-color: rgb(255, 0, 255);"></td>
+                    <td style="background-color: rgb(128, 0, 255);"></td>
+                    <td style="background-color: rgb(0, 0, 255);"></td>
+                    <td style="background-color: rgb(0, 127, 255);"></td>
+                    <td style="background-color: rgb(0, 255, 255);"></td>
+                    <td style="background-color: rgb(0, 255, 128);"></td>
+                    <td style="background-color: rgb(0, 255, 0);"></td>
+                    <td style="background-color: rgb(127, 255, 0);"></td>
+                    <td style="background-color: rgb(255, 255, 0);"></td>
+                    <td style="background-color: rgb(255, 128, 0);"></td>
+                    <td style="background-color: rgb(255, 0, 0);"></td>
+                  </tr>
+                  <tr style="height: 20px;">
+                    <td style="padding-left: 2px; padding-right: 2px;">-50°C</td>
+                    <td style="padding-left: 2px; padding-right: 2px;">-40°C</td>
+                    <td style="padding-left: 2px; padding-right: 2px;">-30°C</td>
+                    <td style="padding-left: 2px; padding-right: 2px;">-20°C</td>
+                    <td style="padding-left: 2px; padding-right: 2px;">-10°C</td>
+                    <td style="padding-left: 2px; padding-right: 2px;">0°C</td>
+                    <td style="padding-left: 2px; padding-right: 2px;">10°C</td>
+                    <td style="padding-left: 2px; padding-right: 2px;">20°C</td>
+                    <td style="padding-left: 2px; padding-right: 2px;">30°C</td>
+                    <td style="padding-left: 2px; padding-right: 2px;">40°C</td>
+                    <td style="padding-left: 2px; padding-right: 2px;">50°C</td>
+                  </tr>
+                </table>
+              </div>
+              <br>
+              <hr>
+              <br>
+              <img src="/bulb_0_1.png">
+              Low light pollution
+              <br>
+              <img src="/bulb_7_1.png">
+              High light pollution
+              <br>
+              <img src="/bulb_7_0.png">
+              Warning! Wrong measurement! Or measurement too high or too low!
+              <hr>
+              <br>
+              Low gass pollution: CO: 0 PPM
+              <br>
+              High gass pollution: CO: 15 PPM
+              <br>
+              Warning! Wrong measurement! Or measurement too high or too low! : <font color="red">CO: 15 PPM</font>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -96,6 +170,7 @@
 
     <div id="map">
     </div>
+
     <!-- Button trigger modal -->
 
     <!-- Modal -->
@@ -136,10 +211,6 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="scale">
-    -50°C
-    <img src="/spectrum.png" style="border-radius: 5500px;" height="10%" width="100px"> 50°C
   </div>
 </div>
 </div>
