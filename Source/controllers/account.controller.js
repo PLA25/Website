@@ -19,15 +19,13 @@ const {
   isLoggedIn,
 } = require('./../middlewares');
 
-router.use(isLoggedIn);
-
 /**
  * Renders the profile page.
  *
  * @name Profile
  * @path {GET} /account
  */
-router.get('/', (req, res) => {
+router.get('/', isLoggedIn, (req, res) => {
   res.render('profile', {
     title: 'Profile Page',
   });
@@ -39,7 +37,7 @@ router.get('/', (req, res) => {
  * @name Profile
  * @path {POST} /account/edit
  */
-router.post('/edit', (req, res) => {
+router.post('/edit', isLoggedIn, (req, res) => {
   const {
     passChange, oldPass, newPass, repeatPass, nameChange, name,
   } = req.body;
@@ -86,7 +84,7 @@ router.post('/edit', (req, res) => {
  * @name Profile
  * @path {GET} /account/edit
  */
-router.get('/edit', (req, res) => {
+router.get('/edit', isLoggedIn, (req, res) => {
   res.render('editProfile', {
     title: 'Edit Account',
     fail: (req.query.fail === 'true'),
