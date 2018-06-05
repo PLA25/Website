@@ -274,7 +274,7 @@ router.get('/:type/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
       },
     }).exec().then(data => [sensorHubs, data]))
     .then(([sensorHubs, data]) => Config.findOne({
-      // Specifiek zoeken op type
+      valueID: `treshold-${type}`,
     }).exec().then(treshold => [sensorHubs, data, treshold]))
     .then(([sensorHubs, data, treshold]) => generateImage(req.params, sensorHubs, data, treshold))
     .then((image) => {

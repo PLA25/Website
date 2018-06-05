@@ -112,7 +112,7 @@ function generateImage(params, allSensorHubs, data, config) {
 
           for (let x = 0; x < (0 + (textWidth - 1)); x += 1) {
             for (let y = 0; y < 18; y += 1) {
-              if(inMarginValue < 0.9) {
+              if(inMarginValue < treshold) {
                 image.setPixelColor(Jimp.rgbaToInt(255, 0, 0, parseFloat(1 * 255)), x, y);
               } else {
                 image.setPixelColor(Jimp.rgbaToInt(0, 0, 0, parseFloat(1 * 255)), x, y);
@@ -129,7 +129,7 @@ function generateImage(params, allSensorHubs, data, config) {
       calculatedValue = Math.min(calculatedValue, 7);
       calculatedValue = Math.max(calculatedValue, 0);
 
-      const inMargin = (inMarginValue < 0.8 ? 0 : 1);
+      const inMargin = (inMarginValue < treshold ? 0 : 1);
 
       Jimp.read(`./public/bulb_${calculatedValue}_${inMargin}.png`)
         .then((bulb) => {
@@ -154,7 +154,7 @@ function generateImage(params, allSensorHubs, data, config) {
             inMargin,
           } = getColorFromLatLong(latitude, longitude, allSensorHubs, data);
 
-          if (inMargin < 0.75) {
+          if (inMargin < treshold) {
             showWarn.push([x, y]);
           }
 
