@@ -126,6 +126,31 @@ router.get('/flip/:id', isAdmin, (req, res, next) => {
 });
 
 /**
+ * Renders a specific config page.
+ *
+ * @name config
+ * @path {GET} /config/:valueID
+ * @params {String} :valueID is the SerialID of the limit.
+ */
+router.get('/config/:valueID', isAdmin, (req, res, next) => {
+  Config.findOne({
+    valueID: req.params.valueID,
+  }).exec()
+    .then((valueID) => {
+      if (valueID === null) {
+        next(new Error(`Could not find config with ID: '${req.params.valueID}'!`));
+        return;
+      }
+      res.render('config', {
+        valueID,
+      });
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+/**
  * Saves the changes to an config
  *
  * @name Profile
@@ -138,13 +163,13 @@ router.post('/config/:valueID', isAdmin, (req, res) => {
   if (value) {
     Config.findOne({ valueID: req.params.valueID }).exec().then((config) => {
       if (!config) {
-        res.redirect('/config');
+        res.redirect('/admin/config');
         return;
       }
       // eslint-disable-next-line no-param-reassign
       config.value = value;
       config.save();
-      res.redirect('/config');
+      res.redirect('/admin/config');
     });
   } else {
     res.redirect('/admin');

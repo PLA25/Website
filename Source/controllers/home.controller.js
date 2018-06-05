@@ -22,7 +22,6 @@ const {
 /* Models */
 const Data = require('./../models/data');
 const SensorHub = require('./../models/sensorhub');
-const Config = require('./../models/config');
 
 /**
  * Renders the index page.
@@ -106,31 +105,6 @@ router.get('/sensorhub/:SerialID', isLoggedIn, (req, res, next) => {
         temperatureData,
         lightData,
         gassesData,
-      });
-    })
-    .catch((err) => {
-      next(err);
-    });
-});
-
-/**
- * Renders a specific config page.
- *
- * @name config
- * @path {GET} /config/:valueID
- * @params {String} :valueID is the SerialID of the limit.
- */
-router.get('/config/:valueID', isLoggedIn, (req, res, next) => {
-  Config.findOne({
-    valueID: req.params.valueID,
-  }).exec()
-    .then((valueID) => {
-      if (valueID === null) {
-        next(new Error(`Could not find config with ID: '${req.params.valueID}'!`));
-        return;
-      }
-      res.render('config', {
-        valueID,
       });
     })
     .catch((err) => {
