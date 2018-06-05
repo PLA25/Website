@@ -2,13 +2,13 @@ html {
 	height: 100%;
 	box-sizing: border-box;
 }
-  
+
 *,
 *:before,
 *:after {
 	box-sizing: inherit;
 }
-  
+
 body {
 	position: relative;
 	margin: 0;
@@ -31,15 +31,18 @@ main {
 	left: 0;
 }
 
-.navbar, .page-footer {
+.navbar,
+.page-footer {
 	background-color: royalblue;
 }
 
-.sidebar, .map {
+.sidebar,
+.map {
 	margin: 1rem;
 	height: Calc(100vh - 56px - 53px - 2rem);
 	float: left;
 }
+
 .sidebar {
 	width: Calc(42.5% - 1.5rem);
 	margin-right: 0.5rem;
@@ -50,22 +53,22 @@ main {
 	margin-left: 0.5rem;
 }
 
-@media (min-width: 992px) and (max-width: 1199.98px) { 
+@media (min-width: 992px) and (max-width: 1199.98px) {
 	.sidebar {
 		width: Calc(32.5% - 1.5rem);
 	}
-	
+
 	.map {
 		width: Calc(67.5% - 1.5rem);
 	}
- }
+}
 
 
 @media (min-width: 1200px) {
 	.sidebar {
 		width: Calc(25% - 1.5rem);
 	}
-	
+
 	.map {
 		width: Calc(75% - 1.5rem);
 	}
@@ -87,35 +90,37 @@ main {
 }
 
 .first-col {
-  margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 
 .col-xl-6 {
-  margin-top: 20px;
+	margin-top: 20px;
 }
 
-#tempChart, #lightChart, #gassChart {
-  margin-top: 5px;
+#tempChart,
+#lightChart,
+#gassChart {
+	margin-top: 5px;
 }
 
 .heading-margin {
-  margin-top: 15px;
+	margin-top: 15px;
 }
 
 .logo {
-  margin: 0 50px;
+	margin: 0 50px;
 }
 
 .flag {
-  float: left;
-  margin-left: 10px;
+	float: left;
+	margin-left: 10px;
 }
 
 .flag img {
-  height: 100%;
-  width: 64px;
+	height: 100%;
+	width: 64px;
 }
 
 .no-margin-left {
-  margin-left: 0;
+	margin-left: 0;
 }

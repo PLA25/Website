@@ -1,15 +1,16 @@
 <!-- Style -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.5/ol.css" integrity="sha256-rQq4Fxpq3LlPQ8yP11i6Z2lAo82b6ACDgd35CKyNEBw=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha256-rByPlHULObEjJ6XQxW/flG2r+22R5dKiAoef+aXWfik=" crossorigin="anonymous" />
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.4/ol.css" integrity="sha256-rQq4Fxpq3LlPQ8yP11i6Z2lAo82b6ACDgd35CKyNEBw="
+  crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha256-rByPlHULObEjJ6XQxW/flG2r+22R5dKiAoef+aXWfik="
+  crossorigin="anonymous" />
 <div class="card z-depth-2 sidebar">
   <div class="card-header info-color lighten-1 white-text">
-    {{i18n "map.options"}}
+    Options
   </div>
   <div class="card-body">
     <label>
       <b>
-        {{i18n "map.go-to"}}
+        Go To:
       </b>
     </label>
     <div class="md-form" style="margin-top: 0px;">
@@ -21,60 +22,61 @@
 
     <label>
       <b>
-        {{i18n "map.features"}}
+        Features:
       </b>
     </label>
     <div class="custom-control custom-checkbox">
       <input type="checkbox" class="custom-control-input" id="mapboxLayer">
-      <label class="custom-control-label" for="mapboxLayer">{{i18n "map.navigation"}}</label>
+      <label class="custom-control-label" for="mapboxLayer">Navigation</label>
     </div>
 
     <div class="custom-control custom-checkbox">
       <input type="checkbox" class="custom-control-input" id="sensorhubLayer">
-      <label class="custom-control-label" for="sensorhubLayer">{{i18n "map.sensorhubs"}}</label>
+      <label class="custom-control-label" for="sensorhubLayer">SensorHubs</label>
     </div>
     <hr>
 
     <label>
       <b>
-        {{i18n "map.layers"}}
+        Layers:
       </b>
     </label>
     <div class="custom-control custom-checkbox">
       <input type="checkbox" class="custom-control-input" id="tempEnabled">
-      <label class="custom-control-label" for="tempEnabled">{{i18n "map.temperature"}}</label>
+      <label class="custom-control-label" for="tempEnabled">Temperature</label>
     </div>
 
     <div class="custom-control custom-checkbox">
       <input type="checkbox" class="custom-control-input" id="gasEnabled">
-      <label class="custom-control-label" for="gasEnabled">{{i18n "map.gas"}}</label>
+      <label class="custom-control-label" for="gasEnabled">Gasses</label>
     </div>
 
     <div class="custom-control custom-checkbox">
       <input type="checkbox" class="custom-control-input" id="lightEnabled">
-      <label class="custom-control-label" for="lightEnabled">{{i18n "map.light"}}</label>
+      <label class="custom-control-label" for="lightEnabled">Light</label>
     </div>
     <hr>
 
     <label>
       <b>
-        {{i18n "map.timeline"}}
+        Timeline:
       </b>
     </label>
     <div class="btn-group" style="width: 100%;">
       <div id="custom-handle" style="width: 50%;">
-        {{i18n "map.latest-data"}}
+        Latest data
       </div>
-      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="time-button" style="width: 50%;">
-        2 {{i18n "map.hour"}}
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+        id="time-button" style="width: 50%;">
+        2 uur
       </button>
 
       <div class="dropdown-menu" id="time-menu">
-        <a class="dropdown-item" href="#" id="time-1">1 {{i18n "map.hour"}}</a>
-        <a class="dropdown-item" href="#" id="time-2" style="display: none;">2 {{i18n "map.hour"}}</a>
-        <a class="dropdown-item" href="#" id="time-6">6 {{i18n "map.hour"}}</a>
-        <a class="dropdown-item" href="#" id="time-12">12 {{i18n "map.hour"}}</a>
-        <a class="dropdown-item" href="#" id="time-24">24 {{i18n "map.hour"}}</a>
+        <a class="dropdown-item" href="#" id="time-1">1 uur</a>
+        <a class="dropdown-item" href="#" id="time-2" style="display: none;">2 uur</a>
+        <a class="dropdown-item" href="#" id="time-6">6 uur</a>
+        <a class="dropdown-item" href="#" id="time-12">12 uur</a>
+        <a class="dropdown-item" href="#" id="time-24">24 uur</a>
       </div>
     </div>
 
@@ -85,17 +87,61 @@
   </div>
 </div>
 
+
 <div class="card text-center z-depth-2 map">
   <div class="card-header info-color lighten-1 white-text">
-    {{i18n "map.map"}}
+    Map
   </div>
   <div class="card-body">
-    <div id="map"></div>
-    <div class="scale">
-      -50°C
-      <img src="/spectrum.png" style="border-radius: 5500px;" height="40px" width="250px"> 50°C
+
+    <div id="map">
+    </div>
+    <!-- Button trigger modal -->
+
+    <!-- Modal -->
+    <div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Sensorhub information</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-12">
+                <canvas id="tempChart"></canvas>
+              </div>
+
+              <div class="col-12">
+                <canvas id="lightChart"></canvas>
+              </div>
+
+              <div class="col-12">
+                <canvas id="gassChart"></canvas>
+              </div>
+              <br>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <a id="detailButton">
+              <button type="button" class="btn btn-primary">more details</button>
+            </a>
+
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+  <div class="scale">
+    -50°C
+    <img src="/spectrum.png" style="border-radius: 5500px;" height="10%" width="100px"> 50°C
+  </div>
+</div>
 </div>
 
 <!-- Scripts -->

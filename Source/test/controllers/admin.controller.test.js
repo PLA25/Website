@@ -71,7 +71,7 @@ module.exports = () => {
       if (!isCI) {
         it('should return a 302 response', (done) => {
           authenticatedAdmin
-            .get('/admin/flip/5b0d2986fe7dc44b5457fd63')
+            .get('/admin/flip/5b14530413f3a72700117dc9')
             .end((err, res) => {
               res.statusCode.should.equal(302);
               done();
@@ -80,7 +80,7 @@ module.exports = () => {
 
         it('should return a 302 response', (done) => {
           authenticatedAdmin
-            .get('/admin/flip/5b0d2986fe7dc44b5457fd63')
+            .get('/admin/flip/5b14530413f3a72700117dc9')
             .end((err, res) => {
               res.statusCode.should.equal(302);
               done();
@@ -89,7 +89,7 @@ module.exports = () => {
 
         it('should return a 302 response', (done) => {
           authenticatedAdmin
-            .get('/admin/flip/5b0d2986fe7dc44b5457fd7c')
+            .get('/admin/flip/5b14530413f3a72700117dce')
             .end((err, res) => {
               res.statusCode.should.equal(302);
               done();
@@ -98,7 +98,7 @@ module.exports = () => {
 
         it('should return a 302 response', (done) => {
           authenticatedAdmin
-            .get('/admin/flip/5b0d2986fe7dc44b5457fd7c')
+            .get('/admin/flip/5b14530413f3a72700117dce')
             .end((err, res) => {
               res.statusCode.should.equal(302);
               done();
@@ -107,7 +107,7 @@ module.exports = () => {
 
         it('should return a 302 response', (done) => {
           authenticatedAdmin
-            .get('/admin/flip/5b0d2986fe7dc44b5457fdef')
+            .get('/admin/flip/5b14530413f3a72700117dd3')
             .end((err, res) => {
               res.statusCode.should.equal(302);
               done();
@@ -116,7 +116,7 @@ module.exports = () => {
 
         it('should return a 302 response', (done) => {
           authenticatedAdmin
-            .get('/admin/flip/5b0d2986fe7dc44b5457fdef')
+            .get('/admin/flip/5b14530413f3a72700117dd3')
             .end((err, res) => {
               res.statusCode.should.equal(302);
               done();
