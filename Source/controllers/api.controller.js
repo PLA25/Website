@@ -162,7 +162,7 @@ router.get('/planet/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
     });
 });
 
-router.get('/data/:sensorHub/:dateTime', (req, res, next) => {
+router.get('/data/:sensorHub/:dateTime', isLoggedIn, (req, res, next) => {
   const serialID = req.params.sensorHub;
   const unixTimestamp = parseInt(req.params.dateTime, 10);
   const requestedDate = new Date((Math.round(unixTimestamp / 1000 / 60 / 60)) * 1000 * 60 * 60);
@@ -175,13 +175,16 @@ router.get('/data/:sensorHub/:dateTime', (req, res, next) => {
       return;
     }
 
-    Data.find({
+    // eslint-disable-next-line consistent-return
+    return Data.find({
       SensorHub: sensorHub.SerialID,
       Timestamp: {
         $gt: new Date(requestedDate.getTime() - (24 * 60 * 60 * 1000)),
         $lte: new Date(requestedDate.getTime()),
       },
-    }).sort({ Timestamp: -1 }).exec().then((data) => {
+    }).sort({ Timestamp: -1 }).exec().then(data => data);
+  })
+    .then((data) => {
       const result = [[[], []], [[], []], [[], []]];
 
       data.forEach((dataNode) => {
@@ -203,10 +206,6 @@ router.get('/data/:sensorHub/:dateTime', (req, res, next) => {
       res.type('json');
       res.send(JSON.stringify(result));
     })
-      .catch((err) => {
-        next(err);
-      });
-  })
     .catch((err) => {
       next(err);
     });
