@@ -1,6 +1,6 @@
 /**
  * Account controller
- *
+ * 
  * @module controllers/account
  * @see module:controllers
  */
