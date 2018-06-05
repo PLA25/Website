@@ -1,17 +1,24 @@
+<link rel="stylesheet" href="/css/editUser.css" />
+
 <button class="btn btn-primary" onclick="location.href = '/admin';">{{i18n "account.back"}}</button>
 <br />
-<form method="POST" action="/admin/saveUser/{{editUser.email}}">
-  <input name="newEmail" type="text" placeholder="{{i18n "admin.email"}}" value="{{editUser.email}}" />
-  <br />
-  <label for="role-select">{{i18n "admin.admin"}}</label>
-  <select name="role" id="role-select" name="role" class="mdb-select">
-    <option value="true" {{#if editUser.isAdmin}}selected=""{{/if}}>{{i18n "account.yes"}}</option>
-    <option value="false" {{#unless editUser.isAdmin}}selected=""{{/unless}}>{{i18n "account.no"}}</option>
-  </select>
-  <br />
-  <label for="reset-password">{{i18n "admin.reset_password"}}</label>
-  <input name="resetPass" id="reset-password" type="checkbox" />
-  <br />
-  <input type="submit" class="btn btn-primary" value="{{i18n "account.save_changes"}}" />
-  <input name="oldEmail" type="text" style="display: none;" value="{{editUser.email}}" />
+<div class="card">
+<div class="card-header info-color white-text">{{i18n "admin.user"}} Info</div>
+<form method="POST" action="/admin/saveUser/{{editUser.email}}" class="card-body">
+<div class="text-left">
+	<label for="email-input">Email</label>
+	<input name="newEmail" id="email-input" type="text" placeholder="{{i18n "admin.email"}}" value="{{editUser.email}}" />
+	<br />
+	<label for="role-select">{{i18n "admin.admin"}}</label>
+	<select name="role" id="role-select" name="role" class="mdb-select">
+		<option value="true" {{#if editUser.isAdmin}}selected=""{{/if}}>{{i18n "account.yes"}}</option>
+		<option value="false" {{#unless editUser.isAdmin}}selected=""{{/unless}}>{{i18n "account.no"}}</option>
+	</select>
+	<br />
+	<label for="reset-password">{{i18n "admin.reset_password"}}</label>
+	<input name="resetPass" id="reset-password" type="checkbox" />
+</div>
+<input type="submit" class="btn btn-primary" value="{{i18n "account.save_changes"}}" />
+<input name="oldEmail" type="text" style="display: none;" value="{{editUser.email}}" />
 </form>
+</div>

@@ -17,7 +17,8 @@
     "longitude": "Longitude",
     "latitude": "Latitude",
     "confirm": "are you sure you want to delete this user?",
-    "reset_password": "Change password to Amsterdam"
+    "reset_password": "Change password to Amsterdam",
+    "user": "User"
   },
   "index": {
     "help": "Help",

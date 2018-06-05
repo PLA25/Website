@@ -17,7 +17,8 @@
     "longitude": "Lengtegraad",
     "latitude": "Breedtegraad",
     "confirm": "Weet U zeker dat U deze gebruiker wilt verwijderen?",
-    "reset_password": "Wachtwoord terugzetten naar Amsterdam"
+    "reset_password": "Wachtwoord terugzetten naar Amsterdam",
+    "user": "Gebruiker"
   },
   "index": {
     "help": "Hulp",
