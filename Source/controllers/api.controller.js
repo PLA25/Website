@@ -191,10 +191,25 @@ router.get('/data/:sensorHub/:dateTime', isLoggedIn, (req, res, next) => {
         $gt: new Date(requestedDate.getTime() - (24 * 60 * 60 * 1000)),
         $lte: new Date(requestedDate.getTime()),
       },
-    }).sort({ Timestamp: -1 }).exec().then(data => data);
+    }).sort({
+      Timestamp: -1,
+    }).exec().then(data => data);
   })
     .then((data) => {
-      const result = [[[], []], [[], []], [[], []]];
+      const result = [
+        [
+          [],
+          [],
+        ],
+        [
+          [],
+          [],
+        ],
+        [
+          [],
+          [],
+        ],
+      ];
 
       data.forEach((dataNode) => {
         const type = dataNode.Type;
@@ -284,11 +299,10 @@ router.get('/:type/:dateTime/:z/:x/:y', isLoggedIn, (req, res, next) => {
       image.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
         if (err) {
           next(err);
-          return;
+        } else {
+          res.type('png');
+          res.send(buffer);
         }
-
-        res.type('png');
-        res.send(buffer);
       });
     })
     .catch((err) => {

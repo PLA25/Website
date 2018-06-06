@@ -57,11 +57,17 @@ function getCalculatedValue(latitude, longitude, allSensorHubs, data) {
     });
   });
 
-  return { calculatedValue, inMarginValue };
+  return {
+    calculatedValue,
+    inMarginValue
+  };
 }
 
 function getColorFromLatLong(latitude, longitude, allSensorHubs, data) {
-  const { calculatedValue, inMarginValue } = getCalculatedValue(latitude, longitude, allSensorHubs, data);
+  const {
+    calculatedValue,
+    inMarginValue
+  } = getCalculatedValue(latitude, longitude, allSensorHubs, data);
   const rgb = temperatureToColor(Math.min(Math.max(-50, calculatedValue), 50));
 
   return {
@@ -102,7 +108,10 @@ function generateImage(params, allSensorHubs, data, config) {
 
     const image = new Jimp(256, 256, 0x0);
     if (data[0].Type == 'gasses') {
-      let { calculatedValue, inMarginValue } = getCalculatedValue((down + (yMulti * 128)), (left + (xMulti * 128)), allSensorHubs, data);
+      let {
+        calculatedValue,
+        inMarginValue
+      } = getCalculatedValue((down + (yMulti * 128)), (left + (xMulti * 128)), allSensorHubs, data);
       calculatedValue = Math.round(calculatedValue);
 
       Jimp.loadFont(Jimp.FONT_SANS_16_WHITE)
@@ -112,7 +121,7 @@ function generateImage(params, allSensorHubs, data, config) {
 
           for (let x = 0; x < (0 + (textWidth - 1)); x += 1) {
             for (let y = 0; y < 18; y += 1) {
-              if(inMarginValue < treshold) {
+              if (inMarginValue < treshold) {
                 image.setPixelColor(Jimp.rgbaToInt(255, 0, 0, parseFloat(1 * 255)), x, y);
               } else {
                 image.setPixelColor(Jimp.rgbaToInt(0, 0, 0, parseFloat(1 * 255)), x, y);
@@ -124,7 +133,10 @@ function generateImage(params, allSensorHubs, data, config) {
           resolve(image);
         });
     } else if (data[0].Type == 'light') {
-      let { calculatedValue, inMarginValue } = getCalculatedValue((down + (yMulti * 128)), (left + (xMulti * 128)), allSensorHubs, data);
+      let {
+        calculatedValue,
+        inMarginValue
+      } = getCalculatedValue((down + (yMulti * 128)), (left + (xMulti * 128)), allSensorHubs, data);
       calculatedValue = (Math.floor(calculatedValue / 1024 * 8)) - 1;
       calculatedValue = Math.min(calculatedValue, 7);
       calculatedValue = Math.max(calculatedValue, 0);
@@ -142,7 +154,7 @@ function generateImage(params, allSensorHubs, data, config) {
           resolve(image);
         });
     } else if (data[0].Type == 'temperature') {
-      const incr = 16;//Math.min(getIncrement(z), 8);
+      const incr = 16; //Math.min(getIncrement(z), 8);
       let showWarn = [];
       for (let x = 0; x < image.bitmap.width; x += incr) {
         for (let y = 0; y < image.bitmap.height; y += incr) {
