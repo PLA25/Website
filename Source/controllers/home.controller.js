@@ -70,7 +70,9 @@ router.get('/sensorhub/:SerialID', isLoggedIn, (req, res, next) => {
         Type: 'temperature',
         SensorHub: sensorHub.SerialID,
       })
-        .sort({ Timestamp: -1 })
+        .sort({
+          Timestamp: -1,
+        })
         .exec()
         .then(temperatureData => [sensorHub, temperatureData]);
     })
