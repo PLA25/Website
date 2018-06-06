@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/css/jquery.dataTables.min.css" integrity="sha256-YY1izqyhIj4W3iyJOaGWOpXDSwrHWFL4Nfk+W0LyCHE=" crossorigin="anonymous" />
+
+<div class="container-fluid">
+  <h1 class="heading-margin">{{ valueID.valueID }}</h1>
+
+  <hr />
+  <div class="row">
+
+    <div class="col-12 col-xl-12">
+      <table class="table table-responsive-md table-striped" id="table-config">
+        <thead class="rgba-blue-dark darken-3">
+          <tr class="text-white">
+            <th>{{i18n "admin.limitvaluevalue"}}</th>
+            <th>{{i18n "admin.limitvaluename"}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td>
+              {{valueID.value}}
+            </td>
+            <td>
+              {{valueID.valueID}}
+            </td>
+          </tr>
+        
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+    <form action="/admin/config/{{valueID.valueID}}" method="POST">
+                <div class="md-form">
+                  <i class="fa fa-user prefix grey-text"></i>
+                  <input type="text" id="value" name="value" class="form-control">
+                  <label for="value">{{i18n "config.newvalue"}}</label>
+                </div>
+                <div class="text-center mt-3">
+                  <button class="btn btn-indigo">{{i18n "config.updatevalue"}}</button>
+                </div>
+              </form>
+    
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/jquery.dataTables.min.js" integrity="sha256-qcV1wr+bn4NoBtxYqghmy1WIBvxeoe8vQlCowLG+cng=" crossorigin="anonymous"></script>
+<script src="/js/config.js" crossorigin="anonymous"></script>
