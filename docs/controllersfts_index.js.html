@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Source: middlewares/index.js</title>
+	<title>JSDoc: Source: controllersfts/index.js</title>
 	<script src="scripts/prettify/prettify.js">
 
 
@@ -21,31 +21,40 @@
 
 <body>
 	<div id="main">
-		<h1 class="page-title">Source: middlewares/index.js</h1>
+		<h1 class="page-title">Source: controllersfts/index.js</h1>
 		<section>
 			<article>
 				<pre class="prettyprint source linenums"><code>/**
- * Middlewares
+ * Controllers
  *
- * @module middleware
- * @see module:middleware/isAdmin
- * @see module:middleware/isLoggedIn
- * @see module:middleware/isNotLoggedIn
- * @see module:middleware/pageNotFound
+ * @module controllers
+ * @see module:controllers/admin
+ * @see module:controllers/api
+ * @see module:controllers/home
  */
 
-/* Middlewares */
-const isAdmin = require('./isAdmin');
-const isLoggedIn = require('./isLoggedIn');
-const isNotLoggedIn = require('./isNotLoggedIn');
-const pageNotFound = require('./pageNotFound');
+/* Packages */
+const express = require('express');
 
-module.exports = {
-  isAdmin,
-  isLoggedIn,
-  isNotLoggedIn,
+/* Controllers */
+const homeController = require('./home.controller.js');
+
+/* Constants */
+const router = express.Router();
+
+/* Middlewares */
+const {
   pageNotFound,
-};
+} = require('./../middlewares');
+
+/* Routes */
+router.use('/', homeController);
+
+/* Error Handling */
+router.use(pageNotFound);
+
+/* Exports */
+module.exports = router;
 </code></pre>
 			</article>
 		</section>

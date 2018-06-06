@@ -7,6 +7,72 @@
         </div>
 
         <div class="card-body">
+            {{i18n "indexfts.setupdetails"}}
+            
+            <form action="/fts" method="POST">
+                <div class="md-form">
+                  <i class="fa fa-user prefix grey-text"></i>
+                  <input type="text" id="MongoDBHost" name="MongoDBHost" class="form-control">
+                  <label for="Latitude">MongoDB Host</label>
+        </div>
+        <div class="md-form">
+                  <i class="fa fa-user prefix grey-text"></i>
+                  <input type="text" id="MongoDBPort" name="MongoDBPort" class="form-control">
+                  <label for="Longitude">MongoDB Port</label>
+                </div>
+        <div class="md-form">
+                  <i class="fa fa-user prefix grey-text"></i>
+                  <input type="text" id="MongoDBUser" name="MongoDBUser" class="form-control">
+                  <label for="Longitude">MongoDB User</label>
+                </div>
+        <div class="md-form">
+                  <i class="fa fa-user prefix grey-text"></i>
+                  <input type="text" id="MongoDBPass" name="MongoDBPass" class="form-control">
+                  <label for="Longitude">MongoDB Pass</label>
+                </div>
+        <div class="md-form">
+                  <i class="fa fa-user prefix grey-text"></i>
+                  <input type="text" id="MongoDBName" name="MongoDBName" class="form-control">
+                  <label for="Longitude">MongoDB Name</label>
+                </div>
+                
+                
+        <div class="md-form">
+                  <i class="fa fa-user prefix grey-text"></i>
+                  <input type="text" id="PlanetKey" name="PlanetKey" class="form-control">
+                  <label for="Longitude">Planet Key</label>
+                </div>
+                
+                <div class="md-form">
+                  <i class="fa fa-user prefix grey-text"></i>
+                  <input type="text" id="Redishost" name="Redishost" class="form-control">
+                  <label for="Longitude">Redis host</label>
+                </div>
+        <div class="md-form">
+                  <i class="fa fa-user prefix grey-text"></i>
+                  <input type="text" id="Redisport" name="Redisport" class="form-control">
+                  <label for="Longitude">Redis port</label>
+                </div>
+        <div class="md-form">
+                  <i class="fa fa-user prefix grey-text"></i>
+                  <input type="text" id="Redispass" name="Redispass" class="form-control">
+                  <label for="Longitude">Redis pass</label>
+                </div>
+        <div class="md-form">
+                  <i class="fa fa-user prefix grey-text"></i>
+                  <input type="text" id="Redisdb" name="Redisdb" class="form-control">
+                  <label for="Longitude">Redis db (the default is 0)</label>
+                </div>
+                
+                
+                
+                
+                <div class="text-center mt-3">
+                  <button class="btn btn-indigo">{{i18n "config.updatevalue"}}</button>
+                </div>
+              </form>
+            
+            
         </div>
       </div>
     </div>

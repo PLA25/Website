@@ -8,25 +8,12 @@ if (!fs.existsSync(path.join(__dirname, '..', 'config.js'))) {
     
     
     const express = require('express')
-    const app = express()
+    const app = require('../appfts');
+const debug = require('debug')('polutiondetectionsystem:server');
+const http = require('http');
 
-    app.get('/', (req, res) => {
-        
-        fs.rename(path.join(__dirname, '..', 'config2.js'), path.join(__dirname, '..', 'config.js'), (err) => {
-            if(err) {
-                res.send(err);
-            } else {
-                res.send('load config');
-                console.log('suc');
-            }
-        })
-    })
-
-    app.get('/crash', (req, res) => {
-        spawn('node', ['www']);
-        process.exit();
-    })
-
+    
+    
     app.listen(8080, () => console.log('Example app listening on port 8080!'))
 
 } else {

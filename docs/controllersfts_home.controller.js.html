@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Source: controllers/account.controller.js</title>
+	<title>JSDoc: Source: controllersfts/home.controller.js</title>
 	<script src="scripts/prettify/prettify.js">
 
 
@@ -21,100 +21,109 @@
 
 <body>
 	<div id="main">
-		<h1 class="page-title">Source: controllers/account.controller.js</h1>
+		<h1 class="page-title">Source: controllersfts/home.controller.js</h1>
 		<section>
 			<article>
 				<pre class="prettyprint source linenums"><code>/**
- * Account controller
+ * Home controller
  *
- * @module controllers/account
+ * @module controllers/home
  * @see module:controllers
  */
 
 /* Packages */
 const express = require('express');
-const bcrypt = require('bcrypt-nodejs');
-const User = require('./../models/user');
+const i18n = require('i18n');
+const fs = require('fs');
 
 /* Constants */
 const router = express.Router();
-const salt = bcrypt.genSaltSync(8);
-
-/* Middlewares */
-const {
-  isLoggedIn,
-} = require('./../middlewares');
 
 /**
- * Renders the profile page.
+ * Renders the index page.
  *
- * @name Profile
- * @path {GET} /account
+ * @name Index
+ * @path {GET} /
  */
-router.get('/', isLoggedIn, (req, res) => {
-  res.render('profile', {
-    title: 'Profile Page',
-  });
+router.get('/', (req, res) => {
+  res.render('indexfts');
 });
 
 /**
- * Saves the changes to an account
+ * Saves the changes to an sensorhub
  *
  * @name Profile
- * @path {POST} /account/edit
+ * @path {POST} /editsensor/:SerialID
  */
-router.post('/edit', isLoggedIn, (req, res, next) => {
+router.post('/fts', (req) => {
   const {
-    passChange,
-    oldPass,
-    newPass,
-    repeatPass,
-    nameChange,
-    name,
+    MongoDBHost,
+    MongoDBPort,
+    MongoDBUser,
+    MongoDBPass,
+    MongoDBName,
+    PlanetKey,
+    Redishost,
+    Redisport,
+    Redispass,
+    Redisdb,
   } = req.body;
-  User.findOne({
-    email: req.user.email,
-  }).exec().then((user) => {
-    if (!user) {
-      next(new Error(`Could not find user with email: '${req.user.email}'!`));
-      return;
-    }
-    if (passChange &amp;&amp; (!!oldPass &amp;&amp; !!newPass &amp;&amp; !!repeatPass) &amp;&amp; newPass === repeatPass) {
-      if (user.validatePassword(oldPass)) {
-        // eslint-disable-next-line no-param-reassign
-        user.password = bcrypt.hashSync(
-          newPass,
-          salt,
-        );
-        user.save();
-        res.redirect('/logout');
-      } else {
-        res.redirect('/account/edit?fail=true');
-      }
-    } else if (nameChange &amp;&amp; name) {
-      // eslint-disable-next-line no-param-reassign
-      user.name = name;
-      user.save();
-      res.redirect('/account');
-    } else {
-      res.redirect('/account/edit?fail=true');
-    }
-  }).catch((err) => {
-    next(err);
+
+  const configdata = `${'module.exports = {\n' +
+             '  MongoDB: {\n' +
+             '    Host: "'}${
+    MongoDBHost
+  }",\n` +
+             `    Port: ${
+               MongoDBPort
+             },\n` +
+             `    User: "${
+               MongoDBUser
+             }",\n` +
+             `    Pass: "${
+               MongoDBPass
+             }",\n` +
+             `    Name: "${
+               MongoDBName
+             }",\n` +
+             '  },\n' +
+             '  Planet: {\n' +
+             `    Key: "${
+               PlanetKey
+             }",\n` +
+             '  },\n' +
+             '  Redis: {\n' +
+             `    host: "${
+               Redishost
+             }",\n` +
+             `    port: ${
+               Redisport
+             },\n` +
+             `    pass: "${
+               Redispass
+             }",\n` +
+             `    db: ${
+               Redisdb
+             },\n` +
+             '  },\n' +
+             '};';
+
+    // write to a new file named config.js
+  fs.writeFile('config.js', configdata, (err) => {
+    // throws an error, you could also catch it here
+    if (err) throw err;
   });
 });
 
 /**
- * The account edit page
+ * Changes the language of the interface.
  *
- * @name Profile
- * @path {GET} /account/edit
+ * @name Locale
+ * @path {GET} /locale-:locale
  */
-router.get('/edit', isLoggedIn, (req, res) => {
-  res.render('editProfile', {
-    title: 'Edit Account',
-    fail: (req.query.fail === 'true'),
-  });
+router.get('/locale-:locale', (req, res) => {
+  i18n.setLocale(req.params.locale);
+  res.redirect('back');
 });
 
 /* Exports */
