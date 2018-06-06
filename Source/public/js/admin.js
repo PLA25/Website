@@ -16,8 +16,9 @@ $(document).ready(() => {
   });
 });
 
+// eslint-disable-next-line no-unused-vars
 function DeleteHub(id) {
-  var xhr = new XMLHttpRequest();
+  const xhr = new XMLHttpRequest();
   xhr.open('POST', '/admin/deleteHub');
   xhr.addEventListener('loadend', () => {
     window.location.reload();

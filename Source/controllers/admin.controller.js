@@ -162,14 +162,14 @@ router.post('/upload-logo', isAdmin, (req, res) => {
  * @path {POST} /admin/deleteHub/:id
  */
 router.post('/deleteHub/:id', isAdmin, (req, res, next) => {
-	var id = req.params.id;
-	SensorHub.deleteOne({SerialID: id}, (err) => {
-		if (err) {
-			next(new Error(`Could not delete sensorhub with id: ${id}`));
-		} else {
-			res.end();
-		}
-	});
+  const { id } = req.params.id;
+  SensorHub.deleteOne({ SerialID: id }, (err) => {
+    if (err) {
+      next(new Error(`Could not delete sensorhub with id: ${id}`));
+    } else {
+      res.end();
+    }
+  });
 });
 
 /* Exports */
