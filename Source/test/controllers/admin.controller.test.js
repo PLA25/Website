@@ -213,27 +213,27 @@ module.exports = () => {
           });
       });
     });
+  });
 
-    describe('GET /editsensor/:SerialID', () => {
-      describe('Not logged in', () => {
-        it('should redirect to /login', (done) => {
-          request(app)
-            .get('/admin/editsensor/asdf')
-            .end((err, res) => {
-              res.headers.location.should.equal('/login');
-              done();
-            });
-        });
-      });
-
-      it('should return a 500 response', (done) => {
-        authenticatedAdmin
+  describe('GET /editsensor/:SerialID', () => {
+    describe('Not logged in', () => {
+      it('should redirect to /login', (done) => {
+        request(app)
           .get('/admin/editsensor/asdf')
           .end((err, res) => {
-            res.statusCode.should.equal(500);
+            res.headers.location.should.equal('/login');
             done();
           });
       });
+    });
+
+    it('should return a 500 response', (done) => {
+      authenticatedAdmin
+        .get('/admin/editsensor/asdf')
+        .end((err, res) => {
+          res.statusCode.should.equal(500);
+          done();
+        });
     });
 
     describe('Logged in user', () => {
@@ -256,27 +256,27 @@ module.exports = () => {
           });
       });
     });
+  });
 
-    describe('GET /config/:valueID', () => {
-      describe('Not logged in', () => {
-        it('should redirect to /login', (done) => {
-          request(app)
-            .get('/admin/config/asdf')
-            .end((err, res) => {
-              res.headers.location.should.equal('/login');
-              done();
-            });
-        });
-      });
-
-      it('should return a 500 response', (done) => {
-        authenticatedAdmin
+  describe('GET /config/:valueID', () => {
+    describe('Not logged in', () => {
+      it('should redirect to /login', (done) => {
+        request(app)
           .get('/admin/config/asdf')
           .end((err, res) => {
-            res.statusCode.should.equal(500);
+            res.headers.location.should.equal('/login');
             done();
           });
       });
+    });
+
+    it('should return a 500 response', (done) => {
+      authenticatedAdmin
+        .get('/admin/config/asdf')
+        .end((err, res) => {
+          res.statusCode.should.equal(500);
+          done();
+        });
     });
 
     describe('Logged in user', () => {
@@ -289,6 +289,7 @@ module.exports = () => {
           });
       });
     });
+
     describe('Logged in admin', () => {
       it('should return a 200 response', (done) => {
         authenticatedAdmin
@@ -299,11 +300,33 @@ module.exports = () => {
           });
       });
     });
+  });
 
-    describe('Update sensorhub succeeded', () => {
-      it('should redirect to /admin', (done) => {
+  describe('POST /admin/editsensor/:SerialID', () => {
+    describe('Not logged in', () => {
+      it('should redirect to /login', (done) => {
         request(app)
-          .post('/account/editsensor/Arnhem')
+          .post('/admin/editsensor/asdf')
+          .end((err, res) => {
+            res.headers.location.should.equal('/login');
+            done();
+          });
+      });
+    });
+
+    describe('Logged in admin', () => {
+      it('should return a 500 response', (done) => {
+        authenticatedAdmin
+          .post('/admin/editsensor/asdf')
+          .end((err, res) => {
+            res.statusCode.should.equal(500);
+            done();
+          });
+      });
+
+      it('should redirect to /admin', (done) => {
+        authenticatedAdmin
+          .post('/admin/editsensor/Arnhem')
           .send({
             Longitude: '5.898730',
             Latitude: '51.985103',
@@ -313,18 +336,88 @@ module.exports = () => {
             done();
           });
       });
-    });
-    describe('Update config succeeded', () => {
-      it('should redirect to /admin', (done) => {
-        request(app)
-          .post('/account/config/temperature')
+
+      it('should return a 500 response', (done) => {
+        authenticatedAdmin
+          .post('/admin/editsensor/asdf')
           .send({
-            value: '0.75',
+            Longitude: '5.898730',
           })
           .end((err, res) => {
-            res.headers.location.should.equal('/admin');
+            res.statusCode.should.equal(500);
             done();
           });
+      });
+
+      it('should return a 500 response', (done) => {
+        authenticatedAdmin
+          .post('/admin/editsensor/asdf')
+          .send({
+            Latitude: '51.985103',
+          })
+          .end((err, res) => {
+            res.statusCode.should.equal(500);
+            done();
+          });
+      });
+    });
+
+    describe('Logged in user', () => {
+      it('should redirect to /404', (done) => {
+        authenticatedUser
+          .post('/admin/editsensor/asdf')
+          .end((err, res) => {
+            res.headers.location.should.equal('/404');
+            done();
+          });
+      });
+    });
+
+    describe('POST /admin/config/:valueID', () => {
+      describe('Not logged in', () => {
+        it('should redirect to /login', (done) => {
+          request(app)
+            .post('/admin/config/asdf')
+            .end((err, res) => {
+              res.headers.location.should.equal('/login');
+              done();
+            });
+        });
+      });
+
+      describe('Logged in admin', () => {
+        it('should return a 302 response', (done) => {
+          authenticatedAdmin
+            .post('/admin/config/asdf')
+            .end((err, res) => {
+              res.statusCode.should.equal(302);
+              res.headers.location.should.equal('/admin');
+              done();
+            });
+        });
+
+        it('should return a 302 response', (done) => {
+          authenticatedAdmin
+            .post('/admin/config/treshold-temperature')
+            .send({
+              value: 0.75,
+            })
+            .end((err, res) => {
+              res.statusCode.should.equal(302);
+              done();
+            });
+        });
+      });
+
+      describe('Logged in user', () => {
+        it('should redirect to /404', (done) => {
+          authenticatedUser
+            .post('/admin/config/asdf')
+            .end((err, res) => {
+              res.headers.location.should.equal('/404');
+              done();
+            });
+        });
       });
     });
   });

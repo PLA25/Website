@@ -81,7 +81,9 @@ router.get('/flip/:id', isAdmin, (req, res, next) => {
         type = 2;
       }
 
-      let { inMargin } = data;
+      let {
+        inMargin,
+      } = data;
       if (inMargin === 0) {
         inMargin = 1;
       } else {
@@ -155,35 +157,42 @@ router.get('/editsensor/:SerialID', isAdmin, (req, res, next) => {
  * @name Profile
  * @path {POST} /editsensor/:SerialID
  */
-router.post('/editsensor/:SerialID', isAdmin, (req, res) => {
+router.post('/editsensor/:SerialID', isAdmin, (req, res, next) => {
   const {
-    Latitude, Longitude,
+    Latitude,
+    Longitude,
   } = req.body;
-  if (Latitude) {
-    SensorHub.findOne({ SerialID: req.params.SerialID }).exec().then((sensorHub) => {
+
+  SensorHub.findOne({
+    SerialID: req.params.SerialID,
+  }).exec()
+    .then((sensorHub) => {
       if (!sensorHub) {
-        res.redirect('/admin');
+        next(new Error(`Could not find sensorhub with ID: '${req.params.SerialID}'!`));
         return;
       }
-      // eslint-disable-next-line no-param-reassign
-      sensorHub.Latitude = Latitude;
-      sensorHub.save();
-      res.redirect('/admin');
-    });
-  } if (Longitude) {
-    SensorHub.findOne({ SerialID: req.params.SerialID }).exec().then((sensorHub) => {
-      if (!sensorHub) {
-        res.redirect('/admin');
-        return;
+
+      if (Latitude) {
+        // eslint-disable-next-line no-param-reassign
+        sensorHub.Latitude = Latitude;
       }
-      // eslint-disable-next-line no-param-reassign
-      sensorHub.Longitude = Longitude;
-      sensorHub.save();
-      res.redirect('/admin');
+
+      if (Longitude) {
+        // eslint-disable-next-line no-param-reassign
+        sensorHub.Longitude = Longitude;
+      }
+
+      sensorHub.save()
+        .then(() => {
+          res.redirect('/admin');
+        })
+        .catch((err) => {
+          next(err);
+        });
+    })
+    .catch((err) => {
+      next(err);
     });
-  } else {
-    res.redirect('/admin');
-  }
 });
 
 /**
@@ -217,24 +226,38 @@ router.get('/config/:valueID', isAdmin, (req, res, next) => {
  * @name Profile
  * @path {POST} /config/:valueID
  */
-router.post('/config/:valueID', isAdmin, (req, res) => {
+router.post('/config/:valueID', isAdmin, (req, res, next) => {
   const {
     value,
   } = req.body;
-  if (value) {
-    Config.findOne({ valueID: req.params.valueID }).exec().then((config) => {
+
+  if (!value) {
+    res.redirect('/admin');
+    return;
+  }
+
+  Config.findOne({
+    valueID: req.params.valueID,
+  }).exec()
+    .then((config) => {
       if (!config) {
-        res.redirect('/admin');
+        next(new Error(`Could not find config with ID: '${req.params.valueID}'!`));
         return;
       }
+
       // eslint-disable-next-line no-param-reassign
       config.value = value;
-      config.save();
-      res.redirect('/admin');
+      config.save()
+        .then(() => {
+          res.redirect('/admin');
+        })
+        .catch((err) => {
+          next(err);
+        });
+    })
+    .catch((err) => {
+      next(err);
     });
-  } else {
-    res.redirect('/admin');
-  }
 });
 
 /**
