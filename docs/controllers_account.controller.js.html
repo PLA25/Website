@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Source: controllers/index.js</title>
+	<title>JSDoc: Source: controllers/account.controller.js</title>
 	<script src="scripts/prettify/prettify.js">
 
 
@@ -21,54 +21,101 @@
 
 <body>
 	<div id="main">
-		<h1 class="page-title">Source: controllers/index.js</h1>
+		<h1 class="page-title">Source: controllers/account.controller.js</h1>
 		<section>
 			<article>
 				<pre class="prettyprint source linenums"><code>/**
- * Controllers
+ * Account controller
  *
- * @module controllers
- * @see module:controllers/admin
- * @see module:controllers/api
- * @see module:controllers/home
+ * @module controllers/account
+ * @see module:controllers
  */
 
 /* Packages */
 const express = require('express');
-
-/* Controllers */
-const accountController = require('./account.controller.js');
-const adminController = require('./admin.controller.js');
-const apiController = require('./api.controller.js');
-const homeController = require('./home.controller.js');
+const bcrypt = require('bcrypt-nodejs');
+const User = require('./../models/user');
 
 /* Constants */
-const has = Object.prototype.hasOwnProperty;
 const router = express.Router();
+const salt = bcrypt.genSaltSync(8);
 
 /* Middlewares */
 const {
-  pageNotFound,
+  isLoggedIn,
 } = require('./../middlewares');
 
-router.use((req, res, next) => {
-  if (!has.call(res.locals, 'user')) {
-    if (req.isAuthenticated()) {
-      res.locals.user = req.user;
-    }
-  }
-
-  next();
+/**
+ * Renders the profile page.
+ *
+ * @name Profile
+ * @path {GET} /account
+ */
+router.get('/', isLoggedIn, (req, res) => {
+  res.render('profile', {
+    title: 'Profile Page',
+  });
 });
 
-/* Routes */
-router.use('/', homeController);
-router.use('/account', accountController);
-router.use('/admin', adminController);
-router.use('/api', apiController);
+/**
+ * Saves the changes to an account
+ *
+ * @name Profile
+ * @path {POST} /account/edit
+ */
+router.post('/edit', isLoggedIn, (req, res, next) => {
+  const {
+    passChange,
+    oldPass,
+    newPass,
+    repeatPass,
+    nameChange,
+    name,
+  } = req.body;
+  User.findOne({
+    email: req.user.email,
+  }).exec().then((user) => {
+    if (!user) {
+      next(new Error(`Could not find user with email: '${req.user.email}'!`));
+      return;
+    }
+    if (passChange &amp;&amp; (!!oldPass &amp;&amp; !!newPass &amp;&amp; !!repeatPass) &amp;&amp; newPass === repeatPass) {
+      if (user.validatePassword(oldPass)) {
+        // eslint-disable-next-line no-param-reassign
+        user.password = bcrypt.hashSync(
+          newPass,
+          salt,
+        );
+        user.save();
+        res.redirect('/logout');
+      } else {
+        res.redirect('/account/edit?fail=true');
+      }
+    } else if (nameChange &amp;&amp; name) {
+      // eslint-disable-next-line no-param-reassign
+      user.name = name;
+      user.save();
+      res.redirect('/account');
+    } else {
+      res.redirect('/account/edit?fail=true');
+    }
+  }).catch((err) => {
+    next(err);
+  });
+});
 
-/* Error Handling */
-router.use(pageNotFound);
+/**
+ * The account edit page
+ *
+ * @name Profile
+ * @path {GET} /account/edit
+ */
+router.get('/edit', isLoggedIn, (req, res) => {
+  res.render('editProfile', {
+    title: 'Edit Account',
+    fail: (req.query.fail === 'true'),
+  });
+});
 
 /* Exports */
 module.exports = router;
