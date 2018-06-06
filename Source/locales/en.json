@@ -19,7 +19,8 @@
 		"limitvalue": "Limit values",
 		"limitvaluevalue": "Value",
 		"limitvaluename": "Name",
-		"setting": "admin.setting"
+		"setting": "Setting",
+		"confirm_delete": "Are you sure you want to delete this sensorhub?"
 	},
 	"index": {
 		"help": "Help",

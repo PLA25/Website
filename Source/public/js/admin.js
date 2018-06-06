@@ -25,11 +25,14 @@ $(document).ready(() => {
 });
 
 // eslint-disable-next-line no-unused-vars
-function DeleteHub(id) {
-  const xhr = new XMLHttpRequest();
-  xhr.open('POST', '/admin/deleteHub');
-  xhr.addEventListener('loadend', () => {
-    window.location.reload();
-  });
-  xhr.send(`id=${id}`);
+function DeleteHub(id, msg) {
+  // eslint-disable-next-line no-restricted-globals
+  if (confirm(msg)) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/admin/deleteHub');
+    xhr.addEventListener('loadend', () => {
+      window.location.reload();
+    });
+    xhr.send(`id=${id}`);
+  }
 }

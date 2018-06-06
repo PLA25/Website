@@ -304,5 +304,15 @@ router.post('/deleteHub/:id', isAdmin, (req, res, next) => {
   });
 });
 
+/**
+ * Edits a sensorhub
+ *
+ * @name Edit Sensorhub
+ * @path {GET} /admin/editHub/:id
+ */
+router.get('/editHub/:id', isAdmin, (req, res) => {
+  res.render('editSensorhub');
+});
+
 /* Exports */
 module.exports = router;

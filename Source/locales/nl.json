@@ -18,8 +18,9 @@
 		"latitude": "Breedtegraad",
 		"limitvalue": "Grenswaardes",
 		"limitvaluevalue": "Waarde",
-		"limitvaluename": "Naame",
-		"setting": "admin.setting"
+		"limitvaluename": "Naam",
+		"setting": "Instelling",
+		"confirm_delete": "Weet U zeker dat U deze sensorhub wilt verwijderen?"
 	},
 	"index": {
 		"help": "Hulp",
