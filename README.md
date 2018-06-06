@@ -26,8 +26,10 @@ After you have filled in the information save the file as config.js in the same 
 Your Planet key can be found on the planet.com website, for more information about how to find your API key [click here](https://support.planet.com/hc/en-us/articles/212318178-What-is-my-API-key-)
 
 ### Step 3: Configure the database
-TO DO!
-This step will be included in an upcoming release.
+This will happen automatically when you start-up the system for the first time.
+
+Yep, it's that easy!
+If you ever lose access to the system, just delete the config document from the database and the default users will be back in the system.
 
 ### Step 4: Starting the system
 Yet again, make sure that you are in the Website/Source folder and execute the following command:
