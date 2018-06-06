@@ -14,13 +14,23 @@ const fs = require('fs');
 const router = express.Router();
 
 /**
- * Renders the index page.
+ * Renders the indexfts page.
  *
- * @name Index
+ * @name Indexfts
  * @path {GET} /
  */
 router.get('/', (req, res) => {
   res.render('indexfts');
+});
+
+/**
+ * Renders the indexreroute page.
+ *
+ * @name Indexreroute
+ * @path {GET} /
+ */
+router.get('/reroute', (req, res) => {
+  res.render('indexreroute');
 });
 
 /**
@@ -29,7 +39,7 @@ router.get('/', (req, res) => {
  * @name Profile
  * @path {POST} /editsensor/:SerialID
  */
-router.post('/fts', (req) => {
+router.post('/fts', (req, res) => {
   const {
     MongoDBHost,
     MongoDBPort,
@@ -87,6 +97,7 @@ router.post('/fts', (req) => {
     // throws an error, you could also catch it here
     if (err) throw err;
   });
+  res.redirect('/reroute');
 });
 
 /**
