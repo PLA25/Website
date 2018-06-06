@@ -18,9 +18,15 @@ const userCredentials = {
   password: 'user',
 };
 
+const testCredentials = {
+  email: 'test',
+  password: 'test',
+};
+
 module.exports = () => {
   const authenticatedAdmin = request.agent(app);
   const authenticatedUser = request.agent(app);
+  const authenticatedTestUser = request.agent(app);
 
   before((done) => {
     authenticatedAdmin
@@ -52,8 +58,20 @@ module.exports = () => {
       });
   });
 
+  before((done) => {
+    authenticatedTestUser
+      .post('/login')
+      .send(testCredentials)
+      .end((err, res) => {
+        res.statusCode.should.equal(302);
+        res.headers.location.should.equal('/');
+        done();
+      });
+  });
+
   return {
     authenticatedAdmin,
     authenticatedUser,
+    authenticatedTestUser,
   };
 };

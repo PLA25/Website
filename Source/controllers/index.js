@@ -11,6 +11,7 @@
 const express = require('express');
 
 /* Controllers */
+const accountController = require('./account.controller.js');
 const adminController = require('./admin.controller.js');
 const apiController = require('./api.controller.js');
 const homeController = require('./home.controller.js');
@@ -36,6 +37,7 @@ router.use((req, res, next) => {
 
 /* Routes */
 router.use('/', homeController);
+router.use('/account', accountController);
 router.use('/admin', adminController);
 router.use('/api', apiController);
 

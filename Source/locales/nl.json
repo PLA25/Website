@@ -36,8 +36,8 @@
 		"admin": "Admin",
 		"logout": "Uitloggen",
 		"login": "Inloggen",
-		"profile": "layout.profile",
-		"my-account": "layout.my-account"
+		"profile": "Profiel",
+		"my-account": "Mijn account"
 	},
 	"login": {
 		"your-email": "Uw e-mail",
@@ -86,5 +86,22 @@
 	"editsensor": {
 		"Latitude": "Breedtegraad",
 		"Longitude": "Lengtegraad"
-	}
+	},
+  "account": {
+		"name": "Naam",
+		"email": "Email",
+		"admin": "Admin",
+		"password": "Wachtwoord",
+		"yes": "Ja",
+		"edit_profile": "Bewerk Profiel",
+		"back": "Terug",
+		"change_name": "Wijzig Naam",
+		"no": "Nee",
+		"change_pass": "Wijzig Wachtwoord",
+		"old_pass": "Oud Wachtwoord",
+		"new_pass": "Nieuw Wachtwoord",
+		"repeat_pass": "Herhaal Wachtwoord",
+		"save_changes": "Wijzigingen Opslaan",
+    "hidden": "Verborgen"
+   }
 }
