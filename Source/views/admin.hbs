@@ -104,6 +104,7 @@
                 </a>
               </td>
               <td>
+                  <a href="/admin/editsensor/{{this.SerialID}}">
                 <button type="button" class="btn btn-primary btn-rounded btn-sm my-0">
                   <span class="d-block d-sm-none">
                     <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -133,6 +134,49 @@
       </table>
     </div>
 
+    <div class="col-12 col-xl-6">
+    <h1>{{i18n "admin.limitvalue"}}</h1>
+    <table class="table table-responsive-md table-striped" id="table-value">
+      <thead class="rgba-blue-dark darken-3">
+        <tr class="text-white">
+          <th>{{i18n "admin.limitvaluename"}}</th>
+          <th>{{i18n "admin.limitvaluevalue"}}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each configs}}
+          <tr>
+            <td>
+              {{this.valueID}}
+            </td>
+            <td>
+              {{this.value}}
+            </td>
+            <td>
+              <a href="/admin/config/{{this.valueID}}">
+                  <button type="button" class="btn btn-primary btn-rounded btn-sm my-0">
+
+                    <span class="d-block d-sm-none">
+                      <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </span>
+
+                    <span class="d-none d-sm-block">
+                      <i class="fa fa-pencil" aria-hidden="true"></i> {{i18n "admin.edit"}}
+                    </span>
+                  </button>
+                </a>
+                
+            </td>
+          </tr>
+        {{/each}}
+
+      </tbody>
+
+    </table>
+  </div>
+      
+      
   </div>
 </div>
 
