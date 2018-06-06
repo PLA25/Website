@@ -396,6 +396,18 @@ module.exports = () => {
             });
         });
 
+        it('should return a 500 response', (done) => {
+          authenticatedAdmin
+            .post('/admin/config/asdf')
+            .send({
+              value: 0.5,
+            })
+            .end((err, res) => {
+              res.statusCode.should.equal(500);
+              done();
+            });
+        });
+
         it('should return a 302 response', (done) => {
           authenticatedAdmin
             .post('/admin/config/treshold-temperature')

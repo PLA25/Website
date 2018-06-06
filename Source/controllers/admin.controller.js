@@ -182,13 +182,9 @@ router.post('/editsensor/:SerialID', isAdmin, (req, res, next) => {
         sensorHub.Longitude = Longitude;
       }
 
-      sensorHub.save()
-        .then(() => {
-          res.redirect('/admin');
-        })
-        .catch((err) => {
-          next(err);
-        });
+      sensorHub.save();
+
+      res.redirect('/admin');
     })
     .catch((err) => {
       next(err);
@@ -247,13 +243,9 @@ router.post('/config/:valueID', isAdmin, (req, res, next) => {
 
       // eslint-disable-next-line no-param-reassign
       config.value = value;
-      config.save()
-        .then(() => {
-          res.redirect('/admin');
-        })
-        .catch((err) => {
-          next(err);
-        });
+      config.save();
+
+      res.redirect('/admin');
     })
     .catch((err) => {
       next(err);
