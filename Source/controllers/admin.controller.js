@@ -260,7 +260,7 @@ router.post('/config/:valueID', isAdmin, (req, res, next) => {
  * @code {200} if a PNG file is uploaded successfully
  * @code {400} if no files or the wrong file type is uploaded
  */
-router.post('/upload-logo', isAdmin, (req, res) => {
+router.post('/upload-logo', isAdmin, (req, res, next) => {
   if (!req.files) {
     res.status(400).send('No files were uploaded.');
     return;
@@ -280,11 +280,10 @@ router.post('/upload-logo', isAdmin, (req, res) => {
   /* Uses the mv() method to save this file. */
   logo.mv('./public/logo.png', (err) => {
     if (err) {
-      res.status(500).send(err);
-      return;
+      next(err);
+    } else {
+      res.redirect(200, '/admin');
     }
-
-    res.redirect(200, '/admin');
   });
 });
 
