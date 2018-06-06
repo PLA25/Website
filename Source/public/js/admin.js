@@ -15,3 +15,12 @@ $(document).ready(() => {
     }],
   });
 });
+
+function DeleteHub(id) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/admin/deleteHub');
+  xhr.addEventListener('loadend', () => {
+    window.location.reload();
+  });
+  xhr.send(`id=${id}`);
+}
