@@ -15,15 +15,20 @@
 		"delete": "Delete",
 		"serial-id": "SerialID",
 		"longitude": "Longitude",
-		"latitude": "Latitude"
+		"latitude": "Latitude",
+		"limitvalue": "Limit values",
+		"limitvaluevalue": "Value",
+		"limitvaluename": "Name",
+		"setting": "admin.setting"
 	},
 	"index": {
 		"help": "Help",
-		"home": "Home",
+		"heading": "Home",
 		"hometext1": "Welcome to the homepage of the Open Source Pollution Detection System. This system uses the Planet API for map images and your own sensorhubs for the pollution details. Visit our Github for details about the sensorhubs. ",
 		"hometext2": "The full documentation for the website can be found here: ",
 		"hometext3": "The homepage text can be edited in the language files (Location: locals/en for English and locales/nl for Dutch) and the index.hbs file. (Location: views/index.hbs)",
-		"hometext4": "In the index.hbs file you can set the amount of paragraphs by adding extra <br><br> and index.hometextNUMBER, you then need to add the index.hometextNUMBER in the 'locals/nl' and 'locals/en' files."
+		"hometext4": "In the index.hbs file you can set the amount of paragraphs by adding extra <br><br> and index.hometextNUMBER, you then need to add the index.hometextNUMBER in the 'locals/nl' and 'locals/en' files.",
+		"home": "index.home"
 	},
 	"layout": {
 		"home": "Home",
@@ -47,23 +52,40 @@
 		"temperature": "Temperature",
 		"timestamp": "Timestamp"
 	},
-	"map": {
-		"options": "Options",
-		"go-to": "Go to:",
-		"search": "Search location",
-		"features": "Features:",
-		"navigation": "Navigation",
-		"sensorhubs": "SensorHubs",
-		"layers": "Layers:",
-		"temperature": "Temperature",
-		"gas": "Gas",
-		"light": "Light",
-		"timeline": "Timeline:",
-		"latest-data": "Latest data",
-		"hour": "hour(s)",
-		"map": "Map"
+  "map": {
+    "options": "Options",
+    "go-to": "Go to:",
+    "search": "Search location",
+    "features": "Features:",
+    "navigation": "Navigation",
+    "sensorhubs": "SensorHubs",
+    "layers": "Layers:",
+    "temperature": "Temperature",
+    "gas": "Gas",
+    "light": "Light",
+    "timeline": "Timeline:",
+    "latest-data": "Latest data",
+    "hour": "hour(s)",
+    "map": "Map",
+    "map-information": "Map information",
+    "temperature-colon": "Temperature:",
+    "invalid": "Invalid",
+    "light": "Light",
+    "valid-measurement": "Valid measurement or measurement expected",
+    "wrong-measurement": "Wrong measurement or measurement too high or too low",
+    "close": "Close",
+    "sensorhub-information": "Sensorhub information",
+    "more-details": "More details"
 	},
-	"account": {
+	"config": {
+		"newvalue": "New Value",
+		"updatevalue": "Update value"
+	},
+	"editsensor": {
+		"Latitude": "Latitude",
+		"Longitude": "Longitude"
+	},
+  "account": {
 		"name": "Name",
 		"email": "Email",
 		"admin": "Admin",
@@ -77,6 +99,7 @@
 		"old_pass": "Old Password",
 		"new_pass": "New Password",
 		"repeat_pass": "Repeat Password",
-		"save_changes": "Save Changes"
-	}
+		"save_changes": "Save Changes",
+    "hidden": "Hidden"
+  }
 }
