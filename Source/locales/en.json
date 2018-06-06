@@ -84,5 +84,22 @@
 	"editsensor": {
 		"Latitude": "Latitude",
 		"Longitude": "Longitude"
-	}
+	},
+  "account": {
+		"name": "Name",
+		"email": "Email",
+		"admin": "Admin",
+		"password": "Password",
+		"yes": "Yes",
+		"edit_profile": "Edit Profile",
+		"back": "Back",
+		"change_name": "Change Name",
+		"no": "No",
+		"change_pass": "Change Password",
+		"old_pass": "Old Password",
+		"new_pass": "New Password",
+		"repeat_pass": "Repeat Password",
+		"save_changes": "Save Changes",
+    "hidden": "Hidden"
+  }
 }
