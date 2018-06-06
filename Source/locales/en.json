@@ -18,7 +18,11 @@
     "latitude": "Latitude",
     "confirm": "are you sure you want to delete this user?",
     "reset_password": "Change password to Amsterdam",
-    "user": "User"
+    "user": "User",
+    "limitvalue": "Limit values",
+		"limitvaluevalue": "Value",
+		"limitvaluename": "Name",
+		"setting": "Settings"
   },
   "index": {
     "help": "Help",
@@ -64,22 +68,40 @@
     "timeline": "Timeline:",
     "latest-data": "Latest data",
     "hour": "hour(s)",
-    "map": "Map"
-  },
+    "map": "Map",
+    "map-information": "Map information",
+    "temperature-colon": "Temperature:",
+    "invalid": "Invalid",
+    "light": "Light",
+    "valid-measurement": "Valid measurement or measurement expected",
+    "wrong-measurement": "Wrong measurement or measurement too high or too low",
+    "close": "Close",
+    "sensorhub-information": "Sensorhub information",
+    "more-details": "More details"
+	},
+	"config": {
+		"newvalue": "New Value",
+		"updatevalue": "Update value"
+	},
+	"editsensor": {
+		"Latitude": "Latitude",
+		"Longitude": "Longitude"
+	},
   "account": {
-    "name": "Name",
-    "email": "Email",
-    "admin": "Admin",
-    "password": "Password",
-    "yes": "Yes",
-    "edit_profile": "Edit Profile",
-    "back": "Back",
-    "change_name": "Change Name",
-    "no": "No",
-    "change_pass": "Change Password",
-    "old_pass": "Old Password",
-    "new_pass": "New Password",
-    "repeat_pass": "Repeat Password",
-    "save_changes": "Save Changes"
+		"name": "Name",
+		"email": "Email",
+		"admin": "Admin",
+		"password": "Password",
+		"yes": "Yes",
+		"edit_profile": "Edit Profile",
+		"back": "Back",
+		"change_name": "Change Name",
+		"no": "No",
+		"change_pass": "Change Password",
+		"old_pass": "Old Password",
+		"new_pass": "New Password",
+		"repeat_pass": "Repeat Password",
+		"save_changes": "Save Changes",
+    "hidden": "Hidden"
   }
 }

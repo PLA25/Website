@@ -84,59 +84,134 @@
       <div class="ui-slider-handle"></div>
     </div>
     <hr>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#legendaModal">
+      {{i18n "map.map-information"}}
+    </button>
+
+    <!-- Modal for map information -->
+    <div class="modal fade" id="legendaModal" tabindex="-1" role="dialog" aria-labelledby="legendaModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="legendaModalLabel">{{i18n "map.map-information"}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="modal-body">
+              <h4>{{i18n "map.temperature"}}:</h4>
+              <table>
+                <tr style="height: 20px;">
+                  <td style="background-color: dimgray"></td>
+                  <td style="background-color: rgb(255, 0, 255);"></td>
+                  <td style="background-color: rgb(128, 0, 255);"></td>
+                  <td style="background-color: rgb(0, 0, 255);"></td>
+                  <td style="background-color: rgb(0, 127, 255);"></td>
+                  <td style="background-color: rgb(0, 255, 255);"></td>
+                  <td style="background-color: rgb(0, 255, 128);"></td>
+                  <td style="background-color: rgb(0, 255, 0);"></td>
+                  <td style="background-color: rgb(127, 255, 0);"></td>
+                  <td style="background-color: rgb(255, 255, 0);"></td>
+                  <td style="background-color: rgb(255, 128, 0);"></td>
+                  <td style="background-color: rgb(255, 0, 0);"></td>
+                </tr>
+                <tr style="height: 20px;">
+                  <td style="padding-left: 2px; padding-right: 2px;">{{i18n "map.invalid"}}</td>
+                  <td style="padding-left: 2px; padding-right: 2px;">-50°C</td>
+                  <td style="padding-left: 2px; padding-right: 2px;">-40°C</td>
+                  <td style="padding-left: 2px; padding-right: 2px;">-30°C</td>
+                  <td style="padding-left: 2px; padding-right: 2px;">-20°C</td>
+                  <td style="padding-left: 2px; padding-right: 2px;">-10°C</td>
+                  <td style="padding-left: 2px; padding-right: 2px;">0°C</td>
+                  <td style="padding-left: 2px; padding-right: 2px;">10°C</td>
+                  <td style="padding-left: 2px; padding-right: 2px;">20°C</td>
+                  <td style="padding-left: 2px; padding-right: 2px;">30°C</td>
+                  <td style="padding-left: 2px; padding-right: 2px;">40°C</td>
+                  <td style="padding-left: 2px; padding-right: 2px;">50°C</td>
+                </tr>
+              </table>
+
+              <hr>
+              <h4>{{i18n "map.light"}}:</h4>
+              <table>
+                <tr>
+                  <td>
+                    <img src="/bulb_7_0.png" style="display:block;" width="100%" height="100%">
+                  </td>
+                  <td>
+                    <img src="/bulb_0_1.png" style="display:block;" width="100%" height="100%">
+                  </td>
+                  <td>
+                    <img src="/bulb_1_1.png" style="display:block;" width="100%" height="100%">
+                  </td>
+                  <td>
+                    <img src="/bulb_2_1.png" style="display:block;" width="100%" height="100%">
+                  </td>
+                  <td>
+                    <img src="/bulb_3_1.png" style="display:block;" width="100%" height="100%">
+                  </td>
+                  <td>
+                    <img src="/bulb_4_1.png" style="display:block;" width="100%" height="100%">
+                  </td>
+                  <td>
+                    <img src="/bulb_5_1.png" style="display:block;" width="100%" height="100%">
+                  </td>
+                  <td>
+                    <img src="/bulb_6_1.png" style="display:block;" width="100%" height="100%">
+                  </td>
+                  <td>
+                    <img src="/bulb_7_1.png" style="display:block;" width="100%" height="100%">
+                  </td>
+                </tr>
+                <tr>
+                  <td>{{i18n "map.invalid"}}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </table>
+
+              <hr>
+              <h4>Gas:</h4>
+              {{i18n "map.valid-measurement"}}:
+              <br>
+              <font color="white" style="background-color: black;">CO: 15 PPM</font>
+              <br> {{i18n "map.wrong-measurement"}}:
+              <br>
+              <font color="white" style="background-color: red;">CO: 100 PPM</font>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">{{i18n "map.close"}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-
 <div class="card text-center z-depth-2 map">
   <div class="card-header info-color lighten-1 white-text">
-    Map
+    {{i18n "map.map-information"}}
   </div>
   <div class="card-body">
 
     <div id="map">
     </div>
 
-    <div class="scale">
-      <table>
-        <tr style="height: 20px;">
-          <td style="background-color: rgb(255, 0, 255);"></td>
-          <td style="background-color: rgb(128, 0, 255);"></td>
-          <td style="background-color: rgb(0, 0, 255);"></td>
-          <td style="background-color: rgb(0, 127, 255);"></td>
-          <td style="background-color: rgb(0, 255, 255);"></td>
-          <td style="background-color: rgb(0, 255, 128);"></td>
-          <td style="background-color: rgb(0, 255, 0);"></td>
-          <td style="background-color: rgb(127, 255, 0);"></td> 
-          <td style="background-color: rgb(255, 255, 0);"></td>
-          <td style="background-color: rgb(255, 128, 0);"></td>
-          <td style="background-color: rgb(255, 0, 0);"></td>
-        </tr>
-        <tr style="height: 20px;">
-          <td style="padding-left: 2px; padding-right: 2px;">-50°C</td>
-          <td style="padding-left: 2px; padding-right: 2px;">-40°C</td>
-          <td style="padding-left: 2px; padding-right: 2px;">-30°C</td>
-          <td style="padding-left: 2px; padding-right: 2px;">-20°C</td>
-          <td style="padding-left: 2px; padding-right: 2px;">-10°C</td>
-          <td style="padding-left: 2px; padding-right: 2px;">0°C</td>
-          <td style="padding-left: 2px; padding-right: 2px;">10°C</td>
-          <td style="padding-left: 2px; padding-right: 2px;">20°C</td>
-          <td style="padding-left: 2px; padding-right: 2px;">30°C</td>
-          <td style="padding-left: 2px; padding-right: 2px;">40°C</td>
-          <td style="padding-left: 2px; padding-right: 2px;">50°C</td>
-        </tr>
-      </table>
-
-    </div>
-
-    <!-- Button trigger modal -->
-
-    <!-- Modal -->
+    <!-- Modal for pop up sensorhub -->
     <div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Sensorhub information</h5>
+            <h5 class="modal-title" id="exampleModalLabel">{{i18n "map.sensorhub-information"}}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -161,15 +236,16 @@
 
           <div class="modal-footer">
             <a id="detailButton">
-              <button type="button" class="btn btn-primary">more details</button>
+              <button type="button" class="btn btn-primary">{{i18n "map.more-details"}}</button>
             </a>
 
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{i18n "map.close"}}</button>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 </div>
 
 <!-- Scripts -->

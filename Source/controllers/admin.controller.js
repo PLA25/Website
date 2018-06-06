@@ -17,6 +17,7 @@ const {
 const Data = require('./../models/data');
 const SensorHub = require('./../models/sensorhub');
 const User = require('./../models/user');
+const Config = require('./../models/config');
 
 /* Constants */
 const router = express.Router();
@@ -35,11 +36,15 @@ const {
  */
 router.get('/', isAdmin, (req, res, next) => {
   User.find({}).exec()
-    .then(users => SensorHub.find({}).exec().then(sensorHubs => [users, sensorHubs]))
-    .then(([users, sensorHubs]) => {
+    .then(users => SensorHub.find({}).exec()
+      .then(sensorHubs => [users, sensorHubs]))
+    .then(([users, sensorHubs]) => Config.find({}).exec()
+      .then(configs => [users, sensorHubs, configs]))
+    .then(([users, sensorHubs, configs]) => {
       res.render('admin', {
         users,
         sensorHubs,
+        configs,
       });
     })
     .catch((err) => {
@@ -123,6 +128,132 @@ router.get('/flip/:id', isAdmin, (req, res, next) => {
 });
 
 /**
+ * Renders a specific sensorhub edit page.
+ *
+ * @name editsensor
+ * @path {GET} /editsensor/:SerialID
+ * @params {String} :SerialID is the SerialID of the limit.
+ */
+router.get('/editsensor/:SerialID', isAdmin, (req, res, next) => {
+  SensorHub.findOne({
+    SerialID: req.params.SerialID,
+  }).exec()
+    .then((SerialID) => {
+      if (SerialID === null) {
+        next(new Error(`Could not find sensorhub with ID: '${req.params.SerialID}'!`));
+        return;
+      }
+      res.render('editsensor', {
+        SerialID,
+      });
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+/**
+ * Saves the changes to an sensorhub
+ *
+ * @name Profile
+ * @path {POST} /editsensor/:SerialID
+ */
+router.post('/editsensor/:SerialID', isAdmin, (req, res, next) => {
+  const {
+    Latitude,
+    Longitude,
+  } = req.body;
+
+  SensorHub.findOne({
+    SerialID: req.params.SerialID,
+  }).exec()
+    .then((sensorHub) => {
+      if (!sensorHub) {
+        next(new Error(`Could not find sensorhub with ID: '${req.params.SerialID}'!`));
+        return;
+      }
+
+      if (Latitude) {
+        // eslint-disable-next-line no-param-reassign
+        sensorHub.Latitude = Latitude;
+      }
+
+      if (Longitude) {
+        // eslint-disable-next-line no-param-reassign
+        sensorHub.Longitude = Longitude;
+      }
+
+      sensorHub.save();
+
+      res.redirect('/admin');
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+/**
+ * Renders a specific config page.
+ *
+ * @name config
+ * @path {GET} /config/:valueID
+ * @params {String} :valueID is the SerialID of the config.
+ */
+router.get('/config/:valueID', isAdmin, (req, res, next) => {
+  Config.findOne({
+    valueID: req.params.valueID,
+  }).exec()
+    .then((valueID) => {
+      if (valueID === null) {
+        next(new Error(`Could not find config with ID: '${req.params.valueID}'!`));
+        return;
+      }
+      res.render('config', {
+        valueID,
+      });
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+/**
+ * Saves the changes to an config
+ *
+ * @name Profile
+ * @path {POST} /config/:valueID
+ */
+router.post('/config/:valueID', isAdmin, (req, res, next) => {
+  const {
+    value,
+  } = req.body;
+
+  if (!value) {
+    res.redirect('/admin');
+    return;
+  }
+
+  Config.findOne({
+    valueID: req.params.valueID,
+  }).exec()
+    .then((config) => {
+      if (!config) {
+        next(new Error(`Could not find config with ID: '${req.params.valueID}'!`));
+        return;
+      }
+
+      // eslint-disable-next-line no-param-reassign
+      config.value = value;
+      config.save();
+
+      res.redirect('/admin');
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+/**
  * Uploads a logo.
  *
  * @name Upload logo
@@ -130,7 +261,7 @@ router.get('/flip/:id', isAdmin, (req, res, next) => {
  * @code {200} if a PNG file is uploaded successfully
  * @code {400} if no files or the wrong file type is uploaded
  */
-router.post('/upload-logo', isAdmin, (req, res) => {
+router.post('/upload-logo', isAdmin, (req, res, next) => {
   if (!req.files) {
     res.status(400).send('No files were uploaded.');
     return;
@@ -150,11 +281,10 @@ router.post('/upload-logo', isAdmin, (req, res) => {
   /* Uses the mv() method to save this file. */
   logo.mv('./public/logo.png', (err) => {
     if (err) {
-      res.status(500).send(err);
-      return;
+      next(err);
+    } else {
+      res.redirect(200, '/admin');
     }
-
-    res.redirect(200, '/admin');
   });
 });
 

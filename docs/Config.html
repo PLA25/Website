@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>JSDoc: Source: middlewares/isLoggedIn.js</title>
+	<title>JSDoc: Class: Config</title>
 	<script src="scripts/prettify/prettify.js">
 
 
@@ -21,30 +21,27 @@
 
 <body>
 	<div id="main">
-		<h1 class="page-title">Source: middlewares/isLoggedIn.js</h1>
+		<h1 class="page-title">Class: Config</h1>
 		<section>
+			<header>
+				<h2><span class="attribs"><span class="type-signature"></span></span>Config<span class="signature">()</span><span class="type-signature"></span></h2>
+				<div class="class-description">Class representing a SensorHub.</div>
+			</header>
 			<article>
-				<pre class="prettyprint source linenums"><code>/**
- * Checks if the user is logged in;
- * If the user is logged in then the request continued;
- * If the user is not logged in then the user is redirect to the login page.
- *
- * @function
- * @see module:middleware
- * @module middleware/isLoggedIn
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- * @param {Function} next - Express next middleware function
- * @returns {undefined}
- */
-module.exports = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.redirect('/login');
-  }
-};
-</code></pre>
+				<div class="container-overview">
+					<h2>Constructor</h2>
+					<h4 class="name" id="Config"><span class="type-signature"></span>new Config<span class="signature">()</span><span class="type-signature"></span></h4>
+					<dl class="details">
+						<dt class="tag-source">Source:</dt>
+						<dd class="tag-source">
+							<ul class="dummy">
+								<li>
+									<a href="models_config.js.html">models/config.js</a>, <a href="models_config.js.html#line20">line 20</a>
+								</li>
+							</ul>
+						</dd>
+					</dl>
+				</div>
 			</article>
 		</section>
 	</div>

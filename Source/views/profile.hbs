@@ -1,39 +1,42 @@
 <!-- Profiel Pagina -->
-
 <link rel="stylesheet" href="/css/profile.css" rel="stylesheet" crossorigin="anonymous">
-
-<div class="card">
+<div class="card z-depth-2">
 <div class="card-header white-text info-color">Account Info</div>
 <div class="card-body">
-<div class="row align-middle text-center">
-			<div class="text-right col" id="properties">
-				{{i18n "account.name"}}
-				<br />
-				{{i18n "account.email"}}
-				<br />
-				{{i18n "account.admin"}}
-				<br />
-				{{i18n "account.password"}}
-			</div>
-			<div class="text-left col">
-				<span>{{user.name}}</span>
-				<br />
-				<span>{{user.email}}</span>
-				<br />
-				<span>
-				{{#if user.isAdmin}}
-					{{i18n "account.yes"}}
-				{{else}}
-					{{i18n "account.no"}}
-				{{/if}}
-				</span>
-				<br />
-				<i>
-					<span>hidden</span>
-				</i>
-			</div>
+	<div class="row align-middle text-center">
+		<table>
+			<tbody>
+				<tr>
+					<th class="property">{{i18n "account.name"}}</th>
+					<td><span>{{user.name}}</span></td>
+				</tr>
+				<tr>
+					<th class="property">{{i18n "account.email"}}</th>
+					<td><span>{{user.email}}</span></td>
+				</tr>
+				<tr>
+					<th class="property">{{i18n "account.admin"}}</th>
+					<td>
+						<span>
+						{{#if user.isAdmin}}
+						{{i18n "account.yes"}}
+						{{else}}
+						{{i18n "account.no"}}
+						{{/if}}
+						</span>
+					</td>
+				</tr>
+				<tr>
+					<th class="property">{{i18n "account.password"}}</th>
+					<td>
+						<i>
+						<span>{{i18n "account.hidden"}}</span>
+						</i>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<button id="edit-button" class="btn btn-primary">{{i18n "account.edit_profile"}}</button>
 </div>
-<button id="edit-button" class="btn btn-primary">{{i18n "account.edit_profile"}}</button>
-</div>
-
 <script src="/js/profile.js"></script>

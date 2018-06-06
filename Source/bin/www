@@ -7,6 +7,8 @@
 const app = require('../app');
 const debug = require('debug')('polutiondetectionsystem:server');
 const http = require('http');
+const Config = require('./../models/config');
+const User = require('./../models/user')
 
 /**
  * Normalize a port into a number, string, or false.
@@ -99,7 +101,55 @@ const numCPUs = require('os').cpus().length;
 
 if (cluster.isMaster) {
   console.log(`Master ${process.pid} is running`);
-
+  
+  Config.findOne({
+  valueID: 'firstTimeSetup'
+  
+  }).exec().then(config => {
+    if (!config) {
+        config = new Config();
+        config.valueID = 'firstTimeSetup';
+        config.value = true;
+    }
+    
+    if (config.value) {
+        const user = new User();
+        user.name = "PDS User";
+        user.email = "user";
+        user.password = "$2a$08$Rt8UJ.BWUEfdcTfsOnuHZOSYUaRglDdLoSzStBY0Ys9f7zCQJ5.UG";
+        user.isAdmin = false;
+        user.save();
+        
+        const admin = new User();
+        admin.name = "PDS Admin";
+        admin.email = "admin";
+        admin.password = "$2a$08$vT3GEqprFl9hit4MU6L1huWHsATdzq/MhNNYcdnRu3RdzyL8xaWiC";
+        admin.isAdmin = true;
+        admin.save();
+        
+        
+        const temperature = new Config();
+        temperature.valueID = "treshold-temperature";
+        temperature.value = "0.75";
+        temperature.save();
+        
+        const gasses = new Config();
+        gasses.valueID = "treshold-gasses";
+        gasses.value = "0.9";
+        gasses.save();
+        
+        const light = new Config();
+        light.valueID = "treshold-light";
+        light.value = "0.9";
+        light.save();
+        
+        config.value = false;
+        config.save();
+    }
+  
+  });
+  
+  
   // Fork workers.
   for (let i = 0; i < numCPUs; i++) {
     cluster.fork();
