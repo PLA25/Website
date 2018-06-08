@@ -63,8 +63,8 @@ router.get('/', isAdmin, (req, res, next) => {
  */
 router.get('/flip/:id', isAdmin, (req, res, next) => {
   Data.findOne({
-    _id: req.params.id,
-  }).exec()
+      _id: req.params.id,
+    }).exec()
     .then((data) => {
       if (data == null) {
         next(new Error('Not found'));
@@ -136,8 +136,8 @@ router.get('/flip/:id', isAdmin, (req, res, next) => {
  */
 router.get('/editsensor/:SerialID', isAdmin, (req, res, next) => {
   SensorHub.findOne({
-    SerialID: req.params.SerialID,
-  }).exec()
+      SerialID: req.params.SerialID,
+    }).exec()
     .then((SerialID) => {
       if (SerialID === null) {
         next(new Error(`Could not find sensorhub with ID: '${req.params.SerialID}'!`));
@@ -165,8 +165,8 @@ router.post('/editsensor/:SerialID', isAdmin, (req, res, next) => {
   } = req.body;
 
   SensorHub.findOne({
-    SerialID: req.params.SerialID,
-  }).exec()
+      SerialID: req.params.SerialID,
+    }).exec()
     .then((sensorHub) => {
       if (!sensorHub) {
         next(new Error(`Could not find sensorhub with ID: '${req.params.SerialID}'!`));
@@ -201,8 +201,8 @@ router.post('/editsensor/:SerialID', isAdmin, (req, res, next) => {
  */
 router.get('/config/:valueID', isAdmin, (req, res, next) => {
   Config.findOne({
-    valueID: req.params.valueID,
-  }).exec()
+      valueID: req.params.valueID,
+    }).exec()
     .then((valueID) => {
       if (valueID === null) {
         next(new Error(`Could not find config with ID: '${req.params.valueID}'!`));
@@ -234,8 +234,8 @@ router.post('/config/:valueID', isAdmin, (req, res, next) => {
   }
 
   Config.findOne({
-    valueID: req.params.valueID,
-  }).exec()
+      valueID: req.params.valueID,
+    }).exec()
     .then((config) => {
       if (!config) {
         next(new Error(`Could not find config with ID: '${req.params.valueID}'!`));
@@ -295,15 +295,14 @@ router.post('/upload-logo', isAdmin, (req, res, next) => {
  * @path {POST} /admin/deleteUser
  */
 router.post('/deleteUser', isAdmin, (req, res, next) => {
-  if (req.body.email) {
-    User.deleteOne({
-      email: req.body.email,
-    }, (err) => {
-      if (err) {
-        next(new Error(`User with email "${req.body.email}" not found`));
-      }
-    });
-  }
+  User.deleteOne({
+    email: req.body.email,
+  }, (err) => {
+    if (err) {
+      res.status(400);
+      next(new Error(`User with email "${req.body.email}" not found`));
+    }
+  });
   res.end();
 });
 
@@ -318,15 +317,14 @@ router.get('/editUser/:email', isAdmin, (req, res, next) => {
     email: req.params.email,
   }).exec().then((user) => {
     if (!user) {
-      res.status(404);
-      next();
+      next(new Error(`Could not find user "${req.params.email}"`));
       return;
     }
     res.render('editUser', {
       editUser: user,
     });
-  }).catch(() => {
-    next(new Error(`Could not find user "${req.params.email}"`));
+  }).catch((err) => {
+    next(err);
   });
 });
 
@@ -346,7 +344,7 @@ router.post('/saveUser/:email', isAdmin, (req, res, next) => {
   User.findOne({
     email: req.params.email,
   }).exec().then((user) => {
-    if (user === null) {
+    if (!user) {
       next(new Error(`Could not find user "${req.params.email}"`));
       return;
     }
@@ -365,7 +363,7 @@ router.post('/saveUser/:email', isAdmin, (req, res, next) => {
     user.save();
     res.redirect('/admin');
   }).catch((e) => {
-    next(new Error(`Could not find user "${req.params.email}"\nMessage: ${e.message}`));
+    next(new Error(`ERROR\nMessage: ${e.message}`));
   });
 });
 
