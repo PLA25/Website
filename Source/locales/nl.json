@@ -19,7 +19,10 @@
 		"limitvalue": "Grenswaardes",
 		"limitvaluevalue": "Waarde",
 		"limitvaluename": "Naame",
-		"setting": "admin.setting"
+		"setting": "Setting",
+    "confirm": "Weet U zeker dat U deze gebruiker wilt verwijderen?",
+    "reset_password": "Wachtwoord terugzetten naar Amsterdam",
+    "user": "Gebruiker"
 	},
 	"index": {
 		"help": "Hulp",

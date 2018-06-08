@@ -7,6 +7,7 @@
 
 /* Packages */
 const express = require('express');
+const bcrypt = require('bcrypt-nodejs');
 const weekNumber = require('current-week-number');
 const {
   spawn,
@@ -62,8 +63,8 @@ router.get('/', isAdmin, (req, res, next) => {
  */
 router.get('/flip/:id', isAdmin, (req, res, next) => {
   Data.findOne({
-    _id: req.params.id,
-  }).exec()
+      _id: req.params.id,
+    }).exec()
     .then((data) => {
       if (data == null) {
         next(new Error('Not found'));
@@ -135,8 +136,8 @@ router.get('/flip/:id', isAdmin, (req, res, next) => {
  */
 router.get('/editsensor/:SerialID', isAdmin, (req, res, next) => {
   SensorHub.findOne({
-    SerialID: req.params.SerialID,
-  }).exec()
+      SerialID: req.params.SerialID,
+    }).exec()
     .then((SerialID) => {
       if (SerialID === null) {
         next(new Error(`Could not find sensorhub with ID: '${req.params.SerialID}'!`));
@@ -164,8 +165,8 @@ router.post('/editsensor/:SerialID', isAdmin, (req, res, next) => {
   } = req.body;
 
   SensorHub.findOne({
-    SerialID: req.params.SerialID,
-  }).exec()
+      SerialID: req.params.SerialID,
+    }).exec()
     .then((sensorHub) => {
       if (!sensorHub) {
         next(new Error(`Could not find sensorhub with ID: '${req.params.SerialID}'!`));
@@ -200,8 +201,8 @@ router.post('/editsensor/:SerialID', isAdmin, (req, res, next) => {
  */
 router.get('/config/:valueID', isAdmin, (req, res, next) => {
   Config.findOne({
-    valueID: req.params.valueID,
-  }).exec()
+      valueID: req.params.valueID,
+    }).exec()
     .then((valueID) => {
       if (valueID === null) {
         next(new Error(`Could not find config with ID: '${req.params.valueID}'!`));
@@ -233,8 +234,8 @@ router.post('/config/:valueID', isAdmin, (req, res, next) => {
   }
 
   Config.findOne({
-    valueID: req.params.valueID,
-  }).exec()
+      valueID: req.params.valueID,
+    }).exec()
     .then((config) => {
       if (!config) {
         next(new Error(`Could not find config with ID: '${req.params.valueID}'!`));
@@ -284,6 +285,85 @@ router.post('/upload-logo', isAdmin, (req, res, next) => {
     } else {
       res.redirect(200, '/admin');
     }
+  });
+});
+
+/**
+ * Deletes a user
+ *
+ * @name Delete User
+ * @path {POST} /admin/deleteUser
+ */
+router.post('/deleteUser', isAdmin, (req, res, next) => {
+  User.deleteOne({
+    email: req.body.email,
+  }, (err) => {
+    if (err) {
+      res.status(400);
+      next(new Error(`User with email "${req.body.email}" not found`));
+    }
+  });
+  res.end();
+});
+
+/**
+ * Edits a user
+ *
+ * @name Edit User
+ * @path {GET} /admin/editUser/:email
+ */
+router.get('/editUser/:email', isAdmin, (req, res, next) => {
+  User.findOne({
+    email: req.params.email,
+  }).exec().then((user) => {
+    if (!user) {
+      next(new Error(`Could not find user "${req.params.email}"`));
+      return;
+    }
+    res.render('editUser', {
+      editUser: user,
+    });
+  }).catch((err) => {
+    next(err);
+  });
+});
+
+/**
+ * Saves a user
+ *
+ * @name Save User
+ * @path {GET} /admin/saveUser/:email
+ */
+router.post('/saveUser/:email', isAdmin, (req, res, next) => {
+  const {
+    resetPass,
+    oldEmail,
+    newEmail,
+    role,
+  } = req.body;
+  User.findOne({
+    email: req.params.email,
+  }).exec().then((user) => {
+    if (!user) {
+      next(new Error(`Could not find user "${req.params.email}"`));
+      return;
+    }
+    if (resetPass) {
+      // eslint-disable-next-line no-param-reassign
+      user.password = bcrypt.hashSync('Amsterdam', bcrypt.genSaltSync(8));
+    }
+    if (!!newEmail && oldEmail !== newEmail) {
+      // eslint-disable-next-line no-param-reassign
+      user.email = newEmail;
+    }
+    if (role) {
+      // eslint-disable-next-line no-param-reassign
+      user.isAdmin = JSON.parse(role);
+    }
+    user.save();
+    res.redirect('/admin');
+  }).catch((e) => {
+    next(new Error(`ERROR\nMessage: ${e.message}`));
   });
 });
 
