@@ -5,10 +5,21 @@
         <div class="card-header info-color lighten-1 white-text">
           {{i18n "indexfts.setupdetailstitle"}}
         </div>
-
         <div class="card-body">
-            {{i18n "indexfts.setupdetails"}}
             
+            <div class="text-center">
+                <hr />
+
+                <div class="flag no-margin-left" id="locale-en">
+                  <img alt="English" src="/lang_en.png" />
+                </div>
+
+                <div class="flag" id="locale-nl">
+                  <img alt="Nederlands" src="/lang_nl.png" />
+                </div>
+              </div>
+            <br><br>            
+            {{i18n "indexfts.setupdetails"}}
             <form action="/fts" method="POST">
                 <div class="md-form">
                   <i class="fa fa-user prefix grey-text"></i>
