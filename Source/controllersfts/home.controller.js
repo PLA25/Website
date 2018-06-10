@@ -39,7 +39,7 @@ router.get('/reroute', (req, res) => {
  * @name Profile
  * @path {POST} /editsensor/:SerialID
  */
-router.post('/fts', (req, res) => {
+router.post('/fts', (req, res, next) => {
   const {
     MongoDBHost,
     MongoDBPort,
@@ -95,7 +95,7 @@ router.post('/fts', (req, res) => {
     // write to a new file named config.js
   fs.writeFile('config.js', configdata, (err) => {
     // throws an error, you could also catch it here
-    if (err) throw err;
+    if (err) next(err);
   });
   res.redirect('/reroute');
 });

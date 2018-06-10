@@ -1,8 +1,9 @@
 let sec = 15;
 const myTimer = document.getElementById('myTimer');
 const myBtn = document.getElementById('myBtn');
-window.onload = countDown;
-
+$(document).ready(() => {
+  countDown();
+});
 function countDown() {
   if (sec < 10) {
     myTimer.innerHTML = `0${sec}`;
@@ -19,3 +20,4 @@ function countDown() {
   sec -= 1;
   window.setTimeout(countDown, 1000);
 }
+

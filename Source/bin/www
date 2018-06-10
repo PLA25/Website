@@ -11,8 +11,8 @@ if (isCI === false && !fs.existsSync(path.join(__dirname, '..', 'config.js'))) {
     
     const express = require('express')
     const app = require('../appfts');
-const debug = require('debug')('polutiondetectionsystem:server');
-const http = require('http');
+    const debug = require('debug')('polutiondetectionsystem:server');
+    const http = require('http');
 
     
     

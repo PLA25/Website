@@ -1,11 +1,9 @@
 /* Packages */
 const express = require('express');
-const session = require('express-session');
 const path = require('path');
 const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const flash = require('connect-flash');
 const hbs = require('hbs');
 const i18n = require('i18n');
 const logger = require('morgan');
@@ -46,20 +44,6 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(session({
-  secret: 'PollutionDetectionSystem',
-  secure: false,
-  HttpOnly: true,
-  rolling: true,
-  resave: true,
-  saveUninitialized: true,
-  /* Stores the session as a cookie for 120 minutes. */
-  cookie: {
-    maxAge: (120 * 60 * 1000),
-  },
-}));
-app.use(flash());
 
 /* Binds i18n to Handlebars. */
 hbs.registerHelper(
