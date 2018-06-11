@@ -44,6 +44,22 @@
 							</ul>
 						</dd>
 					</dl>
+					<dl class="details">
+						<dt class="tag-source">Source:</dt>
+						<dd class="tag-source">
+							<ul class="dummy">
+								<li>
+									<a href="controllersfts_home.controller.js.html">controllersfts/home.controller.js</a>, <a href="controllersfts_home.controller.js.html#line1">line 1</a>
+								</li>
+							</ul>
+						</dd>
+						<dt class="tag-see">See:</dt>
+						<dd class="tag-see">
+							<ul>
+								<li><a href="module-controllers.html">module:controllers</a></li>
+							</ul>
+						</dd>
+					</dl>
 				</div>
 				<h3 class="subsection-title">Members</h3>
 				<h4 class="name" id="Index"><span class="type-signature">(route) </span>Index<span class="type-signature"></span></h4>
@@ -69,6 +85,87 @@
 						<ul class="dummy">
 							<li>
 								<a href="controllers_home.controller.js.html">controllers/home.controller.js</a>, <a href="controllers_home.controller.js.html#line26">line 26</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<h4 class="name" id="Indexfts"><span class="type-signature">(route) </span>Indexfts<span class="type-signature"></span></h4>
+				<div class="description">
+					<h5>Route:</h5>
+					<table class="params">
+						<thead>
+							<tr>
+								<th>Method</th>
+								<th class="last">Path</th>
+							</tr>
+						</thead>
+						<tr>
+							<td class="type">GET</td>
+							<td class="name last">/</td>
+						</tr>
+					</table>
+					Renders the indexfts page.
+				</div>
+				<dl class="details">
+					<dt class="tag-source">Source:</dt>
+					<dd class="tag-source">
+						<ul class="dummy">
+							<li>
+								<a href="controllersfts_home.controller.js.html">controllersfts/home.controller.js</a>, <a href="controllersfts_home.controller.js.html#line16">line 16</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<h4 class="name" id="Indexreroute"><span class="type-signature">(route) </span>Indexreroute<span class="type-signature"></span></h4>
+				<div class="description">
+					<h5>Route:</h5>
+					<table class="params">
+						<thead>
+							<tr>
+								<th>Method</th>
+								<th class="last">Path</th>
+							</tr>
+						</thead>
+						<tr>
+							<td class="type">GET</td>
+							<td class="name last">/</td>
+						</tr>
+					</table>
+					Renders the indexreroute page.
+				</div>
+				<dl class="details">
+					<dt class="tag-source">Source:</dt>
+					<dd class="tag-source">
+						<ul class="dummy">
+							<li>
+								<a href="controllersfts_home.controller.js.html">controllersfts/home.controller.js</a>, <a href="controllersfts_home.controller.js.html#line26">line 26</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<h4 class="name" id="Locale"><span class="type-signature">(route) </span>Locale<span class="type-signature"></span></h4>
+				<div class="description">
+					<h5>Route:</h5>
+					<table class="params">
+						<thead>
+							<tr>
+								<th>Method</th>
+								<th class="last">Path</th>
+							</tr>
+						</thead>
+						<tr>
+							<td class="type">GET</td>
+							<td class="name last">/locale-:locale</td>
+						</tr>
+					</table>
+					Changes the language of the interface.
+				</div>
+				<dl class="details">
+					<dt class="tag-source">Source:</dt>
+					<dd class="tag-source">
+						<ul class="dummy">
+							<li>
+								<a href="controllersfts_home.controller.js.html">controllersfts/home.controller.js</a>, <a href="controllersfts_home.controller.js.html#line103">line 103</a>
 							</li>
 						</ul>
 					</dd>
@@ -208,6 +305,387 @@
 						</ul>
 					</dd>
 				</dl>
+				<h4 class="name" id="Profile"><span class="type-signature">(route) </span>Profile<span class="type-signature"></span></h4>
+				<div class="description">
+					<h5>Route:</h5>
+					<table class="params">
+						<thead>
+							<tr>
+								<th>Method</th>
+								<th class="last">Path</th>
+							</tr>
+						</thead>
+						<tr>
+							<td class="type">POST</td>
+							<td class="name last">/editsensor/:SerialID</td>
+						</tr>
+					</table>
+					Saves the changes to an sensorhub
+				</div>
+				<dl class="details">
+					<dt class="tag-source">Source:</dt>
+					<dd class="tag-source">
+						<ul class="dummy">
+							<li>
+								<a href="controllersfts_home.controller.js.html">controllersfts/home.controller.js</a>, <a href="controllersfts_home.controller.js.html#line36">line 36</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<h4 class="name" id="Sensorhub"><span class="type-signature">(route) </span>Sensorhub<span class="type-signature"></span></h4>
+				<div class="description">
+					<h5>Route:</h5>
+					<table class="params">
+						<thead>
+							<tr>
+								<th>Method</th>
+								<th class="last">Path</th>
+							</tr>
+						</thead>
+						<tr>
+							<td class="type">GET</td>
+							<td class="name last">/sensorhub/:SerialID</td>
+						</tr>
+					</table>
+					Renders a specific sensorhub page.
+					<h5>Route Parameters:</h5>
+					<table class="params">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Type</th>
+								<th class="last">Description</th>
+							</tr>
+						</thead>
+						<tr>
+							<td class="name">:SerialID</td>
+							<td class="type">String</td>
+							<td class="description last">is the SerialID of the SensorHub.</td>
+						</tr>
+					</table>
+				</div>
+				<dl class="details">
+					<dt class="tag-source">Source:</dt>
+					<dd class="tag-source">
+						<ul class="dummy">
+							<li>
+								<a href="controllers_home.controller.js.html">controllers/home.controller.js</a>, <a href="controllers_home.controller.js.html#line51">line 51</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+			</article>
+		</section>
+		<section>
+			<header>
+			</header>
+			<article>
+				<div class="container-overview">
+					<div class="description">Home controller</div>
+					<dl class="details">
+						<dt class="tag-source">Source:</dt>
+						<dd class="tag-source">
+							<ul class="dummy">
+								<li>
+									<a href="controllers_home.controller.js.html">controllers/home.controller.js</a>, <a href="controllers_home.controller.js.html#line1">line 1</a>
+								</li>
+							</ul>
+						</dd>
+						<dt class="tag-see">See:</dt>
+						<dd class="tag-see">
+							<ul>
+								<li><a href="module-controllers.html">module:controllers</a></li>
+							</ul>
+						</dd>
+					</dl>
+					<dl class="details">
+						<dt class="tag-source">Source:</dt>
+						<dd class="tag-source">
+							<ul class="dummy">
+								<li>
+									<a href="controllersfts_home.controller.js.html">controllersfts/home.controller.js</a>, <a href="controllersfts_home.controller.js.html#line1">line 1</a>
+								</li>
+							</ul>
+						</dd>
+						<dt class="tag-see">See:</dt>
+						<dd class="tag-see">
+							<ul>
+								<li><a href="module-controllers.html">module:controllers</a></li>
+							</ul>
+						</dd>
+					</dl>
+				</div>
+				<h3 class="subsection-title">Members</h3>
+				<h4 class="name" id="Index"><span class="type-signature">(route) </span>Index<span class="type-signature"></span></h4>
+				<div class="description">
+					<h5>Route:</h5>
+					<table class="params">
+						<thead>
+							<tr>
+								<th>Method</th>
+								<th class="last">Path</th>
+							</tr>
+						</thead>
+						<tr>
+							<td class="type">GET</td>
+							<td class="name last">/</td>
+						</tr>
+					</table>
+					Renders the index page.
+				</div>
+				<dl class="details">
+					<dt class="tag-source">Source:</dt>
+					<dd class="tag-source">
+						<ul class="dummy">
+							<li>
+								<a href="controllers_home.controller.js.html">controllers/home.controller.js</a>, <a href="controllers_home.controller.js.html#line26">line 26</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<h4 class="name" id="Indexfts"><span class="type-signature">(route) </span>Indexfts<span class="type-signature"></span></h4>
+				<div class="description">
+					<h5>Route:</h5>
+					<table class="params">
+						<thead>
+							<tr>
+								<th>Method</th>
+								<th class="last">Path</th>
+							</tr>
+						</thead>
+						<tr>
+							<td class="type">GET</td>
+							<td class="name last">/</td>
+						</tr>
+					</table>
+					Renders the indexfts page.
+				</div>
+				<dl class="details">
+					<dt class="tag-source">Source:</dt>
+					<dd class="tag-source">
+						<ul class="dummy">
+							<li>
+								<a href="controllersfts_home.controller.js.html">controllersfts/home.controller.js</a>, <a href="controllersfts_home.controller.js.html#line16">line 16</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<h4 class="name" id="Indexreroute"><span class="type-signature">(route) </span>Indexreroute<span class="type-signature"></span></h4>
+				<div class="description">
+					<h5>Route:</h5>
+					<table class="params">
+						<thead>
+							<tr>
+								<th>Method</th>
+								<th class="last">Path</th>
+							</tr>
+						</thead>
+						<tr>
+							<td class="type">GET</td>
+							<td class="name last">/</td>
+						</tr>
+					</table>
+					Renders the indexreroute page.
+				</div>
+				<dl class="details">
+					<dt class="tag-source">Source:</dt>
+					<dd class="tag-source">
+						<ul class="dummy">
+							<li>
+								<a href="controllersfts_home.controller.js.html">controllersfts/home.controller.js</a>, <a href="controllersfts_home.controller.js.html#line26">line 26</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<h4 class="name" id="Locale"><span class="type-signature">(route) </span>Locale<span class="type-signature"></span></h4>
+				<div class="description">
+					<h5>Route:</h5>
+					<table class="params">
+						<thead>
+							<tr>
+								<th>Method</th>
+								<th class="last">Path</th>
+							</tr>
+						</thead>
+						<tr>
+							<td class="type">GET</td>
+							<td class="name last">/locale-:locale</td>
+						</tr>
+					</table>
+					Changes the language of the interface.
+				</div>
+				<dl class="details">
+					<dt class="tag-source">Source:</dt>
+					<dd class="tag-source">
+						<ul class="dummy">
+							<li>
+								<a href="controllersfts_home.controller.js.html">controllersfts/home.controller.js</a>, <a href="controllersfts_home.controller.js.html#line103">line 103</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<h4 class="name" id="Locale"><span class="type-signature">(route) </span>Locale<span class="type-signature"></span></h4>
+				<div class="description">
+					<h5>Route:</h5>
+					<table class="params">
+						<thead>
+							<tr>
+								<th>Method</th>
+								<th class="last">Path</th>
+							</tr>
+						</thead>
+						<tr>
+							<td class="type">GET</td>
+							<td class="name last">/locale-:locale</td>
+						</tr>
+					</table>
+					Changes the language of the interface.
+				</div>
+				<dl class="details">
+					<dt class="tag-source">Source:</dt>
+					<dd class="tag-source">
+						<ul class="dummy">
+							<li>
+								<a href="controllers_home.controller.js.html">controllers/home.controller.js</a>, <a href="controllers_home.controller.js.html#line131">line 131</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<h4 class="name" id="Login"><span class="type-signature">(route) </span>Login<span class="type-signature"></span></h4>
+				<div class="description">
+					<h5>Route:</h5>
+					<table class="params">
+						<thead>
+							<tr>
+								<th>Method</th>
+								<th class="last">Path</th>
+							</tr>
+						</thead>
+						<tr>
+							<td class="type">GET</td>
+							<td class="name last">/login</td>
+						</tr>
+					</table>
+					Renders the login page.
+				</div>
+				<dl class="details">
+					<dt class="tag-source">Source:</dt>
+					<dd class="tag-source">
+						<ul class="dummy">
+							<li>
+								<a href="controllers_home.controller.js.html">controllers/home.controller.js</a>, <a href="controllers_home.controller.js.html#line117">line 117</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<h4 class="name" id="Login"><span class="type-signature">(route) </span>Login<span class="type-signature"></span></h4>
+				<div class="description">
+					<h5>Route:</h5>
+					<table class="params">
+						<thead>
+							<tr>
+								<th>Method</th>
+								<th class="last">Path</th>
+							</tr>
+						</thead>
+						<tr>
+							<td class="type">POST</td>
+							<td class="name last">/login</td>
+						</tr>
+					</table>
+					Handles all post-data for login.
+				</div>
+				<dl class="details">
+					<dt class="tag-source">Source:</dt>
+					<dd class="tag-source">
+						<ul class="dummy">
+							<li>
+								<a href="controllers_home.controller.js.html">controllers/home.controller.js</a>, <a href="controllers_home.controller.js.html#line142">line 142</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<h4 class="name" id="Logout"><span class="type-signature">(route) </span>Logout<span class="type-signature"></span></h4>
+				<div class="description">
+					<h5>Route:</h5>
+					<table class="params">
+						<thead>
+							<tr>
+								<th>Method</th>
+								<th class="last">Path</th>
+							</tr>
+						</thead>
+						<tr>
+							<td class="type">GET</td>
+							<td class="name last">/logout</td>
+						</tr>
+					</table>
+					Log the user out of the system.
+				</div>
+				<dl class="details">
+					<dt class="tag-source">Source:</dt>
+					<dd class="tag-source">
+						<ul class="dummy">
+							<li>
+								<a href="controllers_home.controller.js.html">controllers/home.controller.js</a>, <a href="controllers_home.controller.js.html#line154">line 154</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<h4 class="name" id="Map"><span class="type-signature">(route) </span>Map<span class="type-signature"></span></h4>
+				<div class="description">
+					<h5>Route:</h5>
+					<table class="params">
+						<thead>
+							<tr>
+								<th>Method</th>
+								<th class="last">Path</th>
+							</tr>
+						</thead>
+						<tr>
+							<td class="type">GET</td>
+							<td class="name last">/map</td>
+						</tr>
+					</table>
+					Renders the map page.
+				</div>
+				<dl class="details">
+					<dt class="tag-source">Source:</dt>
+					<dd class="tag-source">
+						<ul class="dummy">
+							<li>
+								<a href="controllers_home.controller.js.html">controllers/home.controller.js</a>, <a href="controllers_home.controller.js.html#line165">line 165</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<h4 class="name" id="Profile"><span class="type-signature">(route) </span>Profile<span class="type-signature"></span></h4>
+				<div class="description">
+					<h5>Route:</h5>
+					<table class="params">
+						<thead>
+							<tr>
+								<th>Method</th>
+								<th class="last">Path</th>
+							</tr>
+						</thead>
+						<tr>
+							<td class="type">POST</td>
+							<td class="name last">/editsensor/:SerialID</td>
+						</tr>
+					</table>
+					Saves the changes to an sensorhub
+				</div>
+				<dl class="details">
+					<dt class="tag-source">Source:</dt>
+					<dd class="tag-source">
+						<ul class="dummy">
+							<li>
+								<a href="controllersfts_home.controller.js.html">controllersfts/home.controller.js</a>, <a href="controllersfts_home.controller.js.html#line36">line 36</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
 				<h4 class="name" id="Sensorhub"><span class="type-signature">(route) </span>Sensorhub<span class="type-signature"></span></h4>
 				<div class="description">
 					<h5>Route:</h5>
@@ -281,7 +759,7 @@
 	</nav>
 	<br class="clear">
 	<footer>
-		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Jun 06 2018 14:49:11 GMT+0200 (W. Europe Daylight Time)
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Jun 10 2018 21:03:58 GMT+0200 (W. Europe Daylight Time)
 	</footer>
 	<script>
 		prettyPrint();

@@ -21,9 +21,15 @@ $ npm install
 ```
 
 ### Step 2: Configure the system
-In the repository you just cloned, make sure you are in the Website/Source folder and edit the config.js.example file.
-After you have filled in the information save the file as config.js in the same folder.
+Open your terminal in the Website/Source folder (or use the terminal you just used) and run the following command.
+```sh
+$ npm start
+```
+Wait for the server to start and visit localhost:3000 or YOUR_DOMAIN_OR_IP:3000 in your webbrowser.
+Fill in all the information on the page and press the SAVE CONFIG button.
 Your Planet key can be found on the planet.com website, for more information about how to find your API key [click here](https://support.planet.com/hc/en-us/articles/212318178-What-is-my-API-key-)
+
+Now wait for the server to reboot and press the Click Me! button.
 
 ### Step 3: Configure the database
 This will happen automatically when you start-up the system for the first time.
@@ -32,11 +38,7 @@ Yep, it's that easy!
 If you ever lose access to the system, just delete the config document from the database and the default users will be back in the system.
 
 ### Step 4: Starting the system
-Yet again, make sure that you are in the Website/Source folder and execute the following command:
-```sh
-$ npm start
-```
-Navigate to http://localhost:3000 and login using the credentials.
+In the webbrowser login using the credentials.
 
 | Username | Password | about |
 | ------ | ------ | ------ |
@@ -44,7 +46,7 @@ Navigate to http://localhost:3000 and login using the credentials.
 | user | user | This is the default user. |
 
 ### Step 5: Security
-Change the admin and user Password in the admin panel!
+Change the admin and user Password in the My Account panel!
 
 ## Development
 This project in maintained by the following awesome people:

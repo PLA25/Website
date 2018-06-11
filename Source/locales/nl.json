@@ -54,30 +54,30 @@
 		"temperature": "Temperatuur",
 		"timestamp": "Tijd"
 	},
-  "map": {
-    "options": "Opties",
-    "go-to": "Ga naar:",
-    "search": "Zoek locatie",
-    "features": "Features:",
-    "navigation": "Navigatie",
-    "sensorhubs": "SensorHubs",
-    "layers": "Lagen:",
-    "temperature": "Temperatuur",
-    "gas": "Gas",
-    "light": "Licht",
-    "timeline": "Tijdlijn:",
-    "latest-data": "Nieuwste data",
-    "hour": "uur",
-    "map": "Kaart",
-    "map-information": "map informatie",
-    "temperature-colon": "Temperatuur:",
-    "invalid": "Ongeldig",
-    "Light": "Licht",
-    "valid-measurement": "Geldige meting of meting verwacht",
-    "wrong-measurement": "Verkeerde meting of meting te hoog of te laag",
-    "close": "Sluiten",
-    "sensorhub-information": "Sensorhub informatie",
-    "more-details": "meer details"
+	"map": {
+		"options": "Opties",
+		"go-to": "Ga naar:",
+		"search": "Zoek locatie",
+		"features": "Features:",
+		"navigation": "Navigatie",
+		"sensorhubs": "SensorHubs",
+		"layers": "Lagen:",
+		"temperature": "Temperatuur",
+		"gas": "Gas",
+		"light": "Licht",
+		"timeline": "Tijdlijn:",
+		"latest-data": "Nieuwste data",
+		"hour": "uur",
+		"map": "Kaart",
+		"map-information": "map informatie",
+		"temperature-colon": "Temperatuur:",
+		"invalid": "Ongeldig",
+		"Light": "Licht",
+		"valid-measurement": "Geldige meting of meting verwacht",
+		"wrong-measurement": "Verkeerde meting of meting te hoog of te laag",
+		"close": "Sluiten",
+		"sensorhub-information": "Sensorhub informatie",
+		"more-details": "meer details"
 	},
 	"config": {
 		"newvalue": "Nieuwe Waarde",
@@ -87,7 +87,7 @@
 		"Latitude": "Breedtegraad",
 		"Longitude": "Lengtegraad"
 	},
-  "account": {
+	"account": {
 		"name": "Naam",
 		"email": "Email",
 		"admin": "Admin",
@@ -102,6 +102,15 @@
 		"new_pass": "Nieuw Wachtwoord",
 		"repeat_pass": "Herhaal Wachtwoord",
 		"save_changes": "Wijzigingen Opslaan",
-    "hidden": "Verborgen"
-   }
+		"hidden": "Verborgen"
+	},
+	"indexfts": {
+		"setupdetailstitle": "Klaarmaken voor het eerste gebruik",
+		"setupdetails": "Hier stel je het systeem in voor het eerste gebruik.",
+        "button": "Save config.hbs"
+	},
+    "indexreroute": {
+        "title": "Bijna klaar",
+        "details": "Nog heel even geduld terwijl de server opnieuw opstart!"
+    }
 }

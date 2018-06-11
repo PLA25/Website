@@ -1,5 +1,25 @@
 #!/usr/bin/env node
 
+const fs = require('fs');
+const path = require('path');
+const isCI = require('is-ci');
+
+
+if (isCI === false && !fs.existsSync(path.join(__dirname, '..', 'config.js'))) {
+    const spawn = require('child_process').spawn;
+    
+    
+    const express = require('express')
+    const app = require('../appfts');
+    const debug = require('debug')('polutiondetectionsystem:server');
+    const http = require('http');
+
+    
+    
+    app.listen(3000, () => console.log('Set-up App listening on port 3000!'))
+
+} else {
+
 /**
  * Module dependencies.
  */
@@ -181,4 +201,5 @@ if (cluster.isMaster) {
   server.on('listening', onListening);
 
   console.log(`Worker ${process.pid} started`);
+}
 }

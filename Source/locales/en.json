@@ -101,5 +101,14 @@
 		"repeat_pass": "Repeat Password",
 		"save_changes": "Save Changes",
     "hidden": "Hidden"
-  }
+  },
+	"indexfts": {
+		"setupdetailstitle": "First time set-up",
+		"setupdetails": "Here you fill in the details for the first time usage",
+        "button": "Save config.hbs"
+	},
+    "indexreroute": {
+        "title": "Almost done",
+        "details": "Just a few more seconds for the server to reboot!"
+    }
 }
